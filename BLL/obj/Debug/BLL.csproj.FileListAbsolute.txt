@@ -1,0 +1,7 @@
+D:\ERPToys\BLL.dll
+D:\ERPToys\BLL.pdb
+D:\Projects\ERPToys\BLL\obj\Debug\BLL.csprojAssemblyReference.cache
+D:\Projects\ERPToys\BLL\obj\Debug\BLL.csproj.CoreCompileInputs.cache
+D:\Projects\ERPToys\BLL\obj\Debug\BLL.csproj.CopyComplete
+D:\Projects\ERPToys\BLL\obj\Debug\BLL.dll
+D:\Projects\ERPToys\BLL\obj\Debug\BLL.pdb

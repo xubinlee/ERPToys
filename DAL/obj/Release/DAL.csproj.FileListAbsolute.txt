@@ -1,0 +1,8 @@
+D:\ERPToys\DAL.dll
+D:\ERPToys\DAL.pdb
+D:\Projects\ERPToys\DAL\obj\Release\DAL.csprojResolveAssemblyReference.cache
+D:\Projects\ERPToys\DAL\obj\Release\DAL.dll
+D:\Projects\ERPToys\DAL\obj\Release\DAL.pdb
+D:\Projects\ERPToys - BAK\DAL\obj\Release\DAL.csprojResolveAssemblyReference.cache
+D:\Projects\ERPToys - BAK\DAL\obj\Release\DAL.dll
+D:\Projects\ERPToys - BAK\DAL\obj\Release\DAL.pdb

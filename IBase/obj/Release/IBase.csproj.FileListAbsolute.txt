@@ -1,0 +1,4 @@
+D:\ERPToys\IBase.dll
+D:\ERPToys\IBase.pdb
+D:\Projects\ERPToys\IBase\obj\Release\IBase.dll
+D:\Projects\ERPToys\IBase\obj\Release\IBase.pdb

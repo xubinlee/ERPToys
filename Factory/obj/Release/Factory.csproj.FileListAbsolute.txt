@@ -1,0 +1,5 @@
+D:\ERPToys\Factory.dll
+D:\ERPToys\Factory.pdb
+D:\Projects\ERPToys\Factory\obj\Release\Factory.csprojResolveAssemblyReference.cache
+D:\Projects\ERPToys\Factory\obj\Release\Factory.dll
+D:\Projects\ERPToys\Factory\obj\Release\Factory.pdb

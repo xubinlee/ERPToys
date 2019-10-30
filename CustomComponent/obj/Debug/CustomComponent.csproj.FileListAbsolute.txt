@@ -1,0 +1,13 @@
+D:\Projects\ERPToys\CustomComponent\bin\Debug\CustomComponent.dll
+D:\Projects\ERPToys\CustomComponent\bin\Debug\CustomComponent.pdb
+D:\BaiduYunDownload\ERPToys\CustomComponent\obj\Debug\CustomComponent.dll
+D:\BaiduYunDownload\ERPToys\CustomComponent\obj\Debug\CustomComponent.pdb
+D:\BaiduYunDownload\ERPToys\CustomComponent\obj\Debug\CustomComponent.csprojResolveAssemblyReference.cache
+D:\ERPToys\CustomComponent.dll
+D:\ERPToys\CustomComponent.pdb
+D:\Projects\ERPToys\CustomComponent\obj\Debug\CustomComponent.csprojAssemblyReference.cache
+D:\Projects\ERPToys\CustomComponent\obj\Debug\CustomComponent.dll.licenses
+D:\Projects\ERPToys\CustomComponent\obj\Debug\CustomComponent.csproj.CoreCompileInputs.cache
+D:\Projects\ERPToys\CustomComponent\obj\Debug\CustomComponent.csproj.CopyComplete
+D:\Projects\ERPToys\CustomComponent\obj\Debug\CustomComponent.dll
+D:\Projects\ERPToys\CustomComponent\obj\Debug\CustomComponent.pdb

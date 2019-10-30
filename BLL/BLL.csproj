@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DF203472-D3A1-44B5-B92D-79F893B2DC0F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BLL</RootNamespace>
+    <AssemblyName>BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\ERPToys\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\ERPToys\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlertBLL.cs" />
+    <Compile Include="AttAppointmentsBLL.cs" />
+    <Compile Include="StaffSchClassBLL.cs" />
+    <Compile Include="SchClassBLL.cs" />
+    <Compile Include="BOMBLL.cs" />
+    <Compile Include="CompanyBLL.cs" />
+    <Compile Include="AppointmentsBLL.cs" />
+    <Compile Include="AttGeneralLogBLL.cs" />
+    <Compile Include="AttWageBillBLL.cs" />
+    <Compile Include="WageBillBLL.cs" />
+    <Compile Include="SLSalePriceBLL.cs" />
+    <Compile Include="DataSourcesBLL.cs" />
+    <Compile Include="DepartmentBLL.cs" />
+    <Compile Include="GoodsBLL.cs" />
+    <Compile Include="GoodsTypeBLL.cs" />
+    <Compile Include="InventoryBLL.cs" />
+    <Compile Include="MainMenuBLL.cs" />
+    <Compile Include="MoldAllotBLL.cs" />
+    <Compile Include="OrderBLL.cs" />
+    <Compile Include="PackagingBLL.cs" />
+    <Compile Include="PaymentBillBLL.cs" />
+    <Compile Include="PermissionBLL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReceiptBillBLL.cs" />
+    <Compile Include="ReportBLL.cs" />
+    <Compile Include="StockInBillBLL.cs" />
+    <Compile Include="StockOutBillBLL.cs" />
+    <Compile Include="SupplierBLL.cs" />
+    <Compile Include="TypesListBLL.cs" />
+    <Compile Include="UsersInfoBLL.cs" />
+    <Compile Include="WarehouseBLL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{827ad114-afae-4bfc-8319-59a3a9e7da5c}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DBML\DBML.csproj">
+      <Project>{12d0e7f3-e5ff-45c6-be29-13f7e7569bb3}</Project>
+      <Name>DBML</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Factory\Factory.csproj">
+      <Project>{0943627b-01fe-40cd-ad12-72c5287621dd}</Project>
+      <Name>Factory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IBase\IBase.csproj">
+      <Project>{3c92250c-d012-4eb2-ae24-229583721d2d}</Project>
+      <Name>IBase</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,6 @@
+D:\Projects\ERPToys\CustomComponent\bin\Debug\CustomComponent.dll
+D:\Projects\ERPToys\CustomComponent\bin\Debug\CustomComponent.pdb
+D:\Projects\ERPToys\CustomComponent\obj\Debug\CustomComponent.dll
+D:\Projects\ERPToys\CustomComponent\obj\Debug\CustomComponent.pdb
+D:\ERPToys\CustomComponent.dll
+D:\ERPToys\CustomComponent.pdb

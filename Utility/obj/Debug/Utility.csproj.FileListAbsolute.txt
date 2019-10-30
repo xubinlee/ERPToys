@@ -1,0 +1,8 @@
+D:\Projects\ERPToys\Utility\bin\Debug\Utility.dll
+D:\Projects\ERPToys\Utility\bin\Debug\Utility.pdb
+D:\ERPToys\Utility.dll
+D:\ERPToys\Utility.pdb
+D:\Projects\ERPToys\Utility\obj\Debug\Utility.csprojAssemblyReference.cache
+D:\Projects\ERPToys\Utility\obj\Debug\Utility.csproj.CoreCompileInputs.cache
+D:\Projects\ERPToys\Utility\obj\Debug\Utility.dll
+D:\Projects\ERPToys\Utility\obj\Debug\Utility.pdb

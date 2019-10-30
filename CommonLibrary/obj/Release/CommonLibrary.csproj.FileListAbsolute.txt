@@ -1,0 +1,8 @@
+D:\ERPToys\CommonLibrary.dll
+D:\ERPToys\CommonLibrary.pdb
+D:\Projects\ERPToys\CommonLibrary\obj\Release\CommonLibrary.ErrorInfoControl.resources
+D:\Projects\ERPToys\CommonLibrary\obj\Release\ICP.Framework.ClientComponents.Forms.PopupWindow.resources
+D:\Projects\ERPToys\CommonLibrary\obj\Release\CommonLibrary.csproj.GenerateResource.Cache
+D:\Projects\ERPToys\CommonLibrary\obj\Release\CommonLibrary.dll
+D:\Projects\ERPToys\CommonLibrary\obj\Release\CommonLibrary.pdb
+D:\Projects\ERPToys\CommonLibrary\obj\Release\CommonLibrary.csprojResolveAssemblyReference.cache

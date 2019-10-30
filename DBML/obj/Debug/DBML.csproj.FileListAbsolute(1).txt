@@ -1,0 +1,8 @@
+D:\Projects\ERPToys\DBML\bin\Debug\DBML.dll.config
+D:\Projects\ERPToys\DBML\bin\Debug\DBML.dll
+D:\Projects\ERPToys\DBML\bin\Debug\DBML.pdb
+D:\Projects\ERPToys\DBML\obj\Debug\DBML.dll
+D:\Projects\ERPToys\DBML\obj\Debug\DBML.pdb
+D:\ERPToys\DBML.dll
+D:\ERPToys\DBML.pdb
+D:\ERPToys\DBML.dll.config

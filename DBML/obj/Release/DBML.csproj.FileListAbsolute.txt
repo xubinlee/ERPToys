@@ -1,0 +1,9 @@
+D:\ERPToys\DBML.dll.config
+D:\ERPToys\DBML.dll
+D:\ERPToys\DBML.pdb
+D:\Projects\ERPToys\DBML\obj\Release\DBML.dll
+D:\Projects\ERPToys\DBML\obj\Release\DBML.pdb
+D:\Projects\ERPToys\DBML\obj\Release\DBML.csprojResolveAssemblyReference.cache
+D:\Projects\ERPToys - BAK\DBML\obj\Release\DBML.csprojResolveAssemblyReference.cache
+D:\Projects\ERPToys - BAK\DBML\obj\Release\DBML.dll
+D:\Projects\ERPToys - BAK\DBML\obj\Release\DBML.pdb

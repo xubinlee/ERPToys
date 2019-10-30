@@ -1,0 +1,10 @@
+D:\Projects\ERPToys\IBase\bin\Debug\IBase.dll
+D:\Projects\ERPToys\IBase\bin\Debug\IBase.pdb
+D:\BaiduYunDownload\ERPToys\IBase\obj\Debug\IBase.dll
+D:\BaiduYunDownload\ERPToys\IBase\obj\Debug\IBase.pdb
+D:\ERPToys\IBase.dll
+D:\ERPToys\IBase.pdb
+D:\Projects\ERPToys\IBase\obj\Debug\IBase.csprojAssemblyReference.cache
+D:\Projects\ERPToys\IBase\obj\Debug\IBase.csproj.CoreCompileInputs.cache
+D:\Projects\ERPToys\IBase\obj\Debug\IBase.dll
+D:\Projects\ERPToys\IBase\obj\Debug\IBase.pdb

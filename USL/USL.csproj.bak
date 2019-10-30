@@ -1,0 +1,756 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{56D10E3E-3A00-4488-A0BC-DB5C57C20356}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>USL</RootNamespace>
+    <AssemblyName>USL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\ERPToys\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\ERPToys\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>snow.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="CABDevExpress.ExtensionKit, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ERPToys\CABDevExpress.ExtensionKit.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.BonusSkins.v16.1">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v16.1.Core, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Data.v16.1">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.DataAccess.v16.1, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Office.v16.1.Core, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.PivotGrid.v16.1.Core, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Pdf.v16.1.Core, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v16.1.Core, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v16.1.Core, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Sparkline.v16.1.Core, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v16.1">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v16.1.UI, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpo.v16.1, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraBars.v16.1">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v16.1, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v16.1.UI, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v16.1.Wizard, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v16.1">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGauges.v16.1.Core, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGrid.v16.1, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraLayout.v16.1">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraPrinting.v16.1, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.CodeParser.v16.1, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v16.1, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v16.1.Extensions, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraRichEdit.v16.1, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraScheduler.v16.1, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.XtraScheduler.v16.1.Core, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraScheduler.v16.1.Reporting, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraScheduler.v16.1.Reporting.Extensions, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraTreeList.v16.1, Version=16.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.CompositeUI, Version=1.0.51205.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ERPToys\Microsoft.Practices.CompositeUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.CompositeUI.WinForms, Version=1.0.51205.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ERPToys\Microsoft.Practices.CompositeUI.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder, Version=1.0.51205.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ERPToys\Microsoft.Practices.ObjectBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChartPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChartPage.Designer.cs">
+      <DependentUpon>ChartPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MonthlyChartPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MonthlyChartPage.Designer.cs">
+      <DependentUpon>MonthlyChartPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GoodsChartPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GoodsChartPage.Designer.cs">
+      <DependentUpon>GoodsChartPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerChartPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomerChartPage.Designer.cs">
+      <DependentUpon>CustomerChartPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\BOMPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\BOMPage.Designer.cs">
+      <DependentUpon>BOMPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AttPage\StaffSchClassPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\AttPage\StaffSchClassPage.Designer.cs">
+      <DependentUpon>StaffSchClassPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomAppointmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomAppointmentForm.Designer.cs">
+      <DependentUpon>CustomAppointmentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AttPage\AttAppointmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AttPage\AttAppointmentForm.Designer.cs">
+      <DependentUpon>AttAppointmentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HistoryQueryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HistoryQueryForm.Designer.cs">
+      <DependentUpon>HistoryQueryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AttPage\AttendanceSchedulingPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\AttPage\AttendanceSchedulingPage.Designer.cs">
+      <DependentUpon>AttendanceSchedulingPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProductionSchedulingPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProductionSchedulingPage.Designer.cs">
+      <DependentUpon>ProductionSchedulingPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AttPage\SchClassPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\AttPage\SchClassPage.Designer.cs">
+      <DependentUpon>SchClassPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SLSalePricePage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SLSalePricePage.Designer.cs">
+      <DependentUpon>SLSalePricePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\DeptEditPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\DeptEditPage.Designer.cs">
+      <DependentUpon>DeptEditPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoldAllotPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MoldAllotPage.Designer.cs">
+      <DependentUpon>MoldAllotPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BOMEditPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BOMEditPage.Designer.cs">
+      <DependentUpon>BOMEditPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CABApplication.cs" />
+    <Compile Include="LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TabbedGoodsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TabbedGoodsPage.Designer.cs">
+      <DependentUpon>TabbedGoodsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillEditPage\PaymentBillPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BillEditPage\PaymentBillPage.Designer.cs">
+      <DependentUpon>PaymentBillPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PermissionSettingPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PermissionSettingPage.Designer.cs">
+      <DependentUpon>PermissionSettingPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintSettingController.cs" />
+    <Compile Include="Views\AttPage\AttWageBillPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\AttPage\AttWageBillPage.Designer.cs">
+      <DependentUpon>AttWageBillPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillEditPage\WageBillPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BillEditPage\WageBillPage.Designer.cs">
+      <DependentUpon>WageBillPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillEditPage\ReceiptBillPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BillEditPage\ReceiptBillPage.Designer.cs">
+      <DependentUpon>ReceiptBillPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillEditPage\StockInBillPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BillEditPage\StockInBillPage.Designer.cs">
+      <DependentUpon>StockInBillPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillEditPage\StockOutBillPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BillEditPage\StockOutBillPage.Designer.cs">
+      <DependentUpon>StockOutBillPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\SupplierEditPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\SupplierEditPage.Designer.cs">
+      <DependentUpon>SupplierEditPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\PackagingEditPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\PackagingEditPage.Designer.cs">
+      <DependentUpon>PackagingEditPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\GoodsTypeEditPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\GoodsTypeEditPage.Designer.cs">
+      <DependentUpon>GoodsTypeEditPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BillEditPage\OrderEditPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BillEditPage\OrderEditPage.Designer.cs">
+      <DependentUpon>OrderEditPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\UsersEditPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\UsersEditPage.Designer.cs">
+      <DependentUpon>UsersEditPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\CompanyEditPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\CompanyEditPage.Designer.cs">
+      <DependentUpon>CompanyEditPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\DataEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\DataEditForm.Designer.cs">
+      <DependentUpon>DataEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\GoodsEditPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BasicEditPage\GoodsEditPage.Designer.cs">
+      <DependentUpon>GoodsEditPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataQueryPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\DataQueryPage.Designer.cs">
+      <DependentUpon>DataQueryPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\SampleData.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GroupDetailPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\GroupDetailPage.Designer.cs">
+      <DependentUpon>GroupDetailPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemDetailPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ItemDetailPage.Designer.cs">
+      <DependentUpon>ItemDetailPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\GroupItemDetailPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\GroupItemDetailPage.Designer.cs">
+      <DependentUpon>GroupItemDetailPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XtraMaterialMRPReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XtraMaterialMRPReport.Designer.cs">
+      <DependentUpon>XtraMaterialMRPReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XtraAssembleMRPReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XtraAssembleMRPReport.Designer.cs">
+      <DependentUpon>XtraAssembleMRPReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XtraSchedulerReport1.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XtraSchedulerReport1.Designer.cs">
+      <DependentUpon>XtraSchedulerReport1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XtraMRPReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XtraMRPReport.Designer.cs">
+      <DependentUpon>XtraMRPReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XtraStatementOfAccountReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XtraStatementOfAccountReport.Designer.cs">
+      <DependentUpon>XtraStatementOfAccountReport.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChartPage.resx">
+      <DependentUpon>ChartPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MonthlyChartPage.resx">
+      <DependentUpon>MonthlyChartPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GoodsChartPage.resx">
+      <DependentUpon>GoodsChartPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomerChartPage.resx">
+      <DependentUpon>CustomerChartPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AttPage\AttAppointmentForm.resx">
+      <DependentUpon>AttAppointmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BasicEditPage\BOMPage.resx">
+      <DependentUpon>BOMPage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AttPage\StaffSchClassPage.resx">
+      <DependentUpon>StaffSchClassPage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomAppointmentForm.resx">
+      <DependentUpon>CustomAppointmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HistoryQueryForm.resx">
+      <DependentUpon>HistoryQueryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AttPage\AttendanceSchedulingPage.resx">
+      <DependentUpon>AttendanceSchedulingPage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductionSchedulingPage.resx">
+      <DependentUpon>ProductionSchedulingPage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AttPage\SchClassPage.resx">
+      <DependentUpon>SchClassPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SLSalePricePage.resx">
+      <DependentUpon>SLSalePricePage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BasicEditPage\DeptEditPage.resx">
+      <DependentUpon>DeptEditPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MoldAllotPage.resx">
+      <DependentUpon>MoldAllotPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BOMEditPage.resx">
+      <DependentUpon>BOMEditPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TabbedGoodsPage.resx">
+      <DependentUpon>TabbedGoodsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BillEditPage\PaymentBillPage.resx">
+      <DependentUpon>PaymentBillPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PermissionSettingPage.resx">
+      <DependentUpon>PermissionSettingPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AttPage\AttWageBillPage.resx">
+      <DependentUpon>AttWageBillPage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BillEditPage\WageBillPage.resx">
+      <DependentUpon>WageBillPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BillEditPage\ReceiptBillPage.resx">
+      <DependentUpon>ReceiptBillPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BillEditPage\StockInBillPage.resx">
+      <DependentUpon>StockInBillPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BillEditPage\StockOutBillPage.resx">
+      <DependentUpon>StockOutBillPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BasicEditPage\SupplierEditPage.resx">
+      <DependentUpon>SupplierEditPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BasicEditPage\PackagingEditPage.resx">
+      <DependentUpon>PackagingEditPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BasicEditPage\GoodsTypeEditPage.resx">
+      <DependentUpon>GoodsTypeEditPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BillEditPage\OrderEditPage.resx">
+      <DependentUpon>OrderEditPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BasicEditPage\UsersEditPage.resx">
+      <DependentUpon>UsersEditPage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BasicEditPage\CompanyEditPage.resx">
+      <DependentUpon>CompanyEditPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BasicEditPage\DataEditForm.resx">
+      <DependentUpon>DataEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BasicEditPage\GoodsEditPage.resx">
+      <DependentUpon>GoodsEditPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\DataQueryPage.resx">
+      <DependentUpon>DataQueryPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XtraMaterialMRPReport.resx">
+      <DependentUpon>XtraMaterialMRPReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XtraAssembleMRPReport.resx">
+      <DependentUpon>XtraAssembleMRPReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XtraSchedulerReport1.resx">
+      <DependentUpon>XtraSchedulerReport1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XtraMRPReport.resx">
+      <DependentUpon>XtraMRPReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XtraStatementOfAccountReport.resx">
+      <DependentUpon>XtraStatementOfAccountReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\DataSources\DBML.Appointments.datasource" />
+    <None Include="Properties\DataSources\DBML.AttAppointments.datasource" />
+    <None Include="Properties\DataSources\DBML.AttWageBillHd.datasource" />
+    <None Include="Properties\DataSources\DBML.BOM.datasource" />
+    <None Include="Properties\DataSources\DBML.ButtonPermission.datasource" />
+    <None Include="Properties\DataSources\DBML.Company.datasource" />
+    <None Include="Properties\DataSources\DBML.Department.datasource" />
+    <None Include="Properties\DataSources\DBML.Goods.datasource" />
+    <None Include="Properties\DataSources\DBML.GoodsType.datasource" />
+    <None Include="Properties\DataSources\DBML.InStoreBillDtl.datasource" />
+    <None Include="Properties\DataSources\DBML.InStoreBillHd.datasource" />
+    <None Include="Properties\DataSources\DBML.MainMenu.datasource" />
+    <None Include="Properties\DataSources\DBML.MaterielInStoreBillDtl.datasource" />
+    <None Include="Properties\DataSources\DBML.MaterielInStoreBillHd.datasource" />
+    <None Include="Properties\DataSources\DBML.MaterielOutStoreBillDtl.datasource" />
+    <None Include="Properties\DataSources\DBML.MaterielOutStoreBillHd.datasource" />
+    <None Include="Properties\DataSources\DBML.OrderDtl.datasource" />
+    <None Include="Properties\DataSources\DBML.OrderHd.datasource" />
+    <None Include="Properties\DataSources\DBML.OutStoreBillDtl.datasource" />
+    <None Include="Properties\DataSources\DBML.OutStoreBillHd.datasource" />
+    <None Include="Properties\DataSources\DBML.Packaging.datasource" />
+    <None Include="Properties\DataSources\DBML.PaymentBillHd.datasource" />
+    <None Include="Properties\DataSources\DBML.ReceiptBillHd.datasource" />
+    <None Include="Properties\DataSources\DBML.Resources.datasource" />
+    <None Include="Properties\DataSources\DBML.SalesSummaryMonthlyReport.datasource" />
+    <None Include="Properties\DataSources\DBML.SchClass.datasource" />
+    <None Include="Properties\DataSources\DBML.StaffSchClass.datasource" />
+    <None Include="Properties\DataSources\DBML.StatementOfAccountToCustomerReport.datasource" />
+    <None Include="Properties\DataSources\DBML.StatementOfAccountToSupplierReport.datasource" />
+    <None Include="Properties\DataSources\DBML.StockInBillDtl.datasource" />
+    <None Include="Properties\DataSources\DBML.StockInBillHd.datasource" />
+    <None Include="Properties\DataSources\DBML.StockOutBillDtl.datasource" />
+    <None Include="Properties\DataSources\DBML.StockOutBillHd.datasource" />
+    <None Include="Properties\DataSources\DBML.Supplier.datasource" />
+    <None Include="Properties\DataSources\DBML.TypesList.datasource" />
+    <None Include="Properties\DataSources\DBML.UsersInfo.datasource" />
+    <None Include="Properties\DataSources\DBML.USPAttWageBillDtl.datasource" />
+    <None Include="Properties\DataSources\DBML.VAppointments.datasource" />
+    <None Include="Properties\DataSources\DBML.VAttAppointments.datasource" />
+    <None Include="Properties\DataSources\DBML.VBillDtlByBOM.datasource" />
+    <None Include="Properties\DataSources\DBML.VCompany.datasource" />
+    <None Include="Properties\DataSources\DBML.VFSMOrderDtlByMoldMaterial.datasource" />
+    <None Include="Properties\DataSources\DBML.VGoods.datasource" />
+    <None Include="Properties\DataSources\DBML.VGoodsByBOM.datasource" />
+    <None Include="Properties\DataSources\DBML.VGoodsByMoldAllot.datasource" />
+    <None Include="Properties\DataSources\DBML.VMaterialStockInBill.datasource" />
+    <None Include="Properties\DataSources\DBML.VOrder.datasource" />
+    <None Include="Properties\DataSources\DBML.VOrderDtlByBOM.datasource" />
+    <None Include="Properties\DataSources\DBML.VOrderDtlForPrint.datasource" />
+    <None Include="Properties\DataSources\DBML.VPaymentBillDtl.datasource" />
+    <None Include="Properties\DataSources\DBML.VProductionOrder.datasource" />
+    <None Include="Properties\DataSources\DBML.VReceiptBillDtl.datasource" />
+    <None Include="Properties\DataSources\DBML.VStockInBill.datasource" />
+    <None Include="Properties\DataSources\DBML.VStockInBillDtlByBOM.datasource" />
+    <None Include="Properties\DataSources\DBML.VStockInBillDtlByColor.datasource" />
+    <None Include="Properties\DataSources\DBML.VStockInBillDtlForPrint.datasource" />
+    <None Include="Properties\DataSources\DBML.VStockOutBillDtlByBOM.datasource" />
+    <None Include="Properties\DataSources\DBML.VStockOutBillDtlForPrint.datasource" />
+    <None Include="Properties\DataSources\DBML.VSupplier.datasource" />
+    <None Include="Properties\DataSources\DBML.VUsersInfo.datasource" />
+    <None Include="Properties\DataSources\DBML.VWageBillDtl.datasource" />
+    <None Include="Properties\DataSources\DBML.WageBillHd.datasource" />
+    <None Include="Properties\DataSources\DBML.WageDesign.datasource" />
+    <None Include="Properties\DataSources\DBML.Warehouse.datasource" />
+    <None Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Views\GroupDetailPage.resx">
+      <DependentUpon>GroupDetailPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ItemDetailPage.resx">
+      <DependentUpon>ItemDetailPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Views\GroupItemDetailPage.resx">
+      <DependentUpon>GroupItemDetailPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\DarkGray.png" />
+    <EmbeddedResource Include="Assets\LightGray.png" />
+    <EmbeddedResource Include="Assets\MediumGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{df203472-d3a1-44b5-b92d-79f893b2dc0f}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonLibrary\CommonLibrary.csproj">
+      <Project>{4220d821-1e36-453e-88f7-0c932372fcee}</Project>
+      <Name>CommonLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CustomComponent\CustomComponent.csproj">
+      <Project>{DF90DCBB-5E18-4918-BAE5-5551C1897DA2}</Project>
+      <Name>CustomComponent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DBML\DBML.csproj">
+      <Project>{12d0e7f3-e5ff-45c6-be29-13f7e7569bb3}</Project>
+      <Name>DBML</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Factory\Factory.csproj">
+      <Project>{0943627b-01fe-40cd-ad12-72c5287621dd}</Project>
+      <Name>Factory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IBase\IBase.csproj">
+      <Project>{3c92250c-d012-4eb2-ae24-229583721d2d}</Project>
+      <Name>IBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{0ada4080-1884-44d2-a0ad-c91e5c96cfc0}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="zkemkeeper">
+      <Guid>{FE9DED34-E159-408E-8490-B720A5E632C7}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="pr.ico" />
+    <Content Include="Resources\add.png" />
+    <None Include="Resources\stop_32px.png" />
+    <None Include="Resources\Menu_blue_32px.png" />
+    <None Include="Resources\Undo_32x32.png" />
+    <None Include="Resources\Closed.png" />
+    <None Include="Resources\HistoryItem_32x32.png" />
+    <None Include="Resources\switch_off_54px.png" />
+    <None Include="Resources\switch_on_54px.png" />
+    <None Include="Resources\UploadStaff_32px.png" />
+    <None Include="Resources\Download_32x32.png" />
+    <None Include="Resources\Generate_tables_32px.png" />
+    <None Include="Resources\Picture_Save_32px.png" />
+    <None Include="Resources\assignment_return_32px.png" />
+    <None Include="Resources\Down_32x32.png" />
+    <Content Include="snow.ico" />
+    <None Include="Resources\phone_32.png" />
+    <None Include="Resources\SaveAndNew_32x32.png" />
+    <None Include="Resources\ExportToXLS_32x32.png" />
+    <None Include="Resources\pr_138.png" />
+    <None Include="Resources\Save_32x32.png" />
+    <None Include="Resources\Refresh_32x32.png" />
+    <None Include="Resources\login.png" />
+    <None Include="Resources\key.png" />
+    <None Include="Resources\Warning.png" />
+    <None Include="Resources\Info.png" />
+    <None Include="Resources\User_16.png" />
+    <None Include="Resources\user.png" />
+    <None Include="Resources\Tip_16.png" />
+    <None Include="Resources\mark.png" />
+    <None Include="Resources\save.png" />
+    <None Include="Resources\print.png" />
+    <None Include="Resources\Contacts\Email.png" />
+    <None Include="Resources\Contacts\HomePhone.png" />
+    <None Include="Resources\Contacts\MobilePhone.png" />
+    <None Include="Resources\Contacts\Skype.png" />
+    <None Include="Resources\Contacts\fax.png" />
+    <None Include="Resources\clear.png" />
+    <None Include="Resources\audit.png" />
+    <None Include="Resources\Background.jpg" />
+    <None Include="Resources\Alarm-Clock.gif" />
+    <None Include="Resources\Contacts\QQ_16.png" />
+    <Content Include="Resources\del.png" />
+    <Content Include="Resources\edit.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

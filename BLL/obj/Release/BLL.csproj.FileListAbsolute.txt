@@ -1,0 +1,8 @@
+D:\ERPToys\BLL.dll
+D:\ERPToys\BLL.pdb
+D:\Projects\ERPToys\BLL\obj\Release\BLL.csprojResolveAssemblyReference.cache
+D:\Projects\ERPToys\BLL\obj\Release\BLL.dll
+D:\Projects\ERPToys\BLL\obj\Release\BLL.pdb
+D:\Projects\ERPToys - BAK\BLL\obj\Release\BLL.csprojResolveAssemblyReference.cache
+D:\Projects\ERPToys - BAK\BLL\obj\Release\BLL.dll
+D:\Projects\ERPToys - BAK\BLL\obj\Release\BLL.pdb

@@ -1,0 +1,8 @@
+D:\ERPToys\Utility.dll
+D:\ERPToys\Utility.pdb
+D:\Projects\ERPToys\Utility\obj\Release\Utility.dll
+D:\Projects\ERPToys\Utility\obj\Release\Utility.pdb
+D:\Projects\ERPToys\Utility\obj\Release\Utility.csprojResolveAssemblyReference.cache
+D:\Projects\ERPToys - BAK\Utility\obj\Release\Utility.csprojResolveAssemblyReference.cache
+D:\Projects\ERPToys - BAK\Utility\obj\Release\Utility.dll
+D:\Projects\ERPToys - BAK\Utility\obj\Release\Utility.pdb
