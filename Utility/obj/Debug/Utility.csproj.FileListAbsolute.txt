@@ -6,3 +6,7 @@ D:\Projects\ERPToys\Utility\obj\Debug\Utility.csprojAssemblyReference.cache
 D:\Projects\ERPToys\Utility\obj\Debug\Utility.csproj.CoreCompileInputs.cache
 D:\Projects\ERPToys\Utility\obj\Debug\Utility.dll
 D:\Projects\ERPToys\Utility\obj\Debug\Utility.pdb
+D:\Project\ERPToys\Utility\obj\Debug\Utility.csprojAssemblyReference.cache
+D:\Project\ERPToys\Utility\obj\Debug\Utility.csproj.CoreCompileInputs.cache
+D:\Project\ERPToys\Utility\obj\Debug\Utility.dll
+D:\Project\ERPToys\Utility\obj\Debug\Utility.pdb

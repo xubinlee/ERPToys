@@ -16,3 +16,8 @@ D:\Projects\ERPToys\Factory\obj\Debug\Factory.csproj.CoreCompileInputs.cache
 D:\Projects\ERPToys\Factory\obj\Debug\Factory.csproj.CopyComplete
 D:\Projects\ERPToys\Factory\obj\Debug\Factory.dll
 D:\Projects\ERPToys\Factory\obj\Debug\Factory.pdb
+D:\Project\ERPToys\Factory\obj\Debug\Factory.csprojAssemblyReference.cache
+D:\Project\ERPToys\Factory\obj\Debug\Factory.csproj.CoreCompileInputs.cache
+D:\Project\ERPToys\Factory\obj\Debug\Factory.csproj.CopyComplete
+D:\Project\ERPToys\Factory\obj\Debug\Factory.dll
+D:\Project\ERPToys\Factory\obj\Debug\Factory.pdb

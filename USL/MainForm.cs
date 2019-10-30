@@ -33,7 +33,7 @@ namespace USL
 {
     public partial class MainForm : XtraForm,IToolbar,IStatusbar
     {
-        Thread threadGetVDataSource;
+        Thread threadGetVDataSource;// hello git
         Thread threadGetUserInfo;
         Thread threadInsertAlert;
         public static Dictionary<String, int> alertCount;

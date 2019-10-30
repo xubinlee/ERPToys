@@ -11,3 +11,9 @@ D:\Projects\ERPToys\CustomComponent\obj\Debug\CustomComponent.csproj.CoreCompile
 D:\Projects\ERPToys\CustomComponent\obj\Debug\CustomComponent.csproj.CopyComplete
 D:\Projects\ERPToys\CustomComponent\obj\Debug\CustomComponent.dll
 D:\Projects\ERPToys\CustomComponent\obj\Debug\CustomComponent.pdb
+D:\Project\ERPToys\CustomComponent\obj\Debug\CustomComponent.csprojAssemblyReference.cache
+D:\Project\ERPToys\CustomComponent\obj\Debug\CustomComponent.dll.licenses
+D:\Project\ERPToys\CustomComponent\obj\Debug\CustomComponent.csproj.CoreCompileInputs.cache
+D:\Project\ERPToys\CustomComponent\obj\Debug\CustomComponent.dll
+D:\Project\ERPToys\CustomComponent\obj\Debug\CustomComponent.pdb
+D:\Project\ERPToys\CustomComponent\obj\Debug\CustomComponent.csproj.CopyComplete

@@ -8,3 +8,7 @@ D:\Projects\ERPToys\IBase\obj\Debug\IBase.csprojAssemblyReference.cache
 D:\Projects\ERPToys\IBase\obj\Debug\IBase.csproj.CoreCompileInputs.cache
 D:\Projects\ERPToys\IBase\obj\Debug\IBase.dll
 D:\Projects\ERPToys\IBase\obj\Debug\IBase.pdb
+D:\Project\ERPToys\IBase\obj\Debug\IBase.csprojAssemblyReference.cache
+D:\Project\ERPToys\IBase\obj\Debug\IBase.csproj.CoreCompileInputs.cache
+D:\Project\ERPToys\IBase\obj\Debug\IBase.dll
+D:\Project\ERPToys\IBase\obj\Debug\IBase.pdb

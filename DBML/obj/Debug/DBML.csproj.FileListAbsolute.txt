@@ -8,3 +8,7 @@ D:\Projects\ERPToys\DBML\obj\Debug\DBML.csprojAssemblyReference.cache
 D:\Projects\ERPToys\DBML\obj\Debug\DBML.csproj.CoreCompileInputs.cache
 D:\Projects\ERPToys\DBML\obj\Debug\DBML.dll
 D:\Projects\ERPToys\DBML\obj\Debug\DBML.pdb
+D:\Project\ERPToys\DBML\obj\Debug\DBML.csprojAssemblyReference.cache
+D:\Project\ERPToys\DBML\obj\Debug\DBML.csproj.CoreCompileInputs.cache
+D:\Project\ERPToys\DBML\obj\Debug\DBML.dll
+D:\Project\ERPToys\DBML\obj\Debug\DBML.pdb
