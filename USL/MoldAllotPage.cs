@@ -34,10 +34,10 @@ namespace USL
         {
             base.OnLoad(e);
             winExplorerView.ShowFindPanel();
-            BindData();
+            BindData(null);
         }
 
-        public void BindData()
+        public void BindData(object obj)
         {
             vSupplierBindingSource.DataSource = MainForm.dataSourceList[typeof(List<VSupplier>)];
             //vGoodsByBOMBindingSource.DataSource = ((List<VGoodsByBOM>)MainForm.dataSourceList[typeof(List<VGoodsByBOM>)]).FindAll(o => o.类型 == (int)BOMType.MoldList);//MainForm.dataSourceList[typeof(List<VGoods>)];
@@ -220,13 +220,13 @@ namespace USL
         private void gridView_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             Save();
-            MainForm.DataPageRefresh(MainMenuConstants.MoldAllot);
+            ClientFactory.DataPageRefresh<MoldAllot>();
         }
 
         private void gridView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
             Save();
-            MainForm.DataPageRefresh(MainMenuConstants.MoldAllot);
+            ClientFactory.DataPageRefresh<MoldAllot>();
         }
     }
 }

@@ -60,7 +60,7 @@ namespace USL
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            filter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl.FilterCriteria);
+               filter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl.FilterCriteria);
             this.Close();
         }
     }

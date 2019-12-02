@@ -14,10 +14,11 @@ namespace BLL
     {
         public List<Warehouse> GetWarehouse()
         {
-            using (DCC dcc = DBMLFty.Dcc)
-            {
-                return DALFty.Create<WarehouseDAL>().GetWarehouse(dcc);
-            }
+            //using (DCC dcc = DBMLFty.Dcc)
+            //{
+            //    return DALFty.Create<WarehouseDAL>().GetWarehouse(dcc);
+            //}
+            return null;
         }
     }
 }

@@ -679,7 +679,8 @@ namespace USL
                     }
 
                     BLLFty.Create<StockInBillBLL>().Insert(inHd, inDtlList);
-                    MainForm.BillSaveRefresh(MainMenuConstants.FGStockInBillQuery);
+                    //MainForm.BillSaveRefresh(MainMenuConstants.FGStockInBillQuery);
+                    ClientFactory.DataPageRefresh<VMaterialStockInBill>();
 
                     //定位
                     MainForm.SetSelected(pageGroupCore, MainForm.mainMenuList[MainMenuConstants.FGStockInBill]);
@@ -732,8 +733,10 @@ namespace USL
                     }
 
                     BLLFty.Create<StockInBillBLL>().Insert(inHd, inDtlList);
-                    MainForm.BillSaveRefresh(MainMenuConstants.ReturnedMaterialBillQuery);
-                    MainForm.BillSaveRefresh(MainMenuConstants.SalesReturnBillQuery);
+                    //MainForm.BillSaveRefresh(MainMenuConstants.ReturnedMaterialBillQuery);
+                    //MainForm.BillSaveRefresh(MainMenuConstants.SalesReturnBillQuery);
+                    ClientFactory.DataPageRefresh<VMaterialStockInBill>();
+                    ClientFactory.DataPageRefresh<VStockInBill>();
 
                     //定位
                     MainForm.SetSelected(pageGroupCore, MainForm.mainMenuList[MainMenuConstants.ReturnedMaterialBill]);
@@ -791,8 +794,8 @@ namespace USL
                         //if (result == false)
                         //    return;
                         BLLFty.Create<GoodsBLL>().Update(goodsList);
-                        MainForm.DataPageRefresh(MainMenuConstants.Goods);
-                        MainForm.DataPageRefresh(MainMenuConstants.Material);
+                        ClientFactory.DataPageRefresh<Goods>();
+                        ClientFactory.DataPageRefresh<VMaterial>();
                         CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "导入成功");
                     }
                 }
@@ -824,52 +827,8 @@ namespace USL
                 openFileDialog.FilterIndex = 1;
                 if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    var _file = new FileInfo(openFileDialog.FileName);
-                    DataSet _ds = new DataSet();
-                    DataSet ds = null;
-                    string connStr = null;
-                    Microsoft.Win32.RegistryKey regKey = null;
-                    Microsoft.Win32.RegistryKey regSubKey_2003 = null;
-                    Microsoft.Win32.RegistryKey regSubKey_2007 = null;
-                    Microsoft.Win32.RegistryKey regSubKey_2010 = null;
-                    //Microsoft.Win32.RegistryKey regSubKey_2013 = null;
+                    DataSet ds = ExcelHelper.ImportExcel(openFileDialog.FileName);
 
-                    regKey = Microsoft.Win32.Registry.LocalMachine;
-
-                    if (_file.FullName.Substring(_file.FullName.LastIndexOf(".")).ToUpper() == ".XLSX")
-                    {
-
-                        //connStr = @"Provider=Microsoft.ACE.OLEDB.12.0;" + @"Data Source=" + _file.FullName + ";" + "Extended Properties=\"Excel 12.0 Xml;HDR=No\"";
-                        connStr = "Provider=Microsoft.Ace.OleDb.12.0;Data Source = " + _file.FullName + ";Extended Properties = 'Excel 12.0;HDR=YES;IMEX=1';";
-                        ds = MainForm.ImportExcelOleDb(connStr);
-                    }
-                    else
-                    {
-                        regSubKey_2003 = regKey.OpenSubKey(@"SOFTWARE\Microsoft\Office\11.0\Common\InstallRoot", false);
-                        regSubKey_2007 = regKey.OpenSubKey(@"SOFTWARE\Microsoft\Office\12.0\Common\InstallRoot", false);
-                        regSubKey_2010 = regKey.OpenSubKey(@"SOFTWARE\Microsoft\Office\14.0\Common\InstallRoot", false);
-                        if (regSubKey_2007 != null || regSubKey_2010 != null)
-                        {
-                            connStr = "Provider=Microsoft.Ace.OleDb.12.0;Data Source = " + _file.FullName + ";Extended Properties = 'Excel 12.0;HDR=YES;IMEX=1;'";
-                            ds = MainForm.ImportExcelOleDb(connStr);
-                        }
-                        //else if (regSubKey_2010 != null)
-                        //{
-                        //    connStr = "Provider=Microsoft.Ace.OleDb.14.0;Data Source = " + _file.FullName + ";Extended Properties = 'Excel 14.0;HDR=YES;IMEX=1;'";
-                        //    ds = ImportExcelOleDb(connStr);
-                        //}
-                        else if (regSubKey_2003 != null)
-                        {
-                            connStr = " Provider = Microsoft.Jet.OLEDB.4.0 ; Data Source = " + _file.FullName + ";Extended Properties=Excel 8.0";
-                            ds = MainForm.ImportExcelOleDb(connStr);
-                        }
-                        else
-                        {
-                            ds = null;
-                        }
-                    }
-                    //dataGridView1.DataSource = ds.Tables[0];
-                    //return ds;
                     //Int64 iBarCode = BLLFty.Create<GoodsBLL>().GetMaxBarCode();
                     List<Goods> InsertGoodsList = new List<Goods>();
                     //List<Goods> UpdateGoodsList = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]);
@@ -1007,7 +966,7 @@ namespace USL
                     {
                         BLLFty.Create<GoodsBLL>().Import(InsertGoodsList, UpdateGoodsList);
                         //InitGrid(BLLFty.Create<GoodsBLL>().GetVGoods());
-                        MainForm.DataPageRefresh(MainMenuConstants.Goods);
+                        ClientFactory.DataPageRefresh<Goods>();
                         CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "导入成功");
                         return;
                     }
@@ -1037,52 +996,8 @@ namespace USL
                 openFileDialog.FilterIndex = 1;
                 if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    var _file = new FileInfo(openFileDialog.FileName);
-                    DataSet _ds = new DataSet();
-                    DataSet ds = null;
-                    string connStr = null;
-                    Microsoft.Win32.RegistryKey regKey = null;
-                    Microsoft.Win32.RegistryKey regSubKey_2003 = null;
-                    Microsoft.Win32.RegistryKey regSubKey_2007 = null;
-                    Microsoft.Win32.RegistryKey regSubKey_2010 = null;
-                    //Microsoft.Win32.RegistryKey regSubKey_2013 = null;
+                    DataSet ds = ExcelHelper.ImportExcel(openFileDialog.FileName);
 
-                    regKey = Microsoft.Win32.Registry.LocalMachine;
-
-                    if (_file.FullName.Substring(_file.FullName.LastIndexOf(".")).ToUpper() == ".XLSX")
-                    {
-
-                        //connStr = @"Provider=Microsoft.ACE.OLEDB.12.0;" + @"Data Source=" + _file.FullName + ";" + "Extended Properties=\"Excel 12.0 Xml;HDR=No\"";
-                        connStr = "Provider=Microsoft.Ace.OleDb.12.0;Data Source = " + _file.FullName + ";Extended Properties = 'Excel 12.0;HDR=YES;IMEX=1';";
-                        ds = MainForm.ImportExcelOleDb(connStr);
-                    }
-                    else
-                    {
-                        regSubKey_2003 = regKey.OpenSubKey(@"SOFTWARE\Microsoft\Office\11.0\Common\InstallRoot", false);
-                        regSubKey_2007 = regKey.OpenSubKey(@"SOFTWARE\Microsoft\Office\12.0\Common\InstallRoot", false);
-                        regSubKey_2010 = regKey.OpenSubKey(@"SOFTWARE\Microsoft\Office\14.0\Common\InstallRoot", false);
-                        if (regSubKey_2007 != null || regSubKey_2010 != null)
-                        {
-                            connStr = "Provider=Microsoft.Ace.OleDb.12.0;Data Source = " + _file.FullName + ";Extended Properties = 'Excel 12.0;HDR=YES;IMEX=1;'";
-                            ds = MainForm.ImportExcelOleDb(connStr);
-                        }
-                        //else if (regSubKey_2010 != null)
-                        //{
-                        //    connStr = "Provider=Microsoft.Ace.OleDb.14.0;Data Source = " + _file.FullName + ";Extended Properties = 'Excel 14.0;HDR=YES;IMEX=1;'";
-                        //    ds = ImportExcelOleDb(connStr);
-                        //}
-                        else if (regSubKey_2003 != null)
-                        {
-                            connStr = " Provider = Microsoft.Jet.OLEDB.4.0 ; Data Source = " + _file.FullName + ";Extended Properties=Excel 8.0";
-                            ds = MainForm.ImportExcelOleDb(connStr);
-                        }
-                        else
-                        {
-                            ds = null;
-                        }
-                    }
-                    //dataGridView1.DataSource = ds.Tables[0];
-                    //return ds;
                     //Int64 iBarCode = BLLFty.Create<GoodsBLL>().GetMaxBarCode();
                     List<Goods> hasGoodsList = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]);
                     List<Goods> InsertGoodsList = new List<Goods>();
@@ -1387,7 +1302,7 @@ namespace USL
             }
             finally
             {
-                MainForm.DataPageRefresh(MainMenuConstants.Material);
+                ClientFactory.DataPageRefresh<VMaterial>();
                 ((TabbedGoodsPage)itemDetail).DataRefresh();
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
@@ -1772,7 +1687,7 @@ namespace USL
                     {
                         MainForm.dataSourceList[typeof(List<AttGeneralLog>)] = BLLFty.Create<AttGeneralLogBLL>().GetAttGeneralLog();
                         MainForm.dataSourceList[typeof(List<VAttGeneralLog>)] = BLLFty.Create<AttGeneralLogBLL>().GetVAttGeneralLog();
-                        ((DataQueryPage)itemDetail).InitGrid(MainForm.GetData(MainMenuConstants.AttGeneralLog));
+                        ((DataQueryPage)itemDetail).BindData(MainForm.GetData<VAttGeneralLog>());
                         //获取并添加apt
                         MainForm.GetAttAppointments();
                     }
@@ -1791,7 +1706,8 @@ namespace USL
                     }
                 }
                 MainForm.AxCZKEM1.EnableDevice(MainForm.AttParam.MachineNumber, true);//enable the device
-                MainForm.DataQueryPageRefresh();
+                //MainForm.DataQueryPageRefresh();
+                ClientFactory.DataPageRefresh<VAttAppointments>();
             }
             catch (Exception ex)
             {
@@ -1809,8 +1725,8 @@ namespace USL
         {
             HistoryQueryForm form = new HistoryQueryForm(menu, ((DataQueryPage)itemDetail).gridView.DataSource);
             form.ShowDialog();
-            MainForm.GetDBData(menu.Name, form.Filter);
-            ((DataQueryPage)itemDetail).InitGrid(MainForm.GetData(menu.Name));
+            ClientFactory.DataPageRefresh(menu.Name, form.Filter);
+            //((DataQueryPage)itemDetail).InitGrid(MainForm.GetData(menu.Name));
             if (string.IsNullOrEmpty(form.Filter))
             {
                 ((DataQueryPage)itemDetail).lblHistoryFilter.Visible = false;
@@ -2002,7 +1918,8 @@ namespace USL
 
         public void LoadBusinessData(MainMenu menu)
         {
-            IList list = MainForm.GetData(menu.Name);
+            //IList list = MainForm.GetData(menu.Name);
+            IList list = ClientFactory.DataPageRefresh(menu.Name, string.Empty);
             if (list != null)
             {
                 itemDetail = new DataQueryPage(menu, list, pageGroupCore, itemDetailButtonList);
@@ -2014,8 +1931,8 @@ namespace USL
             {
                 ((XtraUserControl)itemDetail).Dock = System.Windows.Forms.DockStyle.Fill;
                 xtraScrollableControl1.Controls.Add((XtraUserControl)itemDetail);
-                if (MainForm.itemDetailList.ContainsKey(menu.Name) == false)
-                    MainForm.itemDetailList.Add(menu.Name, itemDetail);
+                if (ClientFactory.itemDetailList.ContainsKey(menu.Name) == false)
+                    ClientFactory.itemDetailList.Add(menu.Name, itemDetail);
                 //RootWorkItem.State["ItemDetailList"] = itemDetailList;
                 CreateToolsButton(menu);
                 //菜单
@@ -2077,7 +1994,7 @@ namespace USL
             {
                 this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
                 //MainForm.GetDataSource();
-                MainForm.DataPageRefresh(menu.Name);
+                ClientFactory.DataPageRefresh(menu.Name, string.Empty);
             }
             catch (Exception ex)
             {
@@ -2107,7 +2024,7 @@ namespace USL
                         //if (menu.Name != MainMenuConstants.ReceiptBill && menu.Name != MainMenuConstants.PaymentBill && !menu.Name.ToUpper().Contains("WAGEBILL") &&
                         //    !menu.Name.ToUpper().Contains("STOCKIN") && !menu.Name.ToUpper().Contains("STOCKOUT") && !menu.Name.ToUpper().Contains("ORDER") && !menu.Name.Contains("MaterialBill")
                         //    && !menu.Name.ToUpper().Contains("RECEIPT") && !menu.Name.ToUpper().Contains("PAYMENT") && !menu.Name.Contains("SLSalePrice"))
-                        MainForm.DataPageRefresh(menu.Name);
+                        ClientFactory.DataPageRefresh(menu.Name, string.Empty);
                     setNavButtonStatus(menu, ButtonType.btnSave);
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 }
@@ -2132,7 +2049,7 @@ namespace USL
                     //if (!menu.Name.ToUpper().Contains("STOCKIN") && !menu.Name.ToUpper().Contains("STOCKOUT") && !menu.Name.ToUpper().Contains("ORDER") && !menu.Name.ToUpper().Contains("WAGEBILL")
                     //     && !menu.Name.ToUpper().Contains("RECEIPT") && !menu.Name.ToUpper().Contains("PAYMENT"))
                     if (!menu.Name.ToUpper().Contains("BILL") && !menu.Name.Contains("Order") && !menu.Name.Contains("SLSalePrice"))
-                        MainForm.DataPageRefresh(menu.Name);
+                        ClientFactory.DataPageRefresh(menu.Name, string.Empty);
                     if (!menu.Name.Contains("Query"))
                     {
                         if (btnAudit.Caption == "审核")

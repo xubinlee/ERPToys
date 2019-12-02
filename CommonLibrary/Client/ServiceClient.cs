@@ -31,7 +31,7 @@ namespace CommonLibrary.Client
                 else
                     return null;
             }
-            catch (Exception ex)
+            catch 
             {
                 return null;
             }

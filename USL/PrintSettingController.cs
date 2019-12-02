@@ -13,7 +13,7 @@ namespace USL
     {
         PrintingSystem ps = null;
 
-        string formName = null;
+        //string formName = null;
 
         PrintableComponentLink link = null;
 

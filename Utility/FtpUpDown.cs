@@ -231,7 +231,7 @@ namespace Utility
                 FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
                 response.Close();
             }
-            catch (Exception ex)
+            catch 
             {
                 //MessageBox.Show(ex.Message, "删除错误");
             }
@@ -248,7 +248,7 @@ namespace Utility
                 FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
                 response.Close();
             }
-            catch (Exception ex)
+            catch 
             {
                 //MessageBox.Show(ex.Message);
             }
@@ -265,7 +265,7 @@ namespace Utility
                 FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
                 response.Close();
             }
-            catch (Exception ex)
+            catch
             {
                 //MessageBox.Show(ex.Message);
             }
@@ -285,7 +285,7 @@ namespace Utility
                 fileSize = response.ContentLength;
                 response.Close();
             }
-            catch (Exception ex)
+            catch
             {
                 //MessageBox.Show(ex.Message);
             }
@@ -307,7 +307,7 @@ namespace Utility
                 //ftpStream.Close();
                 response.Close();
             }
-            catch (Exception ex)
+            catch 
             {
                 //MessageBox.Show(ex.Message);
             }

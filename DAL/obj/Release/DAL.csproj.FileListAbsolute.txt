@@ -6,3 +6,9 @@ D:\Projects\ERPToys\DAL\obj\Release\DAL.pdb
 D:\Projects\ERPToys - BAK\DAL\obj\Release\DAL.csprojResolveAssemblyReference.cache
 D:\Projects\ERPToys - BAK\DAL\obj\Release\DAL.dll
 D:\Projects\ERPToys - BAK\DAL\obj\Release\DAL.pdb
+D:\ERPToys\DAL.dll.config
+D:\Project\ERPToys\DAL\obj\Release\DAL.csprojAssemblyReference.cache
+D:\Project\ERPToys\DAL\obj\Release\DAL.csproj.CoreCompileInputs.cache
+D:\Project\ERPToys\DAL\obj\Release\DAL.csproj.CopyComplete
+D:\Project\ERPToys\DAL\obj\Release\DAL.dll
+D:\Project\ERPToys\DAL\obj\Release\DAL.pdb

@@ -36,10 +36,10 @@ namespace USL
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            BindData();
+            BindData(null);
         }
 
-        public void BindData()
+        public void BindData(object obj)
         {
             departmentBindingSource.DataSource = MainForm.dataSourceList[typeof(List<Department>)];
             schClassBindingSource.DataSource = MainForm.dataSourceList[typeof(List<SchClass>)] as List<SchClass>;
@@ -111,17 +111,17 @@ namespace USL
         /// <summary>
         /// 刷新查询界面
         /// </summary>
-        void PageRefresh()
-        {
-            MainForm.dataSourceList[typeof(List<StaffSchClass>)] = BLLFty.Create<StaffSchClassBLL>().GetStaffSchClass();
-            MainForm.dataSourceList[typeof(List<VStaffSchClass>)] = BLLFty.Create<StaffSchClassBLL>().GetVStaffSchClass();
-            BindData();
-            if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.StaffAttendance))
-            {
-                AttendanceSchedulingPage page = MainForm.itemDetailList[MainMenuConstants.StaffAttendance] as AttendanceSchedulingPage;
-                page.PageRefresh();
-            }
-        }
+        //void PageRefresh()
+        //{
+        //    MainForm.dataSourceList[typeof(List<StaffSchClass>)] = BLLFty.Create<StaffSchClassBLL>().GetStaffSchClass();
+        //    MainForm.dataSourceList[typeof(List<VStaffSchClass>)] = BLLFty.Create<StaffSchClassBLL>().GetVStaffSchClass();
+        //    BindData();
+        //    if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.StaffAttendance))
+        //    {
+        //        AttendanceSchedulingPage page = ClientFactory.itemDetailList[MainMenuConstants.StaffAttendance] as AttendanceSchedulingPage;
+        //        page.PageRefresh();
+        //    }
+        //}
 
         public bool Save()
         {
@@ -179,7 +179,9 @@ namespace USL
                 BLLFty.Create<StaffSchClassBLL>().Update(sscList, focused);
                 //addNew = false;
                 //刷新数据
-                PageRefresh();
+                //PageRefresh();
+                ClientFactory.DataPageRefresh<StaffSchClass>();
+                ClientFactory.DataPageRefresh<VStaffSchClass>();
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 return true;
             }
@@ -207,13 +209,13 @@ namespace USL
         private void layoutView_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             Save();
-            MainForm.DataPageRefresh(MainMenuConstants.StaffSchClass);
+            ClientFactory.DataPageRefresh<VStaffSchClass>();
         }
 
         private void layoutView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
             Save();
-            MainForm.DataPageRefresh(MainMenuConstants.StaffSchClass);
+            ClientFactory.DataPageRefresh<VStaffSchClass>();
         }
 
         private void layoutView_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)

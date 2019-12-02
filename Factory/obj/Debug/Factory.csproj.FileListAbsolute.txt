@@ -21,3 +21,4 @@ D:\Project\ERPToys\Factory\obj\Debug\Factory.csproj.CoreCompileInputs.cache
 D:\Project\ERPToys\Factory\obj\Debug\Factory.csproj.CopyComplete
 D:\Project\ERPToys\Factory\obj\Debug\Factory.dll
 D:\Project\ERPToys\Factory\obj\Debug\Factory.pdb
+D:\ERPToys\Factory.dll.config

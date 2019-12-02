@@ -14,6 +14,7 @@ namespace BLL
     {
         public List<VAlert> GetVAlert()
         {
+            
             using (DCC dcc = DBMLFty.Dcc)
             {
                 return DALFty.Create<AlertDAL>().GetVAlert(dcc);

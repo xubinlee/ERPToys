@@ -1,0 +1,12 @@
+D:\Project\ERPToys\EDMX\bin\Release\EDMX.dll.config
+D:\Project\ERPToys\EDMX\bin\Release\EDMX.dll
+D:\Project\ERPToys\EDMX\bin\Release\EDMX.pdb
+D:\Project\ERPToys\EDMX\bin\Release\EntityFramework.dll
+D:\Project\ERPToys\EDMX\bin\Release\EntityFramework.SqlServer.dll
+D:\Project\ERPToys\EDMX\bin\Release\EntityFramework.xml
+D:\Project\ERPToys\EDMX\bin\Release\EntityFramework.SqlServer.xml
+D:\Project\ERPToys\EDMX\obj\Release\EDMX.csprojAssemblyReference.cache
+D:\Project\ERPToys\EDMX\obj\Release\EDMX.csproj.CoreCompileInputs.cache
+D:\Project\ERPToys\EDMX\obj\Release\EDMX.csproj.CopyComplete
+D:\Project\ERPToys\EDMX\obj\Release\EDMX.dll
+D:\Project\ERPToys\EDMX\obj\Release\EDMX.pdb

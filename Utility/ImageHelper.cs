@@ -56,10 +56,7 @@ namespace Utility
                 bmp.Dispose();//释放bmp文件资源 
 
             }
-            catch (Exception ex)
-            {
-
-            }
+            catch { }
             return (Image)bmp1;
         }
 
@@ -147,7 +144,7 @@ namespace Utility
                 graphics.DrawImage(ResourceImage, new Rectangle(0, 0, Width, Height));
                 return bitmap;
             }
-            catch (Exception e)
+            catch 
             {
                 //ErrMessage = e.Message;
                 return null;

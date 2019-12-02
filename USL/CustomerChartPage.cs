@@ -47,10 +47,10 @@ namespace USL
         {
             base.OnLoad(e);
             winExplorerView.ShowFindPanel();
-            BindData();
+            BindData(null);
         }
 
-        public void BindData()
+        public void BindData(object obj)
         {
             vBusinessContactBindingSource.DataSource = ((List<VCompany>)MainForm.dataSourceList[typeof(List<VCompany>)]);
             GetYearMonthList();
@@ -207,7 +207,7 @@ namespace USL
             }
             catch (Exception ex)
             {
-                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据");
+                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据。\r\n错误信息：" + ex.Message);
             }
             finally
             {

@@ -70,10 +70,10 @@ namespace USL
                     break;
             }
             winExplorerView.ShowFindPanel();
-            BindData();
+            BindData(null);
         }
 
-        public void BindData()
+        public void BindData(object obj)
         {
             if (bomType == BOMType.Assemble)
             {
@@ -346,13 +346,13 @@ namespace USL
         private void gridView_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             Save();
-            MainForm.DataPageRefresh(MainMenuConstants.BOM);
+            ClientFactory.DataPageRefresh<BOM>();
         }
 
         private void gridView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
             this.Save();
-            MainForm.DataPageRefresh(MainMenuConstants.BOM);
+            ClientFactory.DataPageRefresh<BOM>();
         }
     }
 }

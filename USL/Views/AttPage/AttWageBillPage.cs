@@ -49,16 +49,16 @@ namespace USL
             BindData(headID);
         }
 
-        public void BindData(Guid hdID)
+        public void BindData(object hdID)
         {
             gridControl.BeginUpdate();
-            if (hdID != Guid.Empty)
+            if (hdID is Guid && ((Guid)hdID)!=Guid.Empty)
             {
-                headID = hdID;
-                attWageBillHdBindingSource.DataSource = hd = BLLFty.Create<AttWageBillBLL>().GetAttWageBillHd(hdID);
+                headID = (Guid)hdID;
+                attWageBillHdBindingSource.DataSource = hd = BLLFty.Create<AttWageBillBLL>().GetAttWageBillHd(headID);
                 dtl = BLLFty.Create<AttWageBillBLL>().GetUSPAttWageBillDtl().FindAll(o =>
                                     o.YearMonth == Convert.ToDateTime(deYearMonth.EditValue).ToString("yyyy-MM"));
-                List<VAttWageBill> list = ((List<VAttWageBill>)MainForm.dataSourceList[typeof(List<VAttWageBill>)]).FindAll(o => o.HdID == hdID);
+                List<VAttWageBill> list = ((List<VAttWageBill>)MainForm.dataSourceList[typeof(List<VAttWageBill>)]).FindAll(o => o.HdID == headID);
                 for (int i = dtl.Count - 1; i >= 0; i--)
                 {
                     VAttWageBill obj = list.Find(o => o.UserID == dtl[i].UserID);
@@ -108,20 +108,6 @@ namespace USL
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// 刷新查询界面
-        /// </summary>
-        void QueryPageRefresh()
-        {
-            if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.AttWageBillQuery))
-            {
-                DataQueryPage page = MainForm.itemDetailList[MainMenuConstants.AttWageBillQuery] as DataQueryPage;
-                //MainForm.GetDataSource();
-                MainForm.dataSourceList[typeof(List<VAttWageBill>)] = BLLFty.Create<AttWageBillBLL>().GetAttWageBill();
-                page.InitGrid(MainForm.GetData(MainMenuConstants.AttWageBillQuery));
-            }
-        }
-
         public void Del()
         {
             try
@@ -144,7 +130,7 @@ namespace USL
 
                     }
                     //刷新查询界面
-                    QueryPageRefresh();
+                    ClientFactory.DataPageRefresh<VAttWageBill>();
                     attWageBillHdBindingSource.DataSource = hd = new AttWageBillHd();
                     uSPAttWageBillDtlBindingSource.DataSource = dtl = new List<USPAttWageBillDtl>();
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "删除成功");
@@ -262,7 +248,8 @@ namespace USL
                         o.日期.Value.ToString("yyyy-MM").Equals(hd.YearMonth));
                 //DataQueryPageRefresh();
                 //QueryPageRefresh();
-                MainForm.BillSaveRefresh(MainMenuConstants.AttWageBillQuery);
+                ClientFactory.DataPageRefresh<VAttWageBill>();
+                //MainForm.BillSaveRefresh(MainMenuConstants.AttWageBillQuery);
                 ////MainForm.DataQueryPageRefresh();
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 return true;
@@ -357,7 +344,8 @@ namespace USL
             }
             finally
             {
-                MainForm.BillSaveRefresh(MainMenuConstants.AttWageBillQuery);
+                //MainForm.BillSaveRefresh(MainMenuConstants.AttWageBillQuery);
+                ClientFactory.DataPageRefresh<VAttWageBill>();
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
         }
@@ -422,7 +410,7 @@ namespace USL
             }
             catch (Exception ex)
             {
-                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据");
+                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据。\r\n错误信息：" + ex.Message);
             }
             finally
             {
@@ -605,7 +593,7 @@ namespace USL
             }
             catch (Exception ex)
             {
-                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据");
+                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据。\r\n错误信息：" + ex.Message);
             }
             finally
             {

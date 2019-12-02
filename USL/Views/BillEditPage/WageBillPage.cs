@@ -49,16 +49,16 @@ namespace USL
             BindData(headID);
         }
 
-        public void BindData(Guid hdID)
+        public void BindData(object hdID)
         {
             gridControl.BeginUpdate();
-            if (hdID != Guid.Empty)
+            if (hdID is Guid && ((Guid)hdID) != Guid.Empty)
             {
-                headID = hdID;
-                wageBillHdBindingSource.DataSource = hd = BLLFty.Create<WageBillBLL>().GetWageBillHd(hdID);
+                headID = (Guid)hdID;
+                wageBillHdBindingSource.DataSource = hd = BLLFty.Create<WageBillBLL>().GetWageBillHd(headID);
                 dtl = BLLFty.Create<WageBillBLL>().GetVWageBillDtl().FindAll(o =>
                                     o.UserID == new Guid(lueBusinessContact.EditValue.ToString()));
-                List<VWageBill> list = ((List<VWageBill>)MainForm.dataSourceList[typeof(List<VWageBill>)]).FindAll(o => o.HdID == hdID);
+                List<VWageBill> list = ((List<VWageBill>)MainForm.dataSourceList[typeof(List<VWageBill>)]).FindAll(o => o.HdID == headID);
                 for (int i = dtl.Count - 1; i >= 0; i--)
                 {
                     VWageBill obj = list.Find(o => o.年月 == dtl[i].YearMonth);
@@ -104,20 +104,6 @@ namespace USL
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// 刷新查询界面
-        /// </summary>
-        void QueryPageRefresh()
-        {
-            if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.WageBillQuery))
-            {
-                DataQueryPage page = MainForm.itemDetailList[MainMenuConstants.WageBillQuery] as DataQueryPage;
-                //MainForm.GetDataSource();
-                MainForm.dataSourceList[typeof(List<VWageBill>)] = BLLFty.Create<WageBillBLL>().GetWageBill();
-                page.InitGrid(MainForm.GetData(MainMenuConstants.WageBillQuery));
-            }
-        }
-
         public void Del()
         {
             try
@@ -140,7 +126,7 @@ namespace USL
 
                     }
                     //刷新查询界面
-                    QueryPageRefresh();
+                    ClientFactory.DataPageRefresh<VWageBill>();
                     wageBillHdBindingSource.DataSource = hd = new WageBillHd();
                     vWageBillDtlBindingSource.DataSource = dtl = new List<VWageBillDtl>();
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "删除成功");
@@ -249,7 +235,8 @@ namespace USL
                         o.UserID == hd.UserID && (o.日期.Value.ToString("yyyy-MM").Equals(dtl.Min(m => m.YearMonth)) || o.日期.Value.ToString("yyyy-MM").Equals(dtl.Max(m => m.YearMonth))));
                 //DataQueryPageRefresh();
                 //QueryPageRefresh();
-                MainForm.BillSaveRefresh(MainMenuConstants.WageBillQuery);
+                ClientFactory.DataPageRefresh<VWageBill>();
+                //MainForm.BillSaveRefresh(MainMenuConstants.WageBillQuery);
                 ////MainForm.DataQueryPageRefresh();
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 return true;
@@ -337,7 +324,7 @@ namespace USL
             }
             finally
             {
-                MainForm.BillSaveRefresh(MainMenuConstants.WageBillQuery);
+                ClientFactory.DataPageRefresh<VWageBill>();
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
         }
@@ -548,7 +535,7 @@ namespace USL
             }
             catch (Exception ex)
             {
-                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据");
+                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据。\r\n错误信息：" + ex.Message);
             }
             finally
             {

@@ -154,16 +154,16 @@ namespace USL
             }
         }
 
-        public void BindData(Guid hdID)
+        public void BindData(object hdID)
         {
-            if (hdID != Guid.Empty)
+            if (hdID is Guid && ((Guid)hdID) != Guid.Empty)
             {
-                headID = hdID;
-                stockOutBillHdBindingSource.DataSource = hd = BLLFty.Create<StockOutBillBLL>().GetStockOutBillHd(hdID);
-                stockOutBillDtlBindingSource.DataSource = dtl = BLLFty.Create<StockOutBillBLL>().GetStockOutBillDtl(hdID);
+                headID = (Guid)hdID;
+                stockOutBillHdBindingSource.DataSource = hd = BLLFty.Create<StockOutBillBLL>().GetStockOutBillHd(headID);
+                stockOutBillDtlBindingSource.DataSource = dtl = BLLFty.Create<StockOutBillBLL>().GetStockOutBillDtl(headID);
                 if (billType == MainMenuConstants.EMSStockOutBill && (lueType.ItemIndex == 0 || lueType.ItemIndex == -1) ||
                     billType == MainMenuConstants.FSMDPReturnBill)
-                    billDtlByBOMBindingSource.DataSource = dtlByBOM = BLLFty.Create<StockOutBillBLL>().GetVStockOutBillDtlByBOM(hdID, (int)BOMType.Assemble);
+                    billDtlByBOMBindingSource.DataSource = dtlByBOM = BLLFty.Create<StockOutBillBLL>().GetVStockOutBillDtlByBOM(headID, (int)BOMType.Assemble);
                 else
                     billDtlByBOMBindingSource.DataSource = dtlByBOM = new List<StockOutBillDtl>();
             }
@@ -322,8 +322,9 @@ namespace USL
                     }
                     ////DataQueryPageRefresh();
                     //刷新查询界面
-                    MainForm.DataQueryPageRefresh();
-                    //DataQueryPage page = MainForm.itemDetailList[billType + "Query"] as DataQueryPage;
+                    ClientFactory.DataPageRefresh(billType, string.Empty);
+                    //MainForm.DataQueryPageRefresh();
+                    //DataQueryPage page = ClientFactory.itemDetailList[billType + "Query"] as DataQueryPage;
                     //MainForm.GetDataSource();
                     //page.InitGrid(MainForm.GetData(billType + "Query"));
                     stockOutBillHdBindingSource.DataSource = hd = new StockOutBillHd();
@@ -563,7 +564,8 @@ namespace USL
                     billDtlByBOMBindingSource.DataSource = dtlByBOM = BLLFty.Create<StockOutBillBLL>().GetVStockOutBillDtlByBOM(hd.ID, (int)BOMType.Assemble);
                 else
                     billDtlByBOMBindingSource.DataSource = dtlByBOM = new List<StockOutBillDtl>();
-                MainForm.BillSaveRefresh(billType + "Query");
+                //MainForm.BillSaveRefresh(billType + "Query");
+                ClientFactory.DataPageRefresh(billType, string.Empty);
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 return true;
             }
@@ -920,8 +922,9 @@ namespace USL
             }
             finally
             {
-                MainForm.BillSaveRefresh(billType + "Query");
-                MainForm.InventoryRefresh();
+                //MainForm.BillSaveRefresh(billType + "Query");
+                //MainForm.InventoryRefresh();
+                ClientFactory.DataPageRefresh(billType, string.Empty);
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
         }
@@ -1065,7 +1068,7 @@ namespace USL
             }
             catch (Exception ex)
             {
-                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据");
+                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据。\r\n错误信息：" + ex.Message);
             }
             finally
             {

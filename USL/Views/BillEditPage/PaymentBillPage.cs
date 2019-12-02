@@ -72,14 +72,14 @@ namespace USL
             }
         }
 
-        public void BindData(Guid hdID)
+        public void BindData(object hdID)
         {
             gridControl.BeginUpdate();
             types = MainForm.dataSourceList[typeof(List<TypesList>)] as List<TypesList>;
-            if (hdID != Guid.Empty)
+            if (hdID is Guid && ((Guid)hdID) != Guid.Empty)
             {
-                headID = hdID;
-                paymentBillHdBindingSource.DataSource = hd = BLLFty.Create<PaymentBillBLL>().GetPaymentBillHd(hdID);
+                headID = (Guid)hdID;
+                paymentBillHdBindingSource.DataSource = hd = BLLFty.Create<PaymentBillBLL>().GetPaymentBillHd(headID);
                 if (!string.IsNullOrEmpty(lueBillType.Text))
                     type = types.Find(o => o.Type == TypesListConstants.PaymentBillType && o.No == int.Parse(lueBillType.EditValue.ToString())).SubType;
                 switch (type)
@@ -101,7 +101,7 @@ namespace USL
                                     o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && ((o.Type == 5 && o.BillNo.Contains("RK")) || (o.Type == 4 && o.BillNo.Contains("CK"))));
                         break;
                 }
-                List<VPaymentBill> list = ((List<VPaymentBill>)MainForm.dataSourceList[typeof(List<VPaymentBill>)]).FindAll(o => o.HdID == hdID);
+                List<VPaymentBill> list = ((List<VPaymentBill>)MainForm.dataSourceList[typeof(List<VPaymentBill>)]).FindAll(o => o.HdID == headID);
                 if (dtl != null)
                 {
                     for (int i = dtl.Count - 1; i >= 0; i--)
@@ -179,20 +179,6 @@ namespace USL
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// 刷新查询界面
-        /// </summary>
-        void QueryPageRefresh()
-        {
-            if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.PaymentBillQuery))
-            {
-                DataQueryPage page = MainForm.itemDetailList[MainMenuConstants.PaymentBillQuery] as DataQueryPage;
-                //MainForm.GetDataSource();
-                MainForm.dataSourceList[typeof(List<VPaymentBill>)] = BLLFty.Create<PaymentBillBLL>().GetPaymentBill();
-                page.InitGrid(MainForm.GetData(MainMenuConstants.PaymentBillQuery));
-            }
-        }
-
         public void Del()
         {
             try
@@ -215,7 +201,8 @@ namespace USL
 
                     }
                     //QueryPageRefresh();
-                    MainForm.DataQueryPageRefresh();
+                    //MainForm.DataQueryPageRefresh();
+                    ClientFactory.DataPageRefresh<VPaymentBill>();
                     paymentBillHdBindingSource.DataSource = hd = new PaymentBillHd();
                     vPaymentBillDtlBindingSource.DataSource = dtl = new List<VPaymentBillDtl>();
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "删除成功");
@@ -353,7 +340,8 @@ namespace USL
                 meTotalAMT.EditValue = (hd.Balance == null ? 0 : hd.Balance) + billAMT;
                 headID = hd.ID;
                 ////MainForm.DataQueryPageRefresh();
-                MainForm.BillSaveRefresh(MainMenuConstants.PaymentBillQuery);
+                //MainForm.BillSaveRefresh(MainMenuConstants.PaymentBillQuery);
+                ClientFactory.DataPageRefresh<VPaymentBill>();
                 statementOfAccountToSupplierReportBindingSource.DataSource = soa = //BLLFty.Create<ReportBLL>().GetStatementOfAccountToSupplierReport(string.Format("付款单号='{0}'", hd.BillNo));
                     ((List<StatementOfAccountToSupplierReport>)MainForm.dataSourceList[typeof(List<StatementOfAccountToSupplierReport>)]).FindAll(o => o.付款单号 == hd.BillNo);
                 if (type == TypesListConstants.FSMPayment)
@@ -500,7 +488,8 @@ namespace USL
             }
             finally
             {
-                MainForm.BillSaveRefresh(MainMenuConstants.PaymentBillQuery);
+                //MainForm.BillSaveRefresh(MainMenuConstants.PaymentBillQuery);
+                ClientFactory.DataPageRefresh<VPaymentBill>();
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
         }
@@ -863,7 +852,7 @@ namespace USL
             }
             catch (Exception ex)
             {
-                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据");
+                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据。\r\n错误信息：" + ex.Message);
             }
             finally
             {

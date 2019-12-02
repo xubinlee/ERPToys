@@ -62,7 +62,7 @@ namespace USL
         {
             int i = types.Find(o => o.Type == TypesListConstants.GoodsType && o.Name == MainForm.GoodsBigTypeName).No;
             list = ((List<VMaterial>)MainForm.dataSourceList[typeof(List<VMaterial>)]).FindAll(o => o.Type == i);
-            queryPageList[MainForm.GoodsBigTypeName].InitGrid(list);
+            queryPageList[MainForm.GoodsBigTypeName].BindData(list);
         }
 
         public void Add()
@@ -135,6 +135,11 @@ namespace USL
         }
 
         public object ReceiveData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BindData(object obj)
         {
             throw new NotImplementedException();
         }

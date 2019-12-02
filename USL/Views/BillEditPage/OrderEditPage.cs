@@ -162,7 +162,7 @@ namespace USL
             }
         }
 
-        public void BindData(Guid hdID)
+        public void BindData(object hdID)
         {
 
             businessContactBindingSource.DataSource = null;
@@ -209,20 +209,20 @@ namespace USL
                 SetDtlHeader(false);
                 businessContactType = (int)BusinessContactType.Supplier;
             }
-            if (hdID != Guid.Empty)
+            if (hdID is Guid && ((Guid)hdID) != Guid.Empty)
             {
-                headID = hdID;
-                orderHdBindingSource.DataSource = hd = BLLFty.Create<OrderBLL>().GetOrderHd(hdID);
-                orderDtlBindingSource.DataSource = dtl = BLLFty.Create<OrderBLL>().GetOrderDtl(hdID);
+                headID = (Guid)hdID;
+                orderHdBindingSource.DataSource = hd = BLLFty.Create<OrderBLL>().GetOrderHd(headID);
+                orderDtlBindingSource.DataSource = dtl = BLLFty.Create<OrderBLL>().GetOrderDtl(headID);
                 if (billType == MainMenuConstants.ProductionOrder)
                 {
-                    billDtlByAssembleBindingSource.DataSource = dtlByAssemble= BLLFty.Create<OrderBLL>().GetVOrderDtlByBOM(hdID, (int)BOMType.Assemble);
-                    billDtlByBOMBindingSource.DataSource = dtlByBOM = BLLFty.Create<OrderBLL>().GetVOrderDtlByBOM(hdID, (int)BOMType.BOM);
+                    billDtlByAssembleBindingSource.DataSource = dtlByAssemble= BLLFty.Create<OrderBLL>().GetVOrderDtlByBOM(headID, (int)BOMType.Assemble);
+                    billDtlByBOMBindingSource.DataSource = dtlByBOM = BLLFty.Create<OrderBLL>().GetVOrderDtlByBOM(headID, (int)BOMType.BOM);
                 }
                 else if (billType == MainMenuConstants.FSMOrder)
                 {
                     ////billDtlByBOMBindingSource.DataSource = dtlByBOM = BLLFty.Create<OrderBLL>().GetVFSMOrderDtlByMoldList(hdID);
-                    vFSMOrderDtlByMoldMaterialBindingSource.DataSource = dtlByMoldMaterial = BLLFty.Create<OrderBLL>().GetVFSMOrderDtlByMoldMaterial(hdID);
+                    vFSMOrderDtlByMoldMaterialBindingSource.DataSource = dtlByMoldMaterial = BLLFty.Create<OrderBLL>().GetVFSMOrderDtlByMoldMaterial(headID);
                 }
                 else
                 {
@@ -342,12 +342,7 @@ namespace USL
                     }
                     //DataQueryPageRefresh();
                     //刷新查询界面
-                    if (MainForm.itemDetailList.ContainsKey(billType + "Query"))
-                    {
-                        DataQueryPage page = MainForm.itemDetailList[billType + "Query"] as DataQueryPage;
-                        MainForm.GetDataSource();
-                        page.InitGrid(MainForm.GetData(billType + "Query"));
-                    }
+                    ClientFactory.DataPageRefresh(billType, string.Empty);
                     orderHdBindingSource.DataSource = hd = new OrderHd();
                     orderDtlBindingSource.DataSource = dtl = new List<OrderDtl>();
                     if (billType == MainMenuConstants.ProductionOrder)
@@ -525,7 +520,8 @@ namespace USL
                 }
                 gvAssemble.BestFitColumns();
                 //DataQueryPageRefresh();
-                MainForm.BillSaveRefresh(billType + "Query");
+                //MainForm.BillSaveRefresh(billType + "Query");
+                ClientFactory.DataPageRefresh(billType, string.Empty);
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 return true;
             }
@@ -630,8 +626,9 @@ namespace USL
                         hd.AuditDate = DateTime.Now;
                         hd.Status = 0;
                         BLLFty.Create<OrderBLL>().CancelAudit(hd);
-                        MainForm.BillSaveRefresh(billType + "Query");
-                        MainForm.InventoryRefresh();
+                        //MainForm.BillSaveRefresh(billType + "Query");
+                        //MainForm.InventoryRefresh();
+                        ClientFactory.DataPageRefresh(billType, string.Empty);
                         CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "取消审核成功");
                         return true;
                     }
@@ -827,8 +824,9 @@ namespace USL
                         BLLFty.Create<OrderBLL>().Update(hd);
                 }
                 //DataQueryPageRefresh();
-                MainForm.BillSaveRefresh(billType + "Query");
-                MainForm.InventoryRefresh();
+                //MainForm.BillSaveRefresh(billType + "Query");
+                //MainForm.InventoryRefresh();
+                ClientFactory.DataPageRefresh(billType, string.Empty);
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "审核成功");
                 return true;
             }
@@ -981,7 +979,7 @@ namespace USL
             }
             catch (Exception ex)
             {
-                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据");
+                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据。\r\n错误信息：" + ex.Message);
             }
             finally
             {
@@ -1335,7 +1333,8 @@ namespace USL
                                 outDtlList.Add(outDtl);
                             }
                             BLLFty.Create<StockOutBillBLL>().Insert(outHd, outDtlList);
-                            MainForm.BillSaveRefresh(MainMenuConstants.GetMaterialBillQuery);
+                            //MainForm.BillSaveRefresh(MainMenuConstants.GetMaterialBillQuery);
+                            ClientFactory.DataPageRefresh<VMaterialStockOutBill>();
                             XtraMessageBox.Show("领料出库单已成功生成。", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }

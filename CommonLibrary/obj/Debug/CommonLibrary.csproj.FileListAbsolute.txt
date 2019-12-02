@@ -24,7 +24,6 @@ D:\Projects\ERPToys\CommonLibrary\obj\Debug\CommonLibrary.csproj.CoreCompileInpu
 D:\Projects\ERPToys\CommonLibrary\obj\Debug\CommonLibrary.csproj.CopyComplete
 D:\Projects\ERPToys\CommonLibrary\obj\Debug\CommonLibrary.dll
 D:\Projects\ERPToys\CommonLibrary\obj\Debug\CommonLibrary.pdb
-D:\Project\ERPToys\CommonLibrary\obj\Debug\CommonLibrary.csprojAssemblyReference.cache
 D:\Project\ERPToys\CommonLibrary\obj\Debug\CommonLibrary.ErrorInfoControl.resources
 D:\Project\ERPToys\CommonLibrary\obj\Debug\ICP.Framework.ClientComponents.Forms.PopupWindow.resources
 D:\Project\ERPToys\CommonLibrary\obj\Debug\CommonLibrary.csproj.GenerateResource.cache
@@ -33,3 +32,4 @@ D:\Project\ERPToys\CommonLibrary\obj\Debug\CommonLibrary.csproj.CoreCompileInput
 D:\Project\ERPToys\CommonLibrary\obj\Debug\CommonLibrary.dll
 D:\Project\ERPToys\CommonLibrary\obj\Debug\CommonLibrary.pdb
 D:\Project\ERPToys\CommonLibrary\obj\Debug\CommonLibrary.csproj.CopyComplete
+D:\Project\ERPToys\CommonLibrary\obj\Debug\CommonLibrary.csprojAssemblyReference.cache

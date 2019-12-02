@@ -7,3 +7,6 @@ D:\Projects\ERPToys\DBML\obj\Release\DBML.csprojResolveAssemblyReference.cache
 D:\Projects\ERPToys - BAK\DBML\obj\Release\DBML.csprojResolveAssemblyReference.cache
 D:\Projects\ERPToys - BAK\DBML\obj\Release\DBML.dll
 D:\Projects\ERPToys - BAK\DBML\obj\Release\DBML.pdb
+D:\Project\ERPToys\DBML\obj\Release\DBML.csproj.CoreCompileInputs.cache
+D:\Project\ERPToys\DBML\obj\Release\DBML.dll
+D:\Project\ERPToys\DBML\obj\Release\DBML.pdb

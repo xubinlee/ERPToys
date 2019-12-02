@@ -36,10 +36,10 @@ namespace USL
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            BindData();
+            BindData(null);
         }
 
-        public void BindData()
+        public void BindData(object obj)
         {
             //departmentBindingSource.DataSource = MainForm.dataSourceList[typeof(List<Department>)];
             //schClassBindingSource.DataSource = MainForm.dataSourceList[typeof(List<SchClass>)] as List<SchClass>;
@@ -89,10 +89,10 @@ namespace USL
         {
             MainForm.dataSourceList[typeof(List<StaffSchClass>)] = BLLFty.Create<StaffSchClassBLL>().GetStaffSchClass();
             MainForm.dataSourceList[typeof(List<VStaffSchClass>)] = BLLFty.Create<StaffSchClassBLL>().GetVStaffSchClass();
-            BindData();
-            if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.StaffAttendance))
+            BindData(null);
+            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.StaffAttendance))
             {
-                AttendanceSchedulingPage page = MainForm.itemDetailList[MainMenuConstants.StaffAttendance] as AttendanceSchedulingPage;
+                AttendanceSchedulingPage page = ClientFactory.itemDetailList[MainMenuConstants.StaffAttendance] as AttendanceSchedulingPage;
                 page.PageRefresh();
             }
         }
@@ -163,13 +163,13 @@ namespace USL
         private void layoutView_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             Save();
-            MainForm.DataPageRefresh(MainMenuConstants.BOM);
+            ClientFactory.DataPageRefresh<BOM>();
         }
 
         private void layoutView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
             Save();
-            MainForm.DataPageRefresh(MainMenuConstants.BOM);
+            ClientFactory.DataPageRefresh<BOM>();
         }
 
         private void layoutView_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)

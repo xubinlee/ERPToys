@@ -84,7 +84,7 @@ namespace USL
             base.OnLoad(e);
             displayUsers = BLLFty.Create<UsersInfoBLL>().GetVUsersInfo();
             GetItemDetailPage();
-            InitGrid(dataSource);
+            BindData(dataSource);
             MainForm.SetQueryPageGridColumn(gridView,mainMenu);
             //SetGridSummaryItem();
             if (MainForm.Company.Contains("镇阳") && (
@@ -101,42 +101,25 @@ namespace USL
             }
         }
 
-        public void InitGrid(IList list)
+        public void InitGrid<T>(IList list)
         {
-            ////gridControl.BeginUpdate();
-            //gridView.Columns.Clear();
-            //gridControl.DataSource = new Company();       
-            gridControl.DataSource = list;
-            ////gridControl.EndUpdate();
-            //gridView.PopulateColumns();
-
+            if (mainMenu.Name.Equals(typeof(T).Name))
+            {
+                gridControl.DataSource = list;
+                //MainForm.SetQueryPageGridColumn(gridView, mainMenu);
+            }
         }
 
-        //void SetGridSummaryItem()
-        //{
-        //    foreach (string item in Enum.GetNames(typeof(SummaryItemColumns)))
-        //    {
-        //        GridColumn col = gridView.Columns.FirstOrDefault(c => c.FieldName == item);
-        //        if (col != null)
-        //        {
-        //            if (col.FieldName == "品名")
-        //            {
-        //                //合计说明
-        //                col.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-        //            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "品名", "总计:")});
-        //                gridView.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "品名", col, "小组合计:");
-        //            }
-        //            else
-        //            {
-        //                //总计
-        //                col.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-        //            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, item, "{0}")});
-        //                //组计
-        //                gridView.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, item, col, "{0}");
-        //            }
-        //        }
-        //    }
-        //}
+        public void BindData(object list)
+        {
+            //类型相同才绑定
+            //if (list.Count > 0 && mainMenu.Name.Equals(list[0].GetType().Name))
+            if (list != null && mainMenu.Name.Equals(list.GetType().GenericTypeArguments[0].Name))
+            {
+                gridControl.DataSource = list;
+                //MainForm.SetQueryPageGridColumn(gridView, mainMenu);
+            }
+        }
 
         private void gridView_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
@@ -387,7 +370,7 @@ namespace USL
                         if (mainMenu.Name == MainMenuConstants.Material)
                         {
                             goodsList = ((List<VMaterial>)MainForm.dataSourceList[typeof(List<VMaterial>)]).FindAll(o => o.Type == MainForm.GoodsBigType);
-                            InitGrid(goodsList);
+                            BindData(goodsList);
                         }
                         //刷新数据
                         //itemDetailPage.DataQueryPageRefresh();
@@ -523,7 +506,7 @@ namespace USL
                             break;
                     }
                     //gridView.DeleteSelectedRows();
-                    MainForm.DataPageRefresh(mainMenu.Name);
+                    ClientFactory.DataPageRefresh(mainMenu.Name, string.Empty);
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "删除成功");
                     //BillEditPageRefresh();
                     //itemDetailPageList[mainMenu.Name].DataPageRefresh();
@@ -551,48 +534,8 @@ namespace USL
                 openFileDialog.FilterIndex = 1;
                 if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    var _file = new FileInfo(openFileDialog.FileName);
-                    DataSet _ds = new DataSet();
-                    DataSet ds = null;
-                    string connStr = null;
-                    Microsoft.Win32.RegistryKey regKey = null;
-                    Microsoft.Win32.RegistryKey regSubKey_2003 = null;
-                    Microsoft.Win32.RegistryKey regSubKey_2007 = null;
-                    //Microsoft.Win32.RegistryKey regSubKey_2013 = null;
+                    DataSet ds = ExcelHelper.ImportExcel(openFileDialog.FileName);
 
-                    regKey = Microsoft.Win32.Registry.LocalMachine;
-
-                    if (_file.FullName.Substring(_file.FullName.LastIndexOf(".")).ToUpper() == ".XLSX")
-                    {
-
-                        //connStr = @"Provider=Microsoft.ACE.OLEDB.12.0;" + @"Data Source=" + _file.FullName + ";" + "Extended Properties=\"Excel 12.0 Xml;HDR=No\"";
-                        connStr = "Provider=Microsoft.Ace.OleDb.12.0;Data Source = " + _file.FullName + ";Extended Properties = 'Excel 12.0;HDR=YES;IMEX=1';";
-                        ds = MainForm.ImportExcelOleDb(connStr);
-                    }
-                    else
-                    {
-                        regSubKey_2003 = regKey.OpenSubKey(@"SOFTWARE\Microsoft\Office\11.0\Common\InstallRoot", false);
-                        regSubKey_2007 = regKey.OpenSubKey(@"SOFTWARE\Microsoft\Office\12.0\Common\InstallRoot", false);
-                        if (regSubKey_2007 != null)
-                        {
-                            connStr = "Provider=Microsoft.Ace.OleDb.12.0;Data Source = " + _file.FullName + ";Extended Properties = 'Excel 12.0;HDR=YES;IMEX=1;'";
-                            ds = MainForm.ImportExcelOleDb(connStr);
-                        }
-                        else if (regSubKey_2003 != null)
-                        {
-                            connStr = " Provider = Microsoft.Jet.OLEDB.4.0 ; Data Source = " + _file.FullName + ";Extended Properties='Excel 8.0;HDR=YES;IMEX=1;'";
-                            ds = MainForm.ImportExcelOleDb(connStr);
-                        }
-                        else
-                        {
-                            connStr = " Provider = Microsoft.Jet.OLEDB.4.0 ; Data Source = " + _file.FullName + ";Extended Properties='Excel 8.0;HDR=YES;IMEX=1;'";
-                            ds = MainForm.ImportExcelOleDb(connStr);
-                            //ds = null;
-                        }
-                    }
-
-                    //dataGridView1.DataSource = ds.Tables[0];
-                    //return ds;
                     Hashtable hasGoods = new Hashtable();
                     List<Stocktaking> stList = new List<Stocktaking>();
                     foreach (DataRow row in ds.Tables[0].Rows)
@@ -641,17 +584,18 @@ namespace USL
                     if (stList.Count > 0)
                     {
                         BLLFty.Create<InventoryBLL>().Insert(stList);
-                        InitGrid(BLLFty.Create<InventoryBLL>().GetStocktaking());
-                        MainForm.DataQueryPageRefresh();
+                        //InitGrid(BLLFty.Create<InventoryBLL>().GetStocktaking());
+                        //MainForm.DataQueryPageRefresh();
+                        ClientFactory.DataPageRefresh<Stocktaking>();
                         //刷新盘点盈亏表
-                        if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.ProfitAndLoss))
+                        if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.ProfitAndLoss))
                         {
-                            DataQueryPage page = MainForm.itemDetailList[MainMenuConstants.ProfitAndLoss] as DataQueryPage;
+                            DataQueryPage page = ClientFactory.itemDetailList[MainMenuConstants.ProfitAndLoss] as DataQueryPage;
                             if (stList[0].GoodsBigType == -1)
-                                page.InitGrid(((List<VProfitAndLoss>)MainForm.dataSourceList[typeof(List<VProfitAndLoss>)]).FindAll(o =>
+                                page.BindData(MainForm.GetData<VProfitAndLoss>().FindAll(o =>
                                     o.仓库 == stList[0].Warehouse && o.SupplierID == stList[0].SupplierID));
                             else
-                                page.InitGrid(((List<VProfitAndLoss>)MainForm.dataSourceList[typeof(List<VProfitAndLoss>)]).FindAll(o =>
+                                page.BindData(MainForm.GetData<VProfitAndLoss>().FindAll(o =>
                                 o.仓库 == stList[0].Warehouse && o.SupplierID == stList[0].SupplierID && o.货品大类 == stList[0].GoodsBigType));
                             CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "导入成功");
                             return true;
@@ -685,12 +629,12 @@ namespace USL
 
                         #region PrintData
 
-                        if (MainForm.itemDetailList.ContainsKey(mainMenu.Name.Replace("Query", "").Trim()))
+                        if (ClientFactory.itemDetailList.ContainsKey(mainMenu.Name.Replace("Query", "").Trim()))
                         {
                             if (currentObj is VStockInBill)
                             {
                                 VStockInBill bill = currentObj as VStockInBill;
-                                StockInBillPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockInBillPage;
+                                StockInBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockInBillPage;
                                 page.BindData(bill.HdID);
                                 System.Windows.Forms.DialogResult result = XtraMessageBox.Show(string.Format("确定要{0}审核单据:{1}吗?", bill.状态 == 1 ? "取消" : "", bill.入库单号), "操作提示",
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
@@ -703,7 +647,7 @@ namespace USL
                             else if (currentObj is VMaterialStockInBill)
                             {
                                 VMaterialStockInBill bill = currentObj as VMaterialStockInBill;
-                                StockInBillPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockInBillPage;
+                                StockInBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockInBillPage;
                                 page.BindData(bill.HdID);
                                 System.Windows.Forms.DialogResult result = XtraMessageBox.Show(string.Format("确定要{0}审核单据:{1}吗?", bill.状态 == 1 ? "取消" : "", bill.入库单号), "操作提示",
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
@@ -716,7 +660,7 @@ namespace USL
                             else if (currentObj is VStockOutBill)
                             {
                                 VStockOutBill bill = currentObj as VStockOutBill;
-                                StockOutBillPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockOutBillPage;
+                                StockOutBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockOutBillPage;
                                 page.BindData(bill.HdID);
                                 System.Windows.Forms.DialogResult result = XtraMessageBox.Show(string.Format("确定要{0}审核单据:{1}吗?", bill.状态 == 1 ? "取消" : "", bill.出库单号), "操作提示",
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
@@ -729,7 +673,7 @@ namespace USL
                             else if (currentObj is VMaterialStockOutBill)
                             {
                                 VMaterialStockOutBill bill = currentObj as VMaterialStockOutBill;
-                                StockOutBillPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockOutBillPage;
+                                StockOutBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockOutBillPage;
                                 page.BindData(bill.HdID);
                                 System.Windows.Forms.DialogResult result = XtraMessageBox.Show(string.Format("确定要{0}审核单据:{1}吗?", bill.状态 == 1 ? "取消" : "", bill.出库单号), "操作提示",
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
@@ -742,7 +686,7 @@ namespace USL
                             else if (currentObj is VOrder)
                             {
                                 VOrder bill = currentObj as VOrder;
-                                OrderEditPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
+                                OrderEditPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
                                 page.BindData(bill.HdID);
                                 System.Windows.Forms.DialogResult result = XtraMessageBox.Show(string.Format("确定要{0}审核单据:{1}吗?", bill.状态 == 1 ? "取消" : "", bill.订货单号), "操作提示",
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
@@ -755,7 +699,7 @@ namespace USL
                             else if (currentObj is VFSMOrder)
                             {
                                 VFSMOrder bill = currentObj as VFSMOrder;
-                                OrderEditPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
+                                OrderEditPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
                                 page.BindData(bill.HdID);
                                 System.Windows.Forms.DialogResult result = XtraMessageBox.Show(string.Format("确定要{0}审核单据:{1}吗?", bill.状态 == 1 ? "取消" : "", bill.订货单号), "操作提示",
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
@@ -768,7 +712,7 @@ namespace USL
                             else if (currentObj is VProductionOrder)
                             {
                                 VProductionOrder bill = currentObj as VProductionOrder;
-                                OrderEditPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
+                                OrderEditPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
                                 page.BindData(bill.HdID);
                                 System.Windows.Forms.DialogResult result = XtraMessageBox.Show(string.Format("确定要{0}审核单据:{1}吗?", bill.状态 == 1 ? "取消" : "", bill.订货单号), "操作提示",
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
@@ -781,7 +725,7 @@ namespace USL
                             else if (currentObj is VReceiptBill)
                             {
                                 VReceiptBill bill = currentObj as VReceiptBill;
-                                ReceiptBillPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as ReceiptBillPage;
+                                ReceiptBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as ReceiptBillPage;
                                 page.BindData(bill.HdID);
                                 System.Windows.Forms.DialogResult result = XtraMessageBox.Show(string.Format("确定要{0}审核单据:{1}吗?", bill.状态 == 1 ? "取消" : "", bill.收款单号), "操作提示",
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
@@ -794,7 +738,7 @@ namespace USL
                             else if (currentObj is VPaymentBill)
                             {
                                 VPaymentBill bill = currentObj as VPaymentBill;
-                                PaymentBillPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as PaymentBillPage;
+                                PaymentBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as PaymentBillPage;
                                 page.BindData(bill.HdID);
                                 System.Windows.Forms.DialogResult result = XtraMessageBox.Show(string.Format("确定要{0}审核单据:{1}吗?", bill.状态 == 1 ? "取消" : "", bill.付款单号), "操作提示",
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
@@ -807,7 +751,7 @@ namespace USL
                             else if (currentObj is VWageBill)
                             {
                                 VWageBill bill = currentObj as VWageBill;
-                                WageBillPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as WageBillPage;
+                                WageBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as WageBillPage;
                                 page.BindData(bill.HdID);
                                 System.Windows.Forms.DialogResult result = XtraMessageBox.Show(string.Format("确定要{0}审核单据:{1}吗?", bill.状态 == 1 ? "取消" : "", bill.工资单号), "操作提示",
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
@@ -820,7 +764,7 @@ namespace USL
                             else if (currentObj is VAttWageBill)
                             {
                                 VAttWageBill bill = currentObj as VAttWageBill;
-                                AttWageBillPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as AttWageBillPage;
+                                AttWageBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as AttWageBillPage;
                                 page.BindData(bill.HdID);
                                 System.Windows.Forms.DialogResult result = XtraMessageBox.Show(string.Format("确定要{0}审核单据:{1}吗?", bill.状态 == 1 ? "取消" : "", bill.工资单号), "操作提示",
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
@@ -921,7 +865,8 @@ namespace USL
                                 return false;
                             }
                             BLLFty.Create<InventoryBLL>().StocktakingUpdate(warehouseID, goodsBigType, stocktakingList[0].SupplierID, inventoryList, accountBooklist);
-                            MainForm.DataQueryPageRefresh();
+                            //MainForm.DataQueryPageRefresh();
+                            ClientFactory.DataPageRefresh<VProfitAndLoss>();
                             CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "盘点库存更新成功");
                             return true;
                         }
@@ -956,77 +901,77 @@ namespace USL
                     //if (currentObj is VStockInBill)
                     //{
                     //    VStockInBill bill = currentObj as VStockInBill;
-                    //    StockInBillPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockInBillPage;
+                    //    StockInBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockInBillPage;
                     //    page.BindData(bill.HdID);
                     //    page.Print();
                     //}
                     //else if (currentObj is VMaterialStockInBill)
                     //{
                     //    VMaterialStockInBill bill = currentObj as VMaterialStockInBill;
-                    //    StockInBillPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockInBillPage;
+                    //    StockInBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockInBillPage;
                     //    page.BindData(bill.HdID);
                     //    page.Print();
                     //}
                     //else if (currentObj is VStockOutBill)
                     //{
                     //    VStockOutBill bill = currentObj as VStockOutBill;
-                    //    StockOutBillPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockOutBillPage;
+                    //    StockOutBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockOutBillPage;
                     //    page.BindData(bill.HdID);
                     //    page.Print();
                     //}
                     //else if (currentObj is VMaterialStockOutBill)
                     //{
                     //    VMaterialStockOutBill bill = currentObj as VMaterialStockOutBill;
-                    //    StockOutBillPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockOutBillPage;
+                    //    StockOutBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockOutBillPage;
                     //    page.BindData(bill.HdID);
                     //    page.Print();
                     //}
                     //else if (currentObj is VOrder)
                     //{
                     //    VOrder bill = currentObj as VOrder;
-                    //    OrderEditPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
+                    //    OrderEditPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
                     //    page.BindData(bill.HdID);
                     //    page.Print();
                     //}
                     //else if (currentObj is VFSMOrder)
                     //{
                     //    VFSMOrder bill = currentObj as VFSMOrder;
-                    //    OrderEditPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
+                    //    OrderEditPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
                     //    page.BindData(bill.HdID);
                     //    page.Print();
                     //}
                     //else if (currentObj is VProductionOrder)
                     //{
                     //    VProductionOrder bill = currentObj as VProductionOrder;
-                    //    OrderEditPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
+                    //    OrderEditPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
                     //    page.BindData(bill.HdID);
                     //    page.Print();
                     //}
                     //else if (currentObj is VReceiptBill)
                     //{
                     //    VReceiptBill bill = currentObj as VReceiptBill;
-                    //    ReceiptBillPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as ReceiptBillPage;
+                    //    ReceiptBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as ReceiptBillPage;
                     //    page.BindData(bill.HdID);
                     //    page.Print();
                     //}
                     //else if (currentObj is VPaymentBill)
                     //{
                     //    VPaymentBill bill = currentObj as VPaymentBill;
-                    //    PaymentBillPage page = MainForm.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as PaymentBillPage;
+                    //    PaymentBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as PaymentBillPage;
                     //    page.BindData(bill.HdID);
                     //    page.Print();
                     //}
-                    if (currentObj is StatementOfAccountToCustomerReport && MainForm.itemDetailList.ContainsKey(MainMenuConstants.ReceiptBill))
+                    if (currentObj is StatementOfAccountToCustomerReport && ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.ReceiptBill))
                     {
                         StatementOfAccountToCustomerReport bill = currentObj as StatementOfAccountToCustomerReport;
-                        ReceiptBillPage page = MainForm.itemDetailList[MainMenuConstants.ReceiptBill] as ReceiptBillPage;
+                        ReceiptBillPage page = ClientFactory.itemDetailList[MainMenuConstants.ReceiptBill] as ReceiptBillPage;
                         page.BindData(((List<ReceiptBillHd>)MainForm.dataSourceList[typeof(List<ReceiptBillHd>)]).FirstOrDefault(o => o.BillNo == bill.收款单号).ID);
                         page.SendData(null);
                     }
-                    else if (currentObj is StatementOfAccountToSupplierReport && MainForm.itemDetailList.ContainsKey(MainMenuConstants.PaymentBill))
+                    else if (currentObj is StatementOfAccountToSupplierReport && ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.PaymentBill))
                     {
                         StatementOfAccountToSupplierReport bill = currentObj as StatementOfAccountToSupplierReport;
-                        PaymentBillPage page = MainForm.itemDetailList[MainMenuConstants.PaymentBill] as PaymentBillPage;
+                        PaymentBillPage page = ClientFactory.itemDetailList[MainMenuConstants.PaymentBill] as PaymentBillPage;
                         page.BindData(((List<PaymentBillHd>)MainForm.dataSourceList[typeof(List<PaymentBillHd>)]).FirstOrDefault(o => o.BillNo == bill.付款单号).ID);
                         page.SendData(null);
                     }
@@ -1248,7 +1193,7 @@ namespace USL
                             BLLFty.Create<GoodsBLL>().Update(sf);
                             break;
                     }
-                    MainForm.DataPageRefresh(mainMenu.Name);
+                    ClientFactory.DataPageRefresh(mainMenu.Name, string.Empty);
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "货品设置停产成功");
                 }
             }

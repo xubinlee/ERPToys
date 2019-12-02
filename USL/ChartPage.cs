@@ -26,10 +26,10 @@ namespace USL
         {
             InitializeComponent();
             mainMenu = menu;
-            BindData();
+            BindData(null);
         }
 
-        public void BindData()
+        public void BindData(object obj)
         {
             //if (mainMenu.Name==MainMenuConstants.AnnualSalesSummaryByCustomerReport)
             //    dataSource = MainForm.dataSourceList[typeof(List<AnnualSalesSummaryByCustomerReport>)] as IList;

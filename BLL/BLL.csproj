@@ -49,6 +49,7 @@
     <Compile Include="AppointmentsBLL.cs" />
     <Compile Include="AttGeneralLogBLL.cs" />
     <Compile Include="AttWageBillBLL.cs" />
+    <Compile Include="SystemInfoBLL.cs" />
     <Compile Include="WageBillBLL.cs" />
     <Compile Include="SLSalePriceBLL.cs" />
     <Compile Include="DataSourcesBLL.cs" />

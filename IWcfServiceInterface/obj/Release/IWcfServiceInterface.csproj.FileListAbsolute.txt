@@ -1,0 +1,14 @@
+D:\Project\ERPToys\IWcfServiceInterface\bin\Release\IWcfServiceInterface.dll
+D:\Project\ERPToys\IWcfServiceInterface\bin\Release\IWcfServiceInterface.pdb
+D:\Project\ERPToys\IWcfServiceInterface\bin\Release\Common.dll
+D:\Project\ERPToys\IWcfServiceInterface\bin\Release\EDMX.dll
+D:\Project\ERPToys\IWcfServiceInterface\bin\Release\EntityFramework.dll
+D:\Project\ERPToys\IWcfServiceInterface\bin\Release\Common.pdb
+D:\Project\ERPToys\IWcfServiceInterface\bin\Release\EDMX.pdb
+D:\Project\ERPToys\IWcfServiceInterface\bin\Release\EDMX.dll.config
+D:\Project\ERPToys\IWcfServiceInterface\bin\Release\EntityFramework.xml
+D:\Project\ERPToys\IWcfServiceInterface\obj\Release\IWcfServiceInterface.csprojAssemblyReference.cache
+D:\Project\ERPToys\IWcfServiceInterface\obj\Release\IWcfServiceInterface.csproj.CoreCompileInputs.cache
+D:\Project\ERPToys\IWcfServiceInterface\obj\Release\IWcfServiceInterface.csproj.CopyComplete
+D:\Project\ERPToys\IWcfServiceInterface\obj\Release\IWcfServiceInterface.dll
+D:\Project\ERPToys\IWcfServiceInterface\obj\Release\IWcfServiceInterface.pdb

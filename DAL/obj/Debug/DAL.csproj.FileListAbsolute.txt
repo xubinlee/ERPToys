@@ -10,3 +10,4 @@ D:\Project\ERPToys\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
 D:\Project\ERPToys\DAL\obj\Debug\DAL.csproj.CopyComplete
 D:\Project\ERPToys\DAL\obj\Debug\DAL.dll
 D:\Project\ERPToys\DAL\obj\Debug\DAL.pdb
+D:\ERPToys\DAL.dll.config

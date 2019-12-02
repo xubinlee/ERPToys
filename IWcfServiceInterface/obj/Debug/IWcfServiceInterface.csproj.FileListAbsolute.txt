@@ -1,0 +1,7 @@
+D:\ERPToys\IWcfServiceInterface.dll
+D:\ERPToys\IWcfServiceInterface.pdb
+D:\Project\ERPToys\IWcfServiceInterface\obj\Debug\IWcfServiceInterface.csprojAssemblyReference.cache
+D:\Project\ERPToys\IWcfServiceInterface\obj\Debug\IWcfServiceInterface.csproj.CoreCompileInputs.cache
+D:\Project\ERPToys\IWcfServiceInterface\obj\Debug\IWcfServiceInterface.csproj.CopyComplete
+D:\Project\ERPToys\IWcfServiceInterface\obj\Debug\IWcfServiceInterface.dll
+D:\Project\ERPToys\IWcfServiceInterface\obj\Debug\IWcfServiceInterface.pdb

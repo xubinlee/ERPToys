@@ -77,13 +77,13 @@ namespace USL
                 col额外费用.Visible = false;
         }
 
-        public void BindData(Guid hdID)
+        public void BindData(object hdID)
         {
             gridControl.BeginUpdate();
-            if (hdID != Guid.Empty)
+            if (hdID is Guid && ((Guid)hdID) != Guid.Empty)
             {
-                headID = hdID;
-                receiptBillHdBindingSource.DataSource = hd = BLLFty.Create<ReceiptBillBLL>().GetReceiptBillHd(hdID);
+                headID = (Guid)hdID;
+                receiptBillHdBindingSource.DataSource = hd = BLLFty.Create<ReceiptBillBLL>().GetReceiptBillHd(headID);
                 switch (types.Find(o => o.Type == TypesListConstants.ReceiptBillType && o.No == int.Parse(lueBillType.EditValue.ToString())).SubType)
                 {
                     case TypesListConstants.SalesReceipt:
@@ -97,7 +97,7 @@ namespace USL
                                     o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == int.Parse(lueBillType.EditValue.ToString()));
                         break;
                 }
-                List<VReceiptBill> list = ((List<VReceiptBill>)MainForm.dataSourceList[typeof(List<VReceiptBill>)]).FindAll(o => o.HdID == hdID);
+                List<VReceiptBill> list = ((List<VReceiptBill>)MainForm.dataSourceList[typeof(List<VReceiptBill>)]).FindAll(o => o.HdID == headID);
                 for (int i = dtl.Count - 1; i >= 0; i--)
                 {
                     VReceiptBill obj = list.Find(o => o.BillID == dtl[i].BillID);
@@ -157,20 +157,6 @@ namespace USL
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// 刷新查询界面
-        /// </summary>
-        void QueryPageRefresh()
-        {
-            if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.ReceiptBillQuery))
-            {
-                DataQueryPage page = MainForm.itemDetailList[MainMenuConstants.ReceiptBillQuery] as DataQueryPage;
-                //MainForm.GetDataSource();
-                MainForm.dataSourceList[typeof(List<VReceiptBill>)] = BLLFty.Create<ReceiptBillBLL>().GetReceiptBill();
-                page.InitGrid(MainForm.GetData(MainMenuConstants.ReceiptBillQuery));
-            }
-        }
-
         public void Del()
         {
             try
@@ -193,7 +179,7 @@ namespace USL
 
                     }
                     //刷新查询界面
-                    QueryPageRefresh();
+                    ClientFactory.DataPageRefresh<VReceiptBill>();
                     receiptBillHdBindingSource.DataSource = hd = new ReceiptBillHd();
                     vReceiptBillDtlBindingSource.DataSource = dtl = new List<VReceiptBillDtl>();
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "删除成功");
@@ -345,7 +331,8 @@ namespace USL
                 meLastAMT.EditValue = billAMT;
                 meTotalAMT.EditValue = (hd.Balance == null ? 0 : hd.Balance) + billAMT;
                 headID = hd.ID;
-                MainForm.BillSaveRefresh(MainMenuConstants.ReceiptBillQuery);
+                ClientFactory.DataPageRefresh<VReceiptBill>();
+                //MainForm.BillSaveRefresh(MainMenuConstants.ReceiptBillQuery);
                 ////MainForm.DataQueryPageRefresh();
                 statementOfAccountToCustomerReportBindingSource.DataSource = soa = //BLLFty.Create<ReportBLL>().GetStatementOfAccountToCustomerReport(string.Format("收款单号='{0}'", hd.BillNo));
                     ((List<StatementOfAccountToCustomerReport>)MainForm.dataSourceList[typeof(List<StatementOfAccountToCustomerReport>)]).FindAll(o => o.收款单号 == hd.BillNo);
@@ -487,7 +474,8 @@ namespace USL
             }
             finally
             {
-                MainForm.BillSaveRefresh(MainMenuConstants.ReceiptBillQuery);
+                //MainForm.BillSaveRefresh(MainMenuConstants.ReceiptBillQuery);
+                ClientFactory.DataPageRefresh<VReceiptBill>();
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
         }
@@ -858,7 +846,7 @@ namespace USL
             }
             catch (Exception ex)
             {
-                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据");
+                CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据。\r\n错误信息：" + ex.Message);
             }
             finally
             {

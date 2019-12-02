@@ -388,6 +388,7 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Caption" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
       <Column Name="Subtitle" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Prefix" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
       <Column Name="ImagePath" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="CheckBoxState" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
@@ -888,6 +889,13 @@
       <Column Name="ServerUserName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
       <Column Name="ServerPassword" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Version" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SystemStatus" Member="SystemStatus">
+    <Type Name="SystemStatus">
+      <Column Name="MainMenuName" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaxBillNo" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.TonerLabel" Member="TonerLabel">

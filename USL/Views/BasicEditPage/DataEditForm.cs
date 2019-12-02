@@ -183,7 +183,7 @@ namespace USL
                     this.Text = mainMenu.Caption;
                     if (dataEditPage.Save())
                     {
-                        MainForm.DataPageRefresh(mainMenu.Name);
+                        ClientFactory.DataPageRefresh(mainMenu.Name, string.Empty);
                         CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                     }
                 }

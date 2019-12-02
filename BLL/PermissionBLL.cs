@@ -55,5 +55,14 @@ namespace BLL
             }
         }
 
+        public void Update(Guid userID, List<Permission> insertList)
+        {
+            using (DCC dcc = DBMLFty.Dcc)
+            {
+                DALFty.Create<PermissionDAL>().Update(dcc, userID, insertList);
+                dcc.Save();
+            }
+        }
+
     }
 }

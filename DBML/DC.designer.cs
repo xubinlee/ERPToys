@@ -135,6 +135,9 @@ namespace DBML
     partial void InsertSystemInfo(SystemInfo instance);
     partial void UpdateSystemInfo(SystemInfo instance);
     partial void DeleteSystemInfo(SystemInfo instance);
+    partial void InsertSystemStatus(SystemStatus instance);
+    partial void UpdateSystemStatus(SystemStatus instance);
+    partial void DeleteSystemStatus(SystemStatus instance);
     partial void InsertTonerLabel(TonerLabel instance);
     partial void UpdateTonerLabel(TonerLabel instance);
     partial void DeleteTonerLabel(TonerLabel instance);
@@ -601,6 +604,14 @@ namespace DBML
 			get
 			{
 				return this.GetTable<SystemInfo>();
+			}
+		}
+		
+		public System.Data.Linq.Table<SystemStatus> SystemStatus
+		{
+			get
+			{
+				return this.GetTable<SystemStatus>();
 			}
 		}
 		
@@ -8787,6 +8798,8 @@ namespace DBML
 		
 		private string _Subtitle;
 		
+		private string _Prefix;
+		
 		private string _ImagePath;
 		
 		private string _Description;
@@ -8809,6 +8822,8 @@ namespace DBML
     partial void OnCaptionChanged();
     partial void OnSubtitleChanging(string value);
     partial void OnSubtitleChanged();
+    partial void OnPrefixChanging(string value);
+    partial void OnPrefixChanged();
     partial void OnImagePathChanging(string value);
     partial void OnImagePathChanged();
     partial void OnDescriptionChanging(string value);
@@ -8938,6 +8953,26 @@ namespace DBML
 					this._Subtitle = value;
 					this.SendPropertyChanged("Subtitle");
 					this.OnSubtitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prefix", DbType="NVarChar(10)")]
+		public string Prefix
+		{
+			get
+			{
+				return this._Prefix;
+			}
+			set
+			{
+				if ((this._Prefix != value))
+				{
+					this.OnPrefixChanging(value);
+					this.SendPropertyChanging();
+					this._Prefix = value;
+					this.SendPropertyChanged("Prefix");
+					this.OnPrefixChanged();
 				}
 			}
 		}
@@ -18163,6 +18198,116 @@ namespace DBML
 					this._Version = value;
 					this.SendPropertyChanged("Version");
 					this.OnVersionChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SystemStatus")]
+	public partial class SystemStatus : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _MainMenuName;
+		
+		private string _MaxBillNo;
+		
+		private int _Status;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnMainMenuNameChanging(string value);
+    partial void OnMainMenuNameChanged();
+    partial void OnMaxBillNoChanging(string value);
+    partial void OnMaxBillNoChanged();
+    partial void OnStatusChanging(int value);
+    partial void OnStatusChanged();
+    #endregion
+		
+		public SystemStatus()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MainMenuName", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string MainMenuName
+		{
+			get
+			{
+				return this._MainMenuName;
+			}
+			set
+			{
+				if ((this._MainMenuName != value))
+				{
+					this.OnMainMenuNameChanging(value);
+					this.SendPropertyChanging();
+					this._MainMenuName = value;
+					this.SendPropertyChanged("MainMenuName");
+					this.OnMainMenuNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaxBillNo", DbType="VarChar(30)")]
+		public string MaxBillNo
+		{
+			get
+			{
+				return this._MaxBillNo;
+			}
+			set
+			{
+				if ((this._MaxBillNo != value))
+				{
+					this.OnMaxBillNoChanging(value);
+					this.SendPropertyChanging();
+					this._MaxBillNo = value;
+					this.SendPropertyChanged("MaxBillNo");
+					this.OnMaxBillNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="Int NOT NULL")]
+		public int Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
 				}
 			}
 		}

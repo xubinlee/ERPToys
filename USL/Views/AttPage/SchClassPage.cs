@@ -118,13 +118,19 @@ namespace USL
         private void layoutView_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             Save();
-            MainForm.DataPageRefresh(MainMenuConstants.SchClass);
+            //ClientFactory.DataPageRefresh(MainMenuConstants.SchClass);
+            ClientFactory.DataPageRefresh<SchClass>();
         }
 
         private void layoutView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
             Save();
-            MainForm.DataPageRefresh(MainMenuConstants.SchClass);
+            ClientFactory.DataPageRefresh<SchClass>();
+        }
+
+        public void BindData(object obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

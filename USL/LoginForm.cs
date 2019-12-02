@@ -12,6 +12,12 @@ using DBML;
 using Factory;
 using BLL;
 using System.Configuration;
+using Common;
+using System.Linq.Expressions;
+using System.Collections;
+using IWcfServiceInterface;
+using Newtonsoft.Json;
+using Utility;
 
 namespace USL
 {
@@ -25,6 +31,11 @@ namespace USL
 
         public void BindData()
         {
+            List<EDMX.UsersInfo> users = ClientFactory.ExecuteQuery<EDMX.UsersInfo>(string.Empty);
+            int i = ClientFactory.ModifyByList<EDMX.UsersInfo>(users);
+            //EDMX.UsersInfo u = users[0];
+            //u.Remark = "test";
+            //int i= ClientFactory.Modify<EDMX.UsersInfo>(u);
             vUsersInfoBindingSource.DataSource = BLLFty.Create<UsersInfoBLL>().GetLoginUsersInfo();
             txtCode.EditValue = Utility.ConfigAppSettings.GetValue("User");
         }

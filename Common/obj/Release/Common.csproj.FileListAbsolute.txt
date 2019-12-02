@@ -1,0 +1,11 @@
+D:\Projects\iSnowTrade\Common\bin\Release\Common.dll
+D:\Projects\iSnowTrade\Common\bin\Release\Common.pdb
+D:\Projects\iSnowTrade\Common\obj\Release\Common.csprojResolveAssemblyReference.cache
+D:\Projects\iSnowTrade\Common\obj\Release\Common.dll
+D:\Projects\iSnowTrade\Common\obj\Release\Common.pdb
+D:\Project\ERPToys\Common\bin\Release\Common.dll
+D:\Project\ERPToys\Common\bin\Release\Common.pdb
+D:\Project\ERPToys\Common\obj\Release\Common.csprojAssemblyReference.cache
+D:\Project\ERPToys\Common\obj\Release\Common.csproj.CoreCompileInputs.cache
+D:\Project\ERPToys\Common\obj\Release\Common.dll
+D:\Project\ERPToys\Common\obj\Release\Common.pdb

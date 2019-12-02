@@ -28,12 +28,19 @@ using System.Runtime.Serialization;
 using System.Data.OleDb;
 using System.Data;
 using System.Text.RegularExpressions;
+using System.Transactions;
+using Common;
+using System.Reflection;
 
 namespace USL
 {
     public partial class MainForm : XtraForm,IToolbar,IStatusbar
     {
-        Thread threadGetVDataSource;// hello git
+        private IPermissionService permissionService = ServiceProxyFactory.Create<IPermissionService>("PermissionService");
+        private static ISystemInfoService systemInfoService = ServiceProxyFactory.Create<ISystemInfoService>("SystemInfoService");
+        private static IReportService reportService = ServiceProxyFactory.Create<IReportService>("ReportService");
+
+        Thread threadGetVDataSource;
         Thread threadGetUserInfo;
         Thread threadInsertAlert;
         public static Dictionary<String, int> alertCount;
@@ -46,7 +53,6 @@ namespace USL
         static List<DBML.MainMenu> menuList;
         Dictionary<DBML.MainMenu, PageGroup> groupsItemDetailPage;
         public static Dictionary<Guid, PageGroup> groupsItemDetailList;
-        public static Dictionary<String, IItemDetail> itemDetailList;
         Dictionary<String, int> itemDetailButtonList; //子菜单按钮项
         public static Dictionary<Type, object> dataSourceList;  //数据集
         static IList list;
@@ -205,121 +211,124 @@ namespace USL
         public MainForm()
         {
             InitializeComponent();
-            //iSnowSoftVersion = EnumHelper.GetEnumValues<ISnowSoftVersion>(true).FirstOrDefault(o => o.Name == ConfigurationManager.AppSettings["ISnowSoftVersion"].ToString()).Value;
-            this.windowsUIView.Caption = ConfigurationManager.AppSettings["SystemName"];
-            company = ConfigurationManager.AppSettings["Company"];
-            contacts = ConfigurationManager.AppSettings["Contacts"];
-            accounts = ConfigurationManager.AppSettings["Accounts"];
-            this.tileContainer.Properties.IndentBetweenGroups = int.Parse(ConfigurationManager.AppSettings["IndentBetweenGroups"]);
-            this.tileContainer.Properties.ItemSize = int.Parse(ConfigurationManager.AppSettings["ItemSize"]);
-            this.tileContainer.Properties.LargeItemWidth = int.Parse(ConfigurationManager.AppSettings["LargeItemWidth"]);
-            this.tileContainer.Properties.RowCount = int.Parse(ConfigurationManager.AppSettings["RowCount"]);
-            serverUrl = ConfigurationManager.AppSettings["ServerUrl"];
-            serverUserName = ConfigurationManager.AppSettings["ServerUserName"];
-            serverPassword = Security.Decrypt(ConfigurationManager.AppSettings["ServerPassword"].ToString());
-            serverDomain = ConfigurationManager.AppSettings["ServerDomain"];
-            //if (MainForm.Company.Contains("镇阳"))
-            //{
-            //    isLandScape = false;
-            //    printPaperKind = System.Drawing.Printing.PaperKind.A5Rotated;
-            //}
-            if (MainForm.Company.Contains("创萌"))
+            try
             {
-                isLandScape = false;
-                printPaperKind = System.Drawing.Printing.PaperKind.Custom;
-                PaperSize = new Size((int)(218 / 25.4 * 100), (int)(140 / 25.4 * 100));
+                this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    //iSnowSoftVersion = EnumHelper.GetEnumValues<ISnowSoftVersion>(true).FirstOrDefault(o => o.Name == ConfigurationManager.AppSettings["ISnowSoftVersion"].ToString()).Value;
+                    this.windowsUIView.Caption = ConfigurationManager.AppSettings["SystemName"];
+                    company = ConfigurationManager.AppSettings["Company"];
+                    contacts = ConfigurationManager.AppSettings["Contacts"];
+                    accounts = ConfigurationManager.AppSettings["Accounts"];
+                    this.tileContainer.Properties.IndentBetweenGroups = int.Parse(ConfigurationManager.AppSettings["IndentBetweenGroups"]);
+                    this.tileContainer.Properties.ItemSize = int.Parse(ConfigurationManager.AppSettings["ItemSize"]);
+                    this.tileContainer.Properties.LargeItemWidth = int.Parse(ConfigurationManager.AppSettings["LargeItemWidth"]);
+                    this.tileContainer.Properties.RowCount = int.Parse(ConfigurationManager.AppSettings["RowCount"]);
+                    serverUrl = ConfigurationManager.AppSettings["ServerUrl"];
+                    serverUserName = ConfigurationManager.AppSettings["ServerUserName"];
+                    serverPassword = Security.Decrypt(ConfigurationManager.AppSettings["ServerPassword"].ToString());
+                    serverDomain = ConfigurationManager.AppSettings["ServerDomain"];
+
+                    if (MainForm.Company.Contains("创萌"))
+                    {
+                        isLandScape = false;
+                        printPaperKind = System.Drawing.Printing.PaperKind.Custom;
+                        PaperSize = new Size((int)(218 / 25.4 * 100), (int)(140 / 25.4 * 100));
+                    }
+                    else if (MainForm.Company.Contains("谷铭达") || MainForm.Company.Contains("镇阳") || MainForm.Company.Contains("盛兴"))
+                    {
+                        isLandScape = false;
+                        printPaperKind = System.Drawing.Printing.PaperKind.Custom;
+                        PaperSize = new Size((int)(215 / 25.4 * 100), (int)(139 / 25.4 * 100));
+                    }
+                    else
+                    {
+                        isLandScape = false;
+                        printPaperKind = System.Drawing.Printing.PaperKind.A5Rotated;
+                    }
+
+                    this.tools.Visible = false;
+                    windowsUIView.AddTileWhenCreatingDocument = DevExpress.Utils.DefaultBoolean.False;
+                    //dataSource = new SampleDataSource();
+                    //userPermissions.Find(o => o.Caption.Trim() == item.Caption.Trim()).CheckBoxState;
+                    menuList = BLLFty.Create<MainMenuBLL>().GetMainMenu();
+                    List<Permission> pList = BLLFty.Create<PermissionBLL>().GetPermission().FindAll(o => o.UserID == usersInfo.ID);
+
+                    //如果MainMenu有变更，更新用户权限列表
+                    updatePermission(pList);
+
+                    pList = BLLFty.Create<PermissionBLL>().GetPermission().FindAll(o => o.UserID == usersInfo.ID);
+                    //设置权限
+                    for (int i = menuList.Count - 1; i >= 0; i--)
+                    {
+                        if (menuList[i].ParentID == null)
+                            continue;
+                        if (pList.FirstOrDefault(o => o.Caption.Trim() == menuList[i].Caption.Trim()).CheckBoxState == false)
+                        {
+                            menuList.RemoveAt(i);
+                            continue;
+                        }
+                    }
+                    alertCount = new Dictionary<string, int>();
+                    //groupsItemDetailPage = new Dictionary<SampleDataGroup, PageGroup>();
+                    groupsItemDetailPage = new Dictionary<DBML.MainMenu, PageGroup>();
+                    groupsItemDetailList = new Dictionary<Guid, PageGroup>();
+                    itemDetailButtonList = new Dictionary<string, int>();
+                    dataSourceList = new Dictionary<Type, object>();
+                    alertControl = new AlertControl(this.components);
+                    alertControl.FormShowingEffect = AlertFormShowingEffect.SlideHorizontal;
+
+                    SetStateBarInfo();
+                    GetDataSource();
+                    GetVDataSource();
+                    types = MainForm.dataSourceList[typeof(List<TypesList>)] as List<TypesList>;
+                    warehouseList = MainForm.dataSourceList[typeof(List<Warehouse>)] as List<Warehouse>;
+                    ////userPermissions = ((List<Permission>)MainForm.dataSourceList[typeof(List<Permission>)]).FindAll(o => o.UserID == usersInfo.ID);
+                    buttonPermissions = ((List<ButtonPermission>)MainForm.dataSourceList[typeof(List<ButtonPermission>)]).FindAll(o => o.UserID == usersInfo.ID);
+                    attParam = ((List<AttParameters>)MainForm.dataSourceList[typeof(List<AttParameters>)]).FirstOrDefault(o => o.CommMode == "TCP/IP");
+                    sysInfo = ((List<SystemInfo>)MainForm.dataSourceList[typeof(List<SystemInfo>)]).FirstOrDefault(o => o.Company.Contains(MainForm.Company));
+                    CreateLayout();
+                    ts.Complete();
+                }
             }
-            else if (MainForm.Company.Contains("谷铭达") || MainForm.Company.Contains("镇阳") || MainForm.Company.Contains("盛兴"))
+            catch (Exception ex)
             {
-                isLandScape = false;
-                printPaperKind = System.Drawing.Printing.PaperKind.Custom;
-                PaperSize= new Size((int)(215 / 25.4 * 100), (int)(139 / 25.4 * 100));
+                //CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), ex.Message);
+                XtraMessageBox.Show(ex.Message, "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else
+            finally
             {
-                isLandScape = false;
-                printPaperKind = System.Drawing.Printing.PaperKind.A5Rotated;
+
+                this.Cursor = System.Windows.Forms.Cursors.Default;
             }
 
-            this.tools.Visible = false;
-            windowsUIView.AddTileWhenCreatingDocument = DevExpress.Utils.DefaultBoolean.False;
-            //dataSource = new SampleDataSource();
-            //userPermissions.Find(o => o.Caption.Trim() == item.Caption.Trim()).CheckBoxState;
-            menuList = BLLFty.Create<MainMenuBLL>().GetMainMenu();
-            List<Permission> pList = BLLFty.Create<PermissionBLL>().GetPermission().FindAll(o => o.UserID == usersInfo.ID);
+        }
 
-            #region 如果MainMenu有变更，更新用户权限列表
-
-            //更新功能权限信息
-            int iCount = 0;
-            foreach (DBML.MainMenu menu in menuList)
+        private void updatePermission(List<Permission> pList)
+        {
+            List<Permission> insertList = new List<Permission>();
+            menuList.FindAll(o => o.CheckBoxState).ForEach(menu =>
             {
                 Permission p = pList.FirstOrDefault(o => o.UserID == usersInfo.ID && o.Caption == menu.Caption);
+                Permission obj = new Permission();
                 if (p == null)
-                {
-                    p = new Permission();
-                    p.ID = ++iCount;
-                    if (menu.ParentID == null)
-                        p.ParentID = 0;
-                    else if (menu.SerialNo.ToString().Length > 2)
-                        p.ParentID = int.Parse(menu.SerialNo.ToString().Substring(0, menu.SerialNo.ToString().Length - 2));
-                    p.SerialNo = menu.SerialNo;
-                    p.UserID = usersInfo.ID;
-                    p.Caption = menu.Caption;
-                    p.CheckBoxState = false;
-                    BLLFty.Create<PermissionBLL>().Insert(p);
-                }
+                    obj.CheckBoxState = false;
                 else
-                {
-                    p.ID = ++iCount;
-                    if (menu.ParentID == null)
-                        p.ParentID = 0;
-                    else if (menu.SerialNo.ToString().Length > 2)
-                        p.ParentID = int.Parse(menu.SerialNo.ToString().Substring(0, menu.SerialNo.ToString().Length - 2));
-                    //else
-                    //    p.ParentID = int.Parse(menu.SerialNo.ToString().Substring(0, 1));
-                    p.SerialNo = menu.SerialNo;
-                    //p.UserID = usersInfo.ID;
-                    //p.Caption = menu.Caption;
-                    BLLFty.Create<PermissionBLL>().Update(p);
-                }
-            }
-
-            #endregion
-
-            pList = BLLFty.Create<PermissionBLL>().GetPermission().FindAll(o => o.UserID == usersInfo.ID);
-            //设置权限
-            for (int i = menuList.Count - 1; i >= 0; i--)
-            {
-                if (menuList[i].ParentID == null)
-                    continue;
-                if (pList.FirstOrDefault(o => o.Caption.Trim() == menuList[i].Caption.Trim()).CheckBoxState == false)
-                {
-                    menuList.RemoveAt(i);
-                    continue;
-                }
-            }
-            alertCount = new Dictionary<string, int>();
-            //groupsItemDetailPage = new Dictionary<SampleDataGroup, PageGroup>();
-            groupsItemDetailPage = new Dictionary<DBML.MainMenu, PageGroup>();
-            groupsItemDetailList = new Dictionary<Guid, PageGroup>();
-            itemDetailList = new Dictionary<String, IItemDetail>();  //ItemDetailPage页面所有加载的Control
-            itemDetailButtonList = new Dictionary<string, int>();
-            dataSourceList = new Dictionary<Type, object>();
-            alertControl = new AlertControl(this.components);
-            alertControl.FormShowingEffect = AlertFormShowingEffect.SlideHorizontal;
-            
-            SetStateBarInfo();
-            GetDataSource();
-            GetVDataSource();
-            types = MainForm.dataSourceList[typeof(List<TypesList>)] as List<TypesList>;
-            warehouseList = MainForm.dataSourceList[typeof(List<Warehouse>)] as List<Warehouse>;
-            ////userPermissions = ((List<Permission>)MainForm.dataSourceList[typeof(List<Permission>)]).FindAll(o => o.UserID == usersInfo.ID);
-            buttonPermissions = ((List<ButtonPermission>)MainForm.dataSourceList[typeof(List<ButtonPermission>)]).FindAll(o => o.UserID == usersInfo.ID);
-            attParam = ((List<AttParameters>)MainForm.dataSourceList[typeof(List<AttParameters>)]).FirstOrDefault(o => o.CommMode == "TCP/IP");
-            sysInfo = ((List<SystemInfo>)MainForm.dataSourceList[typeof(List<SystemInfo>)]).FirstOrDefault(o => o.Company.Contains(MainForm.Company));
-            CreateLayout();
-   
+                    obj.CheckBoxState = p.CheckBoxState;
+                obj.ID = menu.SerialNo;
+                string no = menu.SerialNo.ToString().Trim();
+                if (menu.ParentID == null)
+                    obj.ParentID = 0;
+                else if (no.Length > 2)
+                    obj.ParentID = int.Parse(no.Substring(0, no.Length - 2));
+                obj.SerialNo = menu.SerialNo;
+                obj.UserID = usersInfo.ID;
+                obj.Caption = menu.Caption;
+                insertList.Add(obj);
+            });
+            if (insertList.Count > 0)
+                BLLFty.Create<PermissionBLL>().Update(usersInfo.ID, insertList);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -356,7 +365,7 @@ namespace USL
         /// </summary>
         public static void SetAlertCount()
         {
-            List<Alert> alertList = BLLFty.Create<AlertBLL>().GetAlert();//((List<Alert>)MainForm.dataSourceList[typeof(List<Alert>)]);
+            List<Alert> alertList = BLLFty.Create<AlertBLL>().GetAlert();
             alertCount.Clear();
             foreach (Alert item in alertList)
             {
@@ -476,38 +485,57 @@ namespace USL
             }
         }
 
-        public static DataSet ImportExcelOleDb(string connStr)
+        /// <summary>
+        /// 获取最大单号
+        /// </summary>
+        /// <param name="billType">单据类型</param>
+        /// <param name="IsCreated">是否创建新单</param>
+        /// <returns></returns>
+        public static SystemStatus GetMaxBillNo(String billType, bool IsCreated)
         {
-            //把EXCEL导入到DataSet
-            DataSet ds = new DataSet();
-            using (OleDbConnection conn = new OleDbConnection(connStr))
+            SystemStatus entity = null;
+            try
             {
-                ArrayList al = new ArrayList();
-                conn.Open();
-                DataTable sheetNames = conn.GetOleDbSchemaTable(System.Data.OleDb.OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
-                foreach (DataRow item in sheetNames.Rows)
+                string prefix = string.Empty;
+                DBML.MainMenu menu = menuList.FirstOrDefault(o => o.Name.Equals(billType));
+                if (menu != null)
+                    prefix = menu.Prefix;
+                string no = prefix + DateTime.Now.ToString("yyyyMMdd") + "000";
+
+                List<SystemStatus> list = systemInfoService.GetSystemStatus();
+                if (list != null)
                 {
-                    al.Add(item[2]);  //itme[2]是获取Excel表单薄名称
+                    entity = list.FirstOrDefault(o => o.MainMenuName.Equals(billType));
+                    if (entity != null)
+                        no = entity.MaxBillNo.Trim();
                 }
-                int n = al.Count;
-                string[] SheetSet = new string[n];
-                for (int i = 0; i < n; i++)
+                if (IsCreated)
                 {
-                    SheetSet[i] = (string)al[i];
+                    // 单号流水+1
+                    if (no.Length == 13 && no.Substring(2, 8).Equals(DateTime.Now.ToString("yyyyMMdd")))
+                    {
+                        no = prefix + DateTime.Now.ToString("yyyyMMdd") + Convert.ToString(int.Parse(no.Substring(10, 3)) + 1).PadLeft(3, '0');
+                    }
+                    if (entity == null)
+                    {
+                        entity = new SystemStatus();
+                        entity.MainMenuName = billType;
+                        entity.MaxBillNo = no;
+                        entity.Status = 0;
+                        systemInfoService.Insert(entity);
+                    }
+                    else
+                    {
+                        entity.MaxBillNo = no;
+                        systemInfoService.Update(entity);
+                    }
+                    ClientFactory.DataPageRefresh<SystemStatus>();
                 }
-                OleDbDataAdapter da;
-                for (int i = 0; i < n; i++)
-                {
-                    string sql = "select * from [" + SheetSet[i] + "] ";
-                    da = new OleDbDataAdapter(sql, conn);
-                    da.Fill(ds, SheetSet[i]);
-                    da.Dispose();
-                }
-                conn.Close();
-                conn.Dispose();
             }
-            return ds;
+            catch { }
+            return entity;
         }
+
         public static string GetBillMaxBillNo(String billType, String prefix)
         {
             string no = string.Empty;
@@ -745,98 +773,10 @@ namespace USL
                     attApt.Description = obj.Description;
                     aptUpdateList.Add(attApt);
                 }
-
-                //UsersInfo u = ((List<UsersInfo>)dataSourceList[typeof(List<UsersInfo>)]).FirstOrDefault(o => o.ID == obj.UserID);
-                //VAttAppointments vObj = new VAttAppointments();
-                //vObj.UniqueID = obj.UniqueID;
-                //vObj.GLogStartID = obj.GLogStartID;
-                //vObj.GLogEndID = obj.GLogEndID;
-                //vObj.UserID = obj.UserID;
-                //vObj.工号 = u.Code;
-                //vObj.姓名 = u.Name;
-                //vObj.SchSerialNo = obj.SchSerialNo;
-                //vObj.日期 = obj.CheckInTime;
-                //vObj.上班时间 = obj.SchStartTime;
-                //vObj.下班时间 = obj.SchEndTime;
-                //vObj.签到时间 = obj.CheckInTime;
-                //vObj.签退时间 = obj.CheckOutTime;
-                //vObj.考勤状态 = obj.AttStatus;
-                //vObj.迟到分钟数 = obj.LateMinutes;
-                //vObj.早退分钟数 = obj.EarlyMinutes;
-                //vObj.备注 = obj.Description;
-                //vaptList.Add(vObj);
             }
-            //dataSourceList[typeof(List<AttAppointments>)] = aptList;
-            //dataSourceList[typeof(List<VAttAppointments>)] = vaptList;
-
-            //BLLFty.Create<AttAppointmentsBLL>().Insert(aptList);
             BLLFty.Create<AttAppointmentsBLL>().Save(aptInsertList, aptUpdateList);
         }
-
-        //static AttAppointments SetAttStatus(AttAppointments obj)
-        //{
-        //    //foreach (AttAppointments obj in apts)
-        //    //{
-        //        if (obj.AttStatus < (int)AttStatusType.Absent)  //判断考勤状态
-        //        {
-        //            if (obj.LateMinutes != null && obj.LateMinutes > 0)
-        //                obj.AttStatus = (int)AttStatusType.Late;
-        //            if (obj.EarlyMinutes != null && obj.EarlyMinutes > 0)
-        //                obj.AttStatus = (int)AttStatusType.Early;
-        //            if (obj.LateMinutes != null && obj.LateMinutes > 0 && obj.EarlyMinutes != null && obj.EarlyMinutes > 0)
-        //                obj.AttStatus = (int)AttStatusType.LateEarly;
-        //            if (obj.CheckInTime == null)
-        //            {
-        //                obj.AttStatus = (int)AttStatusType.NoCheckIn;
-        //                obj.CheckInTime = obj.CheckOutTime.Value.Date;
-        //            }
-        //            if (obj.CheckOutTime == null)
-        //            {
-        //                obj.AttStatus = (int)AttStatusType.NoCheckOut;
-        //                obj.CheckOutTime = obj.CheckInTime.Value.Date;
-        //            }
-        //            if (obj.CheckInTime == null && obj.CheckOutTime == null)
-        //                obj.AttStatus = (int)AttStatusType.Absent;
-        //        }
-        //        else
-        //        {
-        //            if (obj.CheckInTime == null)
-        //                obj.CheckInTime = obj.CheckOutTime.Value.Date;
-        //            if (obj.CheckOutTime == null)
-        //                obj.CheckOutTime = obj.CheckInTime.Value.Date;
-        //            if (obj.LateMinutes != null && obj.LateMinutes >= 0)
-        //                obj.LateMinutes = null;
-        //            if (obj.EarlyMinutes != null && obj.EarlyMinutes >= 0)
-        //                obj.EarlyMinutes = null;
-        //        }
-        //        if (obj.LateMinutes.GetValueOrDefault() > 0 || obj.EarlyMinutes.GetValueOrDefault() > 0)
-        //            obj.Location = string.Format("{0} {1}", obj.LateMinutes, obj.EarlyMinutes);
-        //        obj.Subject = EnumHelper.GetDescription<AttStatusType>((AttStatusType)obj.AttStatus, false);
-        //        //aptList.Add(obj);
-        //        return obj;
-        //        //UsersInfo u = ((List<UsersInfo>)dataSourceList[typeof(List<UsersInfo>)]).FirstOrDefault(o => o.ID == obj.UserID);
-        //        //VAttAppointments vObj = new VAttAppointments();
-        //        //vObj.UniqueID = obj.UniqueID;
-        //        //vObj.GLogStartID = obj.GLogStartID;
-        //        //vObj.GLogEndID = obj.GLogEndID;
-        //        //vObj.UserID = obj.UserID;
-        //        //vObj.工号 = u.Code;
-        //        //vObj.姓名 = u.Name;
-        //        //vObj.SchSerialNo = obj.SchSerialNo;
-        //        //vObj.日期 = obj.CheckInTime;
-        //        //vObj.上班时间 = obj.SchStartTime;
-        //        //vObj.下班时间 = obj.SchEndTime;
-        //        //vObj.签到时间 = obj.CheckInTime;
-        //        //vObj.签退时间 = obj.CheckOutTime;
-        //        //vObj.考勤状态 = obj.AttStatus;
-        //        //vObj.迟到分钟数 = obj.LateMinutes;
-        //        //vObj.早退分钟数 = obj.EarlyMinutes;
-        //        //vObj.备注 = obj.Description;
-        //        //vaptList.Add(vObj);
-        //    //}
-        //    //dataSourceList[typeof(List<AttAppointments>)] = aptList;
-        //    //dataSourceList[typeof(List<VAttAppointments>)] = vaptList;
-        //}
+        
         private void GetViewDataSource()
         {
             //dataSourceList.Clear();
@@ -918,774 +858,634 @@ namespace USL
             dataSourceList = BLLFty.Create<DataSourcesBLL>().GetDataSources();
 
             GetNewList();
-            ////添加考勤报表
-            //GetAttAppointments();
-            //List<Goods> lst = MainForm.dataSourceList[typeof(List<Goods>)] as List<Goods>;
-            //foreach (Goods item in lst)
-            //{
-            //    if (!string.IsNullOrEmpty(item.Code) && item.Pic != null)
-            //        ImageHelper.BinaryToImage(item.Pic).Save(string.Format("D:\\ERPToysPic\\{0}.jpg", item.Code));
-            //}
-            //string dir = @"D:\ERPToysPic\";
-            //string[] pics = Directory.GetFiles(dir, "*.jpg");
-            //foreach (string item in pics)
-            //{
-            //    string strCode = Path.GetFileNameWithoutExtension(item).Trim();
-
-            //    //////制作缩略图
-            //    Image img = ImageHelper.GetReducedImage(Image.FromFile(item), 24, 24);
-            //    ////img.Save(string.Format("D:\\ERPToysPic\\Thumbnail\\{0}.jpg", strCode));
-            //    Goods g = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FirstOrDefault(o => o.Code == strCode);
-            //    if (g != null && !string.IsNullOrEmpty(g.Code))
-            //    {
-            //        g.Pic = ImageHelper.MakeBuff(img);
-            //        //        g.PicPath = item;
-            //        BLLFty.Create<GoodsBLL>().Update(g);
-            //    }
-            //}
-
-            //DataContractSerializer serializer = new DataContractSerializer(typeof(List<EMSGoodsTrackingDailyReport>));
-            //using (FileStream fs = new FileStream("d:\\EMSGoodsTrackingDailyReport.xml", FileMode.Create))
-            //{
-            //    using (XmlDictionaryWriter writer = XmlDictionaryWriter.CreateTextWriter(fs))
-            //    {
-            //        serializer.WriteObject(writer, dataSourceList[typeof(List<EMSGoodsTrackingDailyReport>)]);
-            //    }
-            //}
-
-            //using (FileStream fs = new FileStream("c:\\UsersInfo.xml", FileMode.Open, FileAccess.Read))
-            //{
-            //    using (XmlReader reader = new XmlTextReader("c:\\UsersInfo.xml", fs))
-            //    {
-            //        List<UsersInfo> pp = (List<UsersInfo>)serializer.ReadObject(reader);
-            //    }
-            //}
         }
 
-        public static IList GetData(String menuName)
-        {
-            //IList list = null;
-            switch (menuName)
-            {
-                case MainMenuConstants.Department:
-                    list = MainForm.dataSourceList[typeof(List<VDepartment>)] as IList;
-                    break;
-                case MainMenuConstants.Company:
-                    list = MainForm.dataSourceList[typeof(List<VCompany>)] as IList;
-                    break;
-                case MainMenuConstants.Supplier:
-                    list = MainForm.dataSourceList[typeof(List<VSupplier>)] as IList;
-                    break;
-                case MainMenuConstants.Staff:
-                    list = MainForm.dataSourceList[typeof(List<VUsersInfo>)] as IList;
-                    break;
-                case MainMenuConstants.Goods:
-                    list = MainForm.dataSourceList[typeof(List<VGoods>)] as IList;
-                    break;
-                //case MainMenuConstants.Material:
-                //    list = MainForm.dataSourceList[typeof(List<VMaterial>)] as IList;
-                //    break;
-                case MainMenuConstants.GoodsType:
-                    list = MainForm.dataSourceList[typeof(List<VGoodsType>)] as IList;
-                    break;
-                case MainMenuConstants.Packaging:
-                    list = MainForm.dataSourceList[typeof(List<VPackaging>)] as IList;
-                    break;
-                case MainMenuConstants.ProductionOrderQuery:
-                    list = MainForm.dataSourceList[typeof(List<VProductionOrder>)] as IList;
-                    break;
-                //case MainMenuConstants.ProductionStockInBillQuery:
-                //    list = ((List<VStockInBill>)MainForm.dataSourceList[typeof(List<VStockInBill>)]).FindAll(o => o.类型 < 2);
-                //    break;
-                case MainMenuConstants.ProductionStockInBillQuery:
-                    list = ((List<VStockInBill>)MainForm.dataSourceList[typeof(List<VStockInBill>)]).FindAll(o =>
-                        o.类型 == 0 || o.类型 == 1);
-                    break;
-                case MainMenuConstants.SalesReturnBillQuery:
-                    list = ((List<VStockInBill>)MainForm.dataSourceList[typeof(List<VStockInBill>)]).FindAll(o =>
-                        o.类型 == types.Find(t => t.Type == TypesListConstants.StockInBillType && t.SubType == menuName.Replace("Query", "")).No);
-                    break;
+        #region 注释
 
-                case MainMenuConstants.FGStockInBillQuery:
-                case MainMenuConstants.EMSReturnBillQuery:
-                case MainMenuConstants.SFGStockInBillQuery:
-                case MainMenuConstants.FSMStockInBillQuery:
-                case MainMenuConstants.FSMReturnBillQuery:
-                case MainMenuConstants.AssembleStockInBillQuery:
-                    list = ((List<VMaterialStockInBill>)MainForm.dataSourceList[typeof(List<VMaterialStockInBill>)]).FindAll(o =>
-                        o.类型 == types.Find(t => t.Type == TypesListConstants.StockInBillType && t.SubType == menuName.Replace("Query", "")).No);
-                    break;
-                case MainMenuConstants.ReturnedMaterialBillQuery:
-                    list = ((List<VMaterialStockInBill>)MainForm.dataSourceList[typeof(List<VMaterialStockInBill>)]).FindAll(o =>
-                        o.类型 == 4 || o.类型 == 7 || o.类型 == 9 || o.类型 == 10);
-                    break;
-                case MainMenuConstants.OrderQuery:
-                    list = MainForm.dataSourceList[typeof(List<VOrder>)] as IList;
-                    break;
-                case MainMenuConstants.FSMOrderQuery:
-                    list = MainForm.dataSourceList[typeof(List<VFSMOrder>)] as IList;
-                    break;
-                //case MainMenuConstants.FGStockOutBillQuery:
-                //    list = ((List<VStockOutBill>)MainForm.dataSourceList[typeof(List<VStockOutBill>)]).FindAll(o => o.类型 < 2);
-                //    break;
-                //case MainMenuConstants.EMSStockOutBillQuery:
-                //    list = ((List<VMaterialStockOutBill>)MainForm.dataSourceList[typeof(List<VMaterialStockOutBill>)]).FindAll(o => o.类型 == 2 || o.类型 == 3);
-                //    break;
-                case MainMenuConstants.FGStockOutBillQuery:
-                    list = ((List<VStockOutBill>)MainForm.dataSourceList[typeof(List<VStockOutBill>)]).FindAll(o =>
-                        o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == menuName.Replace("Query", "")).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
-                    break;
-                case MainMenuConstants.EMSStockOutBillQuery:
-                    list = ((List<VMaterialStockOutBill>)MainForm.dataSourceList[typeof(List<VMaterialStockOutBill>)]).FindAll(o =>
-                        o.类型 == 2 || o.类型 == 3);
-                    break;
-                case MainMenuConstants.SFGStockOutBillQuery:
-                case MainMenuConstants.FSMStockOutBillQuery:
-                case MainMenuConstants.FSMDPReturnBillQuery:
-                case MainMenuConstants.EMSDPReturnBillQuery:
-                    list = ((List<VMaterialStockOutBill>)MainForm.dataSourceList[typeof(List<VMaterialStockOutBill>)]).FindAll(o =>
-                        o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == menuName.Replace("Query", "")).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
-                    break;
-                case MainMenuConstants.GetMaterialBillQuery:
-                    list = ((List<VMaterialStockOutBill>)MainForm.dataSourceList[typeof(List<VMaterialStockOutBill>)]).FindAll(o =>
-                        o.类型 == 3 || o.类型 == 5 || o.类型 == 6 || o.类型 == 9);
-                    break;
-                case MainMenuConstants.InventoryQuery:
-                    list = MainForm.dataSourceList[typeof(List<VInventory>)] as IList;
-                    break;
-                case MainMenuConstants.InventoryGroupByGoodsQuery:
-                    list = MainForm.dataSourceList[typeof(List<VInventoryGroupByGoods>)] as IList;
-                    break;
-                case MainMenuConstants.MaterialInventoryQuery:
-                    list = MainForm.dataSourceList[typeof(List<VMaterialInventory>)] as IList;
-                    break;
-                case MainMenuConstants.InventoryGroupByMaterialQuery:
-                    list = MainForm.dataSourceList[typeof(List<VMaterialInventoryGroupByGoods>)] as IList;
-                    break;
-                case MainMenuConstants.FSMInventoryQuery:
-                    list = MainForm.dataSourceList[typeof(List<VFSMInventoryGroupByGoods>)] as IList;
-                    break;
-                case MainMenuConstants.EMSInventoryQuery:
-                    list = MainForm.dataSourceList[typeof(List<VEMSInventoryGroupByGoods>)] as IList;
-                    break;
-                case MainMenuConstants.AccountBookQuery:
-                    list = MainForm.dataSourceList[typeof(List<VAccountBook>)] as IList;
-                    break;
-                case MainMenuConstants.Stocktaking:
-                    list = MainForm.dataSourceList[typeof(List<VStocktaking>)] as IList;
-                    break;
-                case MainMenuConstants.ProfitAndLoss:
-                    list = MainForm.dataSourceList[typeof(List<VProfitAndLoss>)] as IList;
-                    break;
-                case MainMenuConstants.ReceiptBillQuery:
-                    list = MainForm.dataSourceList[typeof(List<VReceiptBill>)] as IList;
-                    break;
-                case MainMenuConstants.StatementOfAccountToCustomer:
-                    list = MainForm.dataSourceList[typeof(List<StatementOfAccountToCustomerReport>)] as IList;
-                    break;
-                case MainMenuConstants.PaymentBillQuery:
-                    list = MainForm.dataSourceList[typeof(List<VPaymentBill>)] as IList;
-                    break;
-                case MainMenuConstants.StatementOfAccountToSupplier:
-                    list = MainForm.dataSourceList[typeof(List<StatementOfAccountToSupplierReport>)] as IList;
-                    break;
-                //case MainMenuConstants.EMSGoodsTrackingDailyReport:
-                //    list = MainForm.dataSourceList[typeof(List<EMSGoodsTrackingDailyReport>)] as IList;
-                //    break;
-                //case MainMenuConstants.FSMGoodsTrackingDailyReport:
-                //    list = MainForm.dataSourceList[typeof(List<FSMGoodsTrackingDailyReport>)] as IList;
-                //    break;
-                case MainMenuConstants.SampleStockOutReport:
-                    list = MainForm.dataSourceList[typeof(List<VSampleStockOut>)] as IList;
-                    break;
-                case MainMenuConstants.SalesBillSummaryReport:
-                    list = MainForm.dataSourceList[typeof(List<VSalesBillSummary>)] as IList;
-                    break;
-                case MainMenuConstants.SalesSummaryByCustomerReport:
-                    list = MainForm.dataSourceList[typeof(List<SalesSummaryByCustomerReport>)] as IList;
-                    break;
-                //case MainMenuConstants.AnnualSalesSummaryByCustomerReport:
-                //    list = MainForm.dataSourceList[typeof(List<AnnualSalesSummaryByCustomerReport>)] as IList;
-                //    break;
-                case MainMenuConstants.SalesSummaryByGoodsReport:
-                    list = MainForm.dataSourceList[typeof(List<SalesSummaryByGoodsReport>)] as IList;
-                    break;
-                case MainMenuConstants.SalesSummaryByGoodsPriceReport:
-                    list = MainForm.dataSourceList[typeof(List<SalesSummaryByGoodsPriceReport>)] as IList;
-                    break;
-                //case MainMenuConstants.AnnualSalesSummaryByGoodsReport:
-                //    list = MainForm.dataSourceList[typeof(List<AnnualSalesSummaryByGoodsReport>)] as IList;
-                //    break;
-                case MainMenuConstants.GoodsSalesSummaryByCustomerReport:
-                    list = MainForm.dataSourceList[typeof(List<GoodsSalesSummaryByCustomerReport>)] as IList;
-                    break;
-                case MainMenuConstants.AlertQuery:
-                    list = MainForm.dataSourceList[typeof(List<VAlert>)] as IList;
-                    break;
-                case MainMenuConstants.AttGeneralLog:
-                    list = MainForm.dataSourceList[typeof(List<VAttGeneralLog>)] as IList;
-                    break;
-                //case MainMenuConstants.SchClass:
-                //    list = MainForm.dataSourceList[typeof(List<SchClass>)] as IList;
-                //    break;
-                case MainMenuConstants.SchedulingQuery:
-                    list = MainForm.dataSourceList[typeof(List<VAppointments>)] as IList;
-                    break;
-                case MainMenuConstants.WageBillQuery:
-                    list = MainForm.dataSourceList[typeof(List<VWageBill>)] as IList;
-                    break;
-                case MainMenuConstants.AttendanceQuery:
-                    list = MainForm.dataSourceList[typeof(List<VAttAppointments>)] as IList;
-                    break;
-                case MainMenuConstants.AttWageBillQuery:
-                    list = MainForm.dataSourceList[typeof(List<VAttWageBill>)] as IList;
-                    break;
+        //public static IList GetData(String menuName)
+        //{
+        //    //IList list = null;
+        //    switch (menuName)
+        //    {
+        //        case MainMenuConstants.Department:
+        //            list = MainForm.dataSourceList[typeof(List<VDepartment>)] as IList;
+        //            break;
+        //        case MainMenuConstants.Company:
+        //            list = MainForm.dataSourceList[typeof(List<VCompany>)] as IList;
+        //            break;
+        //        case MainMenuConstants.Supplier:
+        //            list = MainForm.dataSourceList[typeof(List<VSupplier>)] as IList;
+        //            break;
+        //        case MainMenuConstants.Staff:
+        //            list = MainForm.dataSourceList[typeof(List<VUsersInfo>)] as IList;
+        //            break;
+        //        case MainMenuConstants.Goods:
+        //            list = MainForm.dataSourceList[typeof(List<VGoods>)] as IList;
+        //            break;
+        //        //case MainMenuConstants.Material:
+        //        //    list = MainForm.dataSourceList[typeof(List<VMaterial>)] as IList;
+        //        //    break;
+        //        case MainMenuConstants.GoodsType:
+        //            list = MainForm.dataSourceList[typeof(List<VGoodsType>)] as IList;
+        //            break;
+        //        case MainMenuConstants.Packaging:
+        //            list = MainForm.dataSourceList[typeof(List<VPackaging>)] as IList;
+        //            break;
+        //        case MainMenuConstants.ProductionOrderQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VProductionOrder>)] as IList;
+        //            break;
+        //        //case MainMenuConstants.ProductionStockInBillQuery:
+        //        //    list = ((List<VStockInBill>)MainForm.dataSourceList[typeof(List<VStockInBill>)]).FindAll(o => o.类型 < 2);
+        //        //    break;
+        //        case MainMenuConstants.ProductionStockInBillQuery:
+        //            list = ((List<VStockInBill>)MainForm.dataSourceList[typeof(List<VStockInBill>)]).FindAll(o =>
+        //                o.类型 == 0 || o.类型 == 1);
+        //            break;
+        //        case MainMenuConstants.SalesReturnBillQuery:
+        //            list = ((List<VStockInBill>)MainForm.dataSourceList[typeof(List<VStockInBill>)]).FindAll(o =>
+        //                o.类型 == types.Find(t => t.Type == TypesListConstants.StockInBillType && t.SubType == menuName.Replace("Query", "")).No);
+        //            break;
+
+        //        case MainMenuConstants.FGStockInBillQuery:
+        //        case MainMenuConstants.EMSReturnBillQuery:
+        //        case MainMenuConstants.SFGStockInBillQuery:
+        //        case MainMenuConstants.FSMStockInBillQuery:
+        //        case MainMenuConstants.FSMReturnBillQuery:
+        //        case MainMenuConstants.AssembleStockInBillQuery:
+        //            list = ((List<VMaterialStockInBill>)MainForm.dataSourceList[typeof(List<VMaterialStockInBill>)]).FindAll(o =>
+        //                o.类型 == types.Find(t => t.Type == TypesListConstants.StockInBillType && t.SubType == menuName.Replace("Query", "")).No);
+        //            break;
+        //        case MainMenuConstants.ReturnedMaterialBillQuery:
+        //            list = ((List<VMaterialStockInBill>)MainForm.dataSourceList[typeof(List<VMaterialStockInBill>)]).FindAll(o =>
+        //                o.类型 == 4 || o.类型 == 7 || o.类型 == 9 || o.类型 == 10);
+        //            break;
+        //        case MainMenuConstants.OrderQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VOrder>)] as IList;
+        //            break;
+        //        case MainMenuConstants.FSMOrderQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VFSMOrder>)] as IList;
+        //            break;
+        //        //case MainMenuConstants.FGStockOutBillQuery:
+        //        //    list = ((List<VStockOutBill>)MainForm.dataSourceList[typeof(List<VStockOutBill>)]).FindAll(o => o.类型 < 2);
+        //        //    break;
+        //        //case MainMenuConstants.EMSStockOutBillQuery:
+        //        //    list = ((List<VMaterialStockOutBill>)MainForm.dataSourceList[typeof(List<VMaterialStockOutBill>)]).FindAll(o => o.类型 == 2 || o.类型 == 3);
+        //        //    break;
+        //        case MainMenuConstants.FGStockOutBillQuery:
+        //            list = ((List<VStockOutBill>)MainForm.dataSourceList[typeof(List<VStockOutBill>)]).FindAll(o =>
+        //                o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == menuName.Replace("Query", "")).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
+        //            break;
+        //        case MainMenuConstants.EMSStockOutBillQuery:
+        //            list = ((List<VMaterialStockOutBill>)MainForm.dataSourceList[typeof(List<VMaterialStockOutBill>)]).FindAll(o =>
+        //                o.类型 == 2 || o.类型 == 3);
+        //            break;
+        //        case MainMenuConstants.SFGStockOutBillQuery:
+        //        case MainMenuConstants.FSMStockOutBillQuery:
+        //        case MainMenuConstants.FSMDPReturnBillQuery:
+        //        case MainMenuConstants.EMSDPReturnBillQuery:
+        //            list = ((List<VMaterialStockOutBill>)MainForm.dataSourceList[typeof(List<VMaterialStockOutBill>)]).FindAll(o =>
+        //                o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == menuName.Replace("Query", "")).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
+        //            break;
+        //        case MainMenuConstants.GetMaterialBillQuery:
+        //            list = ((List<VMaterialStockOutBill>)MainForm.dataSourceList[typeof(List<VMaterialStockOutBill>)]).FindAll(o =>
+        //                o.类型 == 3 || o.类型 == 5 || o.类型 == 6 || o.类型 == 9);
+        //            break;
+        //        case MainMenuConstants.InventoryQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VInventory>)] as IList;
+        //            break;
+        //        case MainMenuConstants.InventoryGroupByGoodsQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VInventoryGroupByGoods>)] as IList;
+        //            break;
+        //        case MainMenuConstants.MaterialInventoryQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VMaterialInventory>)] as IList;
+        //            break;
+        //        case MainMenuConstants.InventoryGroupByMaterialQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VMaterialInventoryGroupByGoods>)] as IList;
+        //            break;
+        //        case MainMenuConstants.FSMInventoryQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VFSMInventoryGroupByGoods>)] as IList;
+        //            break;
+        //        case MainMenuConstants.EMSInventoryQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VEMSInventoryGroupByGoods>)] as IList;
+        //            break;
+        //        case MainMenuConstants.AccountBookQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VAccountBook>)] as IList;
+        //            break;
+        //        case MainMenuConstants.Stocktaking:
+        //            list = MainForm.dataSourceList[typeof(List<VStocktaking>)] as IList;
+        //            break;
+        //        case MainMenuConstants.ProfitAndLoss:
+        //            list = MainForm.dataSourceList[typeof(List<VProfitAndLoss>)] as IList;
+        //            break;
+        //        case MainMenuConstants.ReceiptBillQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VReceiptBill>)] as IList;
+        //            break;
+        //        case MainMenuConstants.StatementOfAccountToCustomer:
+        //            list = MainForm.dataSourceList[typeof(List<StatementOfAccountToCustomerReport>)] as IList;
+        //            break;
+        //        case MainMenuConstants.PaymentBillQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VPaymentBill>)] as IList;
+        //            break;
+        //        case MainMenuConstants.StatementOfAccountToSupplier:
+        //            list = MainForm.dataSourceList[typeof(List<StatementOfAccountToSupplierReport>)] as IList;
+        //            break;
+        //        //case MainMenuConstants.EMSGoodsTrackingDailyReport:
+        //        //    list = MainForm.dataSourceList[typeof(List<EMSGoodsTrackingDailyReport>)] as IList;
+        //        //    break;
+        //        //case MainMenuConstants.FSMGoodsTrackingDailyReport:
+        //        //    list = MainForm.dataSourceList[typeof(List<FSMGoodsTrackingDailyReport>)] as IList;
+        //        //    break;
+        //        case MainMenuConstants.SampleStockOutReport:
+        //            list = MainForm.dataSourceList[typeof(List<VSampleStockOut>)] as IList;
+        //            break;
+        //        case MainMenuConstants.SalesBillSummaryReport:
+        //            list = MainForm.dataSourceList[typeof(List<VSalesBillSummary>)] as IList;
+        //            break;
+        //        case MainMenuConstants.SalesSummaryByCustomerReport:
+        //            list = MainForm.dataSourceList[typeof(List<SalesSummaryByCustomerReport>)] as IList;
+        //            break;
+        //        //case MainMenuConstants.AnnualSalesSummaryByCustomerReport:
+        //        //    list = MainForm.dataSourceList[typeof(List<AnnualSalesSummaryByCustomerReport>)] as IList;
+        //        //    break;
+        //        case MainMenuConstants.SalesSummaryByGoodsReport:
+        //            list = MainForm.dataSourceList[typeof(List<SalesSummaryByGoodsReport>)] as IList;
+        //            break;
+        //        case MainMenuConstants.SalesSummaryByGoodsPriceReport:
+        //            list = MainForm.dataSourceList[typeof(List<SalesSummaryByGoodsPriceReport>)] as IList;
+        //            break;
+        //        //case MainMenuConstants.AnnualSalesSummaryByGoodsReport:
+        //        //    list = MainForm.dataSourceList[typeof(List<AnnualSalesSummaryByGoodsReport>)] as IList;
+        //        //    break;
+        //        case MainMenuConstants.GoodsSalesSummaryByCustomerReport:
+        //            list = MainForm.dataSourceList[typeof(List<GoodsSalesSummaryByCustomerReport>)] as IList;
+        //            break;
+        //        case MainMenuConstants.AlertQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VAlert>)] as IList;
+        //            break;
+        //        case MainMenuConstants.AttGeneralLog:
+        //            list = MainForm.dataSourceList[typeof(List<VAttGeneralLog>)] as IList;
+        //            break;
+        //        //case MainMenuConstants.SchClass:
+        //        //    list = MainForm.dataSourceList[typeof(List<SchClass>)] as IList;
+        //        //    break;
+        //        case MainMenuConstants.SchedulingQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VAppointments>)] as IList;
+        //            break;
+        //        case MainMenuConstants.WageBillQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VWageBill>)] as IList;
+        //            break;
+        //        case MainMenuConstants.AttendanceQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VAttAppointments>)] as IList;
+        //            break;
+        //        case MainMenuConstants.AttWageBillQuery:
+        //            list = MainForm.dataSourceList[typeof(List<VAttWageBill>)] as IList;
+        //            break;
+        //    }
+        //    return list;
+        //}
+
+        //public static void GetDBData(String menuName,String filter)
+        //{
+        //    switch (menuName)
+        //    {
+        //        case MainMenuConstants.Department:
+        //            MainForm.dataSourceList[typeof(List<Department>)] = BLLFty.Create<DepartmentBLL>().GetDepartment();
+        //            MainForm.dataSourceList[typeof(List<VDepartment>)] = BLLFty.Create<DepartmentBLL>().GetVDepartment();
+        //            break;
+        //        case MainMenuConstants.Company:
+        //            MainForm.dataSourceList[typeof(List<Company>)] = BLLFty.Create<CompanyBLL>().GetCompany();
+        //            MainForm.dataSourceList[typeof(List<VCompany>)] = BLLFty.Create<CompanyBLL>().GetVCompany();
+        //            break;
+        //        case MainMenuConstants.Supplier:
+        //            MainForm.dataSourceList[typeof(List<Supplier>)] = BLLFty.Create<SupplierBLL>().GetSupplier();
+        //            MainForm.dataSourceList[typeof(List<VSupplier>)] = BLLFty.Create<SupplierBLL>().GetVSupplier();
+        //            break;
+        //        case MainMenuConstants.Staff:
+        //            MainForm.dataSourceList[typeof(List<UsersInfo>)] = BLLFty.Create<UsersInfoBLL>().GetUsersInfo();
+        //            MainForm.dataSourceList[typeof(List<VUsersInfo>)] = BLLFty.Create<UsersInfoBLL>().GetVUsersInfo();
+        //            break;
+        //        case MainMenuConstants.Goods:
+        //            MainForm.dataSourceList[typeof(List<Goods>)] = BLLFty.Create<GoodsBLL>().GetGoods();
+        //            MainForm.dataSourceList[typeof(List<VGoods>)] = BLLFty.Create<GoodsBLL>().GetVGoods();
+        //            MainForm.dataSourceList[typeof(List<VParentGoodsByBOM>)] = BLLFty.Create<GoodsBLL>().GetVParentGoodsByBOM();
+        //            break;
+        //        case MainMenuConstants.Material:
+        //            MainForm.dataSourceList[typeof(List<Goods>)] = BLLFty.Create<GoodsBLL>().GetGoods();
+        //            MainForm.dataSourceList[typeof(List<VMaterial>)] = BLLFty.Create<GoodsBLL>().GetVMaterial();
+        //            MainForm.dataSourceList[typeof(List<VGoodsByBOM>)] = BLLFty.Create<GoodsBLL>().GetVGoodsByBOM();
+        //            MainForm.dataSourceList[typeof(List<VGoodsByMoldAllot>)] = BLLFty.Create<GoodsBLL>().GetVGoodsByMoldAllot();
+        //            break;
+        //        case MainMenuConstants.GoodsType:
+        //            MainForm.dataSourceList[typeof(List<GoodsType>)] = BLLFty.Create<GoodsTypeBLL>().GetGoodsType();
+        //            MainForm.dataSourceList[typeof(List<VGoodsType>)] = BLLFty.Create<GoodsTypeBLL>().GetVGoodsType();
+        //            break;
+        //        case MainMenuConstants.Packaging:
+        //            MainForm.dataSourceList[typeof(List<Packaging>)] = BLLFty.Create<PackagingBLL>().GetPackaging();
+        //            MainForm.dataSourceList[typeof(List<VPackaging>)] = BLLFty.Create<PackagingBLL>().GetVPackaging();
+        //            break;
+        //        case MainMenuConstants.BOM:
+        //        case MainMenuConstants.MoldList:
+        //        case MainMenuConstants.MoldMaterial:
+        //        case MainMenuConstants.Assemble:
+        //            MainForm.dataSourceList[typeof(List<BOM>)] = BLLFty.Create<BOMBLL>().GetBOM();
+        //            break;
+        //        case MainMenuConstants.MoldAllot:
+        //            MainForm.dataSourceList[typeof(List<MoldAllot>)] = BLLFty.Create<MoldAllotBLL>().GetMoldAllot();
+        //            break;
+        //        case MainMenuConstants.CustomerSLSalePrice:
+        //        case MainMenuConstants.SupplierSLSalePrice:
+        //            MainForm.dataSourceList[typeof(List<SLSalePrice>)] = BLLFty.Create<SLSalePriceBLL>().GetSLSalePrice();
+        //            break;
+        //        case MainMenuConstants.PermissionSetting:
+        //            MainForm.dataSourceList[typeof(List<Permission>)] = BLLFty.Create<PermissionBLL>().GetPermission();
+        //            MainForm.dataSourceList[typeof(List<ButtonPermission>)] = BLLFty.Create<PermissionBLL>().GetButtonPermission();
+        //            break;
+        //        case MainMenuConstants.ProductionScheduling:
+        //            MainForm.dataSourceList[typeof(List<Appointments>)] = BLLFty.Create<AppointmentsBLL>().GetAppointments();
+        //            MainForm.dataSourceList[typeof(List<VAppointments>)] = BLLFty.Create<AppointmentsBLL>().GetVAppointments();
+        //            break;
+        //        case MainMenuConstants.SchClass:
+        //            MainForm.dataSourceList[typeof(List<SchClass>)] = BLLFty.Create<SchClassBLL>().GetSchClass();
+        //            break;
+        //        case MainMenuConstants.StaffSchClass:
+        //            MainForm.dataSourceList[typeof(List<StaffSchClass>)] = BLLFty.Create<StaffSchClassBLL>().GetStaffSchClass();
+        //            MainForm.dataSourceList[typeof(List<VStaffSchClass>)] = BLLFty.Create<StaffSchClassBLL>().GetVStaffSchClass();
+        //            break;
+        //        case MainMenuConstants.StaffAttendance:
+        //            MainForm.dataSourceList[typeof(List<AttAppointments>)] = BLLFty.Create<AttAppointmentsBLL>().GetAttAppointments();
+        //            MainForm.dataSourceList[typeof(List<VAttAppointments>)] = BLLFty.Create<AttAppointmentsBLL>().GetVAttAppointments();
+        //            break;
+
+        //        case MainMenuConstants.ProductionOrderQuery:
+        //            MainForm.dataSourceList[typeof(List<VProductionOrder>)] = BLLFty.Create<ReportBLL>().GetT<VProductionOrder>("VProductionOrder", filter).OrderByDescending(o => o.类型).OrderBy(o => o.状态).ToList();
+        //            break;
+        //        case MainMenuConstants.ProductionStockInBillQuery:
+        //            MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", filter).FindAll(o =>
+        //                o.类型 == 0 || o.类型 == 1).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
+        //            break;
+        //        case MainMenuConstants.SalesReturnBillQuery:
+        //            MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", filter).FindAll(o =>
+        //                o.类型 == types.Find(t => t.Type == TypesListConstants.StockInBillType && t.SubType == menuName.Replace("Query", "")).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
+        //            break;
+        //        case MainMenuConstants.FGStockInBillQuery:
+        //        case MainMenuConstants.EMSReturnBillQuery:
+        //        case MainMenuConstants.SFGStockInBillQuery:
+        //        case MainMenuConstants.FSMStockInBillQuery:
+        //        case MainMenuConstants.FSMReturnBillQuery:
+        //        case MainMenuConstants.AssembleStockInBillQuery:
+        //            MainForm.dataSourceList[typeof(List<VMaterialStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialStockInBill>("VMaterialStockInBill", filter).FindAll(o =>
+        //                o.类型 == types.Find(t => t.Type == TypesListConstants.StockInBillType && t.SubType == menuName.Replace("Query", "")).No).OrderBy(o=>o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
+        //            MainForm.dataSourceList[typeof(List<SLSalePrice>)] = BLLFty.Create<SLSalePriceBLL>().GetSLSalePrice();
+        //            break;
+        //        case MainMenuConstants.ReturnedMaterialBillQuery:
+        //            MainForm.dataSourceList[typeof(List<VMaterialStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialStockInBill>("VMaterialStockInBill", filter).FindAll(o =>
+        //                o.类型 == 4 || o.类型 == 7 || o.类型 == 9 || o.类型 == 10).OrderBy(o=>o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
+        //            break;
+        //        case MainMenuConstants.OrderQuery:
+        //            MainForm.dataSourceList[typeof(List<VOrder>)] = BLLFty.Create<ReportBLL>().GetT<VOrder>("VOrder", filter).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o=>o.订货单号).ToList();
+        //            MainForm.dataSourceList[typeof(List<SLSalePrice>)] = BLLFty.Create<SLSalePriceBLL>().GetSLSalePrice();
+        //            break;
+        //        case MainMenuConstants.FSMOrderQuery:
+        //            MainForm.dataSourceList[typeof(List<VFSMOrder>)] = BLLFty.Create<ReportBLL>().GetT<VFSMOrder>("VFSMOrder", filter).OrderByDescending(o => o.类型).OrderBy(o => o.状态).ToList();
+        //            break;
+        //        case MainMenuConstants.FGStockOutBillQuery:
+        //            MainForm.dataSourceList[typeof(List<VStockOutBill>)] =BLLFty.Create<ReportBLL>().GetT<VStockOutBill>("VStockOutBill", filter).FindAll(o =>
+        //                o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == menuName.Replace("Query", "")).No).OrderBy(o=>o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
+        //            MainForm.dataSourceList[typeof(List<SLSalePrice>)] = BLLFty.Create<SLSalePriceBLL>().GetSLSalePrice();
+        //            break;
+        //        case MainMenuConstants.EMSStockOutBillQuery:
+        //            MainForm.dataSourceList[typeof(List<VMaterialStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialStockOutBill>("VMaterialStockOutBill", filter).FindAll(o =>
+        //                o.类型 == 2 || o.类型 == 3).OrderBy(o=>o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
+        //            break;
+        //        case MainMenuConstants.SFGStockOutBillQuery:
+        //        case MainMenuConstants.FSMStockOutBillQuery:
+        //            MainForm.dataSourceList[typeof(List<VMaterialStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialStockOutBill>("VMaterialStockOutBill", filter).FindAll(o =>
+        //                o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == menuName.Replace("Query", "")).No).OrderBy(o=>o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
+        //            break;
+        //        case MainMenuConstants.GetMaterialBillQuery:
+        //            MainForm.dataSourceList[typeof(List<VMaterialStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialStockOutBill>("VMaterialStockOutBill", filter).FindAll(o =>
+        //                o.类型 == 3 || o.类型 == 5 || o.类型 == 6 || o.类型 == 9).OrderBy(o=>o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
+        //            break;
+        //        case MainMenuConstants.ReceiptBillQuery:
+        //            MainForm.dataSourceList[typeof(List<VReceiptBill>)] = BLLFty.Create<ReportBLL>().GetT<VReceiptBill>("VReceiptBill", filter);
+        //            break;
+        //        case MainMenuConstants.StatementOfAccountToCustomer:
+        //            MainForm.dataSourceList[typeof(List<StatementOfAccountToCustomerReport>)] = BLLFty.Create<ReportBLL>().GetStatementOfAccountToCustomerReport(filter);
+        //            break;
+        //        case MainMenuConstants.PaymentBillQuery:
+        //            MainForm.dataSourceList[typeof(List<VPaymentBill>)] = BLLFty.Create<ReportBLL>().GetT<VPaymentBill>("VPaymentBill", filter);
+        //            break;
+        //        case MainMenuConstants.StatementOfAccountToSupplier:
+        //            MainForm.dataSourceList[typeof(List<StatementOfAccountToSupplierReport>)] = BLLFty.Create<ReportBLL>().GetStatementOfAccountToSupplierReport(filter);
+        //            break;
+        //        case MainMenuConstants.SampleStockOutReport:
+        //            MainForm.dataSourceList[typeof(List<VSampleStockOut>)] = BLLFty.Create<ReportBLL>().GetT<VSampleStockOut>("VSampleStockOut", filter);
+        //            break;
+        //        case MainMenuConstants.SalesBillSummaryReport:
+        //            MainForm.dataSourceList[typeof(List<VSalesBillSummary>)] = BLLFty.Create<ReportBLL>().GetT<VSalesBillSummary>("VSalesBillSummary", filter);
+        //            break;
+        //        case MainMenuConstants.SalesSummaryByCustomerReport:
+        //            MainForm.dataSourceList[typeof(List<SalesSummaryByCustomerReport>)] = BLLFty.Create<ReportBLL>().GetSalesSummaryByCustomerReport(filter);
+        //            break;
+        //        case MainMenuConstants.SalesSummaryByGoodsReport:
+        //            MainForm.dataSourceList[typeof(List<SalesSummaryByGoodsReport>)] = BLLFty.Create<ReportBLL>().GetSalesSummaryByGoodsReport(filter);
+        //            break;
+        //        case MainMenuConstants.SalesSummaryByGoodsPriceReport:
+        //            MainForm.dataSourceList[typeof(List<SalesSummaryByGoodsPriceReport>)] = BLLFty.Create<ReportBLL>().GetSalesSummaryByGoodsPriceReport(filter);
+        //            break;
+        //        case MainMenuConstants.GoodsSalesSummaryByCustomerReport:
+        //            MainForm.dataSourceList[typeof(List<GoodsSalesSummaryByCustomerReport>)] = BLLFty.Create<ReportBLL>().GetGoodsSalesSummaryByCustomerReport(filter);
+        //            break;
+        //        case MainMenuConstants.SchedulingQuery:
+        //            MainForm.dataSourceList[typeof(List<VAppointments>)] = BLLFty.Create<ReportBLL>().GetT<VAppointments>("VAppointments", filter);
+        //            break;
+        //        case MainMenuConstants.WageBillQuery:
+        //            MainForm.dataSourceList[typeof(List<VWageBill>)] = BLLFty.Create<ReportBLL>().GetT<VWageBill>("VWageBill", filter);
+        //            break;
+        //        case MainMenuConstants.AttWageBillQuery:
+        //            MainForm.dataSourceList[typeof(List<VAttWageBill>)] = BLLFty.Create<ReportBLL>().GetT<VAttWageBill>("VAttWageBill", filter);
+        //            break;
+        //        case MainMenuConstants.InventoryQuery:
+        //            MainForm.dataSourceList[typeof(List<VInventory>)] = BLLFty.Create<ReportBLL>().GetT<VInventory>("VInventory", filter);
+        //            break;
+        //        case MainMenuConstants.InventoryGroupByGoodsQuery:
+        //            MainForm.dataSourceList[typeof(List<VInventoryGroupByGoods>)] = BLLFty.Create<ReportBLL>().GetT<VInventoryGroupByGoods>("VInventoryGroupByGoods", filter);
+        //            break;
+        //        case MainMenuConstants.MaterialInventoryQuery:
+        //            MainForm.dataSourceList[typeof(List<VMaterialInventory>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialInventory>("VMaterialInventory", filter);
+        //            break;
+        //        case MainMenuConstants.InventoryGroupByMaterialQuery:
+        //            MainForm.dataSourceList[typeof(List<VMaterialInventoryGroupByGoods>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialInventoryGroupByGoods>("VMaterialInventoryGroupByGoods", filter);
+        //            break;
+        //        case MainMenuConstants.FSMInventoryQuery:
+        //            MainForm.dataSourceList[typeof(List<VFSMInventoryGroupByGoods>)] = BLLFty.Create<ReportBLL>().GetT<VFSMInventoryGroupByGoods>("VFSMInventoryGroupByGoods", filter);
+        //            break;
+        //        case MainMenuConstants.EMSInventoryQuery:
+        //            MainForm.dataSourceList[typeof(List<VEMSInventoryGroupByGoods>)] = BLLFty.Create<ReportBLL>().GetT<VEMSInventoryGroupByGoods>("VEMSInventoryGroupByGoods", filter);
+        //            break;
+        //        case MainMenuConstants.AccountBookQuery:
+        //            MainForm.dataSourceList[typeof(List<VAccountBook>)] = BLLFty.Create<ReportBLL>().GetT<VWageBill>("VAccountBook", filter);
+        //            break;
+        //    }
+        //}
+
+        //public static void BillSaveRefresh(String billType)
+        //{
+        //    //单据查询界面数据更新
+        //    if (ClientFactory.itemDetailList.ContainsKey(billType))
+        //    {
+        //        DataQueryPage page = ClientFactory.itemDetailList[billType] as DataQueryPage;
+        //        GetDBData(billType, string.Empty);
+        //        if (billType==MainMenuConstants.OrderQuery)
+        //        {
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.FGStockOutBillQuery))
+        //            {
+        //                DataQueryPage bill = ClientFactory.itemDetailList[MainMenuConstants.FGStockOutBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockOutBill>("VStockOutBill", string.Empty).FindAll(o =>
+        //                    o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == MainMenuConstants.FGStockOutBill).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
+        //                bill.InitGrid(MainForm.GetData(MainMenuConstants.FGStockOutBillQuery));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.ProductionOrderQuery))
+        //            {
+        //                DataQueryPage order = ClientFactory.itemDetailList[MainMenuConstants.ProductionOrderQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VProductionOrder>)] = BLLFty.Create<ReportBLL>().GetT<VProductionOrder>("VProductionOrder", string.Empty).OrderByDescending(o => o.类型).OrderBy(o => o.状态).ToList();
+        //                order.InitGrid(MainForm.GetData(MainMenuConstants.ProductionOrderQuery));
+        //            }
+        //        }
+        //        else if (billType == MainMenuConstants.ProductionOrderQuery)
+        //        {
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.ProductionStockInBillQuery))
+        //            {
+        //                DataQueryPage bill = ClientFactory.itemDetailList[MainMenuConstants.ProductionStockInBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", string.Empty).FindAll(o =>
+        //                    o.类型 == 0 || o.类型 == 1).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
+        //                bill.InitGrid(MainForm.GetData(MainMenuConstants.ProductionStockInBillQuery));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.FGStockInBillQuery))
+        //            {
+        //                DataQueryPage bill = ClientFactory.itemDetailList[MainMenuConstants.FGStockInBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", string.Empty).FindAll(o =>
+        //                    o.类型 == 3).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
+        //                bill.InitGrid(MainForm.GetData(MainMenuConstants.FGStockInBillQuery));
+        //            }
+        //        }
+        //        else if (billType == MainMenuConstants.FSMOrderQuery)
+        //        {
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.FSMStockInBillQuery))
+        //            {
+        //                DataQueryPage bill = ClientFactory.itemDetailList[MainMenuConstants.FSMStockInBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VMaterialStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialStockInBill>("VMaterialStockInBill", string.Empty).FindAll(o =>
+        //                    o.类型 == types.Find(t => t.Type == TypesListConstants.StockInBillType && t.SubType == MainMenuConstants.FSMStockInBill).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
+        //                bill.InitGrid(MainForm.GetData(MainMenuConstants.FSMStockInBillQuery));
+        //            }
+        //        }
+        //        else if (billType == MainMenuConstants.WageBillQuery)
+        //        {
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.WageBillQuery))
+        //            {
+        //                DataQueryPage bill = ClientFactory.itemDetailList[MainMenuConstants.WageBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VWageBill>)] = BLLFty.Create<ReportBLL>().GetT<VWageBill>("VWageBill", string.Empty);
+        //                bill.InitGrid(MainForm.GetData(MainMenuConstants.WageBillQuery));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.SchedulingQuery))
+        //            {
+        //                DataQueryPage bill = ClientFactory.itemDetailList[MainMenuConstants.SchedulingQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VAppointments>)] = BLLFty.Create<ReportBLL>().GetT<VAppointments>("VAppointments", string.Empty);
+        //                bill.InitGrid(MainForm.GetData(MainMenuConstants.SchedulingQuery));
+        //            }
+        //        }
+        //        else if (billType == MainMenuConstants.AttWageBillQuery)
+        //        {
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.AttWageBillQuery))
+        //            {
+        //                DataQueryPage bill = ClientFactory.itemDetailList[MainMenuConstants.AttWageBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VAttWageBill>)] = BLLFty.Create<ReportBLL>().GetT<VAttWageBill>("VAttWageBill", string.Empty);
+        //                bill.InitGrid(MainForm.GetData(MainMenuConstants.AttWageBillQuery));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.AttendanceQuery))
+        //            {
+        //                DataQueryPage bill = ClientFactory.itemDetailList[MainMenuConstants.AttendanceQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VAttAppointments>)] = BLLFty.Create<ReportBLL>().GetT<VAttAppointments>("VAttAppointments", string.Empty);
+        //                bill.InitGrid(MainForm.GetData(MainMenuConstants.AttendanceQuery));
+        //            }
+        //        }
+        //        else if (billType==MainMenuConstants.ReceiptBillQuery)
+        //        {
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.StatementOfAccountToCustomer))
+        //            {
+        //                DataQueryPage billPurchase = ClientFactory.itemDetailList[MainMenuConstants.StatementOfAccountToCustomer] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<StatementOfAccountToCustomerReport>)] = BLLFty.Create<ReportBLL>().GetStatementOfAccountToCustomerReport(string.Empty);
+        //                billPurchase.InitGrid(MainForm.GetData(MainMenuConstants.StatementOfAccountToCustomer));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.ReceiptBillQuery))
+        //            {
+        //                DataQueryPage billPurchase = ClientFactory.itemDetailList[MainMenuConstants.ReceiptBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VReceiptBill>)] = BLLFty.Create<ReceiptBillBLL>().GetReceiptBill();
+        //                billPurchase.InitGrid(MainForm.GetData(MainMenuConstants.ReceiptBillQuery));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.FGStockOutBillQuery))
+        //            {
+        //                DataQueryPage bill = ClientFactory.itemDetailList[MainMenuConstants.FGStockOutBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockOutBill>("VStockOutBill", string.Empty).FindAll(o =>
+        //                    o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == MainMenuConstants.FGStockOutBill).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
+        //                bill.InitGrid(MainForm.GetData(MainMenuConstants.FGStockOutBillQuery));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.SalesReturnBillQuery))
+        //            {
+        //                DataQueryPage billSalesReturn = ClientFactory.itemDetailList[MainMenuConstants.SalesReturnBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", string.Empty).FindAll(o =>
+        //                    o.类型 == 0 || o.类型 == 1).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
+        //                billSalesReturn.InitGrid(MainForm.GetData(MainMenuConstants.SalesReturnBillQuery));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.SFGStockOutBillQuery))
+        //            {
+        //                DataQueryPage billPurchaseReturn = ClientFactory.itemDetailList[MainMenuConstants.SFGStockOutBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockOutBill>("VStockOutBill", string.Empty).FindAll(o =>
+        //                    o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == MainMenuConstants.FGStockOutBill).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
+        //                billPurchaseReturn.InitGrid(MainForm.GetData(MainMenuConstants.SFGStockOutBillQuery));
+        //            }
+        //        }
+        //        else if (billType==MainMenuConstants.PaymentBillQuery)
+        //        {
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.StatementOfAccountToSupplier))
+        //            {
+        //                DataQueryPage billPurchase = ClientFactory.itemDetailList[MainMenuConstants.StatementOfAccountToSupplier] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<StatementOfAccountToSupplierReport>)] = BLLFty.Create<ReportBLL>().GetStatementOfAccountToSupplierReport(string.Empty);
+        //                billPurchase.InitGrid(MainForm.GetData(MainMenuConstants.StatementOfAccountToSupplier));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.PaymentBillQuery))
+        //            {
+        //                DataQueryPage billPurchase = ClientFactory.itemDetailList[MainMenuConstants.PaymentBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VPaymentBill>)] = BLLFty.Create<PaymentBillBLL>().GetPaymentBill();
+        //                billPurchase.InitGrid(MainForm.GetData(MainMenuConstants.PaymentBillQuery));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.SFGStockInBillQuery))
+        //            {
+        //                DataQueryPage billPurchase = ClientFactory.itemDetailList[MainMenuConstants.SFGStockInBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", string.Empty).FindAll(o =>
+        //                    o.类型 == 0 || o.类型 == 1).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
+        //                billPurchase.InitGrid(MainForm.GetData(MainMenuConstants.SFGStockInBillQuery));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.SFGStockOutBillQuery))
+        //            {
+        //                DataQueryPage billPurchaseReturn = ClientFactory.itemDetailList[MainMenuConstants.SFGStockOutBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockOutBill>("VStockOutBill", string.Empty).FindAll(o =>
+        //                    o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == MainMenuConstants.FGStockOutBill).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
+        //                billPurchaseReturn.InitGrid(MainForm.GetData(MainMenuConstants.SFGStockOutBillQuery));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.SalesReturnBillQuery))
+        //            {
+        //                DataQueryPage billSalesReturn = ClientFactory.itemDetailList[MainMenuConstants.SalesReturnBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", string.Empty).FindAll(o =>
+        //                    o.类型 == 0 || o.类型 == 1).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
+        //                billSalesReturn.InitGrid(MainForm.GetData(MainMenuConstants.SalesReturnBillQuery));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.FGStockInBillQuery))
+        //            {
+        //                DataQueryPage billEMS = ClientFactory.itemDetailList[MainMenuConstants.FGStockInBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", string.Empty).FindAll(o =>
+        //                    o.类型 == 0 || o.类型 == 1).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
+        //                billEMS.InitGrid(MainForm.GetData(MainMenuConstants.FGStockInBillQuery));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.EMSDPReturnBillQuery))
+        //            {
+        //                DataQueryPage billEMSDPReturn = ClientFactory.itemDetailList[MainMenuConstants.EMSDPReturnBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockOutBill>("VStockOutBill", string.Empty).FindAll(o =>
+        //                    o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == MainMenuConstants.FGStockOutBill).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
+        //                billEMSDPReturn.InitGrid(MainForm.GetData(MainMenuConstants.EMSDPReturnBillQuery));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.FSMStockInBillQuery))
+        //            {
+        //                DataQueryPage billFSM = ClientFactory.itemDetailList[MainMenuConstants.FSMStockInBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", string.Empty).FindAll(o =>
+        //                    o.类型 == 0 || o.类型 == 1).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
+        //                billFSM.InitGrid(MainForm.GetData(MainMenuConstants.FSMStockInBillQuery));
+        //            }
+        //            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.FSMDPReturnBillQuery))
+        //            {
+        //                DataQueryPage billFSMDPReturn = ClientFactory.itemDetailList[MainMenuConstants.FSMDPReturnBillQuery] as DataQueryPage;
+        //                MainForm.dataSourceList[typeof(List<VStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockOutBill>("VStockOutBill", string.Empty).FindAll(o =>
+        //                    o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == MainMenuConstants.FGStockOutBill).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
+        //                billFSMDPReturn.InitGrid(MainForm.GetData(MainMenuConstants.FSMDPReturnBillQuery));
+        //            }
+        //        }
+        //        page.InitGrid(MainForm.GetData(billType));
+        //    }
+        //}
+
+        //public static void InventoryRefresh()
+        //{
+        //    //刷新库存界面
+        //    if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.InventoryQuery))
+        //    {
+        //        DataQueryPage page = ClientFactory.itemDetailList[MainMenuConstants.InventoryQuery] as DataQueryPage;
+        //        MainForm.dataSourceList[typeof(List<VInventory>)] = BLLFty.Create<InventoryBLL>().GetInventory();
+        //        page.InitGrid(MainForm.GetData(MainMenuConstants.InventoryQuery));
+        //    }
+        //    if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.InventoryGroupByGoodsQuery))
+        //    {
+        //        DataQueryPage page = ClientFactory.itemDetailList[MainMenuConstants.InventoryGroupByGoodsQuery] as DataQueryPage;
+        //        MainForm.dataSourceList[typeof(List<VInventoryGroupByGoods>)] = BLLFty.Create<InventoryBLL>().GetInventoryGroupByGoods();
+        //        page.InitGrid(MainForm.GetData(MainMenuConstants.InventoryGroupByGoodsQuery));
+        //    }
+        //    if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.MaterialInventoryQuery))
+        //    {
+        //        DataQueryPage page = ClientFactory.itemDetailList[MainMenuConstants.MaterialInventoryQuery] as DataQueryPage;
+        //        MainForm.dataSourceList[typeof(List<VMaterialInventory>)] = BLLFty.Create<InventoryBLL>().GetMaterialInventory();
+        //        page.InitGrid(MainForm.GetData(MainMenuConstants.MaterialInventoryQuery));
+        //    }
+        //    if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.InventoryGroupByMaterialQuery))
+        //    {
+        //        DataQueryPage page = ClientFactory.itemDetailList[MainMenuConstants.InventoryGroupByMaterialQuery] as DataQueryPage;
+        //        MainForm.dataSourceList[typeof(List<VMaterialInventoryGroupByGoods>)] = BLLFty.Create<InventoryBLL>().GetMaterialInventoryGroupByGoods();
+        //        page.InitGrid(MainForm.GetData(MainMenuConstants.InventoryGroupByMaterialQuery));
+        //    }
+        //    if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.FSMInventoryQuery))
+        //    {
+        //        DataQueryPage page = ClientFactory.itemDetailList[MainMenuConstants.FSMInventoryQuery] as DataQueryPage;
+        //        MainForm.dataSourceList[typeof(List<VFSMInventoryGroupByGoods>)] = BLLFty.Create<InventoryBLL>().GetFSMInventoryGroupByGoods();
+        //        page.InitGrid(MainForm.GetData(MainMenuConstants.FSMInventoryQuery));
+        //    }
+        //    if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.EMSInventoryQuery))
+        //    {
+        //        DataQueryPage page = ClientFactory.itemDetailList[MainMenuConstants.EMSInventoryQuery] as DataQueryPage;
+        //        MainForm.dataSourceList[typeof(List<VEMSInventoryGroupByGoods>)] = BLLFty.Create<InventoryBLL>().GetEMSInventoryGroupByGoods();
+        //        page.InitGrid(MainForm.GetData(MainMenuConstants.EMSInventoryQuery));
+        //    }
+        //    if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.AccountBookQuery))
+        //    {
+        //        DataQueryPage page = ClientFactory.itemDetailList[MainMenuConstants.AccountBookQuery] as DataQueryPage;
+        //        MainForm.dataSourceList[typeof(List<VAccountBook>)] = BLLFty.Create<InventoryBLL>().GetAccountBook();
+        //        page.InitGrid(MainForm.GetData(MainMenuConstants.AccountBookQuery));
+        //    }
+        //}
+        #endregion
+
+        public static List<T> GetData<T>() where T : class, new()
+        {
+            List<T> list = new List<T>();
+            if (dataSourceList.ContainsKey(typeof(T)))
+                list = (List<T>)MainForm.dataSourceList[typeof(T)];
+            else
+            {
+                list = reportService.GetT<T>(string.Empty);
+                dataSourceList.Add(typeof(T), list);
             }
             return list;
         }
 
-        public static void GetDBData(String menuName,String filter)
+        public static List<T> GetDBData<T>(String filter) where T : class, new()
         {
-            switch (menuName)
+            List<T> list = reportService.GetT<T>(filter);
+            if (dataSourceList.ContainsKey(typeof(T)))
             {
-                case MainMenuConstants.Department:
-                    MainForm.dataSourceList[typeof(List<Department>)] = BLLFty.Create<DepartmentBLL>().GetDepartment();
-                    MainForm.dataSourceList[typeof(List<VDepartment>)] = BLLFty.Create<DepartmentBLL>().GetVDepartment();
-                    break;
-                case MainMenuConstants.Company:
-                    MainForm.dataSourceList[typeof(List<Company>)] = BLLFty.Create<CompanyBLL>().GetCompany();
-                    MainForm.dataSourceList[typeof(List<VCompany>)] = BLLFty.Create<CompanyBLL>().GetVCompany();
-                    break;
-                case MainMenuConstants.Supplier:
-                    MainForm.dataSourceList[typeof(List<Supplier>)] = BLLFty.Create<SupplierBLL>().GetSupplier();
-                    MainForm.dataSourceList[typeof(List<VSupplier>)] = BLLFty.Create<SupplierBLL>().GetVSupplier();
-                    break;
-                case MainMenuConstants.Staff:
-                    MainForm.dataSourceList[typeof(List<UsersInfo>)] = BLLFty.Create<UsersInfoBLL>().GetUsersInfo();
-                    MainForm.dataSourceList[typeof(List<VUsersInfo>)] = BLLFty.Create<UsersInfoBLL>().GetVUsersInfo();
-                    break;
-                case MainMenuConstants.Goods:
-                    MainForm.dataSourceList[typeof(List<Goods>)] = BLLFty.Create<GoodsBLL>().GetGoods();
-                    MainForm.dataSourceList[typeof(List<VGoods>)] = BLLFty.Create<GoodsBLL>().GetVGoods();
-                    MainForm.dataSourceList[typeof(List<VParentGoodsByBOM>)] = BLLFty.Create<GoodsBLL>().GetVParentGoodsByBOM();
-                    break;
-                case MainMenuConstants.Material:
-                    MainForm.dataSourceList[typeof(List<Goods>)] = BLLFty.Create<GoodsBLL>().GetGoods();
-                    MainForm.dataSourceList[typeof(List<VMaterial>)] = BLLFty.Create<GoodsBLL>().GetVMaterial();
-                    MainForm.dataSourceList[typeof(List<VGoodsByBOM>)] = BLLFty.Create<GoodsBLL>().GetVGoodsByBOM();
-                    MainForm.dataSourceList[typeof(List<VGoodsByMoldAllot>)] = BLLFty.Create<GoodsBLL>().GetVGoodsByMoldAllot();
-                    break;
-                case MainMenuConstants.GoodsType:
-                    MainForm.dataSourceList[typeof(List<GoodsType>)] = BLLFty.Create<GoodsTypeBLL>().GetGoodsType();
-                    MainForm.dataSourceList[typeof(List<VGoodsType>)] = BLLFty.Create<GoodsTypeBLL>().GetVGoodsType();
-                    break;
-                case MainMenuConstants.Packaging:
-                    MainForm.dataSourceList[typeof(List<Packaging>)] = BLLFty.Create<PackagingBLL>().GetPackaging();
-                    MainForm.dataSourceList[typeof(List<VPackaging>)] = BLLFty.Create<PackagingBLL>().GetVPackaging();
-                    break;
-                case MainMenuConstants.BOM:
-                case MainMenuConstants.MoldList:
-                case MainMenuConstants.MoldMaterial:
-                case MainMenuConstants.Assemble:
-                    MainForm.dataSourceList[typeof(List<BOM>)] = BLLFty.Create<BOMBLL>().GetBOM();
-                    break;
-                case MainMenuConstants.MoldAllot:
-                    MainForm.dataSourceList[typeof(List<MoldAllot>)] = BLLFty.Create<MoldAllotBLL>().GetMoldAllot();
-                    break;
-                case MainMenuConstants.CustomerSLSalePrice:
-                case MainMenuConstants.SupplierSLSalePrice:
-                    MainForm.dataSourceList[typeof(List<SLSalePrice>)] = BLLFty.Create<SLSalePriceBLL>().GetSLSalePrice();
-                    break;
-                case MainMenuConstants.PermissionSetting:
-                    MainForm.dataSourceList[typeof(List<Permission>)] = BLLFty.Create<PermissionBLL>().GetPermission();
-                    MainForm.dataSourceList[typeof(List<ButtonPermission>)] = BLLFty.Create<PermissionBLL>().GetButtonPermission();
-                    break;
-                case MainMenuConstants.ProductionScheduling:
-                    MainForm.dataSourceList[typeof(List<Appointments>)] = BLLFty.Create<AppointmentsBLL>().GetAppointments();
-                    MainForm.dataSourceList[typeof(List<VAppointments>)] = BLLFty.Create<AppointmentsBLL>().GetVAppointments();
-                    break;
-                case MainMenuConstants.SchClass:
-                    MainForm.dataSourceList[typeof(List<SchClass>)] = BLLFty.Create<SchClassBLL>().GetSchClass();
-                    break;
-                case MainMenuConstants.StaffSchClass:
-                    MainForm.dataSourceList[typeof(List<StaffSchClass>)] = BLLFty.Create<StaffSchClassBLL>().GetStaffSchClass();
-                    MainForm.dataSourceList[typeof(List<VStaffSchClass>)] = BLLFty.Create<StaffSchClassBLL>().GetVStaffSchClass();
-                    break;
-                case MainMenuConstants.StaffAttendance:
-                    MainForm.dataSourceList[typeof(List<AttAppointments>)] = BLLFty.Create<AttAppointmentsBLL>().GetAttAppointments();
-                    MainForm.dataSourceList[typeof(List<VAttAppointments>)] = BLLFty.Create<AttAppointmentsBLL>().GetVAttAppointments();
-                    break;
-
-                case MainMenuConstants.ProductionOrderQuery:
-                    MainForm.dataSourceList[typeof(List<VProductionOrder>)] = BLLFty.Create<ReportBLL>().GetT<VProductionOrder>("VProductionOrder", filter).OrderByDescending(o => o.类型).OrderBy(o => o.状态).ToList();
-                    break;
-                case MainMenuConstants.ProductionStockInBillQuery:
-                    MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", filter).FindAll(o =>
-                        o.类型 == 0 || o.类型 == 1).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
-                    break;
-                case MainMenuConstants.SalesReturnBillQuery:
-                    MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", filter).FindAll(o =>
-                        o.类型 == types.Find(t => t.Type == TypesListConstants.StockInBillType && t.SubType == menuName.Replace("Query", "")).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
-                    break;
-                case MainMenuConstants.FGStockInBillQuery:
-                case MainMenuConstants.EMSReturnBillQuery:
-                case MainMenuConstants.SFGStockInBillQuery:
-                case MainMenuConstants.FSMStockInBillQuery:
-                case MainMenuConstants.FSMReturnBillQuery:
-                case MainMenuConstants.AssembleStockInBillQuery:
-                    MainForm.dataSourceList[typeof(List<VMaterialStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialStockInBill>("VMaterialStockInBill", filter).FindAll(o =>
-                        o.类型 == types.Find(t => t.Type == TypesListConstants.StockInBillType && t.SubType == menuName.Replace("Query", "")).No).OrderBy(o=>o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
-                    MainForm.dataSourceList[typeof(List<SLSalePrice>)] = BLLFty.Create<SLSalePriceBLL>().GetSLSalePrice();
-                    break;
-                case MainMenuConstants.ReturnedMaterialBillQuery:
-                    MainForm.dataSourceList[typeof(List<VMaterialStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialStockInBill>("VMaterialStockInBill", filter).FindAll(o =>
-                        o.类型 == 4 || o.类型 == 7 || o.类型 == 9 || o.类型 == 10).OrderBy(o=>o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
-                    break;
-                case MainMenuConstants.OrderQuery:
-                    MainForm.dataSourceList[typeof(List<VOrder>)] = BLLFty.Create<ReportBLL>().GetT<VOrder>("VOrder", filter).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o=>o.订货单号).ToList();
-                    MainForm.dataSourceList[typeof(List<SLSalePrice>)] = BLLFty.Create<SLSalePriceBLL>().GetSLSalePrice();
-                    break;
-                case MainMenuConstants.FSMOrderQuery:
-                    MainForm.dataSourceList[typeof(List<VFSMOrder>)] = BLLFty.Create<ReportBLL>().GetT<VFSMOrder>("VFSMOrder", filter).OrderByDescending(o => o.类型).OrderBy(o => o.状态).ToList();
-                    break;
-                case MainMenuConstants.FGStockOutBillQuery:
-                    MainForm.dataSourceList[typeof(List<VStockOutBill>)] =BLLFty.Create<ReportBLL>().GetT<VStockOutBill>("VStockOutBill", filter).FindAll(o =>
-                        o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == menuName.Replace("Query", "")).No).OrderBy(o=>o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
-                    MainForm.dataSourceList[typeof(List<SLSalePrice>)] = BLLFty.Create<SLSalePriceBLL>().GetSLSalePrice();
-                    break;
-                case MainMenuConstants.EMSStockOutBillQuery:
-                    MainForm.dataSourceList[typeof(List<VMaterialStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialStockOutBill>("VMaterialStockOutBill", filter).FindAll(o =>
-                        o.类型 == 2 || o.类型 == 3).OrderBy(o=>o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
-                    break;
-                case MainMenuConstants.SFGStockOutBillQuery:
-                case MainMenuConstants.FSMStockOutBillQuery:
-                    MainForm.dataSourceList[typeof(List<VMaterialStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialStockOutBill>("VMaterialStockOutBill", filter).FindAll(o =>
-                        o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == menuName.Replace("Query", "")).No).OrderBy(o=>o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
-                    break;
-                case MainMenuConstants.GetMaterialBillQuery:
-                    MainForm.dataSourceList[typeof(List<VMaterialStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialStockOutBill>("VMaterialStockOutBill", filter).FindAll(o =>
-                        o.类型 == 3 || o.类型 == 5 || o.类型 == 6 || o.类型 == 9).OrderBy(o=>o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
-                    break;
-                case MainMenuConstants.ReceiptBillQuery:
-                    MainForm.dataSourceList[typeof(List<VReceiptBill>)] = BLLFty.Create<ReportBLL>().GetT<VReceiptBill>("VReceiptBill", filter);
-                    break;
-                case MainMenuConstants.StatementOfAccountToCustomer:
-                    MainForm.dataSourceList[typeof(List<StatementOfAccountToCustomerReport>)] = BLLFty.Create<ReportBLL>().GetStatementOfAccountToCustomerReport(filter);
-                    break;
-                case MainMenuConstants.PaymentBillQuery:
-                    MainForm.dataSourceList[typeof(List<VPaymentBill>)] = BLLFty.Create<ReportBLL>().GetT<VPaymentBill>("VPaymentBill", filter);
-                    break;
-                case MainMenuConstants.StatementOfAccountToSupplier:
-                    MainForm.dataSourceList[typeof(List<StatementOfAccountToSupplierReport>)] = BLLFty.Create<ReportBLL>().GetStatementOfAccountToSupplierReport(filter);
-                    break;
-                case MainMenuConstants.SampleStockOutReport:
-                    MainForm.dataSourceList[typeof(List<VSampleStockOut>)] = BLLFty.Create<ReportBLL>().GetT<VSampleStockOut>("VSampleStockOut", filter);
-                    break;
-                case MainMenuConstants.SalesBillSummaryReport:
-                    MainForm.dataSourceList[typeof(List<VSalesBillSummary>)] = BLLFty.Create<ReportBLL>().GetT<VSalesBillSummary>("VSalesBillSummary", filter);
-                    break;
-                case MainMenuConstants.SalesSummaryByCustomerReport:
-                    MainForm.dataSourceList[typeof(List<SalesSummaryByCustomerReport>)] = BLLFty.Create<ReportBLL>().GetSalesSummaryByCustomerReport(filter);
-                    break;
-                case MainMenuConstants.SalesSummaryByGoodsReport:
-                    MainForm.dataSourceList[typeof(List<SalesSummaryByGoodsReport>)] = BLLFty.Create<ReportBLL>().GetSalesSummaryByGoodsReport(filter);
-                    break;
-                case MainMenuConstants.SalesSummaryByGoodsPriceReport:
-                    MainForm.dataSourceList[typeof(List<SalesSummaryByGoodsPriceReport>)] = BLLFty.Create<ReportBLL>().GetSalesSummaryByGoodsPriceReport(filter);
-                    break;
-                case MainMenuConstants.GoodsSalesSummaryByCustomerReport:
-                    MainForm.dataSourceList[typeof(List<GoodsSalesSummaryByCustomerReport>)] = BLLFty.Create<ReportBLL>().GetGoodsSalesSummaryByCustomerReport(filter);
-                    break;
-                case MainMenuConstants.SchedulingQuery:
-                    MainForm.dataSourceList[typeof(List<VAppointments>)] = BLLFty.Create<ReportBLL>().GetT<VAppointments>("VAppointments", filter);
-                    break;
-                case MainMenuConstants.WageBillQuery:
-                    MainForm.dataSourceList[typeof(List<VWageBill>)] = BLLFty.Create<ReportBLL>().GetT<VWageBill>("VWageBill", filter);
-                    break;
-                case MainMenuConstants.AttWageBillQuery:
-                    MainForm.dataSourceList[typeof(List<VAttWageBill>)] = BLLFty.Create<ReportBLL>().GetT<VAttWageBill>("VAttWageBill", filter);
-                    break;
-                case MainMenuConstants.InventoryQuery:
-                    MainForm.dataSourceList[typeof(List<VInventory>)] = BLLFty.Create<ReportBLL>().GetT<VInventory>("VInventory", filter);
-                    break;
-                case MainMenuConstants.InventoryGroupByGoodsQuery:
-                    MainForm.dataSourceList[typeof(List<VInventoryGroupByGoods>)] = BLLFty.Create<ReportBLL>().GetT<VInventoryGroupByGoods>("VInventoryGroupByGoods", filter);
-                    break;
-                case MainMenuConstants.MaterialInventoryQuery:
-                    MainForm.dataSourceList[typeof(List<VMaterialInventory>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialInventory>("VMaterialInventory", filter);
-                    break;
-                case MainMenuConstants.InventoryGroupByMaterialQuery:
-                    MainForm.dataSourceList[typeof(List<VMaterialInventoryGroupByGoods>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialInventoryGroupByGoods>("VMaterialInventoryGroupByGoods", filter);
-                    break;
-                case MainMenuConstants.FSMInventoryQuery:
-                    MainForm.dataSourceList[typeof(List<VFSMInventoryGroupByGoods>)] = BLLFty.Create<ReportBLL>().GetT<VFSMInventoryGroupByGoods>("VFSMInventoryGroupByGoods", filter);
-                    break;
-                case MainMenuConstants.EMSInventoryQuery:
-                    MainForm.dataSourceList[typeof(List<VEMSInventoryGroupByGoods>)] = BLLFty.Create<ReportBLL>().GetT<VEMSInventoryGroupByGoods>("VEMSInventoryGroupByGoods", filter);
-                    break;
-                case MainMenuConstants.AccountBookQuery:
-                    MainForm.dataSourceList[typeof(List<VAccountBook>)] = BLLFty.Create<ReportBLL>().GetT<VWageBill>("VAccountBook", filter);
-                    break;
+                dataSourceList[typeof(T)] = list;
             }
-        }
-
-        public static void BillSaveRefresh(String billType)
-        {
-            //单据查询界面数据更新
-            if (MainForm.itemDetailList.ContainsKey(billType))
-            {
-                DataQueryPage page = MainForm.itemDetailList[billType] as DataQueryPage;
-                GetDBData(billType, string.Empty);
-                if (billType==MainMenuConstants.OrderQuery)
-                {
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.FGStockOutBillQuery))
-                    {
-                        DataQueryPage bill = MainForm.itemDetailList[MainMenuConstants.FGStockOutBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockOutBill>("VStockOutBill", string.Empty).FindAll(o =>
-                            o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == MainMenuConstants.FGStockOutBill).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
-                        bill.InitGrid(MainForm.GetData(MainMenuConstants.FGStockOutBillQuery));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.ProductionOrderQuery))
-                    {
-                        DataQueryPage order = MainForm.itemDetailList[MainMenuConstants.ProductionOrderQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VProductionOrder>)] = BLLFty.Create<ReportBLL>().GetT<VProductionOrder>("VProductionOrder", string.Empty).OrderByDescending(o => o.类型).OrderBy(o => o.状态).ToList();
-                        order.InitGrid(MainForm.GetData(MainMenuConstants.ProductionOrderQuery));
-                    }
-                }
-                else if (billType == MainMenuConstants.ProductionOrderQuery)
-                {
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.ProductionStockInBillQuery))
-                    {
-                        DataQueryPage bill = MainForm.itemDetailList[MainMenuConstants.ProductionStockInBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", string.Empty).FindAll(o =>
-                            o.类型 == 0 || o.类型 == 1).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
-                        bill.InitGrid(MainForm.GetData(MainMenuConstants.ProductionStockInBillQuery));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.FGStockInBillQuery))
-                    {
-                        DataQueryPage bill = MainForm.itemDetailList[MainMenuConstants.FGStockInBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", string.Empty).FindAll(o =>
-                            o.类型 == 3).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
-                        bill.InitGrid(MainForm.GetData(MainMenuConstants.FGStockInBillQuery));
-                    }
-                }
-                else if (billType == MainMenuConstants.FSMOrderQuery)
-                {
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.FSMStockInBillQuery))
-                    {
-                        DataQueryPage bill = MainForm.itemDetailList[MainMenuConstants.FSMStockInBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VMaterialStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VMaterialStockInBill>("VMaterialStockInBill", string.Empty).FindAll(o =>
-                            o.类型 == types.Find(t => t.Type == TypesListConstants.StockInBillType && t.SubType == MainMenuConstants.FSMStockInBill).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
-                        bill.InitGrid(MainForm.GetData(MainMenuConstants.FSMStockInBillQuery));
-                    }
-                }
-                else if (billType == MainMenuConstants.WageBillQuery)
-                {
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.WageBillQuery))
-                    {
-                        DataQueryPage bill = MainForm.itemDetailList[MainMenuConstants.WageBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VWageBill>)] = BLLFty.Create<ReportBLL>().GetT<VWageBill>("VWageBill", string.Empty);
-                        bill.InitGrid(MainForm.GetData(MainMenuConstants.WageBillQuery));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.SchedulingQuery))
-                    {
-                        DataQueryPage bill = MainForm.itemDetailList[MainMenuConstants.SchedulingQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VAppointments>)] = BLLFty.Create<ReportBLL>().GetT<VAppointments>("VAppointments", string.Empty);
-                        bill.InitGrid(MainForm.GetData(MainMenuConstants.SchedulingQuery));
-                    }
-                }
-                else if (billType == MainMenuConstants.AttWageBillQuery)
-                {
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.AttWageBillQuery))
-                    {
-                        DataQueryPage bill = MainForm.itemDetailList[MainMenuConstants.AttWageBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VAttWageBill>)] = BLLFty.Create<ReportBLL>().GetT<VAttWageBill>("VAttWageBill", string.Empty);
-                        bill.InitGrid(MainForm.GetData(MainMenuConstants.AttWageBillQuery));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.AttendanceQuery))
-                    {
-                        DataQueryPage bill = MainForm.itemDetailList[MainMenuConstants.AttendanceQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VAttAppointments>)] = BLLFty.Create<ReportBLL>().GetT<VAttAppointments>("VAttAppointments", string.Empty);
-                        bill.InitGrid(MainForm.GetData(MainMenuConstants.AttendanceQuery));
-                    }
-                }
-                else if (billType==MainMenuConstants.ReceiptBillQuery)
-                {
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.StatementOfAccountToCustomer))
-                    {
-                        DataQueryPage billPurchase = MainForm.itemDetailList[MainMenuConstants.StatementOfAccountToCustomer] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<StatementOfAccountToCustomerReport>)] = BLLFty.Create<ReportBLL>().GetStatementOfAccountToCustomerReport(string.Empty);
-                        billPurchase.InitGrid(MainForm.GetData(MainMenuConstants.StatementOfAccountToCustomer));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.ReceiptBillQuery))
-                    {
-                        DataQueryPage billPurchase = MainForm.itemDetailList[MainMenuConstants.ReceiptBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VReceiptBill>)] = BLLFty.Create<ReceiptBillBLL>().GetReceiptBill();
-                        billPurchase.InitGrid(MainForm.GetData(MainMenuConstants.ReceiptBillQuery));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.FGStockOutBillQuery))
-                    {
-                        DataQueryPage bill = MainForm.itemDetailList[MainMenuConstants.FGStockOutBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockOutBill>("VStockOutBill", string.Empty).FindAll(o =>
-                            o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == MainMenuConstants.FGStockOutBill).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
-                        bill.InitGrid(MainForm.GetData(MainMenuConstants.FGStockOutBillQuery));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.SalesReturnBillQuery))
-                    {
-                        DataQueryPage billSalesReturn = MainForm.itemDetailList[MainMenuConstants.SalesReturnBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", string.Empty).FindAll(o =>
-                            o.类型 == 0 || o.类型 == 1).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
-                        billSalesReturn.InitGrid(MainForm.GetData(MainMenuConstants.SalesReturnBillQuery));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.SFGStockOutBillQuery))
-                    {
-                        DataQueryPage billPurchaseReturn = MainForm.itemDetailList[MainMenuConstants.SFGStockOutBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockOutBill>("VStockOutBill", string.Empty).FindAll(o =>
-                            o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == MainMenuConstants.FGStockOutBill).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
-                        billPurchaseReturn.InitGrid(MainForm.GetData(MainMenuConstants.SFGStockOutBillQuery));
-                    }
-                }
-                else if (billType==MainMenuConstants.PaymentBillQuery)
-                {
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.StatementOfAccountToSupplier))
-                    {
-                        DataQueryPage billPurchase = MainForm.itemDetailList[MainMenuConstants.StatementOfAccountToSupplier] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<StatementOfAccountToSupplierReport>)] = BLLFty.Create<ReportBLL>().GetStatementOfAccountToSupplierReport(string.Empty);
-                        billPurchase.InitGrid(MainForm.GetData(MainMenuConstants.StatementOfAccountToSupplier));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.PaymentBillQuery))
-                    {
-                        DataQueryPage billPurchase = MainForm.itemDetailList[MainMenuConstants.PaymentBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VPaymentBill>)] = BLLFty.Create<PaymentBillBLL>().GetPaymentBill();
-                        billPurchase.InitGrid(MainForm.GetData(MainMenuConstants.PaymentBillQuery));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.SFGStockInBillQuery))
-                    {
-                        DataQueryPage billPurchase = MainForm.itemDetailList[MainMenuConstants.SFGStockInBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", string.Empty).FindAll(o =>
-                            o.类型 == 0 || o.类型 == 1).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
-                        billPurchase.InitGrid(MainForm.GetData(MainMenuConstants.SFGStockInBillQuery));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.SFGStockOutBillQuery))
-                    {
-                        DataQueryPage billPurchaseReturn = MainForm.itemDetailList[MainMenuConstants.SFGStockOutBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockOutBill>("VStockOutBill", string.Empty).FindAll(o =>
-                            o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == MainMenuConstants.FGStockOutBill).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
-                        billPurchaseReturn.InitGrid(MainForm.GetData(MainMenuConstants.SFGStockOutBillQuery));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.SalesReturnBillQuery))
-                    {
-                        DataQueryPage billSalesReturn = MainForm.itemDetailList[MainMenuConstants.SalesReturnBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", string.Empty).FindAll(o =>
-                            o.类型 == 0 || o.类型 == 1).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
-                        billSalesReturn.InitGrid(MainForm.GetData(MainMenuConstants.SalesReturnBillQuery));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.FGStockInBillQuery))
-                    {
-                        DataQueryPage billEMS = MainForm.itemDetailList[MainMenuConstants.FGStockInBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", string.Empty).FindAll(o =>
-                            o.类型 == 0 || o.类型 == 1).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
-                        billEMS.InitGrid(MainForm.GetData(MainMenuConstants.FGStockInBillQuery));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.EMSDPReturnBillQuery))
-                    {
-                        DataQueryPage billEMSDPReturn = MainForm.itemDetailList[MainMenuConstants.EMSDPReturnBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockOutBill>("VStockOutBill", string.Empty).FindAll(o =>
-                            o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == MainMenuConstants.FGStockOutBill).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
-                        billEMSDPReturn.InitGrid(MainForm.GetData(MainMenuConstants.EMSDPReturnBillQuery));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.FSMStockInBillQuery))
-                    {
-                        DataQueryPage billFSM = MainForm.itemDetailList[MainMenuConstants.FSMStockInBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VStockInBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockInBill>("VStockInBill", string.Empty).FindAll(o =>
-                            o.类型 == 0 || o.类型 == 1).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.入库单号).ToList();
-                        billFSM.InitGrid(MainForm.GetData(MainMenuConstants.FSMStockInBillQuery));
-                    }
-                    if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.FSMDPReturnBillQuery))
-                    {
-                        DataQueryPage billFSMDPReturn = MainForm.itemDetailList[MainMenuConstants.FSMDPReturnBillQuery] as DataQueryPage;
-                        MainForm.dataSourceList[typeof(List<VStockOutBill>)] = BLLFty.Create<ReportBLL>().GetT<VStockOutBill>("VStockOutBill", string.Empty).FindAll(o =>
-                            o.类型 == types.Find(t => t.Type == TypesListConstants.StockOutBillType && t.SubType == MainMenuConstants.FGStockOutBill).No).OrderBy(o => o.SerialNo).OrderBy(o => o.状态).OrderByDescending(o => o.出库单号).ToList();
-                        billFSMDPReturn.InitGrid(MainForm.GetData(MainMenuConstants.FSMDPReturnBillQuery));
-                    }
-                }
-                page.InitGrid(MainForm.GetData(billType));
-            }
-        }
-
-        public static void InventoryRefresh()
-        {
-            //刷新库存界面
-            if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.InventoryQuery))
-            {
-                DataQueryPage page = MainForm.itemDetailList[MainMenuConstants.InventoryQuery] as DataQueryPage;
-                MainForm.dataSourceList[typeof(List<VInventory>)] = BLLFty.Create<InventoryBLL>().GetInventory();
-                page.InitGrid(MainForm.GetData(MainMenuConstants.InventoryQuery));
-            }
-            if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.InventoryGroupByGoodsQuery))
-            {
-                DataQueryPage page = MainForm.itemDetailList[MainMenuConstants.InventoryGroupByGoodsQuery] as DataQueryPage;
-                MainForm.dataSourceList[typeof(List<VInventoryGroupByGoods>)] = BLLFty.Create<InventoryBLL>().GetInventoryGroupByGoods();
-                page.InitGrid(MainForm.GetData(MainMenuConstants.InventoryGroupByGoodsQuery));
-            }
-            if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.MaterialInventoryQuery))
-            {
-                DataQueryPage page = MainForm.itemDetailList[MainMenuConstants.MaterialInventoryQuery] as DataQueryPage;
-                MainForm.dataSourceList[typeof(List<VMaterialInventory>)] = BLLFty.Create<InventoryBLL>().GetMaterialInventory();
-                page.InitGrid(MainForm.GetData(MainMenuConstants.MaterialInventoryQuery));
-            }
-            if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.InventoryGroupByMaterialQuery))
-            {
-                DataQueryPage page = MainForm.itemDetailList[MainMenuConstants.InventoryGroupByMaterialQuery] as DataQueryPage;
-                MainForm.dataSourceList[typeof(List<VMaterialInventoryGroupByGoods>)] = BLLFty.Create<InventoryBLL>().GetMaterialInventoryGroupByGoods();
-                page.InitGrid(MainForm.GetData(MainMenuConstants.InventoryGroupByMaterialQuery));
-            }
-            if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.FSMInventoryQuery))
-            {
-                DataQueryPage page = MainForm.itemDetailList[MainMenuConstants.FSMInventoryQuery] as DataQueryPage;
-                MainForm.dataSourceList[typeof(List<VFSMInventoryGroupByGoods>)] = BLLFty.Create<InventoryBLL>().GetFSMInventoryGroupByGoods();
-                page.InitGrid(MainForm.GetData(MainMenuConstants.FSMInventoryQuery));
-            }
-            if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.EMSInventoryQuery))
-            {
-                DataQueryPage page = MainForm.itemDetailList[MainMenuConstants.EMSInventoryQuery] as DataQueryPage;
-                MainForm.dataSourceList[typeof(List<VEMSInventoryGroupByGoods>)] = BLLFty.Create<InventoryBLL>().GetEMSInventoryGroupByGoods();
-                page.InitGrid(MainForm.GetData(MainMenuConstants.EMSInventoryQuery));
-            }
-            if (MainForm.itemDetailList.ContainsKey(MainMenuConstants.AccountBookQuery))
-            {
-                DataQueryPage page = MainForm.itemDetailList[MainMenuConstants.AccountBookQuery] as DataQueryPage;
-                MainForm.dataSourceList[typeof(List<VAccountBook>)] = BLLFty.Create<InventoryBLL>().GetAccountBook();
-                page.InitGrid(MainForm.GetData(MainMenuConstants.AccountBookQuery));
-            }
-        }
-
-        public static void DataPageRefresh(String menuName)
-        {
-            if (menuName == string.Empty)
-                GetDataSource();
             else
-                GetDBData(menuName, string.Empty);
-            foreach (KeyValuePair<String, IItemDetail> kvp in itemDetailList)
             {
-                if (kvp.Value is DataQueryPage)
-                {
-                    DataQueryPage page = ((DataQueryPage)kvp.Value);
-                    GetData(kvp.Key);
-                    page.InitGrid(list);
-                }
-                else if (kvp.Value is GoodsEditPage)
-                {
-                    GoodsEditPage page = kvp.Value as GoodsEditPage;
-                    if (page != null)
-                        page.BindData();
-                }
-                //单据编辑界面数据更新
-                else if (kvp.Value is OrderEditPage)
-                {
-                    OrderEditPage page = kvp.Value as OrderEditPage;
-                    if (page != null)
-                        page.BindData(Guid.Empty);
-                }
-                else if (kvp.Value is StockInBillPage)
-                {
-                    StockInBillPage page = kvp.Value as StockInBillPage;
-                    if (page != null)
-                        page.BindData(Guid.Empty);
-                }
-                else if (kvp.Value is StockOutBillPage)
-                {
-                    StockOutBillPage page = kvp.Value as StockOutBillPage;
-                    if (page != null)
-                        page.BindData(Guid.Empty);
-                }
-                else if (kvp.Value is ReceiptBillPage)
-                {
-                    ReceiptBillPage page = kvp.Value as ReceiptBillPage;
-                    if (page != null)
-                        page.BindData(Guid.Empty);
-                }
-                else if (kvp.Value is PaymentBillPage)
-                {
-                    PaymentBillPage page = kvp.Value as PaymentBillPage;
-                    if (page != null)
-                        page.BindData(Guid.Empty);
-                }
-                else if (kvp.Value is BOMEditPage)
-                {
-                    BOMEditPage page = kvp.Value as BOMEditPage;
-                    if (page != null)
-                        page.BindData();
-                }
-                else if (kvp.Value is MoldAllotPage)
-                {
-                    MoldAllotPage page = kvp.Value as MoldAllotPage;
-                    if (page != null)
-                        page.BindData();
-                }
-                else if (kvp.Value is SLSalePricePage)
-                {
-                    SLSalePricePage page = kvp.Value as SLSalePricePage;
-                    if (page != null)
-                        page.BindData();
-                }
-                else if (kvp.Value is PermissionSettingPage)
-                {
-                    PermissionSettingPage page = kvp.Value as PermissionSettingPage;
-                    if (page != null)
-                        page.BindData();
-                }
-                else if (kvp.Value is ProductionSchedulingPage)
-                {
-                    ProductionSchedulingPage page = kvp.Value as ProductionSchedulingPage;
-                    if (page != null)
-                        page.BindData();
-                }
-                else if (kvp.Value is WageBillPage)
-                {
-                    WageBillPage page = kvp.Value as WageBillPage;
-                    if (page != null)
-                        page.BindData(Guid.Empty);
-                }
-                else if (kvp.Value is AttendanceSchedulingPage)
-                {
-                    AttendanceSchedulingPage page = kvp.Value as AttendanceSchedulingPage;
-                    if (page != null)
-                        page.BindData();
-                }
-                else if (kvp.Value is StaffSchClassPage)
-                {
-                    StaffSchClassPage page = kvp.Value as StaffSchClassPage;
-                    if (page != null)
-                        page.BindData();
-                }
-                else if (kvp.Value is AttWageBillPage)
-                {
-                    AttWageBillPage page = kvp.Value as AttWageBillPage;
-                    if (page != null)
-                        page.BindData(Guid.Empty);
-                }
+                dataSourceList.Add(typeof(T), list);
             }
-        }
-
-        public static void DataQueryPageRefresh()
-        {
-            GetDataSource();
-            foreach (KeyValuePair<String, IItemDetail> kvp in itemDetailList)
-            {
-                if (kvp.Value is DataQueryPage)
-                {
-                    DataQueryPage page = ((DataQueryPage)kvp.Value);
-                    GetData(kvp.Key);
-                    page.InitGrid(list);
-                }
-                else if (kvp.Value is GoodsEditPage)
-                {
-                    GoodsEditPage page = kvp.Value as GoodsEditPage;
-                    if (page != null)
-                        page.BindData();
-                }
-            }
+            return list;
         }
 
         public static void SetQueryPageGridColumn(DevExpress.XtraGrid.Views.Grid.GridView gv, DBML.MainMenu menu)

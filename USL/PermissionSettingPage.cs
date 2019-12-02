@@ -25,12 +25,12 @@ namespace USL
         public PermissionSettingPage()
         {
             InitializeComponent();
-            BindData();
+            BindData(null);
             
             layoutView.ShowFindPanel();
         }
 
-        public void BindData()
+        public void BindData(object obj)
         {
             vUsersInfoBindingSource.DataSource = BLLFty.Create<UsersInfoBLL>().GetLoginUsersInfo();// MainForm.dataSourceList[typeof(List<VUsersInfo>)];
             dsPermission = IListDataSet.ToDataSet<Permission>(((List<Permission>)MainForm.dataSourceList[typeof(List<Permission>)]).FindAll(o => o.UserID == MainForm.usersInfo.ID));

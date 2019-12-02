@@ -52,7 +52,7 @@ namespace Utility
 
             }
 
-            catch (Exception e)
+            catch 
             {
 
                 return "uMnIk";

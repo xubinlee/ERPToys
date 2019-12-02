@@ -21,5 +21,7 @@ namespace IBase
         bool Audit();
 
         void Print();
+
+        void BindData(object obj);
     }
 }

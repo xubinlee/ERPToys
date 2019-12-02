@@ -1,0 +1,8 @@
+D:\ERPToys\EDMX.dll.config
+D:\ERPToys\EDMX.dll
+D:\ERPToys\EDMX.pdb
+D:\Project\ERPToys\EDMX\obj\Debug\EDMX.csproj.CoreCompileInputs.cache
+D:\Project\ERPToys\EDMX\obj\Debug\EDMX.csproj.CopyComplete
+D:\Project\ERPToys\EDMX\obj\Debug\EDMX.dll
+D:\Project\ERPToys\EDMX\obj\Debug\EDMX.pdb
+D:\Project\ERPToys\EDMX\obj\Debug\EDMX.csprojAssemblyReference.cache
