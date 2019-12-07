@@ -21,44 +21,54 @@ namespace WcfService
     public class BaseService : ServiceBase, IBaseService
     {
         #region 添加
-        public int Add(object model)
+        public int Add(SerializedParam param)
         {
-            using (ErpContext db = EDMXFty.Dc)
+            using (ERPToysContext db = EDMXFty.Dc)
             {
-                return DALFty.Create<BaseDAL>().Add(db, model);
+                Parameter p = param.GetParameter();
+                return DALFty.Create<BaseDAL>().Add(db, p.entityType, p.model);
             }
         }
-        public void AddByBulkCopy(string entityType, IList list)
+        public void AddByBulkCopy(SerializedParam param)
         {
-            using (ErpContext db = EDMXFty.Dc)
+            using (ERPToysContext db = EDMXFty.Dc)
             {
-                DALFty.Create<BaseDAL>().AddByBulkCopy(db, entityType, list);
+                Parameter p = param.GetParameter();
+                DALFty.Create<BaseDAL>().AddByBulkCopy(db, p.entityType, p.list);
             }
         }
         #endregion
 
         #region 删除
-
+        /// <summary>
+        /// 删除(适用于先查询后删除的单个实体)
+        /// </summary>
+        /// <param name="model">需要删除的实体</param>
+        /// <returns></returns>
+        public int Delete(SerializedParam param)
+        {
+            using (ERPToysContext db = EDMXFty.Dc)
+            {
+                Parameter p = param.GetParameter();
+                return DALFty.Create<BaseDAL>().Delete(db, p.entityType, p.model);
+            }
+        }
         #endregion
 
         #region 修改
         public int Modify(SerializedParam param)
         {
-            using (ErpContext db = EDMXFty.Dc)
+            using (ERPToysContext db = EDMXFty.Dc)
             {
                 Parameter p = param.GetParameter();
-                if (p == null)
-                    return 0;
                 return DALFty.Create<BaseDAL>().Modify(db, p.model);
             }
         }
         public int ModifyByList(SerializedParam param)
         {
-            using (ErpContext db = EDMXFty.Dc)
+            using (ERPToysContext db = EDMXFty.Dc)
             {
                 Parameter p = param.GetParameter();
-                if (p == null)
-                    return 0;
                 return DALFty.Create<BaseDAL>().ModifyByList(db, p.list);
             }
         }
@@ -66,31 +76,60 @@ namespace WcfService
 
         #region 查询
 
-        public string ExecuteQuery(string entityType, string sql, params SerializedSqlParam[] serPars)
+        private SerializedParam QueryableResult(IQueryable queryable)
         {
-            using (ErpContext db = EDMXFty.Dc)
+            Parameter parameter = new Parameter();
+            // IQueryable反序列化回报异常，直接在客户端通过List<T>反序列化
+            //parameter.entityType = typeof(IQueryable);
+            parameter.queryable = queryable;
+            SerializedParam param = new SerializedParam(parameter);
+            return param;
+        }
+
+        public SerializedParam ExecuteQuery(Type type, string sql, params SerializedSqlParam[] serPars)
+        {
+            using (ERPToysContext db = EDMXFty.Dc)
             {
                 SqlParameter[] pars = new SqlParameter[serPars.Length];
                 for (int i = 0; i < serPars.Length; i++)
                 {
                     pars[i] = (SqlParameter)serPars[i];
                 }
-                return DALFty.Create<BaseDAL>().ExecuteQuery(db, entityType, sql, pars);
+                IQueryable queryable = DALFty.Create<BaseDAL>().ExecuteQuery(db, type, sql, pars);
+                return QueryableResult(queryable);
             }
         }
-        public string ExecuteQueryByFilter(string entityType, string filter)
+        public SerializedParam ExecuteQueryByFilter(SerializedParam param)
         {
-            using (ErpContext db = EDMXFty.Dc)
+            using (ERPToysContext db = EDMXFty.Dc)
             {
-                return DALFty.Create<BaseDAL>().ExecuteQuery(db, entityType, filter);
+                Parameter p = param.GetParameter();
+                IList list = DALFty.Create<BaseDAL>().ExecuteQuery(db, p.entityType, p.filter);
+                Parameter parameter = new Parameter();
+                parameter.entityType = typeof(IList);
+                parameter.list = list;
+                SerializedParam result = new SerializedParam(parameter);
+                return result;
             }
         }
 
-        public string GetModelList(string entityType)
+        public SerializedParam GetListByNoTracking(SerializedParam param)
         {
-            using (ErpContext db = EDMXFty.Dc)
+            using (ERPToysContext db = EDMXFty.Dc)
             {
-                return DALFty.Create<BaseDAL>().GetModelList(db, entityType);
+                Parameter p = param.GetParameter();
+                IQueryable queryable = DALFty.Create<BaseDAL>().GetListByNoTracking(db, p.entityType);
+                return QueryableResult(queryable);
+            }
+        }
+
+        public SerializedParam GetModelList(SerializedParam param)
+        {
+            using (ERPToysContext db = EDMXFty.Dc)
+            {
+                Parameter p = param.GetParameter();
+                IQueryable queryable = DALFty.Create<BaseDAL>().GetModelList(db, p.entityType);
+                return QueryableResult(queryable);
             }
         }
         #endregion

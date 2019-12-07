@@ -16,11 +16,13 @@ using CommonLibrary;
 using Utility;
 using DevExpress.XtraGrid.Views.Grid;
 using System.Collections;
+using Utility.Interceptor;
 
 namespace USL
 {
     public partial class MoldAllotPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         List<MoldAllot> moldAllotList;
         List<MoldAllot> supplierMoldAllotList;
         Guid focusedID;
@@ -220,13 +222,13 @@ namespace USL
         private void gridView_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             Save();
-            ClientFactory.DataPageRefresh<MoldAllot>();
+            clientFactory.DataPageRefresh<MoldAllot>();
         }
 
         private void gridView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
             Save();
-            ClientFactory.DataPageRefresh<MoldAllot>();
+            clientFactory.DataPageRefresh<MoldAllot>();
         }
     }
 }

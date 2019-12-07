@@ -9,3 +9,4 @@ D:\Project\ERPToys\Factory\obj\Release\Factory.csproj.CoreCompileInputs.cache
 D:\Project\ERPToys\Factory\obj\Release\Factory.csproj.CopyComplete
 D:\Project\ERPToys\Factory\obj\Release\Factory.dll
 D:\Project\ERPToys\Factory\obj\Release\Factory.pdb
+D:\ERPToys\NLog.config

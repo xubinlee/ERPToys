@@ -17,11 +17,13 @@ using CommonLibrary;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraReports.UI;
+using Utility.Interceptor;
 
 namespace USL
 {
     public partial class PaymentBillPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail, IExtensions
     {
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         PaymentBillHd hd;
         List<VPaymentBillDtl> dtl;
         List<StatementOfAccountToSupplierReport> soa;
@@ -165,7 +167,7 @@ namespace USL
             //    else
             //        hd.BillNo = "FK" + DateTime.Now.ToString("yyyyMMdd") + "001";
             //}
-            hd.BillNo = MainForm.GetBillMaxBillNo(MainMenuConstants.PaymentBill, "FK");
+            hd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.PaymentBill, true).MaxBillNo;
             meLastAMT.EditValue = null;
             meTotalAMT.EditValue = null;
             headID = Guid.Empty;
@@ -202,7 +204,7 @@ namespace USL
                     }
                     //QueryPageRefresh();
                     //MainForm.DataQueryPageRefresh();
-                    ClientFactory.DataPageRefresh<VPaymentBill>();
+                    clientFactory.DataPageRefresh<VPaymentBill>();
                     paymentBillHdBindingSource.DataSource = hd = new PaymentBillHd();
                     vPaymentBillDtlBindingSource.DataSource = dtl = new List<VPaymentBillDtl>();
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "删除成功");
@@ -341,7 +343,7 @@ namespace USL
                 headID = hd.ID;
                 ////MainForm.DataQueryPageRefresh();
                 //MainForm.BillSaveRefresh(MainMenuConstants.PaymentBillQuery);
-                ClientFactory.DataPageRefresh<VPaymentBill>();
+                clientFactory.DataPageRefresh<VPaymentBill>();
                 statementOfAccountToSupplierReportBindingSource.DataSource = soa = //BLLFty.Create<ReportBLL>().GetStatementOfAccountToSupplierReport(string.Format("付款单号='{0}'", hd.BillNo));
                     ((List<StatementOfAccountToSupplierReport>)MainForm.dataSourceList[typeof(List<StatementOfAccountToSupplierReport>)]).FindAll(o => o.付款单号 == hd.BillNo);
                 if (type == TypesListConstants.FSMPayment)
@@ -489,7 +491,7 @@ namespace USL
             finally
             {
                 //MainForm.BillSaveRefresh(MainMenuConstants.PaymentBillQuery);
-                ClientFactory.DataPageRefresh<VPaymentBill>();
+                clientFactory.DataPageRefresh<VPaymentBill>();
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
         }

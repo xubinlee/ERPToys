@@ -20,11 +20,13 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using System.Data.Linq;
 using DevExpress.XtraGrid.Views.WinExplorer;
 using DevExpress.XtraGrid.Views.Layout;
+using Utility.Interceptor;
 
 namespace USL
 {
     public partial class StaffSchClassPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         Guid focused;
         //List<UsersInfo> focusedUsers;
         List<StaffSchClass> staffSchClassList;
@@ -180,8 +182,8 @@ namespace USL
                 //addNew = false;
                 //刷新数据
                 //PageRefresh();
-                ClientFactory.DataPageRefresh<StaffSchClass>();
-                ClientFactory.DataPageRefresh<VStaffSchClass>();
+                clientFactory.DataPageRefresh<StaffSchClass>();
+                clientFactory.DataPageRefresh<VStaffSchClass>();
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 return true;
             }
@@ -209,13 +211,13 @@ namespace USL
         private void layoutView_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             Save();
-            ClientFactory.DataPageRefresh<VStaffSchClass>();
+            clientFactory.DataPageRefresh<VStaffSchClass>();
         }
 
         private void layoutView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
             Save();
-            ClientFactory.DataPageRefresh<VStaffSchClass>();
+            clientFactory.DataPageRefresh<VStaffSchClass>();
         }
 
         private void layoutView_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)

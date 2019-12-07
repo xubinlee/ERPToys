@@ -16,11 +16,13 @@ using Utility;
 using CommonLibrary;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Columns;
+using Utility.Interceptor;
 
 namespace USL
 {
     public partial class AttWageBillPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail, IExtensions
     {
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         AttWageBillHd hd;
         List<USPAttWageBillDtl> dtl;
         List<VAttAppointments> apt;
@@ -94,7 +96,7 @@ namespace USL
         {
             attWageBillHdBindingSource.DataSource = hd = new AttWageBillHd();
             uSPAttWageBillDtlBindingSource.DataSource = dtl = new List<USPAttWageBillDtl>();
-            hd.BillNo = MainForm.GetBillMaxBillNo(MainMenuConstants.WageBill, "GZ");
+            hd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.WageBill, true).MaxBillNo;
             meLastAMT.EditValue = null;
             meTotalAMT.EditValue = null;
             headID = Guid.Empty;
@@ -130,7 +132,7 @@ namespace USL
 
                     }
                     //刷新查询界面
-                    ClientFactory.DataPageRefresh<VAttWageBill>();
+                    clientFactory.DataPageRefresh<VAttWageBill>();
                     attWageBillHdBindingSource.DataSource = hd = new AttWageBillHd();
                     uSPAttWageBillDtlBindingSource.DataSource = dtl = new List<USPAttWageBillDtl>();
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "删除成功");
@@ -248,7 +250,7 @@ namespace USL
                         o.日期.Value.ToString("yyyy-MM").Equals(hd.YearMonth));
                 //DataQueryPageRefresh();
                 //QueryPageRefresh();
-                ClientFactory.DataPageRefresh<VAttWageBill>();
+                clientFactory.DataPageRefresh<VAttWageBill>();
                 //MainForm.BillSaveRefresh(MainMenuConstants.AttWageBillQuery);
                 ////MainForm.DataQueryPageRefresh();
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
@@ -345,7 +347,7 @@ namespace USL
             finally
             {
                 //MainForm.BillSaveRefresh(MainMenuConstants.AttWageBillQuery);
-                ClientFactory.DataPageRefresh<VAttWageBill>();
+                clientFactory.DataPageRefresh<VAttWageBill>();
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
         }

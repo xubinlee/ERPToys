@@ -12,20 +12,21 @@ using IBase;
 using DevExpress.XtraBars.Docking;
 using System.Collections;
 using DevExpress.XtraBars.Docking2010.Views.WindowsUI;
-using DBML;
+using EDMX;
 using Utility;
+using MainMenu = EDMX.MainMenu;
 
 namespace USL
 {
     public partial class TabbedGoodsPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail, IExtensions
     {
         //Object currentObj;
-        DBML.MainMenu mainMenu;
+        MainMenu mainMenu;
         PageGroup pageGroupCore;
         IList list;
         List<TypesList> types;   //类型列表
         Dictionary<String, DataQueryPage> queryPageList;
-        public TabbedGoodsPage(DBML.MainMenu menu, PageGroup child, Dictionary<String, int> childButtonList)
+        public TabbedGoodsPage(MainMenu menu, PageGroup child, Dictionary<String, int> childButtonList)
         {
             InitializeComponent();
             mainMenu = menu;

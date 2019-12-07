@@ -40,52 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICompanyService.cs" />
-    <Compile Include="IDataSourcesService.cs" />
-    <Compile Include="IDepartmentService.cs" />
-    <Compile Include="ISystemInfoService.cs" />
-    <Compile Include="IGoodsService.cs" />
-    <Compile Include="IGoodsTypeService.cs" />
-    <Compile Include="IAlertService.cs" />
-    <Compile Include="IAppointmentsService.cs" />
     <Compile Include="IBLLBase.cs" />
-    <Compile Include="IBOMService.cs" />
     <Compile Include="IDALBase.cs" />
     <Compile Include="IDataEdit.cs" />
     <Compile Include="IExtensions.cs" />
     <Compile Include="IFactoryBase.cs" />
     <Compile Include="IItemDetail.cs" />
-    <Compile Include="InventoryService.cs" />
-    <Compile Include="IUsersInfoService.cs" />
-    <Compile Include="IWageBillService.cs" />
-    <Compile Include="IWarehouseService.cs" />
-    <Compile Include="IMainMenuService.cs" />
-    <Compile Include="IMoldAllotService.cs" />
-    <Compile Include="IOrderService.cs" />
-    <Compile Include="IPackagingService.cs" />
-    <Compile Include="IPaymentBillService.cs" />
-    <Compile Include="IPermissionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IReceiptBillService.cs" />
-    <Compile Include="IReportService.cs" />
-    <Compile Include="ISLSalePriceService.cs" />
-    <Compile Include="IStockInBillService.cs" />
-    <Compile Include="IStockOutBillService.cs" />
-    <Compile Include="ISupplierService.cs" />
-    <Compile Include="ITypesListService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{79951fcf-e737-4e62-aea7-efae14f3db96}</Project>
       <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DBML\DBML.csproj">
-      <Project>{12d0e7f3-e5ff-45c6-be29-13f7e7569bb3}</Project>
-      <Name>DBML</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EDMX\EDMX.csproj">
-      <Project>{3bd3d61b-378b-4106-93d1-dbdb2c7a3a91}</Project>
-      <Name>EDMX</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

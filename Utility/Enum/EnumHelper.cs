@@ -38,6 +38,33 @@
 
             return results;
         }
+        /// <summary>
+        /// 获取枚举成员列表
+        /// </summary>
+        /// <typeparam name="typeName">枚举类型名称</typeparam>
+        /// <param name="english">是否英文环境</param>
+        /// <returns>返回枚举成员列表</returns>
+        public static List<ListItem> GetEnumValues(String typeName, bool english)
+        {
+            string assemblyString = "Utility";
+            Assembly assembly = Assembly.Load(assemblyString);
+            Type type = assembly.GetType(string.Format("{0}.{1}", assemblyString, typeName));
+            if (type.IsEnum == false)
+            {
+                return null;
+            }
+
+            string[] names = Enum.GetNames(type);
+            List<ListItem> results = new List<ListItem>();
+            foreach (var value in Enum.GetValues(type))
+            {
+                ListItem item = new ListItem();
+                item.Name = GetDescription(type, value, english);
+                item.Value = value;
+                results.Add(item);
+            }
+            return results;
+        }
 
         /// <summary>
         /// 成员类型
@@ -50,6 +77,32 @@
             /// 值
             /// </summary>
             public T Value
+            {
+                get { return this.value; }
+                set { this.value = value; }
+            }
+
+            string name;
+            /// <summary>
+            /// 名称
+            /// </summary>
+            public string Name
+            {
+                get { return name; }
+                set { name = value; }
+            }
+        }
+
+        /// <summary>
+        /// 成员类型
+        /// </summary>
+        public class ListItem
+        {
+            object value;
+            /// <summary>
+            /// 值
+            /// </summary>
+            public object Value
             {
                 get { return this.value; }
                 set { this.value = value; }
@@ -82,6 +135,24 @@
         public static string GetDescription<T>(T value)
         {
             return Get<T>(value, false, false, false);
+        }
+
+        /// <summary>
+        /// 获取枚举类型值的描述信息.
+        /// </summary>
+        /// <param name="type">枚举类</param>
+        /// <param name="value">枚举类型值</param>
+        /// <param name="english">是否英文环境</param>
+        /// <param name="returnEmptyIfNull">对为空值的枚举(值为0时)返回Empty</param>
+        /// <returns>返回枚举成员的描述</returns>
+        public static string GetDescription(Type type, object value, bool english, bool returnEmptyIfNull)
+        {
+            return Get(value, english, returnEmptyIfNull, true);
+        }
+
+        public static string GetDescription(Type type, object value)
+        {
+            return Get(type, value, false, false, false);
         }
 
         public static string Get<T>(T value, bool english, bool returnEmptyIfNull, bool returnDescription)
@@ -129,6 +200,52 @@
             return description;
         }
 
+        public static string Get(Type type, object value, bool english, bool returnEmptyIfNull, bool returnDescription)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+
+            string description = string.Empty;
+            FieldInfo fieldInfo = type.GetField(value.ToString());
+
+            if (fieldInfo != null)
+            {
+                object[] attrs = fieldInfo.GetCustomAttributes(typeof(MemberDescriptionAttribute), false);
+
+                if (attrs != null)
+                {
+                    MemberDescriptionAttribute[] attributes = (MemberDescriptionAttribute[])attrs;
+                    if (attributes != null && attributes.Length > 0)
+                    {
+                        if (returnDescription)
+                        {
+                            description = english ? attributes[0].EDescription : attributes[0].CDescription;
+                        }
+                        else
+                        {
+                            description = attributes[0].SimpleMeaning;
+                        }
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(description))
+            {
+                if (returnEmptyIfNull)
+                {
+                    description = string.Empty;
+                }
+                else
+                {
+                    description = value.ToString();
+                }
+            }
+
+            return description;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -139,6 +256,10 @@
         public static string GetDescription<T>(T value, bool english)
         {
             return GetDescription<T>(value, english, false);
+        }
+        public static string GetDescription(Type type, object value, bool english)
+        {
+            return GetDescription(type, value, english, false);
         }
 
         /// <summary>

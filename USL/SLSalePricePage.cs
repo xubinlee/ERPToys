@@ -18,11 +18,13 @@ using DevExpress.XtraGrid.Views.Grid;
 using System.Collections;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using System.Data.Linq;
+using Utility.Interceptor;
 
 namespace USL
 {
     public partial class SLSalePricePage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         List<SLSalePrice> sLSalePriceList;
         List<SLSalePrice> SLSalePriceList;
         Guid focusedID;
@@ -314,7 +316,7 @@ namespace USL
                 menuName = MainMenuConstants.CustomerSLSalePrice;
             else
                 menuName = MainMenuConstants.SupplierSLSalePrice;
-            ClientFactory.DataPageRefresh(menuName, string.Empty);
+            clientFactory.DataPageRefresh(menuName);
         }
 
         private void gridView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
@@ -325,7 +327,7 @@ namespace USL
                 menuName = MainMenuConstants.CustomerSLSalePrice;
             else
                 menuName = MainMenuConstants.SupplierSLSalePrice;
-            ClientFactory.DataPageRefresh(menuName, string.Empty);
+            clientFactory.DataPageRefresh(menuName);
         }
     }
 }

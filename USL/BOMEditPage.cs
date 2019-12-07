@@ -19,11 +19,13 @@ using System.Collections;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using System.Data.Linq;
 using DevExpress.XtraGrid.Views.WinExplorer;
+using Utility.Interceptor;
 
 namespace USL
 {
     public partial class BOMEditPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         List<BOM> bomList;
         List<BOM> goodsBOMList;
         Guid focusedGoodsID;
@@ -346,13 +348,13 @@ namespace USL
         private void gridView_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             Save();
-            ClientFactory.DataPageRefresh<BOM>();
+            clientFactory.DataPageRefresh<BOM>();
         }
 
         private void gridView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
             this.Save();
-            ClientFactory.DataPageRefresh<BOM>();
+            clientFactory.DataPageRefresh<BOM>();
         }
     }
 }

@@ -11,3 +11,5 @@ D:\Project\ERPToys\Utility\obj\Release\Utility.csproj.CoreCompileInputs.cache
 D:\Project\ERPToys\Utility\obj\Release\Utility.dll
 D:\Project\ERPToys\Utility\obj\Release\Utility.pdb
 D:\Project\ERPToys\Utility\obj\Release\Utility.csproj.CopyComplete
+D:\ERPToys\Utility.dll.config
+D:\ERPToys\NLog.config

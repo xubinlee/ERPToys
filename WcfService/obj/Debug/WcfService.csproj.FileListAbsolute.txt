@@ -11,7 +11,6 @@ D:\Project\ERPToys\WcfService\bin\EntityFramework.dll
 D:\Project\ERPToys\WcfService\bin\EntityFramework.SqlServer.dll
 D:\Project\ERPToys\WcfService\bin\Factory.dll
 D:\Project\ERPToys\WcfService\bin\IBase.dll
-D:\Project\ERPToys\WcfService\bin\DBML.dll
 D:\Project\ERPToys\WcfService\bin\Utility.dll
 D:\Project\ERPToys\WcfService\bin\Z.EntityFramework.Extensions.dll
 D:\Project\ERPToys\WcfService\bin\Common.pdb
@@ -24,8 +23,6 @@ D:\Project\ERPToys\WcfService\bin\Factory.dll.config
 D:\Project\ERPToys\WcfService\bin\IBase.pdb
 D:\Project\ERPToys\WcfService\bin\EntityFramework.xml
 D:\Project\ERPToys\WcfService\bin\EntityFramework.SqlServer.xml
-D:\Project\ERPToys\WcfService\bin\DBML.pdb
-D:\Project\ERPToys\WcfService\bin\DBML.dll.config
 D:\Project\ERPToys\WcfService\bin\Utility.pdb
 D:\Project\ERPToys\WcfService\bin\Z.EntityFramework.Extensions.xml
 D:\Project\ERPToys\WcfService\obj\Debug\WcfService.csprojAssemblyReference.cache
@@ -34,3 +31,9 @@ D:\Project\ERPToys\WcfService\bin\IWcfServiceInterface.dll
 D:\Project\ERPToys\WcfService\bin\IWcfServiceInterface.pdb
 D:\Project\ERPToys\WcfService\bin\Newtonsoft.Json.dll
 D:\Project\ERPToys\WcfService\bin\Newtonsoft.Json.xml
+D:\Project\ERPToys\WcfService\bin\Utility.dll.config
+D:\Project\ERPToys\WcfService\bin\NLog.dll
+D:\Project\ERPToys\WcfService\bin\NLog.xml
+D:\Project\ERPToys\WcfService\bin\NLog.config
+D:\Project\ERPToys\WcfService\bin\Castle.Core.dll
+D:\Project\ERPToys\WcfService\bin\Castle.Core.xml

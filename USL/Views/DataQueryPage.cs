@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DevExpress.XtraEditors;
 using System.Collections;
-using DBML;
+using EDMX;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using IBase;
 using Utility;
@@ -23,11 +23,16 @@ using System.Data.OleDb;
 using System.IO;
 using System.Data.Linq;
 using DevExpress.XtraGrid.Views.Grid;
+using Utility.Interceptor;
+using IWcfServiceInterface;
+using Common;
 
 namespace USL
 {
     public partial class DataQueryPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail, IExtensions
     {
+        private static IInventoryService inventoryService = ServiceProxyFactory.Create<IInventoryService>("InventoryService");
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         public MainMenu mainMenu;
         IList dataSource;
         Object currentObj = null;
@@ -35,7 +40,7 @@ namespace USL
         Dictionary<String, int> itemDetailButtonList; //子菜单按钮项
         //Dictionary<String, ItemDetailPage> itemDetailPageList;
         WindowsUIView view = null;
-        List<VUsersInfo> displayUsers;
+        //List<VUsersInfo> displayUsers;
         List<TypesList> types;   //类型列表
         List<Warehouse> warehouseList;
 
@@ -82,7 +87,7 @@ namespace USL
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            displayUsers = BLLFty.Create<UsersInfoBLL>().GetVUsersInfo();
+            //displayUsers = BLLFty.Create<UsersInfoBLL>().GetVUsersInfo();
             GetItemDetailPage();
             BindData(dataSource);
             MainForm.SetQueryPageGridColumn(gridView,mainMenu);
@@ -275,56 +280,6 @@ namespace USL
                     view.ActivateContainer(pageGroupCore);
                 }
                 return MainForm.mainMenuList[mainMenu.Name.Replace("Query", "")];
-                //if (itemDetailPageList.Count>0)
-                //{
-                //    //切换到对应的单据界面并传递数据
-                //    if (mainMenu.Name.ToUpper().Contains("BILLQUERY"))
-                //    {
-                //        if (mainMenu.Name.ToUpper().Contains("STOCKOUT"))
-                //        {
-                //            StockOutBillPage page = itemDetailPageList[mainMenu.Name.Replace("Query", "")].itemDetail as StockOutBillPage;
-                //            if (mainMenu.Name==MainMenuConstants.FGStockOutBillQuery)
-                //                page.BindData(((VStockOutBill)currentObj).HdID);
-                //            else
-                //                page.BindData(((VMaterialStockOutBill)currentObj).HdID);
-                //        }
-                //        else if (mainMenu.Name.ToUpper().Contains("STOCKIN") || mainMenu.Name.ToUpper().Contains("ReturnBill".ToUpper()))
-                //        {
-                //            StockInBillPage page = itemDetailPageList[mainMenu.Name.Replace("Query", "")].itemDetail as StockInBillPage;
-                //            if (mainMenu.Name == MainMenuConstants.ProductionStockInBillQuery || mainMenu.Name == MainMenuConstants.SalesReturnBillQuery)
-                //                page.BindData(((VStockInBill)currentObj).HdID);
-                //            else
-                //                page.BindData(((VMaterialStockInBill)currentObj).HdID);
-                //        }
-                //        else if (mainMenu.Name==MainMenuConstants.ReceiptBillQuery)
-                //        {
-                //            ReceiptBillPage page = itemDetailPageList[mainMenu.Name.Replace("Query", "")].itemDetail as ReceiptBillPage;
-                //            page.BindData(((VReceiptBill)currentObj).HdID);
-                //        }
-                //        else if (mainMenu.Name == MainMenuConstants.PaymentBillQuery)
-                //        {
-                //            PaymentBillPage page = itemDetailPageList[mainMenu.Name.Replace("Query", "")].itemDetail as PaymentBillPage;
-                //            page.BindData(((VPaymentBill)currentObj).HdID);
-                //        }
-                //    }
-                //    else if (mainMenu.Name == MainMenuConstants.OrderQuery)
-                //    {
-                //        OrderEditPage page = itemDetailPageList[MainMenuConstants.Order].itemDetail as OrderEditPage;
-                //        page.BindData(((VOrder)currentObj).HdID);
-                //    }
-                //    else if (mainMenu.Name == MainMenuConstants.FSMOrderQuery)
-                //    {
-                //        OrderEditPage page = itemDetailPageList[MainMenuConstants.FSMOrder].itemDetail as OrderEditPage;
-                //        page.BindData(((VFSMOrder)currentObj).HdID);
-                //    }
-                //    else if (mainMenu.Name == MainMenuConstants.ProductionOrderQuery)
-                //    {
-                //        OrderEditPage page = itemDetailPageList[MainMenuConstants.ProductionOrder].itemDetail as OrderEditPage;
-                //        page.BindData(((VProductionOrder)currentObj).HdID);
-                //    }
-                //    pageGroupCore.SetSelected(pageGroupCore.Items[itemDetailButtonList[mainMenu.Name] - 1]);
-                //    view.ActivateContainer(pageGroupCore);
-                //}
             }
             else
                 return mainMenu;
@@ -479,16 +434,10 @@ namespace USL
                                 CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "操作失败，请刷新数据重试。");
                                 return;
                             }
-                            else if (user.IsDel)
-                            {
-                                user.IsDel = false;
-                                BLLFty.Create<UsersInfoBLL>().Delete(user);
-                            }
                             else
                             {
-                                user.IsDel = true;
-                                //user.AttCardnumber = string.Empty;
-                                BLLFty.Create<UsersInfoBLL>().Delete(user);
+                                user.IsDel = !user.IsDel;
+                                clientFactory.Delete<UsersInfo>(user);
                             }
                             //BLLFty.Create<UsersInfoBLL>().Delete(((VUsersInfo)currentObj).ID);
                             break;
@@ -506,7 +455,7 @@ namespace USL
                             break;
                     }
                     //gridView.DeleteSelectedRows();
-                    ClientFactory.DataPageRefresh(mainMenu.Name, string.Empty);
+                    clientFactory.DataPageRefresh(mainMenu.Name);
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "删除成功");
                     //BillEditPageRefresh();
                     //itemDetailPageList[mainMenu.Name].DataPageRefresh();
@@ -583,19 +532,20 @@ namespace USL
                     }
                     if (stList.Count > 0)
                     {
-                        BLLFty.Create<InventoryBLL>().Insert(stList);
+                        clientFactory.AddByBulkCopy<Stocktaking>(stList);
                         //InitGrid(BLLFty.Create<InventoryBLL>().GetStocktaking());
                         //MainForm.DataQueryPageRefresh();
-                        ClientFactory.DataPageRefresh<Stocktaking>();
+                        clientFactory.DataPageRefresh<Stocktaking>();
+                        List<VProfitAndLoss> vpal = clientFactory.UpdateCache<VProfitAndLoss>();
                         //刷新盘点盈亏表
                         if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.ProfitAndLoss))
                         {
                             DataQueryPage page = ClientFactory.itemDetailList[MainMenuConstants.ProfitAndLoss] as DataQueryPage;
                             if (stList[0].GoodsBigType == -1)
-                                page.BindData(MainForm.GetData<VProfitAndLoss>().FindAll(o =>
+                                page.BindData(vpal.FindAll(o =>
                                     o.仓库 == stList[0].Warehouse && o.SupplierID == stList[0].SupplierID));
                             else
-                                page.BindData(MainForm.GetData<VProfitAndLoss>().FindAll(o =>
+                                page.BindData(vpal.FindAll(o =>
                                 o.仓库 == stList[0].Warehouse && o.SupplierID == stList[0].SupplierID && o.货品大类 == stList[0].GoodsBigType));
                             CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "导入成功");
                             return true;
@@ -835,7 +785,7 @@ namespace USL
                                 accountBooklist.Add(ab);
                             }
                             //BLLFty.Create<InventoryBLL>().StocktakingUpdate(inventoryList[0].WarehouseID, inventoryList);
-                            List<VStocktaking> stocktakingList = BLLFty.Create<InventoryBLL>().GetStocktaking();
+                            List<VStocktaking> stocktakingList = clientFactory.GetData<VStocktaking>();
                             Guid warehouseID = Guid.Empty;
                             int goodsBigType = -1;
                             if (stocktakingList.Count > 0)
@@ -864,9 +814,9 @@ namespace USL
                                 CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有盘点数据，请先导入盘点数据。");
                                 return false;
                             }
-                            BLLFty.Create<InventoryBLL>().StocktakingUpdate(warehouseID, goodsBigType, stocktakingList[0].SupplierID, inventoryList, accountBooklist);
+                            inventoryService.StocktakingUpdate(warehouseID, goodsBigType, stocktakingList[0].SupplierID, inventoryList, accountBooklist);
                             //MainForm.DataQueryPageRefresh();
-                            ClientFactory.DataPageRefresh<VProfitAndLoss>();
+                            clientFactory.DataPageRefresh<VProfitAndLoss>();
                             CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "盘点库存更新成功");
                             return true;
                         }
@@ -897,80 +847,17 @@ namespace USL
                     currentObj = gridView.GetRow(gridView.FocusedRowHandle);
 
                     #region PrintData
-
-                    //if (currentObj is VStockInBill)
-                    //{
-                    //    VStockInBill bill = currentObj as VStockInBill;
-                    //    StockInBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockInBillPage;
-                    //    page.BindData(bill.HdID);
-                    //    page.Print();
-                    //}
-                    //else if (currentObj is VMaterialStockInBill)
-                    //{
-                    //    VMaterialStockInBill bill = currentObj as VMaterialStockInBill;
-                    //    StockInBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockInBillPage;
-                    //    page.BindData(bill.HdID);
-                    //    page.Print();
-                    //}
-                    //else if (currentObj is VStockOutBill)
-                    //{
-                    //    VStockOutBill bill = currentObj as VStockOutBill;
-                    //    StockOutBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockOutBillPage;
-                    //    page.BindData(bill.HdID);
-                    //    page.Print();
-                    //}
-                    //else if (currentObj is VMaterialStockOutBill)
-                    //{
-                    //    VMaterialStockOutBill bill = currentObj as VMaterialStockOutBill;
-                    //    StockOutBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as StockOutBillPage;
-                    //    page.BindData(bill.HdID);
-                    //    page.Print();
-                    //}
-                    //else if (currentObj is VOrder)
-                    //{
-                    //    VOrder bill = currentObj as VOrder;
-                    //    OrderEditPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
-                    //    page.BindData(bill.HdID);
-                    //    page.Print();
-                    //}
-                    //else if (currentObj is VFSMOrder)
-                    //{
-                    //    VFSMOrder bill = currentObj as VFSMOrder;
-                    //    OrderEditPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
-                    //    page.BindData(bill.HdID);
-                    //    page.Print();
-                    //}
-                    //else if (currentObj is VProductionOrder)
-                    //{
-                    //    VProductionOrder bill = currentObj as VProductionOrder;
-                    //    OrderEditPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as OrderEditPage;
-                    //    page.BindData(bill.HdID);
-                    //    page.Print();
-                    //}
-                    //else if (currentObj is VReceiptBill)
-                    //{
-                    //    VReceiptBill bill = currentObj as VReceiptBill;
-                    //    ReceiptBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as ReceiptBillPage;
-                    //    page.BindData(bill.HdID);
-                    //    page.Print();
-                    //}
-                    //else if (currentObj is VPaymentBill)
-                    //{
-                    //    VPaymentBill bill = currentObj as VPaymentBill;
-                    //    PaymentBillPage page = ClientFactory.itemDetailList[mainMenu.Name.Replace("Query", "").Trim()] as PaymentBillPage;
-                    //    page.BindData(bill.HdID);
-                    //    page.Print();
-                    //}
-                    if (currentObj is StatementOfAccountToCustomerReport && ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.ReceiptBill))
+                    
+                    if (currentObj is DBML.StatementOfAccountToCustomerReport && ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.ReceiptBill))
                     {
-                        StatementOfAccountToCustomerReport bill = currentObj as StatementOfAccountToCustomerReport;
+                        DBML.StatementOfAccountToCustomerReport bill = currentObj as DBML.StatementOfAccountToCustomerReport;
                         ReceiptBillPage page = ClientFactory.itemDetailList[MainMenuConstants.ReceiptBill] as ReceiptBillPage;
                         page.BindData(((List<ReceiptBillHd>)MainForm.dataSourceList[typeof(List<ReceiptBillHd>)]).FirstOrDefault(o => o.BillNo == bill.收款单号).ID);
                         page.SendData(null);
                     }
-                    else if (currentObj is StatementOfAccountToSupplierReport && ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.PaymentBill))
+                    else if (currentObj is DBML.StatementOfAccountToSupplierReport && ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.PaymentBill))
                     {
-                        StatementOfAccountToSupplierReport bill = currentObj as StatementOfAccountToSupplierReport;
+                        DBML.StatementOfAccountToSupplierReport bill = currentObj as DBML.StatementOfAccountToSupplierReport;
                         PaymentBillPage page = ClientFactory.itemDetailList[MainMenuConstants.PaymentBill] as PaymentBillPage;
                         page.BindData(((List<PaymentBillHd>)MainForm.dataSourceList[typeof(List<PaymentBillHd>)]).FirstOrDefault(o => o.BillNo == bill.付款单号).ID);
                         page.SendData(null);
@@ -1180,20 +1067,9 @@ namespace USL
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
                     currentObj = gridView.GetRow(gridView.FocusedRowHandle);
-                    switch (mainMenu.Name)
-                    {
-                        case MainMenuConstants.Goods:
-                            Goods goods = BLLFty.Create<GoodsBLL>().GetGoods(((VGoods)currentObj).ID);
-                            goods.IsStop = true;
-                            BLLFty.Create<GoodsBLL>().Update(goods);
-                            break;
-                        case MainMenuConstants.Material:
-                            Goods sf = BLLFty.Create<GoodsBLL>().GetGoods(((VMaterial)currentObj).ID);
-                            sf.IsStop = true;
-                            BLLFty.Create<GoodsBLL>().Update(sf);
-                            break;
-                    }
-                    ClientFactory.DataPageRefresh(mainMenu.Name, string.Empty);
+                    Goods goods = currentObj as Goods;
+                    clientFactory.Modify<Goods>(goods);
+                    clientFactory.DataPageRefresh(mainMenu.Name, string.Empty);
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "货品设置停产成功");
                 }
             }

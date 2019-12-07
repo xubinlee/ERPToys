@@ -20,11 +20,13 @@ using CommonLibrary;
 using DevExpress.XtraBars.Alerter;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports.UI;
+using Utility.Interceptor;
 
 namespace USL
 {
     public partial class StockInBillPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail, IExtensions
     {
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         StockInBillHd hd;
         List<StockInBillDtl> dtl;
         List<Warehouse> warehouseList;
@@ -285,7 +287,7 @@ namespace USL
             //    else
             //        hd.BillNo = "RK" + DateTime.Now.ToString("yyyyMMdd") + "001";
             //}
-            hd.BillNo = MainForm.GetBillMaxBillNo(MainMenuConstants.StockInBillType, "RK");
+            hd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.StockInBillType, true).MaxBillNo;
             headID = Guid.Empty;
             hd.BillDate = DateTime.Today;
             lueType.Focus();
@@ -319,7 +321,7 @@ namespace USL
                     }
                     ////DataQueryPageRefresh();
                     //刷新查询界面
-                    ClientFactory.DataPageRefresh(billType, string.Empty);
+                    clientFactory.DataPageRefresh(billType);
                     //MainForm.DataQueryPageRefresh();
                     //DataQueryPage page = ClientFactory.itemDetailList[billType + "Query"] as DataQueryPage;
                     //MainForm.GetDataSource();
@@ -521,7 +523,7 @@ namespace USL
                 headID = hd.ID;
                 //DataQueryPageRefresh();
                 //MainForm.BillSaveRefresh(billType + "Query");
-                ClientFactory.DataPageRefresh(billType, string.Empty);
+                clientFactory.DataPageRefresh(billType);
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 return true;
             }
@@ -789,7 +791,7 @@ namespace USL
             {
                 //MainForm.BillSaveRefresh(billType + "Query");
                 //MainForm.InventoryRefresh();
-                ClientFactory.DataPageRefresh(billType, string.Empty);
+                clientFactory.DataPageRefresh(billType);
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
         }
@@ -1521,7 +1523,7 @@ namespace USL
                             //单表头数据
                             OrderHd fsmHd = new OrderHd();
                             fsmHd.ID = Guid.NewGuid();
-                            fsmHd.BillNo = MainForm.GetBillMaxBillNo(MainMenuConstants.Order, "DH");
+                            fsmHd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.Order, true).MaxBillNo;
                             fsmHd.WarehouseID = hd.WarehouseID;
                             fsmHd.WarehouseType = hd.WarehouseType;
                             fsmHd.CompanyID = hd.CompanyID;
@@ -1562,7 +1564,7 @@ namespace USL
                             }
                             BLLFty.Create<OrderBLL>().Insert(fsmHd, fsmDtlList);
                             //MainForm.BillSaveRefresh(MainMenuConstants.FSMOrder);
-                            ClientFactory.DataPageRefresh<VFSMOrder>();
+                            clientFactory.DataPageRefresh<VFSMOrder>();
                             //XtraMessageBox.Show("领料出库单已成功生成。", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             //定位
@@ -1630,7 +1632,7 @@ namespace USL
                             //生成领料出库单表头数据
                             StockOutBillHd outHd = new StockOutBillHd();
                             outHd.ID = Guid.NewGuid();
-                            outHd.BillNo = MainForm.GetBillMaxBillNo(MainMenuConstants.StockOutBillType, "CK");
+                            outHd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.StockOutBillType, true).MaxBillNo;
                             outHd.WarehouseID = hd.WarehouseID;
                             outHd.WarehouseType = hd.WarehouseType;
                             outHd.OrderID = hd.ID;
@@ -1671,7 +1673,7 @@ namespace USL
                             }
                             BLLFty.Create<StockOutBillBLL>().Insert(outHd, outDtlList);
                             //MainForm.BillSaveRefresh(MainMenuConstants.GetMaterialBillQuery);
-                            ClientFactory.DataPageRefresh<VMaterialStockOutBill>();
+                            clientFactory.DataPageRefresh<VMaterialStockOutBill>();
                             //XtraMessageBox.Show("领料出库单已成功生成。", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             //定位

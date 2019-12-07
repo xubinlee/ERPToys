@@ -16,23 +16,26 @@ using DevExpress.XtraBars.Docking2010.Views;
 using System.Collections;
 using Factory;
 using BLL;
-using DBML;
+using EDMX;
 using DevExpress.XtraGrid.Columns;
 using CommonLibrary;
+using Utility.Interceptor;
+using MainMenu = EDMX.MainMenu;
 
 namespace USL
 {
     public partial class DataEditForm : DevExpress.XtraEditors.XtraForm
     {
-        Dictionary<DBML.MainMenu, Object> editPage;
-        DBML.MainMenu mainMenu;
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
+        Dictionary<MainMenu, Object> editPage;
+        MainMenu mainMenu;
         PageGroup pageGroupCore;
         IDataEdit dataEditPage;
 
-        public DataEditForm(DBML.MainMenu menu, Object obj, PageGroup child)
+        public DataEditForm(MainMenu menu, Object obj, PageGroup child)
         {
             InitializeComponent();
-            editPage = new Dictionary<DBML.MainMenu, object>();
+            editPage = new Dictionary<MainMenu, object>();
             mainMenu = menu;
             pageGroupCore = child;
             this.Text = mainMenu.Caption;
@@ -183,7 +186,7 @@ namespace USL
                     this.Text = mainMenu.Caption;
                     if (dataEditPage.Save())
                     {
-                        ClientFactory.DataPageRefresh(mainMenu.Name, string.Empty);
+                        clientFactory.DataPageRefresh(mainMenu.Name);
                         CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                     }
                 }

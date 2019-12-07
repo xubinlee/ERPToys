@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using DBML;
 using Factory;
 using BLL;
 using System.Configuration;
@@ -18,31 +17,35 @@ using System.Collections;
 using IWcfServiceInterface;
 using Newtonsoft.Json;
 using Utility;
+using EDMX;
+using Utility.Interceptor;
+using System.Data.Entity;
 
 namespace USL
 {
     public partial class LoginForm : DevExpress.XtraEditors.XtraForm
     {
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         public LoginForm()
         {
             InitializeComponent();
+            //using (ERPToysContext context = EDMXFty.Dc)
+            //{
+            //    context.UsersInfo.Load();
+            //    object o = context.UsersInfo.Local.ToBindingList();
+            //}
             BindData();
         }
 
         public void BindData()
         {
-            List<EDMX.UsersInfo> users = ClientFactory.ExecuteQuery<EDMX.UsersInfo>(string.Empty);
-            int i = ClientFactory.ModifyByList<EDMX.UsersInfo>(users);
-            //EDMX.UsersInfo u = users[0];
-            //u.Remark = "test";
-            //int i= ClientFactory.Modify<EDMX.UsersInfo>(u);
-            vUsersInfoBindingSource.DataSource = BLLFty.Create<UsersInfoBLL>().GetLoginUsersInfo();
+            usersInfoBindingSource.DataSource = clientFactory.GetData<UsersInfo>().FindAll(o => o.IsDel == false && !string.IsNullOrEmpty(o.Password));
             txtCode.EditValue = Utility.ConfigAppSettings.GetValue("User");
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            UsersInfo user = BLLFty.Create<UsersInfoBLL>().GetUsersInfo(txtCode.Text.Trim());
+            UsersInfo user = clientFactory.GetData<UsersInfo>().FirstOrDefault(o => o.Code.Equals(txtCode.Text.Trim()));
             if (user == null)
             {
                 XtraMessageBox.Show("用户不存在。", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3BD3D61B-378B-4106-93D1-DBDB2C7A3A91}</ProjectGuid>
+    <ProjectGuid>{A30E02AE-347D-48BD-8971-76D4EDFA4FB7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EDMX</RootNamespace>
@@ -33,9 +33,11 @@
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -50,60 +52,365 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountBook.cs" />
-    <Compile Include="Alert.cs" />
-    <Compile Include="Appointments.cs" />
-    <Compile Include="AttAppointments.cs" />
-    <Compile Include="AttGeneralLog.cs" />
-    <Compile Include="AttParameters.cs" />
-    <Compile Include="AttWageBillDtl.cs" />
-    <Compile Include="AttWageBillHd.cs" />
-    <Compile Include="BOM.cs" />
-    <Compile Include="ButtonPermission.cs" />
-    <Compile Include="Company.cs" />
-    <Compile Include="Department.cs" />
-    <Compile Include="ErpContext.cs" />
-    <Compile Include="Goods.cs" />
-    <Compile Include="GoodsType.cs" />
-    <Compile Include="Inventory.cs" />
-    <Compile Include="MainMenu.cs" />
-    <Compile Include="MoldAllot.cs" />
-    <Compile Include="OrderDtl.cs" />
-    <Compile Include="OrderHd.cs" />
-    <Compile Include="Packaging.cs" />
-    <Compile Include="PaymentBillDtl.cs" />
-    <Compile Include="PaymentBillHd.cs" />
-    <Compile Include="Permission.cs" />
+    <Compile Include="AccountBook.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Alert.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Appointments.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AttAppointments.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AttGeneralLog.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AttParameters.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AttWageBillDtl.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AttWageBillHd.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BOM.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ButtonPermission.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Company.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Department.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ERPToysModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ERPToysModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ERPToysModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ERPToysModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ERPToysModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Goods.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GoodsType.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MainMenu.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MoldAllot.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderDtl.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderHd.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Packaging.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentBillDtl.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentBillHd.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Permission.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReceiptBillDtl.cs" />
-    <Compile Include="ReceiptBillHd.cs" />
-    <Compile Include="Resources.cs" />
-    <Compile Include="SalesSummaryByGoodsPriceReport.cs" />
-    <Compile Include="SchClass.cs" />
-    <Compile Include="SLSalePrice.cs" />
-    <Compile Include="StaffSchClass.cs" />
-    <Compile Include="StatementOfAccountBasketToSupplierReport.cs" />
-    <Compile Include="StatementOfAccountMaterialToSupplierReport.cs" />
-    <Compile Include="StockInBillDtl.cs" />
-    <Compile Include="StockInBillHd.cs" />
-    <Compile Include="StockOutBillDtl.cs" />
-    <Compile Include="StockOutBillHd.cs" />
-    <Compile Include="Stocktaking.cs" />
-    <Compile Include="Supplier.cs" />
-    <Compile Include="SystemInfo.cs" />
-    <Compile Include="SystemStatus.cs" />
-    <Compile Include="TonerLabel.cs" />
-    <Compile Include="TypesList.cs" />
-    <Compile Include="UsersInfo.cs" />
-    <Compile Include="USPAttWageBillDtl.cs" />
-    <Compile Include="WageBillDtl.cs" />
-    <Compile Include="WageBillHd.cs" />
-    <Compile Include="WageDesign.cs" />
-    <Compile Include="Warehouse.cs" />
+    <Compile Include="ReceiptBillDtl.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiptBillHd.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Resources.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SchClass.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SLSalePrice.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StaffSchClass.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockInBillDtl.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockInBillHd.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockOutBillDtl.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockOutBillHd.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Stocktaking.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Supplier.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SystemInfo.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SystemStatus.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TonerLabel.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TypesList.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UsersInfo.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VAccountBook.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VAlert.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VAppointments.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VAttAppointments.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VAttGeneralLog.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VAttWageBill.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VCompany.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VCustomerSalesReceiptedSummary.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VCustomerSettlement.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VDepartment.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VEMSInventoryGroupByGoods.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VFSMInventoryGroupByGoods.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VFSMOrder.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VFSMOrderDtlByMoldList.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VFSMOrderDtlByMoldMaterial.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VGoods.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VGoodsByBOM.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VGoodsByMoldAllot.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VGoodsBySLSalePrice.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VGoodsSalesSummaryByCustomer.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VGoodsType.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VInventory.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VInventoryGroupByGoods.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VMaterial.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VMaterialInventory.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VMaterialInventoryGroupByGoods.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VMaterialStockInBill.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VMaterialStockOutBill.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VMO.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VMPS.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VOrder.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VOrderDtlByBOM.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VOrderDtlByColor.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VPackaging.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VParentGoodsByBOM.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VPaymentBill.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VPaymentBillDtl.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VPO.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VProductionOrder.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VProductionOrderDtlForPrint.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VProfitAndLoss.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VReceiptBill.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VReceiptBillDtl.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VSalesBillSummary.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VSalesSummaryByCustomer.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VSalesSummaryByGoods.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VSampleStockOut.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VStaffSchClass.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VStatementOfAccountToCustomer.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VStatementOfAccountToSupplier.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VStockInBill.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VStockInBillDtlByBOM.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VStockInBillDtlByColor.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VStockOutBill.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VStockOutBillDtlByBOM.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VStocktaking.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VSupplier.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VSupplierSettlement.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VUsersInfo.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWageBill.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWageBillDtl.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WageBillDtl.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WageBillHd.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WageDesign.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Warehouse.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <EntityDeploy Include="ERPToysModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ERPToysModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="ERPToysModel.edmx.diagram">
+      <DependentUpon>ERPToysModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ERPToysModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ERPToysModel.Context.cs</LastGenOutput>
+      <DependentUpon>ERPToysModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="ERPToysModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ERPToysModel.edmx</DependentUpon>
+      <LastGenOutput>ERPToysModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

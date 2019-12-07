@@ -23,11 +23,13 @@ using DevExpress.XtraScheduler;
 using SchedulerReportingExample;
 using DevExpress.XtraScheduler.Reporting;
 using DevExpress.XtraReports.UI;
+using Utility.Interceptor;
 
 namespace USL
 {
     public partial class ProductionSchedulingPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         Guid focusedID;
         //bool addNew = false;  //是否新增
         public ProductionSchedulingPage()
@@ -161,27 +163,12 @@ namespace USL
             return aptList;
         }
 
-        /// <summary>
-        /// 刷新查询界面
-        /// </summary>
-        void PageRefresh()
-        {
-            MainForm.dataSourceList[typeof(List<Appointments>)] = BLLFty.Create<AppointmentsBLL>().GetAppointments();
-            BindData(null);
-            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.SchedulingQuery))
-            {
-                DataQueryPage page = ClientFactory.itemDetailList[MainMenuConstants.SchedulingQuery] as DataQueryPage;
-                //刷新数据
-                MainForm.dataSourceList[typeof(List<VAppointments>)] = BLLFty.Create<AppointmentsBLL>().GetVAppointments();
-                page.BindData(MainForm.GetData<VAppointments>());
-            }
-        }
-
         private void schedulerStorage_AppointmentsChanged(object sender, PersistentObjectsEventArgs e)
         {
             BLLFty.Create<AppointmentsBLL>().Update(GetAppointmentsList(e.Objects));
             //刷新数据
-            PageRefresh();
+            clientFactory.UpdateCache<Appointments>();
+            clientFactory.DataPageRefresh<VAppointments>();
         }
 
         private void schedulerStorage_AppointmentsInserted(object sender, PersistentObjectsEventArgs e)
@@ -197,9 +184,9 @@ namespace USL
                 BLLFty.Create<AppointmentsBLL>().Insert(dbApt);
                 break;
             }
-            //BLLFty.Create<AppointmentsBLL>().Insert(GetAppointmentsList(e.Objects));
             //刷新数据
-            PageRefresh();
+            clientFactory.UpdateCache<Appointments>();
+            clientFactory.DataPageRefresh<VAppointments>();
         }
 
         private void schedulerStorage_AppointmentsDeleted(object sender, PersistentObjectsEventArgs e)
@@ -214,7 +201,8 @@ namespace USL
                 BLLFty.Create<AppointmentsBLL>().Delete((Int64)apt.Id);
             }
             //刷新数据
-            PageRefresh();
+            clientFactory.UpdateCache<Appointments>();
+            clientFactory.DataPageRefresh<VAppointments>();
         }
         private void schedulerControl1_MouseDown(object sender, MouseEventArgs e)
         {

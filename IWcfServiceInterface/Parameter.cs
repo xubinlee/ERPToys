@@ -9,12 +9,14 @@ namespace IWcfServiceInterface
 {
     public class Parameter
     {
-        public string entityType { get; set; }
+        public Type entityType { get; set; }
 
         public string filter { get; set; }
 
         public object model { get; set; }
 
         public IList list { get; set; }
+
+        public IQueryable queryable { get; set; }
     }
 }

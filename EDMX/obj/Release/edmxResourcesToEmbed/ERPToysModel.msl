@@ -1,0 +1,2341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ERPToysModelStoreContainer" CdmEntityContainer="ERPToysContext">
+    <EntitySetMapping Name="AccountBook">
+      <EntityTypeMapping TypeName="ERPToysModel.AccountBook">
+        <MappingFragment StoreEntitySet="AccountBook">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+          <ScalarProperty Name="WarehouseType" ColumnName="WarehouseType" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="AccntDate" ColumnName="AccntDate" />
+          <ScalarProperty Name="MEAS" ColumnName="MEAS" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="OtherFee" ColumnName="OtherFee" />
+          <ScalarProperty Name="InQty" ColumnName="InQty" />
+          <ScalarProperty Name="OutQty" ColumnName="OutQty" />
+          <ScalarProperty Name="BalanceQty" ColumnName="BalanceQty" />
+          <ScalarProperty Name="BalanceCost" ColumnName="BalanceCost" />
+          <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+          <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+          <ScalarProperty Name="NWeight" ColumnName="NWeight" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Alert">
+      <EntityTypeMapping TypeName="ERPToysModel.Alert">
+        <MappingFragment StoreEntitySet="Alert">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Caption" ColumnName="Caption" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="BillID" ColumnName="BillID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Appointments">
+      <EntityTypeMapping TypeName="ERPToysModel.Appointments">
+        <MappingFragment StoreEntitySet="Appointments">
+          <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="NWeight" ColumnName="NWeight" />
+          <ScalarProperty Name="Machine" ColumnName="Machine" />
+          <ScalarProperty Name="Cycle" ColumnName="Cycle" />
+          <ScalarProperty Name="ManHour" ColumnName="ManHour" />
+          <ScalarProperty Name="ErrorRate" ColumnName="ErrorRate" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Wages" ColumnName="Wages" />
+          <ScalarProperty Name="WageDesignID" ColumnName="WageDesignID" />
+          <ScalarProperty Name="PlanYield" ColumnName="PlanYield" />
+          <ScalarProperty Name="Yielded" ColumnName="Yielded" />
+          <ScalarProperty Name="AMT" ColumnName="AMT" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="AllDay" ColumnName="AllDay" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Label" ColumnName="Label" />
+          <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
+          <ScalarProperty Name="RecurrenceInfo" ColumnName="RecurrenceInfo" />
+          <ScalarProperty Name="ReminderInfo" ColumnName="ReminderInfo" />
+          <ScalarProperty Name="CustomField1" ColumnName="CustomField1" />
+          <ScalarProperty Name="WageStatus" ColumnName="WageStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AttAppointments">
+      <EntityTypeMapping TypeName="ERPToysModel.AttAppointments">
+        <MappingFragment StoreEntitySet="AttAppointments">
+          <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+          <ScalarProperty Name="GLogStartID" ColumnName="GLogStartID" />
+          <ScalarProperty Name="GLogEndID" ColumnName="GLogEndID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="SchClassID" ColumnName="SchClassID" />
+          <ScalarProperty Name="SchClassName" ColumnName="SchClassName" />
+          <ScalarProperty Name="SchSerialNo" ColumnName="SchSerialNo" />
+          <ScalarProperty Name="SchStartTime" ColumnName="SchStartTime" />
+          <ScalarProperty Name="SchEndTime" ColumnName="SchEndTime" />
+          <ScalarProperty Name="CheckInTime" ColumnName="CheckInTime" />
+          <ScalarProperty Name="CheckOutTime" ColumnName="CheckOutTime" />
+          <ScalarProperty Name="LateMinutes" ColumnName="LateMinutes" />
+          <ScalarProperty Name="EarlyMinutes" ColumnName="EarlyMinutes" />
+          <ScalarProperty Name="AttStatus" ColumnName="AttStatus" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="AllDay" ColumnName="AllDay" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
+          <ScalarProperty Name="RecurrenceInfo" ColumnName="RecurrenceInfo" />
+          <ScalarProperty Name="ReminderInfo" ColumnName="ReminderInfo" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="WageStatus" ColumnName="WageStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AttGeneralLog">
+      <EntityTypeMapping TypeName="ERPToysModel.AttGeneralLog">
+        <MappingFragment StoreEntitySet="AttGeneralLog">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="EnrollNumber" ColumnName="EnrollNumber" />
+          <ScalarProperty Name="VerifyMode" ColumnName="VerifyMode" />
+          <ScalarProperty Name="InOutMode" ColumnName="InOutMode" />
+          <ScalarProperty Name="AttTime" ColumnName="AttTime" />
+          <ScalarProperty Name="Workcode" ColumnName="Workcode" />
+          <ScalarProperty Name="AttFlag" ColumnName="AttFlag" />
+          <ScalarProperty Name="AttStatus" ColumnName="AttStatus" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="SchClassID" ColumnName="SchClassID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AttWageBillDtl">
+      <EntityTypeMapping TypeName="ERPToysModel.AttWageBillDtl">
+        <MappingFragment StoreEntitySet="AttWageBillDtl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Classes" ColumnName="Classes" />
+          <ScalarProperty Name="Late" ColumnName="Late" />
+          <ScalarProperty Name="Early" ColumnName="Early" />
+          <ScalarProperty Name="LateCount" ColumnName="LateCount" />
+          <ScalarProperty Name="EarlyCount" ColumnName="EarlyCount" />
+          <ScalarProperty Name="Absent" ColumnName="Absent" />
+          <ScalarProperty Name="Forget" ColumnName="Forget" />
+          <ScalarProperty Name="Leave" ColumnName="Leave" />
+          <ScalarProperty Name="Wages" ColumnName="Wages" />
+          <ScalarProperty Name="Welfare" ColumnName="Welfare" />
+          <ScalarProperty Name="Deduction" ColumnName="Deduction" />
+          <ScalarProperty Name="SocialSecurity" ColumnName="SocialSecurity" />
+          <ScalarProperty Name="IndividualIncomeTax" ColumnName="IndividualIncomeTax" />
+          <ScalarProperty Name="AMT" ColumnName="AMT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AttWageBillHd">
+      <EntityTypeMapping TypeName="ERPToysModel.AttWageBillHd">
+        <MappingFragment StoreEntitySet="AttWageBillHd">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+          <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Maker" ColumnName="Maker" />
+          <ScalarProperty Name="MakeDate" ColumnName="MakeDate" />
+          <ScalarProperty Name="Auditor" ColumnName="Auditor" />
+          <ScalarProperty Name="AuditDate" ColumnName="AuditDate" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BOM">
+      <EntityTypeMapping TypeName="ERPToysModel.BOM">
+        <MappingFragment StoreEntitySet="BOM">
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="ParentGoodsID" ColumnName="ParentGoodsID" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="InnerBox" ColumnName="InnerBox" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceNoTax" ColumnName="PriceNoTax" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="OtherFee" ColumnName="OtherFee" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ButtonPermission">
+      <EntityTypeMapping TypeName="ERPToysModel.ButtonPermission">
+        <MappingFragment StoreEntitySet="ButtonPermission">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Caption" ColumnName="Caption" />
+          <ScalarProperty Name="CheckBoxState" ColumnName="CheckBoxState" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Company">
+      <EntityTypeMapping TypeName="ERPToysModel.Company">
+        <MappingFragment StoreEntitySet="Company">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+          <ScalarProperty Name="Contacts" ColumnName="Contacts" />
+          <ScalarProperty Name="ContactTel" ColumnName="ContactTel" />
+          <ScalarProperty Name="ContactCellPhone" ColumnName="ContactCellPhone" />
+          <ScalarProperty Name="QQ" ColumnName="QQ" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="AccountPeriod" ColumnName="AccountPeriod" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ACBank" ColumnName="ACBank" />
+          <ScalarProperty Name="ACNo" ColumnName="ACNo" />
+          <ScalarProperty Name="Tax" ColumnName="Tax" />
+          <ScalarProperty Name="InvoiceTitle" ColumnName="InvoiceTitle" />
+          <ScalarProperty Name="InvoiceAddr" ColumnName="InvoiceAddr" />
+          <ScalarProperty Name="InvoiceTel" ColumnName="InvoiceTel" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+          <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="LogisticsTel" ColumnName="LogisticsTel" />
+          <ScalarProperty Name="LogisticsAddress" ColumnName="LogisticsAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Department">
+      <EntityTypeMapping TypeName="ERPToysModel.Department">
+        <MappingFragment StoreEntitySet="Department">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Contacts" ColumnName="Contacts" />
+          <ScalarProperty Name="ContactTel" ColumnName="ContactTel" />
+          <ScalarProperty Name="ContactCellPhone" ColumnName="ContactCellPhone" />
+          <ScalarProperty Name="QQ" ColumnName="QQ" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+          <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Goods">
+      <EntityTypeMapping TypeName="ERPToysModel.Goods">
+        <MappingFragment StoreEntitySet="Goods">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="GoodsTypeID" ColumnName="GoodsTypeID" />
+          <ScalarProperty Name="PackagingID" ColumnName="PackagingID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="Material" ColumnName="Material" />
+          <ScalarProperty Name="Dosage" ColumnName="Dosage" />
+          <ScalarProperty Name="Subpackage" ColumnName="Subpackage" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="SPEC" ColumnName="SPEC" />
+          <ScalarProperty Name="MEAS" ColumnName="MEAS" />
+          <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceNoTax" ColumnName="PriceNoTax" />
+          <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+          <ScalarProperty Name="Volume" ColumnName="Volume" />
+          <ScalarProperty Name="GWeight" ColumnName="GWeight" />
+          <ScalarProperty Name="NWeight" ColumnName="NWeight" />
+          <ScalarProperty Name="Cycle" ColumnName="Cycle" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="InnerBox" ColumnName="InnerBox" />
+          <ScalarProperty Name="InPutVAT" ColumnName="InPutVAT" />
+          <ScalarProperty Name="OutPutVAT" ColumnName="OutPutVAT" />
+          <ScalarProperty Name="UpperLimit" ColumnName="UpperLimit" />
+          <ScalarProperty Name="LowerLimit" ColumnName="LowerLimit" />
+          <ScalarProperty Name="Pic" ColumnName="Pic" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+          <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+          <ScalarProperty Name="MainMark" ColumnName="MainMark" />
+          <ScalarProperty Name="SideMark" ColumnName="SideMark" />
+          <ScalarProperty Name="InnerMark" ColumnName="InnerMark" />
+          <ScalarProperty Name="CavityNumber" ColumnName="CavityNumber" />
+          <ScalarProperty Name="Toner" ColumnName="Toner" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="IsStop" ColumnName="IsStop" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="Subsidy" ColumnName="Subsidy" />
+          <ScalarProperty Name="PlanYield" ColumnName="PlanYield" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GoodsType">
+      <EntityTypeMapping TypeName="ERPToysModel.GoodsType">
+        <MappingFragment StoreEntitySet="GoodsType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Inventory">
+      <EntityTypeMapping TypeName="ERPToysModel.Inventory">
+        <MappingFragment StoreEntitySet="Inventory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+          <ScalarProperty Name="WarehouseType" ColumnName="WarehouseType" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="MEAS" ColumnName="MEAS" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="InnerBox" ColumnName="InnerBox" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="OtherFee" ColumnName="OtherFee" />
+          <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+          <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+          <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+          <ScalarProperty Name="NWeight" ColumnName="NWeight" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MainMenu">
+      <EntityTypeMapping TypeName="ERPToysModel.MainMenu">
+        <MappingFragment StoreEntitySet="MainMenu">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Caption" ColumnName="Caption" />
+          <ScalarProperty Name="Subtitle" ColumnName="Subtitle" />
+          <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CheckBoxState" ColumnName="CheckBoxState" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MoldAllot">
+      <EntityTypeMapping TypeName="ERPToysModel.MoldAllot">
+        <MappingFragment StoreEntitySet="MoldAllot">
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="InnerBox" ColumnName="InnerBox" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceNoTax" ColumnName="PriceNoTax" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDtl">
+      <EntityTypeMapping TypeName="ERPToysModel.OrderDtl">
+        <MappingFragment StoreEntitySet="OrderDtl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="MEAS" ColumnName="MEAS" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="InnerBox" ColumnName="InnerBox" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceNoTax" ColumnName="PriceNoTax" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="OtherFee" ColumnName="OtherFee" />
+          <ScalarProperty Name="MainMark" ColumnName="MainMark" />
+          <ScalarProperty Name="SideMark" ColumnName="SideMark" />
+          <ScalarProperty Name="InnerMark" ColumnName="InnerMark" />
+          <ScalarProperty Name="NWeight" ColumnName="NWeight" />
+          <ScalarProperty Name="Modulus" ColumnName="Modulus" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderHd">
+      <EntityTypeMapping TypeName="ERPToysModel.OrderHd">
+        <MappingFragment StoreEntitySet="OrderHd">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+          <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+          <ScalarProperty Name="WarehouseType" ColumnName="WarehouseType" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="Contacts" ColumnName="Contacts" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+          <ScalarProperty Name="Maker" ColumnName="Maker" />
+          <ScalarProperty Name="MakeDate" ColumnName="MakeDate" />
+          <ScalarProperty Name="Auditor" ColumnName="Auditor" />
+          <ScalarProperty Name="AuditDate" ColumnName="AuditDate" />
+          <ScalarProperty Name="MainMark" ColumnName="MainMark" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="BillType" ColumnName="BillType" />
+          <ScalarProperty Name="BillAMT" ColumnName="BillAMT" />
+          <ScalarProperty Name="UnReceiptedAMT" ColumnName="UnReceiptedAMT" />
+          <ScalarProperty Name="Pic" ColumnName="Pic" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Packaging">
+      <EntityTypeMapping TypeName="ERPToysModel.Packaging">
+        <MappingFragment StoreEntitySet="Packaging">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentBillDtl">
+      <EntityTypeMapping TypeName="ERPToysModel.PaymentBillDtl">
+        <MappingFragment StoreEntitySet="PaymentBillDtl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="BillID" ColumnName="BillID" />
+          <ScalarProperty Name="BillAMT" ColumnName="BillAMT" />
+          <ScalarProperty Name="PaidAMT" ColumnName="PaidAMT" />
+          <ScalarProperty Name="UnPaidAMT" ColumnName="UnPaidAMT" />
+          <ScalarProperty Name="LastPaidAMT" ColumnName="LastPaidAMT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentBillHd">
+      <EntityTypeMapping TypeName="ERPToysModel.PaymentBillHd">
+        <MappingFragment StoreEntitySet="PaymentBillHd">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+          <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="Contacts" ColumnName="Contacts" />
+          <ScalarProperty Name="BillType" ColumnName="BillType" />
+          <ScalarProperty Name="POClear" ColumnName="POClear" />
+          <ScalarProperty Name="Maker" ColumnName="Maker" />
+          <ScalarProperty Name="MakeDate" ColumnName="MakeDate" />
+          <ScalarProperty Name="Auditor" ColumnName="Auditor" />
+          <ScalarProperty Name="AuditDate" ColumnName="AuditDate" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="PaidAMT" ColumnName="PaidAMT" />
+          <ScalarProperty Name="UnPaidAMT" ColumnName="UnPaidAMT" />
+          <ScalarProperty Name="Pic" ColumnName="Pic" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Permission">
+      <EntityTypeMapping TypeName="ERPToysModel.Permission">
+        <MappingFragment StoreEntitySet="Permission">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Caption" ColumnName="Caption" />
+          <ScalarProperty Name="CheckBoxState" ColumnName="CheckBoxState" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceiptBillDtl">
+      <EntityTypeMapping TypeName="ERPToysModel.ReceiptBillDtl">
+        <MappingFragment StoreEntitySet="ReceiptBillDtl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="BillID" ColumnName="BillID" />
+          <ScalarProperty Name="BillAMT" ColumnName="BillAMT" />
+          <ScalarProperty Name="ReceiptedAMT" ColumnName="ReceiptedAMT" />
+          <ScalarProperty Name="UnReceiptedAMT" ColumnName="UnReceiptedAMT" />
+          <ScalarProperty Name="LastReceiptedAMT" ColumnName="LastReceiptedAMT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceiptBillHd">
+      <EntityTypeMapping TypeName="ERPToysModel.ReceiptBillHd">
+        <MappingFragment StoreEntitySet="ReceiptBillHd">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+          <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="Contacts" ColumnName="Contacts" />
+          <ScalarProperty Name="BillType" ColumnName="BillType" />
+          <ScalarProperty Name="POClear" ColumnName="POClear" />
+          <ScalarProperty Name="Maker" ColumnName="Maker" />
+          <ScalarProperty Name="MakeDate" ColumnName="MakeDate" />
+          <ScalarProperty Name="Auditor" ColumnName="Auditor" />
+          <ScalarProperty Name="AuditDate" ColumnName="AuditDate" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="ReceiptedAMT" ColumnName="ReceiptedAMT" />
+          <ScalarProperty Name="UnReceiptedAMT" ColumnName="UnReceiptedAMT" />
+          <ScalarProperty Name="Pic" ColumnName="Pic" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Resources">
+      <EntityTypeMapping TypeName="ERPToysModel.Resources">
+        <MappingFragment StoreEntitySet="Resources">
+          <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+          <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
+          <ScalarProperty Name="ResourceName" ColumnName="ResourceName" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="CustomField1" ColumnName="CustomField1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SchClass">
+      <EntityTypeMapping TypeName="ERPToysModel.SchClass">
+        <MappingFragment StoreEntitySet="SchClass">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="LateMinutes" ColumnName="LateMinutes" />
+          <ScalarProperty Name="EarlyMinutes" ColumnName="EarlyMinutes" />
+          <ScalarProperty Name="CheckInStartTime" ColumnName="CheckInStartTime" />
+          <ScalarProperty Name="CheckInEndTime" ColumnName="CheckInEndTime" />
+          <ScalarProperty Name="CheckOutStartTime" ColumnName="CheckOutStartTime" />
+          <ScalarProperty Name="CheckOutEndTime" ColumnName="CheckOutEndTime" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SLSalePrice">
+      <EntityTypeMapping TypeName="ERPToysModel.SLSalePrice">
+        <MappingFragment StoreEntitySet="SLSalePrice">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceNoTax" ColumnName="PriceNoTax" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="OtherFee" ColumnName="OtherFee" />
+          <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StaffSchClass">
+      <EntityTypeMapping TypeName="ERPToysModel.StaffSchClass">
+        <MappingFragment StoreEntitySet="StaffSchClass">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+          <ScalarProperty Name="SchClassID" ColumnName="SchClassID" />
+          <ScalarProperty Name="SchSerialNo" ColumnName="SchSerialNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockInBillDtl">
+      <EntityTypeMapping TypeName="ERPToysModel.StockInBillDtl">
+        <MappingFragment StoreEntitySet="StockInBillDtl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="MEAS" ColumnName="MEAS" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="InnerBox" ColumnName="InnerBox" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceNoTax" ColumnName="PriceNoTax" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="OtherFee" ColumnName="OtherFee" />
+          <ScalarProperty Name="NWeight" ColumnName="NWeight" />
+          <ScalarProperty Name="TonsQty" ColumnName="TonsQty" />
+          <ScalarProperty Name="TonsPrice" ColumnName="TonsPrice" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockInBillHd">
+      <EntityTypeMapping TypeName="ERPToysModel.StockInBillHd">
+        <MappingFragment StoreEntitySet="StockInBillHd">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+          <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+          <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+          <ScalarProperty Name="WarehouseType" ColumnName="WarehouseType" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+          <ScalarProperty Name="Contacts" ColumnName="Contacts" />
+          <ScalarProperty Name="Maker" ColumnName="Maker" />
+          <ScalarProperty Name="MakeDate" ColumnName="MakeDate" />
+          <ScalarProperty Name="Auditor" ColumnName="Auditor" />
+          <ScalarProperty Name="AuditDate" ColumnName="AuditDate" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="BillAMT" ColumnName="BillAMT" />
+          <ScalarProperty Name="UnPaidAMT" ColumnName="UnPaidAMT" />
+          <ScalarProperty Name="Worker" ColumnName="Worker" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockOutBillDtl">
+      <EntityTypeMapping TypeName="ERPToysModel.StockOutBillDtl">
+        <MappingFragment StoreEntitySet="StockOutBillDtl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="MEAS" ColumnName="MEAS" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="InnerBox" ColumnName="InnerBox" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceNoTax" ColumnName="PriceNoTax" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="OtherFee" ColumnName="OtherFee" />
+          <ScalarProperty Name="NWeight" ColumnName="NWeight" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="TonsQty" ColumnName="TonsQty" />
+          <ScalarProperty Name="TonsPrice" ColumnName="TonsPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockOutBillHd">
+      <EntityTypeMapping TypeName="ERPToysModel.StockOutBillHd">
+        <MappingFragment StoreEntitySet="StockOutBillHd">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+          <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+          <ScalarProperty Name="WarehouseType" ColumnName="WarehouseType" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+          <ScalarProperty Name="Contacts" ColumnName="Contacts" />
+          <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+          <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+          <ScalarProperty Name="Maker" ColumnName="Maker" />
+          <ScalarProperty Name="MakeDate" ColumnName="MakeDate" />
+          <ScalarProperty Name="Auditor" ColumnName="Auditor" />
+          <ScalarProperty Name="AuditDate" ColumnName="AuditDate" />
+          <ScalarProperty Name="MainMark" ColumnName="MainMark" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="BillAMT" ColumnName="BillAMT" />
+          <ScalarProperty Name="UnReceiptedAMT" ColumnName="UnReceiptedAMT" />
+          <ScalarProperty Name="Driver" ColumnName="Driver" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stocktaking">
+      <EntityTypeMapping TypeName="ERPToysModel.Stocktaking">
+        <MappingFragment StoreEntitySet="Stocktaking">
+          <ScalarProperty Name="Warehouse" ColumnName="Warehouse" />
+          <ScalarProperty Name="WarehouseType" ColumnName="WarehouseType" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="GoodsBigType" ColumnName="GoodsBigType" />
+          <ScalarProperty Name="Goods" ColumnName="Goods" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="MEAS" ColumnName="MEAS" />
+          <ScalarProperty Name="Checker" ColumnName="Checker" />
+          <ScalarProperty Name="CheckingDate" ColumnName="CheckingDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Supplier">
+      <EntityTypeMapping TypeName="ERPToysModel.Supplier">
+        <MappingFragment StoreEntitySet="Supplier">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+          <ScalarProperty Name="Contacts" ColumnName="Contacts" />
+          <ScalarProperty Name="ContactTel" ColumnName="ContactTel" />
+          <ScalarProperty Name="ContactCellPhone" ColumnName="ContactCellPhone" />
+          <ScalarProperty Name="QQ" ColumnName="QQ" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="ACBank" ColumnName="ACBank" />
+          <ScalarProperty Name="ACNo" ColumnName="ACNo" />
+          <ScalarProperty Name="Tax" ColumnName="Tax" />
+          <ScalarProperty Name="PaymentAddr" ColumnName="PaymentAddr" />
+          <ScalarProperty Name="PaymentTitle" ColumnName="PaymentTitle" />
+          <ScalarProperty Name="InvoiceAddr" ColumnName="InvoiceAddr" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+          <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemInfo">
+      <EntityTypeMapping TypeName="ERPToysModel.SystemInfo">
+        <MappingFragment StoreEntitySet="SystemInfo">
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="CompanyType" ColumnName="CompanyType" />
+          <ScalarProperty Name="Contracts" ColumnName="Contracts" />
+          <ScalarProperty Name="Accounts" ColumnName="Accounts" />
+          <ScalarProperty Name="FtpPath" ColumnName="FtpPath" />
+          <ScalarProperty Name="ServerUserName" ColumnName="ServerUserName" />
+          <ScalarProperty Name="ServerPassword" ColumnName="ServerPassword" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemStatus">
+      <EntityTypeMapping TypeName="ERPToysModel.SystemStatus">
+        <MappingFragment StoreEntitySet="SystemStatus">
+          <ScalarProperty Name="MainMenuName" ColumnName="MainMenuName" />
+          <ScalarProperty Name="MaxBillNo" ColumnName="MaxBillNo" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TonerLabel">
+      <EntityTypeMapping TypeName="ERPToysModel.TonerLabel">
+        <MappingFragment StoreEntitySet="TonerLabel">
+          <ScalarProperty Name="Customer" ColumnName="Customer" />
+          <ScalarProperty Name="Goods" ColumnName="Goods" />
+          <ScalarProperty Name="Material" ColumnName="Material" />
+          <ScalarProperty Name="Dosage" ColumnName="Dosage" />
+          <ScalarProperty Name="Subpackage" ColumnName="Subpackage" />
+          <ScalarProperty Name="TotalQty" ColumnName="TotalQty" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TypesList">
+      <EntityTypeMapping TypeName="ERPToysModel.TypesList">
+        <MappingFragment StoreEntitySet="TypesList">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="No" ColumnName="No" />
+          <ScalarProperty Name="SubType" ColumnName="SubType" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UsersInfo">
+      <EntityTypeMapping TypeName="ERPToysModel.UsersInfo">
+        <MappingFragment StoreEntitySet="UsersInfo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+          <ScalarProperty Name="Post" ColumnName="Post" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="DormNo" ColumnName="DormNo" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="Permissions" ColumnName="Permissions" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="AttCardnumber" ColumnName="AttCardnumber" />
+          <ScalarProperty Name="AttPrivilege" ColumnName="AttPrivilege" />
+          <ScalarProperty Name="AttEnabled" ColumnName="AttEnabled" />
+          <ScalarProperty Name="WageType" ColumnName="WageType" />
+          <ScalarProperty Name="Wages" ColumnName="Wages" />
+          <ScalarProperty Name="SchClassWage" ColumnName="SchClassWage" />
+          <ScalarProperty Name="TimeWage" ColumnName="TimeWage" />
+          <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WageBillDtl">
+      <EntityTypeMapping TypeName="ERPToysModel.WageBillDtl">
+        <MappingFragment StoreEntitySet="WageBillDtl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+          <ScalarProperty Name="Wages" ColumnName="Wages" />
+          <ScalarProperty Name="Welfare" ColumnName="Welfare" />
+          <ScalarProperty Name="Deduction" ColumnName="Deduction" />
+          <ScalarProperty Name="SocialSecurity" ColumnName="SocialSecurity" />
+          <ScalarProperty Name="IndividualIncomeTax" ColumnName="IndividualIncomeTax" />
+          <ScalarProperty Name="AMT" ColumnName="AMT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WageBillHd">
+      <EntityTypeMapping TypeName="ERPToysModel.WageBillHd">
+        <MappingFragment StoreEntitySet="WageBillHd">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+          <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Maker" ColumnName="Maker" />
+          <ScalarProperty Name="MakeDate" ColumnName="MakeDate" />
+          <ScalarProperty Name="Auditor" ColumnName="Auditor" />
+          <ScalarProperty Name="AuditDate" ColumnName="AuditDate" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WageDesign">
+      <EntityTypeMapping TypeName="ERPToysModel.WageDesign">
+        <MappingFragment StoreEntitySet="WageDesign">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Wages" ColumnName="Wages" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="ManHour" ColumnName="ManHour" />
+          <ScalarProperty Name="ErrorRate" ColumnName="ErrorRate" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Warehouse">
+      <EntityTypeMapping TypeName="ERPToysModel.Warehouse">
+        <MappingFragment StoreEntitySet="Warehouse">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AttParameters">
+      <EntityTypeMapping TypeName="ERPToysModel.AttParameters">
+        <MappingFragment StoreEntitySet="AttParameters">
+          <ScalarProperty Name="MachineNumber" ColumnName="MachineNumber" />
+          <ScalarProperty Name="CommMode" ColumnName="CommMode" />
+          <ScalarProperty Name="BaudRate" ColumnName="BaudRate" />
+          <ScalarProperty Name="AttIP" ColumnName="AttIP" />
+          <ScalarProperty Name="AttPort" ColumnName="AttPort" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VAccountBook">
+      <EntityTypeMapping TypeName="ERPToysModel.VAccountBook">
+        <MappingFragment StoreEntitySet="VAccountBook">
+          <ScalarProperty Name="仓库" ColumnName="仓库" />
+          <ScalarProperty Name="仓库类型" ColumnName="仓库类型" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="货品大类" ColumnName="货品大类" />
+          <ScalarProperty Name="记帐日期" ColumnName="记帐日期" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="入库数量" ColumnName="入库数量" />
+          <ScalarProperty Name="入库金额" ColumnName="入库金额" />
+          <ScalarProperty Name="出库数量" ColumnName="出库数量" />
+          <ScalarProperty Name="出库金额" ColumnName="出库金额" />
+          <ScalarProperty Name="结存数量" ColumnName="结存数量" />
+          <ScalarProperty Name="结存金额" ColumnName="结存金额" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="体积" ColumnName="体积" />
+          <ScalarProperty Name="毛重" ColumnName="毛重" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="单据编号" ColumnName="单据编号" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VAlert">
+      <EntityTypeMapping TypeName="ERPToysModel.VAlert">
+        <MappingFragment StoreEntitySet="VAlert">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BillID" ColumnName="BillID" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="标题" ColumnName="标题" />
+          <ScalarProperty Name="内容" ColumnName="内容" />
+          <ScalarProperty Name="添加时间" ColumnName="添加时间" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VAppointments">
+      <EntityTypeMapping TypeName="ERPToysModel.VAppointments">
+        <MappingFragment StoreEntitySet="VAppointments">
+          <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="工号" ColumnName="工号" />
+          <ScalarProperty Name="姓名" ColumnName="姓名" />
+          <ScalarProperty Name="工资状态" ColumnName="工资状态" />
+          <ScalarProperty Name="年月" ColumnName="年月" />
+          <ScalarProperty Name="日期" ColumnName="日期" />
+          <ScalarProperty Name="班次" ColumnName="班次" />
+          <ScalarProperty Name="机号" ColumnName="机号" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="重量_斤" ColumnName="重量_斤" />
+          <ScalarProperty Name="净重_克" ColumnName="净重_克" />
+          <ScalarProperty Name="计算周期" ColumnName="计算周期" />
+          <ScalarProperty Name="应产模数" ColumnName="应产模数" />
+          <ScalarProperty Name="实产模数" ColumnName="实产模数" />
+          <ScalarProperty Name="工时" ColumnName="工时" />
+          <ScalarProperty Name="当班金额" ColumnName="当班金额" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VAttAppointments">
+      <EntityTypeMapping TypeName="ERPToysModel.VAttAppointments">
+        <MappingFragment StoreEntitySet="VAttAppointments">
+          <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+          <ScalarProperty Name="GLogStartID" ColumnName="GLogStartID" />
+          <ScalarProperty Name="GLogEndID" ColumnName="GLogEndID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="工号" ColumnName="工号" />
+          <ScalarProperty Name="姓名" ColumnName="姓名" />
+          <ScalarProperty Name="工资状态" ColumnName="工资状态" />
+          <ScalarProperty Name="年月" ColumnName="年月" />
+          <ScalarProperty Name="日期" ColumnName="日期" />
+          <ScalarProperty Name="时段" ColumnName="时段" />
+          <ScalarProperty Name="SchSerialNo" ColumnName="SchSerialNo" />
+          <ScalarProperty Name="上班时间" ColumnName="上班时间" />
+          <ScalarProperty Name="下班时间" ColumnName="下班时间" />
+          <ScalarProperty Name="签到时间" ColumnName="签到时间" />
+          <ScalarProperty Name="签退时间" ColumnName="签退时间" />
+          <ScalarProperty Name="考勤状态" ColumnName="考勤状态" />
+          <ScalarProperty Name="迟到分钟数" ColumnName="迟到分钟数" />
+          <ScalarProperty Name="早退分钟数" ColumnName="早退分钟数" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VAttGeneralLog">
+      <EntityTypeMapping TypeName="ERPToysModel.VAttGeneralLog">
+        <MappingFragment StoreEntitySet="VAttGeneralLog">
+          <ScalarProperty Name="照片" ColumnName="照片" />
+          <ScalarProperty Name="账号" ColumnName="账号" />
+          <ScalarProperty Name="姓名" ColumnName="姓名" />
+          <ScalarProperty Name="部门" ColumnName="部门" />
+          <ScalarProperty Name="职位" ColumnName="职位" />
+          <ScalarProperty Name="出勤时间" ColumnName="出勤时间" />
+          <ScalarProperty Name="卡号" ColumnName="卡号" />
+          <ScalarProperty Name="特权" ColumnName="特权" />
+          <ScalarProperty Name="验证方式" ColumnName="验证方式" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VAttWageBill">
+      <EntityTypeMapping TypeName="ERPToysModel.VAttWageBill">
+        <MappingFragment StoreEntitySet="VAttWageBill">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="工资单号" ColumnName="工资单号" />
+          <ScalarProperty Name="结算日期" ColumnName="结算日期" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="年月" ColumnName="年月" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="工号" ColumnName="工号" />
+          <ScalarProperty Name="姓名" ColumnName="姓名" />
+          <ScalarProperty Name="班次" ColumnName="班次" />
+          <ScalarProperty Name="迟到分钟数" ColumnName="迟到分钟数" />
+          <ScalarProperty Name="早退分钟数" ColumnName="早退分钟数" />
+          <ScalarProperty Name="迟到次数" ColumnName="迟到次数" />
+          <ScalarProperty Name="早退次数" ColumnName="早退次数" />
+          <ScalarProperty Name="旷工" ColumnName="旷工" />
+          <ScalarProperty Name="忘打卡" ColumnName="忘打卡" />
+          <ScalarProperty Name="请假" ColumnName="请假" />
+          <ScalarProperty Name="基本工资" ColumnName="基本工资" />
+          <ScalarProperty Name="福利" ColumnName="福利" />
+          <ScalarProperty Name="扣款" ColumnName="扣款" />
+          <ScalarProperty Name="代扣社保" ColumnName="代扣社保" />
+          <ScalarProperty Name="代扣个税" ColumnName="代扣个税" />
+          <ScalarProperty Name="实发工资" ColumnName="实发工资" />
+          <ScalarProperty Name="制单人" ColumnName="制单人" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="审核人" ColumnName="审核人" />
+          <ScalarProperty Name="审核日期" ColumnName="审核日期" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VCompany">
+      <EntityTypeMapping TypeName="ERPToysModel.VCompany">
+        <MappingFragment StoreEntitySet="VCompany">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="代码" ColumnName="代码" />
+          <ScalarProperty Name="名称" ColumnName="名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="账期" ColumnName="账期" />
+          <ScalarProperty Name="欠款" ColumnName="欠款" />
+          <ScalarProperty Name="地址" ColumnName="地址" />
+          <ScalarProperty Name="邮编" ColumnName="邮编" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="联系电话" ColumnName="联系电话" />
+          <ScalarProperty Name="联系手机" ColumnName="联系手机" />
+          <ScalarProperty Name="QQ" ColumnName="QQ" />
+          <ScalarProperty Name="传真" ColumnName="传真" />
+          <ScalarProperty Name="物流地址" ColumnName="物流地址" />
+          <ScalarProperty Name="物流电话" ColumnName="物流电话" />
+          <ScalarProperty Name="开户行" ColumnName="开户行" />
+          <ScalarProperty Name="帐号" ColumnName="帐号" />
+          <ScalarProperty Name="税号" ColumnName="税号" />
+          <ScalarProperty Name="开票抬头" ColumnName="开票抬头" />
+          <ScalarProperty Name="开票地址" ColumnName="开票地址" />
+          <ScalarProperty Name="开票电话" ColumnName="开票电话" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+          <ScalarProperty Name="CheckBoxID" ColumnName="CheckBoxID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VCustomerSalesReceiptedSummary">
+      <EntityTypeMapping TypeName="ERPToysModel.VCustomerSalesReceiptedSummary">
+        <MappingFragment StoreEntitySet="VCustomerSalesReceiptedSummary">
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="交货日期" ColumnName="交货日期" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="已收金额" ColumnName="已收金额" />
+          <ScalarProperty Name="未收金额" ColumnName="未收金额" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VCustomerSettlement">
+      <EntityTypeMapping TypeName="ERPToysModel.VCustomerSettlement">
+        <MappingFragment StoreEntitySet="VCustomerSettlement">
+          <ScalarProperty Name="收款单号" ColumnName="收款单号" />
+          <ScalarProperty Name="收款日期" ColumnName="收款日期" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="客户" ColumnName="客户" />
+          <ScalarProperty Name="上期结欠" ColumnName="上期结欠" />
+          <ScalarProperty Name="本期收款" ColumnName="本期收款" />
+          <ScalarProperty Name="共欠" ColumnName="共欠" />
+          <ScalarProperty Name="本期结款" ColumnName="本期结款" />
+          <ScalarProperty Name="本期结欠" ColumnName="本期结欠" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VDepartment">
+      <EntityTypeMapping TypeName="ERPToysModel.VDepartment">
+        <MappingFragment StoreEntitySet="VDepartment">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="代码" ColumnName="代码" />
+          <ScalarProperty Name="名称" ColumnName="名称" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="联系电话" ColumnName="联系电话" />
+          <ScalarProperty Name="联系手机" ColumnName="联系手机" />
+          <ScalarProperty Name="QQ" ColumnName="QQ" />
+          <ScalarProperty Name="传真" ColumnName="传真" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VEMSInventoryGroupByGoods">
+      <EntityTypeMapping TypeName="ERPToysModel.VEMSInventoryGroupByGoods">
+        <MappingFragment StoreEntitySet="VEMSInventoryGroupByGoods">
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="供应商代码" ColumnName="供应商代码" />
+          <ScalarProperty Name="供应商名称" ColumnName="供应商名称" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="货品大类" ColumnName="货品大类" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="布产数量" ColumnName="布产数量" />
+          <ScalarProperty Name="可用数量" ColumnName="可用数量" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="个数" ColumnName="个数" />
+          <ScalarProperty Name="一出几" ColumnName="一出几" />
+          <ScalarProperty Name="模数" ColumnName="模数" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VFSMInventoryGroupByGoods">
+      <EntityTypeMapping TypeName="ERPToysModel.VFSMInventoryGroupByGoods">
+        <MappingFragment StoreEntitySet="VFSMInventoryGroupByGoods">
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="供应商代码" ColumnName="供应商代码" />
+          <ScalarProperty Name="供应商名称" ColumnName="供应商名称" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="货品大类" ColumnName="货品大类" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="布产数量" ColumnName="布产数量" />
+          <ScalarProperty Name="可用数量" ColumnName="可用数量" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="个数" ColumnName="个数" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VFSMOrder">
+      <EntityTypeMapping TypeName="ERPToysModel.VFSMOrder">
+        <MappingFragment StoreEntitySet="VFSMOrder">
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="订货单号" ColumnName="订货单号" />
+          <ScalarProperty Name="订货日期" ColumnName="订货日期" />
+          <ScalarProperty Name="交货日期" ColumnName="交货日期" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="供应商" ColumnName="供应商" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="数量" ColumnName="数量" />
+          <ScalarProperty Name="到货数量" ColumnName="到货数量" />
+          <ScalarProperty Name="未到数量" ColumnName="未到数量" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="仓库" ColumnName="仓库" />
+          <ScalarProperty Name="订单类型" ColumnName="订单类型" />
+          <ScalarProperty Name="类型" ColumnName="类型" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="制单人" ColumnName="制单人" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="审核人" ColumnName="审核人" />
+          <ScalarProperty Name="审核日期" ColumnName="审核日期" />
+          <ScalarProperty Name="MaterialGoodsID" ColumnName="MaterialGoodsID" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VFSMOrderDtlByMoldList">
+      <EntityTypeMapping TypeName="ERPToysModel.VFSMOrderDtlByMoldList">
+        <MappingFragment StoreEntitySet="VFSMOrderDtlByMoldList">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="ParentGoodsID" ColumnName="ParentGoodsID" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="InnerBox" ColumnName="InnerBox" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceNoTax" ColumnName="PriceNoTax" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="OtherFee" ColumnName="OtherFee" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VFSMOrderDtlByMoldMaterial">
+      <EntityTypeMapping TypeName="ERPToysModel.VFSMOrderDtlByMoldMaterial">
+        <MappingFragment StoreEntitySet="VFSMOrderDtlByMoldMaterial">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="ParentGoodsID" ColumnName="ParentGoodsID" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="InnerBox" ColumnName="InnerBox" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceNoTax" ColumnName="PriceNoTax" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="OtherFee" ColumnName="OtherFee" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VGoods">
+      <EntityTypeMapping TypeName="ERPToysModel.VGoods">
+        <MappingFragment StoreEntitySet="VGoods">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="图片" ColumnName="图片" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="货品类型" ColumnName="货品类型" />
+          <ScalarProperty Name="包装方式" ColumnName="包装方式" />
+          <ScalarProperty Name="客户" ColumnName="客户" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="毛重" ColumnName="毛重" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="体积" ColumnName="体积" />
+          <ScalarProperty Name="条形码" ColumnName="条形码" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+          <ScalarProperty Name="CheckBoxID" ColumnName="CheckBoxID" />
+          <ScalarProperty Name="停产" ColumnName="停产" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VGoodsByBOM">
+      <EntityTypeMapping TypeName="ERPToysModel.VGoodsByBOM">
+        <MappingFragment StoreEntitySet="VGoodsByBOM">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="数量" ColumnName="数量" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="类型" ColumnName="类型" />
+          <ScalarProperty Name="ParentGoodsID" ColumnName="ParentGoodsID" />
+          <ScalarProperty Name="GoodsBigType" ColumnName="GoodsBigType" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="NWeight" ColumnName="NWeight" />
+          <ScalarProperty Name="InnerBox" ColumnName="InnerBox" />
+          <ScalarProperty Name="PriceNoTax" ColumnName="PriceNoTax" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VGoodsByMoldAllot">
+      <EntityTypeMapping TypeName="ERPToysModel.VGoodsByMoldAllot">
+        <MappingFragment StoreEntitySet="VGoodsByMoldAllot">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="数量" ColumnName="数量" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VGoodsBySLSalePrice">
+      <EntityTypeMapping TypeName="ERPToysModel.VGoodsBySLSalePrice">
+        <MappingFragment StoreEntitySet="VGoodsBySLSalePrice">
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VGoodsSalesSummaryByCustomer">
+      <EntityTypeMapping TypeName="ERPToysModel.VGoodsSalesSummaryByCustomer">
+        <MappingFragment StoreEntitySet="VGoodsSalesSummaryByCustomer">
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="结算类型" ColumnName="结算类型" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="正唛" ColumnName="正唛" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="包装方式" ColumnName="包装方式" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="体积" ColumnName="体积" />
+          <ScalarProperty Name="毛重" ColumnName="毛重" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VGoodsType">
+      <EntityTypeMapping TypeName="ERPToysModel.VGoodsType">
+        <MappingFragment StoreEntitySet="VGoodsType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="类型编码" ColumnName="类型编码" />
+          <ScalarProperty Name="类型名称" ColumnName="类型名称" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VInventory">
+      <EntityTypeMapping TypeName="ERPToysModel.VInventory">
+        <MappingFragment StoreEntitySet="VInventory">
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="客户" ColumnName="客户" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="仓库类型" ColumnName="仓库类型" />
+          <ScalarProperty Name="登帐日期" ColumnName="登帐日期" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="包装方式" ColumnName="包装方式" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="体积" ColumnName="体积" />
+          <ScalarProperty Name="毛重" ColumnName="毛重" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="单据编号" ColumnName="单据编号" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VInventoryGroupByGoods">
+      <EntityTypeMapping TypeName="ERPToysModel.VInventoryGroupByGoods">
+        <MappingFragment StoreEntitySet="VInventoryGroupByGoods">
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="包装方式" ColumnName="包装方式" />
+          <ScalarProperty Name="仓库类型" ColumnName="仓库类型" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="待发箱数" ColumnName="待发箱数" />
+          <ScalarProperty Name="可用箱数" ColumnName="可用箱数" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="体积" ColumnName="体积" />
+          <ScalarProperty Name="毛重" ColumnName="毛重" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VMaterial">
+      <EntityTypeMapping TypeName="ERPToysModel.VMaterial">
+        <MappingFragment StoreEntitySet="VMaterial">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="图片" ColumnName="图片" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="货品类型" ColumnName="货品类型" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="一出几" ColumnName="一出几" />
+          <ScalarProperty Name="条形码" ColumnName="条形码" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="停产" ColumnName="停产" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="InnerBox" ColumnName="InnerBox" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VMaterialInventory">
+      <EntityTypeMapping TypeName="ERPToysModel.VMaterialInventory">
+        <MappingFragment StoreEntitySet="VMaterialInventory">
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="货品大类" ColumnName="货品大类" />
+          <ScalarProperty Name="数量" ColumnName="数量" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="个数" ColumnName="个数" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="登帐日期" ColumnName="登帐日期" />
+          <ScalarProperty Name="单据编号" ColumnName="单据编号" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VMaterialInventoryGroupByGoods">
+      <EntityTypeMapping TypeName="ERPToysModel.VMaterialInventoryGroupByGoods">
+        <MappingFragment StoreEntitySet="VMaterialInventoryGroupByGoods">
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="货品大类" ColumnName="货品大类" />
+          <ScalarProperty Name="数量" ColumnName="数量" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="个数" ColumnName="个数" />
+          <ScalarProperty Name="一出几" ColumnName="一出几" />
+          <ScalarProperty Name="模数" ColumnName="模数" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VMaterialStockInBill">
+      <EntityTypeMapping TypeName="ERPToysModel.VMaterialStockInBill">
+        <MappingFragment StoreEntitySet="VMaterialStockInBill">
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="入库单号" ColumnName="入库单号" />
+          <ScalarProperty Name="入库日期" ColumnName="入库日期" />
+          <ScalarProperty Name="供应商" ColumnName="供应商" />
+          <ScalarProperty Name="部门" ColumnName="部门" />
+          <ScalarProperty Name="客户" ColumnName="客户" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="仓库" ColumnName="仓库" />
+          <ScalarProperty Name="类型" ColumnName="类型" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="布产单号" ColumnName="布产单号" />
+          <ScalarProperty Name="数量" ColumnName="数量" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="工人" ColumnName="工人" />
+          <ScalarProperty Name="制单人" ColumnName="制单人" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="审核人" ColumnName="审核人" />
+          <ScalarProperty Name="审核日期" ColumnName="审核日期" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VMaterialStockOutBill">
+      <EntityTypeMapping TypeName="ERPToysModel.VMaterialStockOutBill">
+        <MappingFragment StoreEntitySet="VMaterialStockOutBill">
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="出库单号" ColumnName="出库单号" />
+          <ScalarProperty Name="出库日期" ColumnName="出库日期" />
+          <ScalarProperty Name="交货日期" ColumnName="交货日期" />
+          <ScalarProperty Name="供应商" ColumnName="供应商" />
+          <ScalarProperty Name="部门" ColumnName="部门" />
+          <ScalarProperty Name="客户" ColumnName="客户" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="仓库" ColumnName="仓库" />
+          <ScalarProperty Name="类型" ColumnName="类型" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="数量" ColumnName="数量" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="制单人" ColumnName="制单人" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="审核人" ColumnName="审核人" />
+          <ScalarProperty Name="审核日期" ColumnName="审核日期" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VMO">
+      <EntityTypeMapping TypeName="ERPToysModel.VMO">
+        <MappingFragment StoreEntitySet="VMO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="图片" ColumnName="图片" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="客户" ColumnName="客户" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="毛重" ColumnName="毛重" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="体积" ColumnName="体积" />
+          <ScalarProperty Name="条形码" ColumnName="条形码" />
+          <ScalarProperty Name="产量" ColumnName="产量" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VMPS">
+      <EntityTypeMapping TypeName="ERPToysModel.VMPS">
+        <MappingFragment StoreEntitySet="VMPS">
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VOrder">
+      <EntityTypeMapping TypeName="ERPToysModel.VOrder">
+        <MappingFragment StoreEntitySet="VOrder">
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="订货单号" ColumnName="订货单号" />
+          <ScalarProperty Name="订货日期" ColumnName="订货日期" />
+          <ScalarProperty Name="交货日期" ColumnName="交货日期" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="仓库类型" ColumnName="仓库类型" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="正唛" ColumnName="正唛" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="发货数量" ColumnName="发货数量" />
+          <ScalarProperty Name="未送数量" ColumnName="未送数量" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="包装方式" ColumnName="包装方式" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="体积" ColumnName="体积" />
+          <ScalarProperty Name="毛重" ColumnName="毛重" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="仓库" ColumnName="仓库" />
+          <ScalarProperty Name="订单类型" ColumnName="订单类型" />
+          <ScalarProperty Name="类型" ColumnName="类型" />
+          <ScalarProperty Name="制单人" ColumnName="制单人" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="审核人" ColumnName="审核人" />
+          <ScalarProperty Name="审核日期" ColumnName="审核日期" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VOrderDtlByBOM">
+      <EntityTypeMapping TypeName="ERPToysModel.VOrderDtlByBOM">
+        <MappingFragment StoreEntitySet="VOrderDtlByBOM">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="ParentGoodsID" ColumnName="ParentGoodsID" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="StockQty" ColumnName="StockQty" />
+          <ScalarProperty Name="Shortage" ColumnName="Shortage" />
+          <ScalarProperty Name="Yielded" ColumnName="Yielded" />
+          <ScalarProperty Name="NWeight" ColumnName="NWeight" />
+          <ScalarProperty Name="Counts" ColumnName="Counts" />
+          <ScalarProperty Name="Modulus" ColumnName="Modulus" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="InnerBox" ColumnName="InnerBox" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceNoTax" ColumnName="PriceNoTax" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="OtherFee" ColumnName="OtherFee" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="货品大类" ColumnName="货品大类" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="一出几" ColumnName="一出几" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VOrderDtlByColor">
+      <EntityTypeMapping TypeName="ERPToysModel.VOrderDtlByColor">
+        <MappingFragment StoreEntitySet="VOrderDtlByColor">
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VPackaging">
+      <EntityTypeMapping TypeName="ERPToysModel.VPackaging">
+        <MappingFragment StoreEntitySet="VPackaging">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="包装名称" ColumnName="包装名称" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VParentGoodsByBOM">
+      <EntityTypeMapping TypeName="ERPToysModel.VParentGoodsByBOM">
+        <MappingFragment StoreEntitySet="VParentGoodsByBOM">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="去税单价" ColumnName="去税单价" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="类型" ColumnName="类型" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VPaymentBill">
+      <EntityTypeMapping TypeName="ERPToysModel.VPaymentBill">
+        <MappingFragment StoreEntitySet="VPaymentBill">
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="付款单号" ColumnName="付款单号" />
+          <ScalarProperty Name="付款日期" ColumnName="付款日期" />
+          <ScalarProperty Name="付款类型" ColumnName="付款类型" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="供应商代码" ColumnName="供应商代码" />
+          <ScalarProperty Name="供应商名称" ColumnName="供应商名称" />
+          <ScalarProperty Name="工人" ColumnName="工人" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="结算方式" ColumnName="结算方式" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BillID" ColumnName="BillID" />
+          <ScalarProperty Name="单据编号" ColumnName="单据编号" />
+          <ScalarProperty Name="单据日期" ColumnName="单据日期" />
+          <ScalarProperty Name="类型" ColumnName="类型" />
+          <ScalarProperty Name="单据金额" ColumnName="单据金额" />
+          <ScalarProperty Name="已付金额" ColumnName="已付金额" />
+          <ScalarProperty Name="未付金额" ColumnName="未付金额" />
+          <ScalarProperty Name="本次付款" ColumnName="本次付款" />
+          <ScalarProperty Name="制单人" ColumnName="制单人" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="审核人" ColumnName="审核人" />
+          <ScalarProperty Name="审核日期" ColumnName="审核日期" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VPaymentBillDtl">
+      <EntityTypeMapping TypeName="ERPToysModel.VPaymentBillDtl">
+        <MappingFragment StoreEntitySet="VPaymentBillDtl">
+          <ScalarProperty Name="CheckItem" ColumnName="CheckItem" />
+          <ScalarProperty Name="BillID" ColumnName="BillID" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+          <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="BillAMT" ColumnName="BillAMT" />
+          <ScalarProperty Name="PaidAMT" ColumnName="PaidAMT" />
+          <ScalarProperty Name="UnPaidAMT" ColumnName="UnPaidAMT" />
+          <ScalarProperty Name="LastPaidAMT" ColumnName="LastPaidAMT" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="Worker" ColumnName="Worker" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VPO">
+      <EntityTypeMapping TypeName="ERPToysModel.VPO">
+        <MappingFragment StoreEntitySet="VPO">
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="订货单号" ColumnName="订货单号" />
+          <ScalarProperty Name="订货日期" ColumnName="订货日期" />
+          <ScalarProperty Name="交货日期" ColumnName="交货日期" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="供应商" ColumnName="供应商" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="正唛" ColumnName="正唛" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="数量" ColumnName="数量" />
+          <ScalarProperty Name="到货数量" ColumnName="到货数量" />
+          <ScalarProperty Name="未到数量" ColumnName="未到数量" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="仓库" ColumnName="仓库" />
+          <ScalarProperty Name="订单类型" ColumnName="订单类型" />
+          <ScalarProperty Name="类型" ColumnName="类型" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="制单人" ColumnName="制单人" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="审核人" ColumnName="审核人" />
+          <ScalarProperty Name="审核日期" ColumnName="审核日期" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VProductionOrder">
+      <EntityTypeMapping TypeName="ERPToysModel.VProductionOrder">
+        <MappingFragment StoreEntitySet="VProductionOrder">
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="订货单号" ColumnName="订货单号" />
+          <ScalarProperty Name="订货日期" ColumnName="订货日期" />
+          <ScalarProperty Name="交货日期" ColumnName="交货日期" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="正唛" ColumnName="正唛" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="包装方式" ColumnName="包装方式" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="回收箱数" ColumnName="回收箱数" />
+          <ScalarProperty Name="未收箱数" ColumnName="未收箱数" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="仓库" ColumnName="仓库" />
+          <ScalarProperty Name="订单类型" ColumnName="订单类型" />
+          <ScalarProperty Name="类型" ColumnName="类型" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="体积" ColumnName="体积" />
+          <ScalarProperty Name="毛重" ColumnName="毛重" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="制单人" ColumnName="制单人" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="审核人" ColumnName="审核人" />
+          <ScalarProperty Name="审核日期" ColumnName="审核日期" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VProductionOrderDtlForPrint">
+      <EntityTypeMapping TypeName="ERPToysModel.VProductionOrderDtlForPrint">
+        <MappingFragment StoreEntitySet="VProductionOrderDtlForPrint">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="正唛" ColumnName="正唛" />
+          <ScalarProperty Name="侧唛" ColumnName="侧唛" />
+          <ScalarProperty Name="内盒唛" ColumnName="内盒唛" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VProfitAndLoss">
+      <EntityTypeMapping TypeName="ERPToysModel.VProfitAndLoss">
+        <MappingFragment StoreEntitySet="VProfitAndLoss">
+          <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+          <ScalarProperty Name="仓库类型" ColumnName="仓库类型" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="仓库" ColumnName="仓库" />
+          <ScalarProperty Name="盘点厂商" ColumnName="盘点厂商" />
+          <ScalarProperty Name="货品大类" ColumnName="货品大类" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="盘点数量" ColumnName="盘点数量" />
+          <ScalarProperty Name="库存数量" ColumnName="库存数量" />
+          <ScalarProperty Name="盈亏数量" ColumnName="盈亏数量" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VReceiptBill">
+      <EntityTypeMapping TypeName="ERPToysModel.VReceiptBill">
+        <MappingFragment StoreEntitySet="VReceiptBill">
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="收款单号" ColumnName="收款单号" />
+          <ScalarProperty Name="收款日期" ColumnName="收款日期" />
+          <ScalarProperty Name="收款类型" ColumnName="收款类型" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="供应商代码" ColumnName="供应商代码" />
+          <ScalarProperty Name="供应商名称" ColumnName="供应商名称" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="结算方式" ColumnName="结算方式" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BillID" ColumnName="BillID" />
+          <ScalarProperty Name="单据编号" ColumnName="单据编号" />
+          <ScalarProperty Name="单据日期" ColumnName="单据日期" />
+          <ScalarProperty Name="类型" ColumnName="类型" />
+          <ScalarProperty Name="单据金额" ColumnName="单据金额" />
+          <ScalarProperty Name="已收金额" ColumnName="已收金额" />
+          <ScalarProperty Name="未收金额" ColumnName="未收金额" />
+          <ScalarProperty Name="本次收款" ColumnName="本次收款" />
+          <ScalarProperty Name="制单人" ColumnName="制单人" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="审核人" ColumnName="审核人" />
+          <ScalarProperty Name="审核日期" ColumnName="审核日期" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VReceiptBillDtl">
+      <EntityTypeMapping TypeName="ERPToysModel.VReceiptBillDtl">
+        <MappingFragment StoreEntitySet="VReceiptBillDtl">
+          <ScalarProperty Name="CheckItem" ColumnName="CheckItem" />
+          <ScalarProperty Name="BillID" ColumnName="BillID" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+          <ScalarProperty Name="MainMark" ColumnName="MainMark" />
+          <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="BillAMT" ColumnName="BillAMT" />
+          <ScalarProperty Name="ReceiptedAMT" ColumnName="ReceiptedAMT" />
+          <ScalarProperty Name="UnReceiptedAMT" ColumnName="UnReceiptedAMT" />
+          <ScalarProperty Name="LastReceiptedAMT" ColumnName="LastReceiptedAMT" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VSalesBillSummary">
+      <EntityTypeMapping TypeName="ERPToysModel.VSalesBillSummary">
+        <MappingFragment StoreEntitySet="VSalesBillSummary">
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="出库单号" ColumnName="出库单号" />
+          <ScalarProperty Name="出库日期" ColumnName="出库日期" />
+          <ScalarProperty Name="交货日期" ColumnName="交货日期" />
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="结算类型" ColumnName="结算类型" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="重量" ColumnName="重量" />
+          <ScalarProperty Name="成本" ColumnName="成本" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="毛利" ColumnName="毛利" />
+          <ScalarProperty Name="毛利率" ColumnName="毛利率" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VSalesSummaryByCustomer">
+      <EntityTypeMapping TypeName="ERPToysModel.VSalesSummaryByCustomer">
+        <MappingFragment StoreEntitySet="VSalesSummaryByCustomer">
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="结算类型" ColumnName="结算类型" />
+          <ScalarProperty Name="单据日期" ColumnName="单据日期" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="已收金额" ColumnName="已收金额" />
+          <ScalarProperty Name="未收金额" ColumnName="未收金额" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VSalesSummaryByGoods">
+      <EntityTypeMapping TypeName="ERPToysModel.VSalesSummaryByGoods">
+        <MappingFragment StoreEntitySet="VSalesSummaryByGoods">
+          <ScalarProperty Name="结算类型" ColumnName="结算类型" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="正唛" ColumnName="正唛" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="包装方式" ColumnName="包装方式" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="体积" ColumnName="体积" />
+          <ScalarProperty Name="毛重" ColumnName="毛重" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VSampleStockOut">
+      <EntityTypeMapping TypeName="ERPToysModel.VSampleStockOut">
+        <MappingFragment StoreEntitySet="VSampleStockOut">
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="出库单号" ColumnName="出库单号" />
+          <ScalarProperty Name="出库日期" ColumnName="出库日期" />
+          <ScalarProperty Name="交货日期" ColumnName="交货日期" />
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="仓库" ColumnName="仓库" />
+          <ScalarProperty Name="类型" ColumnName="类型" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="数量" ColumnName="数量" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="制单人" ColumnName="制单人" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="审核人" ColumnName="审核人" />
+          <ScalarProperty Name="审核日期" ColumnName="审核日期" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VStaffSchClass">
+      <EntityTypeMapping TypeName="ERPToysModel.VStaffSchClass">
+        <MappingFragment StoreEntitySet="VStaffSchClass">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+          <ScalarProperty Name="SchClassID" ColumnName="SchClassID" />
+          <ScalarProperty Name="SchSerialNo" ColumnName="SchSerialNo" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="LateMinutes" ColumnName="LateMinutes" />
+          <ScalarProperty Name="EarlyMinutes" ColumnName="EarlyMinutes" />
+          <ScalarProperty Name="CheckInStartTime" ColumnName="CheckInStartTime" />
+          <ScalarProperty Name="CheckInEndTime" ColumnName="CheckInEndTime" />
+          <ScalarProperty Name="CheckOutStartTime" ColumnName="CheckOutStartTime" />
+          <ScalarProperty Name="CheckOutEndTime" ColumnName="CheckOutEndTime" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VStatementOfAccountToCustomer">
+      <EntityTypeMapping TypeName="ERPToysModel.VStatementOfAccountToCustomer">
+        <MappingFragment StoreEntitySet="VStatementOfAccountToCustomer">
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="结算类型" ColumnName="结算类型" />
+          <ScalarProperty Name="单据日期" ColumnName="单据日期" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="正唛" ColumnName="正唛" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="包装方式" ColumnName="包装方式" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="体积" ColumnName="体积" />
+          <ScalarProperty Name="毛重" ColumnName="毛重" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VStatementOfAccountToSupplier">
+      <EntityTypeMapping TypeName="ERPToysModel.VStatementOfAccountToSupplier">
+        <MappingFragment StoreEntitySet="VStatementOfAccountToSupplier">
+          <ScalarProperty Name="供应商代码" ColumnName="供应商代码" />
+          <ScalarProperty Name="供应商名称" ColumnName="供应商名称" />
+          <ScalarProperty Name="结算类型" ColumnName="结算类型" />
+          <ScalarProperty Name="结算日期" ColumnName="结算日期" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="数量" ColumnName="数量" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VStockInBill">
+      <EntityTypeMapping TypeName="ERPToysModel.VStockInBill">
+        <MappingFragment StoreEntitySet="VStockInBill">
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="入库单号" ColumnName="入库单号" />
+          <ScalarProperty Name="入库日期" ColumnName="入库日期" />
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="供应商" ColumnName="供应商" />
+          <ScalarProperty Name="仓库" ColumnName="仓库" />
+          <ScalarProperty Name="仓库类型" ColumnName="仓库类型" />
+          <ScalarProperty Name="类型" ColumnName="类型" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="已退料入库" ColumnName="已退料入库" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="包装方式" ColumnName="包装方式" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="体积" ColumnName="体积" />
+          <ScalarProperty Name="毛重" ColumnName="毛重" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="工人" ColumnName="工人" />
+          <ScalarProperty Name="制单人" ColumnName="制单人" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="审核人" ColumnName="审核人" />
+          <ScalarProperty Name="审核日期" ColumnName="审核日期" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VStockInBillDtlByBOM">
+      <EntityTypeMapping TypeName="ERPToysModel.VStockInBillDtlByBOM">
+        <MappingFragment StoreEntitySet="VStockInBillDtlByBOM">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="ParentGoodsID" ColumnName="ParentGoodsID" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="StockQty" ColumnName="StockQty" />
+          <ScalarProperty Name="Shortage" ColumnName="Shortage" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="InnerBox" ColumnName="InnerBox" />
+          <ScalarProperty Name="NWeight" ColumnName="NWeight" />
+          <ScalarProperty Name="Counts" ColumnName="Counts" />
+          <ScalarProperty Name="Modulus" ColumnName="Modulus" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceNoTax" ColumnName="PriceNoTax" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="OtherFee" ColumnName="OtherFee" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="货品大类" ColumnName="货品大类" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="一出几" ColumnName="一出几" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VStockInBillDtlByColor">
+      <EntityTypeMapping TypeName="ERPToysModel.VStockInBillDtlByColor">
+        <MappingFragment StoreEntitySet="VStockInBillDtlByColor">
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VStockOutBill">
+      <EntityTypeMapping TypeName="ERPToysModel.VStockOutBill">
+        <MappingFragment StoreEntitySet="VStockOutBill">
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="勾选" ColumnName="勾选" />
+          <ScalarProperty Name="出库单号" ColumnName="出库单号" />
+          <ScalarProperty Name="出库日期" ColumnName="出库日期" />
+          <ScalarProperty Name="交货日期" ColumnName="交货日期" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="正唛" ColumnName="正唛" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="毛重" ColumnName="毛重" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="订单编号" ColumnName="订单编号" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="重量" ColumnName="重量" />
+          <ScalarProperty Name="包装方式" ColumnName="包装方式" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="适用料" ColumnName="适用料" />
+          <ScalarProperty Name="用量" ColumnName="用量" />
+          <ScalarProperty Name="分包数" ColumnName="分包数" />
+          <ScalarProperty Name="体积" ColumnName="体积" />
+          <ScalarProperty Name="仓库类型" ColumnName="仓库类型" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="仓库" ColumnName="仓库" />
+          <ScalarProperty Name="类型" ColumnName="类型" />
+          <ScalarProperty Name="物流地址" ColumnName="物流地址" />
+          <ScalarProperty Name="物流电话" ColumnName="物流电话" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+          <ScalarProperty Name="制单人" ColumnName="制单人" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="审核人" ColumnName="审核人" />
+          <ScalarProperty Name="审核日期" ColumnName="审核日期" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VStockOutBillDtlByBOM">
+      <EntityTypeMapping TypeName="ERPToysModel.VStockOutBillDtlByBOM">
+        <MappingFragment StoreEntitySet="VStockOutBillDtlByBOM">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="ParentGoodsID" ColumnName="ParentGoodsID" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="InnerBox" ColumnName="InnerBox" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceNoTax" ColumnName="PriceNoTax" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="OtherFee" ColumnName="OtherFee" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="BOMQty" ColumnName="BOMQty" />
+          <ScalarProperty Name="MaterialCode" ColumnName="MaterialCode" />
+          <ScalarProperty Name="MaterialUnit" ColumnName="MaterialUnit" />
+          <ScalarProperty Name="GoodsQty" ColumnName="GoodsQty" />
+          <ScalarProperty Name="GoodsUnit" ColumnName="GoodsUnit" />
+          <ScalarProperty Name="Subpackage" ColumnName="Subpackage" />
+          <ScalarProperty Name="TotalQty" ColumnName="TotalQty" />
+          <ScalarProperty Name="Material" ColumnName="Material" />
+          <ScalarProperty Name="Mod" ColumnName="Mod" />
+          <ScalarProperty Name="TotalMod" ColumnName="TotalMod" />
+          <ScalarProperty Name="NWeight" ColumnName="NWeight" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VStocktaking">
+      <EntityTypeMapping TypeName="ERPToysModel.VStocktaking">
+        <MappingFragment StoreEntitySet="VStocktaking">
+          <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+          <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="盘点仓库" ColumnName="盘点仓库" />
+          <ScalarProperty Name="仓库类型" ColumnName="仓库类型" />
+          <ScalarProperty Name="盘点厂商" ColumnName="盘点厂商" />
+          <ScalarProperty Name="货品大类" ColumnName="货品大类" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="盘点数量" ColumnName="盘点数量" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="盘点人" ColumnName="盘点人" />
+          <ScalarProperty Name="盘点日期" ColumnName="盘点日期" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VSupplier">
+      <EntityTypeMapping TypeName="ERPToysModel.VSupplier">
+        <MappingFragment StoreEntitySet="VSupplier">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="代码" ColumnName="代码" />
+          <ScalarProperty Name="名称" ColumnName="名称" />
+          <ScalarProperty Name="供应商类型" ColumnName="供应商类型" />
+          <ScalarProperty Name="地址" ColumnName="地址" />
+          <ScalarProperty Name="邮编" ColumnName="邮编" />
+          <ScalarProperty Name="联系人" ColumnName="联系人" />
+          <ScalarProperty Name="联系电话" ColumnName="联系电话" />
+          <ScalarProperty Name="联系手机" ColumnName="联系手机" />
+          <ScalarProperty Name="QQ" ColumnName="QQ" />
+          <ScalarProperty Name="传真" ColumnName="传真" />
+          <ScalarProperty Name="开户行" ColumnName="开户行" />
+          <ScalarProperty Name="帐号" ColumnName="帐号" />
+          <ScalarProperty Name="税号" ColumnName="税号" />
+          <ScalarProperty Name="付款地址" ColumnName="付款地址" />
+          <ScalarProperty Name="付款抬头" ColumnName="付款抬头" />
+          <ScalarProperty Name="发票地址" ColumnName="发票地址" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VSupplierSettlement">
+      <EntityTypeMapping TypeName="ERPToysModel.VSupplierSettlement">
+        <MappingFragment StoreEntitySet="VSupplierSettlement">
+          <ScalarProperty Name="付款单号" ColumnName="付款单号" />
+          <ScalarProperty Name="付款日期" ColumnName="付款日期" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="供应商" ColumnName="供应商" />
+          <ScalarProperty Name="上期结欠" ColumnName="上期结欠" />
+          <ScalarProperty Name="本期付款" ColumnName="本期付款" />
+          <ScalarProperty Name="共欠" ColumnName="共欠" />
+          <ScalarProperty Name="本期结款" ColumnName="本期结款" />
+          <ScalarProperty Name="本期结欠" ColumnName="本期结欠" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VUsersInfo">
+      <EntityTypeMapping TypeName="ERPToysModel.VUsersInfo">
+        <MappingFragment StoreEntitySet="VUsersInfo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="照片" ColumnName="照片" />
+          <ScalarProperty Name="姓名" ColumnName="姓名" />
+          <ScalarProperty Name="账号" ColumnName="账号" />
+          <ScalarProperty Name="部门" ColumnName="部门" />
+          <ScalarProperty Name="职位" ColumnName="职位" />
+          <ScalarProperty Name="电话" ColumnName="电话" />
+          <ScalarProperty Name="地址" ColumnName="地址" />
+          <ScalarProperty Name="宿舍号" ColumnName="宿舍号" />
+          <ScalarProperty Name="考勤卡号" ColumnName="考勤卡号" />
+          <ScalarProperty Name="考勤特权" ColumnName="考勤特权" />
+          <ScalarProperty Name="启用考勤" ColumnName="启用考勤" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+          <ScalarProperty Name="已删除" ColumnName="已删除" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VWageBill">
+      <EntityTypeMapping TypeName="ERPToysModel.VWageBill">
+        <MappingFragment StoreEntitySet="VWageBill">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HdID" ColumnName="HdID" />
+          <ScalarProperty Name="工资单号" ColumnName="工资单号" />
+          <ScalarProperty Name="结算日期" ColumnName="结算日期" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="工号" ColumnName="工号" />
+          <ScalarProperty Name="姓名" ColumnName="姓名" />
+          <ScalarProperty Name="年月" ColumnName="年月" />
+          <ScalarProperty Name="基本工资" ColumnName="基本工资" />
+          <ScalarProperty Name="福利" ColumnName="福利" />
+          <ScalarProperty Name="扣款" ColumnName="扣款" />
+          <ScalarProperty Name="代扣社保" ColumnName="代扣社保" />
+          <ScalarProperty Name="代扣个税" ColumnName="代扣个税" />
+          <ScalarProperty Name="实发工资" ColumnName="实发工资" />
+          <ScalarProperty Name="制单人" ColumnName="制单人" />
+          <ScalarProperty Name="制单日期" ColumnName="制单日期" />
+          <ScalarProperty Name="审核人" ColumnName="审核人" />
+          <ScalarProperty Name="审核日期" ColumnName="审核日期" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VWageBillDtl">
+      <EntityTypeMapping TypeName="ERPToysModel.VWageBillDtl">
+        <MappingFragment StoreEntitySet="VWageBillDtl">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+          <ScalarProperty Name="Wages" ColumnName="Wages" />
+          <ScalarProperty Name="Welfare" ColumnName="Welfare" />
+          <ScalarProperty Name="Deduction" ColumnName="Deduction" />
+          <ScalarProperty Name="SocialSecurity" ColumnName="SocialSecurity" />
+          <ScalarProperty Name="IndividualIncomeTax" ColumnName="IndividualIncomeTax" />
+          <ScalarProperty Name="AMT" ColumnName="AMT" />
+          <ScalarProperty Name="WageStatus" ColumnName="WageStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="USPGetAnnualSalesSummaryByCustomerReport" FunctionName="ERPToysModel.Store.USPGetAnnualSalesSummaryByCustomerReport" />
+    <FunctionImportMapping FunctionImportName="USPGetAnnualSalesSummaryByGoodsReport" FunctionName="ERPToysModel.Store.USPGetAnnualSalesSummaryByGoodsReport" />
+    <FunctionImportMapping FunctionImportName="USPGetAttWageBillDtl" FunctionName="ERPToysModel.Store.USPGetAttWageBillDtl" />
+    <FunctionImportMapping FunctionImportName="USPGetEMSGoodsTrackingDailyReport" FunctionName="ERPToysModel.Store.USPGetEMSGoodsTrackingDailyReport" />
+    <FunctionImportMapping FunctionImportName="USPGetEstimatedYieldReport" FunctionName="ERPToysModel.Store.USPGetEstimatedYieldReport" />
+    <FunctionImportMapping FunctionImportName="USPGetFSMGoodsTrackingDailyReport" FunctionName="ERPToysModel.Store.USPGetFSMGoodsTrackingDailyReport" />
+    <FunctionImportMapping FunctionImportName="USPGetGoodsSalesSummaryByCustomerReport" FunctionName="ERPToysModel.Store.USPGetGoodsSalesSummaryByCustomerReport" />
+    <FunctionImportMapping FunctionImportName="USPGetSalesSummaryByCustomerReport" FunctionName="ERPToysModel.Store.USPGetSalesSummaryByCustomerReport" />
+    <FunctionImportMapping FunctionImportName="USPGetSalesSummaryByGoodsPriceReport" FunctionName="ERPToysModel.Store.USPGetSalesSummaryByGoodsPriceReport" />
+    <FunctionImportMapping FunctionImportName="USPGetSalesSummaryByGoodsReport" FunctionName="ERPToysModel.Store.USPGetSalesSummaryByGoodsReport" />
+    <FunctionImportMapping FunctionImportName="USPGetSalesSummaryMonthlyReport" FunctionName="ERPToysModel.Store.USPGetSalesSummaryMonthlyReport" />
+    <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountBasketToSupplierReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountBasketToSupplierReport" />
+    <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountMaterialToSupplierReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountMaterialToSupplierReport" />
+    <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountOfEMSReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountOfEMSReport" />
+    <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountSummaryToSupplierReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountSummaryToSupplierReport" />
+    <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountToBulkSalesReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountToBulkSalesReport" />
+    <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountToCustomerReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountToCustomerReport" />
+    <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountToSupplierReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountToSupplierReport" />
+  </EntityContainerMapping>
+</Mapping>

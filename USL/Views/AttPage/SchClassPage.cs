@@ -15,11 +15,13 @@ using CommonLibrary;
 using Factory;
 using BLL;
 using Utility;
+using Utility.Interceptor;
 
 namespace USL
 {
     public partial class SchClassPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         //bool addNew = false;
         List<SchClass> schClassList;
         public SchClassPage()
@@ -119,13 +121,13 @@ namespace USL
         {
             Save();
             //ClientFactory.DataPageRefresh(MainMenuConstants.SchClass);
-            ClientFactory.DataPageRefresh<SchClass>();
+            clientFactory.DataPageRefresh<SchClass>();
         }
 
         private void layoutView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
             Save();
-            ClientFactory.DataPageRefresh<SchClass>();
+            clientFactory.DataPageRefresh<SchClass>();
         }
 
         public void BindData(object obj)

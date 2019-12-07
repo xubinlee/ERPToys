@@ -12,3 +12,6 @@ D:\Project\ERPToys\IWcfServiceInterface\obj\Release\IWcfServiceInterface.csproj.
 D:\Project\ERPToys\IWcfServiceInterface\obj\Release\IWcfServiceInterface.csproj.CopyComplete
 D:\Project\ERPToys\IWcfServiceInterface\obj\Release\IWcfServiceInterface.dll
 D:\Project\ERPToys\IWcfServiceInterface\obj\Release\IWcfServiceInterface.pdb
+D:\Project\ERPToys\IWcfServiceInterface\bin\Release\Newtonsoft.Json.dll
+D:\Project\ERPToys\IWcfServiceInterface\bin\Release\Newtonsoft.Json.xml
+D:\Project\ERPToys\IWcfServiceInterface\bin\Release\zh-Hans\EntityFramework.resources.dll

@@ -14,12 +14,13 @@ using DevExpress.Data.Filtering.Helpers;
 using DevExpress.Data.Filtering;
 using IBase;
 using Utility;
+using MainMenu = EDMX.MainMenu;
 
 namespace USL
 {
     public partial class HistoryQueryForm : DevExpress.XtraEditors.XtraForm
     {
-        DBML.MainMenu mainMenu;
+        MainMenu mainMenu;
         object dataSource;
         String filter = string.Empty;
 
@@ -28,7 +29,7 @@ namespace USL
             get { return filter; }
             //set { filter = value; }
         }
-        public HistoryQueryForm(DBML.MainMenu menu, object source)
+        public HistoryQueryForm(MainMenu menu, object source)
         {
             InitializeComponent();
             mainMenu = menu;
@@ -50,7 +51,11 @@ namespace USL
             }
             else
                 filterControl.SourceControl = dataSource;
-            //filterControl.FilterColumns.Add(new UnboundFilterColumn("Age", "Field2", typeof(int), new RepositoryItemSpinEdit(), FilterColumnClauseClass.Generic));
+            // 列名转为中文
+            foreach (FilterColumn col in filterControl.FilterColumns)
+            {
+                MainForm.SetColumnCaption(mainMenu.Name, col);
+            }
         }
 
         private void filterControl_FilterChanged(object sender, FilterChangedEventArgs e)

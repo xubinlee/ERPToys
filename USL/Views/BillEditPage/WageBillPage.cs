@@ -16,11 +16,13 @@ using Utility;
 using CommonLibrary;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Columns;
+using Utility.Interceptor;
 
 namespace USL
 {
     public partial class WageBillPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail, IExtensions
     {
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         WageBillHd hd;
         List<VWageBillDtl> dtl;
         List<VAppointments> apt;
@@ -90,7 +92,7 @@ namespace USL
         {
             wageBillHdBindingSource.DataSource = hd = new WageBillHd();
             vWageBillDtlBindingSource.DataSource = dtl = new List<VWageBillDtl>();
-            hd.BillNo = MainForm.GetBillMaxBillNo(MainMenuConstants.WageBill, "GZ");
+            hd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.WageBill, true).MaxBillNo;
             meLastAMT.EditValue = null;
             meTotalAMT.EditValue = null;
             headID = Guid.Empty;
@@ -126,7 +128,7 @@ namespace USL
 
                     }
                     //刷新查询界面
-                    ClientFactory.DataPageRefresh<VWageBill>();
+                    clientFactory.DataPageRefresh<VWageBill>();
                     wageBillHdBindingSource.DataSource = hd = new WageBillHd();
                     vWageBillDtlBindingSource.DataSource = dtl = new List<VWageBillDtl>();
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "删除成功");
@@ -235,7 +237,7 @@ namespace USL
                         o.UserID == hd.UserID && (o.日期.Value.ToString("yyyy-MM").Equals(dtl.Min(m => m.YearMonth)) || o.日期.Value.ToString("yyyy-MM").Equals(dtl.Max(m => m.YearMonth))));
                 //DataQueryPageRefresh();
                 //QueryPageRefresh();
-                ClientFactory.DataPageRefresh<VWageBill>();
+                clientFactory.DataPageRefresh<VWageBill>();
                 //MainForm.BillSaveRefresh(MainMenuConstants.WageBillQuery);
                 ////MainForm.DataQueryPageRefresh();
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
@@ -324,7 +326,7 @@ namespace USL
             }
             finally
             {
-                ClientFactory.DataPageRefresh<VWageBill>();
+                clientFactory.DataPageRefresh<VWageBill>();
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
         }

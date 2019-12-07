@@ -50,7 +50,7 @@ namespace USL
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new MainForm());
-            license = ConfigurationManager.AppSettings["License"];
+            license = Utility.ConfigAppSettings.GetValue("License");
             if (license.Equals(Security.Encrypt(SystemManagement.GetMacAddressByNetworkInformation())))
             {
                 LoginForm loginForm = new LoginForm();

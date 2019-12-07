@@ -1,7 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraBars.Docking2010.Views.WindowsUI;
 using System.Collections.Generic;
-using DBML;
+using EDMX;
 
 namespace USL
 {

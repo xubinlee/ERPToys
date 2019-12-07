@@ -23,11 +23,13 @@ using DevExpress.XtraScheduler;
 using SchedulerReportingExample;
 using DevExpress.XtraScheduler.Reporting;
 using DevExpress.XtraReports.UI;
+using Utility.Interceptor;
 
 namespace USL
 {
     public partial class AttendanceSchedulingPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         Guid focusedID;
         Guid focusedDeptID;
         //bool addNew = false;  //是否新增
@@ -228,29 +230,12 @@ namespace USL
         //    return logList;
         //}
 
-        /// <summary>
-        /// 刷新查询界面
-        /// </summary>
-        public void PageRefresh()
-        {
-            //MainForm.dataSourceList[typeof(List<AttGeneralLog>)] = BLLFty.Create<AttGeneralLogBLL>().GetAttGeneralLog();
-            //MainForm.GetAttAppointments();
-            MainForm.dataSourceList[typeof(List<AttAppointments>)] = BLLFty.Create<AttAppointmentsBLL>().GetAttAppointments();
-            BindData(null);
-            if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.AttendanceQuery))
-            {
-                DataQueryPage page = ClientFactory.itemDetailList[MainMenuConstants.AttendanceQuery] as DataQueryPage;
-                //刷新数据
-                MainForm.dataSourceList[typeof(List<VAttAppointments>)] = BLLFty.Create<AttAppointmentsBLL>().GetVAttAppointments();
-                page.BindData(MainForm.GetData<VAttAppointments>());
-            }
-        }
-
         private void schedulerStorage_AppointmentsChanged(object sender, PersistentObjectsEventArgs e)
         {
             BLLFty.Create<AttAppointmentsBLL>().Update(GetAttAppointmentsList(e.Objects));
             //刷新数据
-            PageRefresh();
+            clientFactory.UpdateCache<AttAppointments>();
+            clientFactory.DataPageRefresh<VAttAppointments>();
         }
 
         private void schedulerStorage_AppointmentsInserted(object sender, PersistentObjectsEventArgs e)
@@ -324,7 +309,8 @@ namespace USL
             BLLFty.Create<AttAppointmentsBLL>().Insert(attAptList);
             //BLLFty.Create<AttGeneralLogBLL>().Insert(logList);
             //刷新数据
-            PageRefresh();
+            clientFactory.UpdateCache<AttAppointments>();
+            clientFactory.DataPageRefresh<VAttAppointments>();
         }
 
         int SetAttStaus( DateTime? checkinTime, DateTime? checkOutTime,int late, int early)
@@ -374,7 +360,8 @@ namespace USL
                 BLLFty.Create<AttAppointmentsBLL>().Delete((Int64)apt.Id);
             }
             //刷新数据
-            PageRefresh();
+            clientFactory.UpdateCache<AttAppointments>();
+            clientFactory.DataPageRefresh<VAttAppointments>();
         }
 
         private void schedulerStorage_AppointmentDeleting(object sender, PersistentObjectCancelEventArgs e)

@@ -1,7 +1,7 @@
 ﻿using BLL;
 using CommonLibrary;
 using CommonLibrary.Client;
-using DBML;
+using EDMX;
 using DevExpress.LookAndFeel;
 using DevExpress.Skins;
 using DevExpress.XtraBars;
@@ -23,6 +23,9 @@ using System.Drawing;
 using Utility;
 using System.IO;
 using System.Data;
+using Utility.Interceptor;
+using IWcfServiceInterface;
+using Common;
 
 namespace USL
 {
@@ -33,6 +36,9 @@ namespace USL
     //[SmartPart]
     public partial class ItemDetailPage : XtraUserControl
     {
+        private static IStockInBillService stockInBillService = ServiceProxyFactory.Create<IStockInBillService>("StockInBillService");
+        private static IGoodsService goodsService = ServiceProxyFactory.Create<IGoodsService>("GoodsService");
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         //Dictionary<Guid, PageGroup> groupsItemDetailPage;
         ////public Dictionary<String, IItemDetail> itemDetailList;
         Dictionary<String, int> itemDetailButtonList; //子菜单按钮项
@@ -636,12 +642,12 @@ namespace USL
                 if (menu.Name == MainMenuConstants.ProductionOrderQuery && currentObj != null)
                 {
                     VProductionOrder order = currentObj as VProductionOrder;
-                    OrderHd hd = BLLFty.Create<OrderBLL>().GetOrderHd(order.HdID);
+                    OrderHd hd = clientFactory.GetData<OrderHd>().FirstOrDefault(o => o.ID.Equals(order.HdID));
                     List<VProductionOrder> dtl = ((List<VProductionOrder>)MainForm.dataSourceList[typeof(List<VProductionOrder>)]).FindAll(o => o.HdID == order.HdID);
                     //外加工回收单表头数据
                     StockInBillHd inHd = new StockInBillHd();
                     inHd.ID = Guid.NewGuid();
-                    inHd.BillNo = MainForm.GetBillMaxBillNo(MainMenuConstants.StockInBillType, "RK");
+                    inHd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.StockInBillType, true).MaxBillNo;
                     inHd.WarehouseID = hd.WarehouseID;
                     inHd.WarehouseType = hd.WarehouseType;
                     inHd.OrderID = hd.ID;
@@ -677,10 +683,10 @@ namespace USL
                         inDtl.OtherFee = 0;
                         inDtlList.Add(inDtl);
                     }
-
-                    BLLFty.Create<StockInBillBLL>().Insert(inHd, inDtlList);
+                    
+                    stockInBillService.Insert(inHd, inDtlList);
                     //MainForm.BillSaveRefresh(MainMenuConstants.FGStockInBillQuery);
-                    ClientFactory.DataPageRefresh<VMaterialStockInBill>();
+                    clientFactory.DataPageRefresh<VMaterialStockInBill>();
 
                     //定位
                     MainForm.SetSelected(pageGroupCore, MainForm.mainMenuList[MainMenuConstants.FGStockInBill]);
@@ -690,12 +696,28 @@ namespace USL
                 else if (menu.Name == MainMenuConstants.SalesReturnBillQuery && currentObj != null)
                 {
                     VStockInBill bill = currentObj as VStockInBill;
-                    StockInBillHd hd = BLLFty.Create<StockInBillBLL>().GetStockInBillHd(bill.HdID);
-                    List<StockInBillDtl> dtlByBOM = BLLFty.Create<StockInBillBLL>().GetVStockInBillDtlByBOM(bill.HdID, (int)BOMType.BOM);
+                    StockInBillHd hd = clientFactory.GetData<StockInBillHd>().FirstOrDefault(o => o.ID.Equals(bill.HdID));
+                    List<VStockInBillDtlByBOM> vList = clientFactory.GetData<VStockInBillDtlByBOM>().FindAll(o => o.HdID.Equals(bill.HdID) && o.Type.Equals((int)BOMType.BOM));
+                    List<StockInBillDtl> dtlByBOM = new List<StockInBillDtl>();
+                    vList.ForEach(item => {
+                        StockInBillDtl dtl = new StockInBillDtl();
+                        dtl.ID = item.ID.Value;
+                        dtl.HdID = item.HdID;
+                        dtl.GoodsID = item.GoodsID;
+                        dtl.Qty = item.Qty.Value;
+                        dtl.PCS = item.PCS;
+                        dtl.InnerBox = item.InnerBox;
+                        dtl.NWeight = item.NWeight == 0 ? 1 : item.NWeight;
+                        dtl.Price = item.Price;
+                        dtl.PriceNoTax = item.PriceNoTax;
+                        dtl.Discount = item.Discount;
+                        dtl.OtherFee = item.OtherFee;
+                        dtlByBOM.Add(dtl);
+                    });
                     //退料单表头数据
                     StockInBillHd inHd = new StockInBillHd();
                     inHd.ID = Guid.NewGuid();
-                    inHd.BillNo = MainForm.GetBillMaxBillNo(MainMenuConstants.StockInBillType, "RK");
+                    inHd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.StockInBillType, true).MaxBillNo;
                     inHd.WarehouseID = MainForm.WarehouseList.FirstOrDefault(o => o.Code == WarehouseConstants.SFG).ID;  //半成品
                     inHd.WarehouseType = hd.WarehouseType;
                     inHd.OrderID = hd.ID;
@@ -731,12 +753,12 @@ namespace USL
                         inDtl.OtherFee = 0;
                         inDtlList.Add(inDtl);
                     }
-
-                    BLLFty.Create<StockInBillBLL>().Insert(inHd, inDtlList);
+                    
+                    stockInBillService.Insert(inHd, inDtlList);
                     //MainForm.BillSaveRefresh(MainMenuConstants.ReturnedMaterialBillQuery);
                     //MainForm.BillSaveRefresh(MainMenuConstants.SalesReturnBillQuery);
-                    ClientFactory.DataPageRefresh<VMaterialStockInBill>();
-                    ClientFactory.DataPageRefresh<VStockInBill>();
+                    clientFactory.DataPageRefresh<VMaterialStockInBill>();
+                    clientFactory.DataPageRefresh<VStockInBill>();
 
                     //定位
                     MainForm.SetSelected(pageGroupCore, MainForm.mainMenuList[MainMenuConstants.ReturnedMaterialBill]);
@@ -793,9 +815,9 @@ namespace USL
                         }
                         //if (result == false)
                         //    return;
-                        BLLFty.Create<GoodsBLL>().Update(goodsList);
-                        ClientFactory.DataPageRefresh<Goods>();
-                        ClientFactory.DataPageRefresh<VMaterial>();
+                        clientFactory.ModifyByList<Goods>(goodsList);
+                        clientFactory.DataPageRefresh<Goods>();
+                        clientFactory.DataPageRefresh<VMaterial>();
                         CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "导入成功");
                     }
                 }
@@ -847,19 +869,19 @@ namespace USL
                             return;
                         }
                         //检查包装方式是否存在
-                        Packaging packaging = BLLFty.Create<PackagingBLL>().GetPackaging().Find(o => o.Name.Contains(row["包装方式"].ToString().Trim()));
+                        Packaging packaging =clientFactory.GetData<Packaging>().FirstOrDefault(o => o.Name.Contains(row["包装方式"].ToString().Trim()));
                         if (packaging == null)
                         {
                             Packaging p = new Packaging();
                             p.ID = Guid.NewGuid();
                             p.Name = row["包装方式"].ToString().Trim();
                             packaging = p;
-                            BLLFty.Create<PackagingBLL>().Insert(p);
+                            clientFactory.Add<Packaging>(p);
                             //CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), string.Format("找不到包装方式[{0}]，请先添加该包装方式。", row["包装方式"].ToString().Trim()));
                             //return;
                         }
                         //检查货品类型是否存在
-                        GoodsType goodsType = BLLFty.Create<GoodsTypeBLL>().GetGoodsType().Find(o => o.Name.Contains(row["货品类型"].ToString().Trim()));
+                        GoodsType goodsType =clientFactory.GetData<GoodsType>().FirstOrDefault(o => o.Name.Contains(row["货品类型"].ToString().Trim()));
                         if (goodsType == null)
                         {
                             GoodsType gt = new GoodsType();
@@ -867,7 +889,7 @@ namespace USL
                             gt.Code = Rexlib.GetSpellCode(row["货品类型"].ToString().Trim());
                             gt.Name = row["货品类型"].ToString().Trim();
                             goodsType = gt;
-                            BLLFty.Create<GoodsTypeBLL>().Insert(gt);
+                            clientFactory.Add<GoodsType>(gt);
                             //CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), string.Format("找不到货品类型[{0}]，请先添加该货品类型。", row["货品类型"].ToString().Trim()));
                             //return;
                         }
@@ -911,62 +933,17 @@ namespace USL
                             hasGoods.Volume = Math.Round(iVolume / 1000000, 2);
                             }
                         hasGoods.Remark = row["备注"].ToString().Trim();
-                        //goods.CommissionRate = 1;
-                        //goods.AddTime = DateTime.Now;
-                        //InsertGoodsList.Add(goods);hasGoods.UpdateTime = DateTime.Now;
                         if (isNewGoods)
                             InsertGoodsList.Add(hasGoods);
                         else
                             UpdateGoodsList.Add(hasGoods);
-                        //}
-                        //else
-                        //{
-                        //    foreach (Goods obj in UpdateGoodsList)
-                        //    {
-
-                        //        if (obj == hasGoods)
-                        //        {
-                        //            goodsCode = obj.Code;
-                        //            //oldGoods.ID = hasGoods.ID;
-                        //            //oldGoods.MfrsID = hasGoods.MfrsID;
-                        //            //oldGoods.Code = hasGoods.Code;
-                        //            obj.Name = row["品名"].ToString().Trim();
-                        //            obj.GoodsTypeID = goodsType.ID;
-                        //            obj.PackagingID = packaging.ID;
-                        //            obj.Price = Convert.ToDecimal(row["单价"]);
-                        //            //oldGoods.BarCode = hasGoods.BarCode;//Convert.ToString(++iBarCode);
-                        //            obj.PCS = Convert.ToInt32(row["装箱数"]);
-                        //            obj.InnerBox = Convert.ToInt32(row["内盒"]);
-                        //            //oldGoods.Unit = hasGoods.Unit;//row["单位"].ToString().Trim();
-                        //            obj.SPEC = row["规格"].ToString().Trim();
-                        //            obj.MEAS = row["外箱规格"].ToString().Trim();
-                        //            obj.GWeight = Convert.ToDecimal(row["毛重"]);
-                        //            if (!string.IsNullOrEmpty(row["净重"].ToString().Trim()))
-                        //                obj.NWeight = Convert.ToDecimal(row["净重"]) == 0 ? 1 : Convert.ToDecimal(row["净重"]);
-                        //            //obj.Weight = row["毛重"].ToString().Trim() + "/" + row["净重"].ToString().Trim() + "KGS";
-                        //            if (!string.IsNullOrEmpty(obj.MEAS))
-                        //            {
-                        //                decimal iVolume = MainForm.GetVolume(obj.MEAS);
-                        //                //obj.Cuft = Math.Round(iVolume * (decimal)0.000035294, 2);//Convert.ToDecimal(row["材积"]);
-                        //                obj.Volume = Math.Round(iVolume / 1000000, 2);
-                        //            }
-                        //            //oldGoods.Pic = hasGoods.Pic;
-                        //            //oldGoods.AddTime = hasGoods.AddTime;
-                        //            obj.Remark = row["备注"].ToString().Trim();
-                        //            //hasGoods.CommissionRate = 1;
-                        //            obj.UpdateTime = DateTime.Now;
-                        //            break;
-                        //        }
-                        //    }
-                        //    //UpdateGoodsList.Add(oldGoods);
-                        //}
 
                     }
                     if (InsertGoodsList.Count > 0 || UpdateGoodsList.Count > 0)
                     {
-                        BLLFty.Create<GoodsBLL>().Import(InsertGoodsList, UpdateGoodsList);
+                        goodsService.AddAndUpdate(InsertGoodsList, UpdateGoodsList);
                         //InitGrid(BLLFty.Create<GoodsBLL>().GetVGoods());
-                        ClientFactory.DataPageRefresh<Goods>();
+                        clientFactory.DataPageRefresh<Goods>();
                         CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "导入成功");
                         return;
                     }
@@ -1012,7 +989,7 @@ namespace USL
                             return;
                         }
                         //检查货品类型是否存在
-                        GoodsType goodsType = BLLFty.Create<GoodsTypeBLL>().GetGoodsType().Find(o => o.Name.Contains(row["货品类型"].ToString().Trim()));
+                        GoodsType goodsType =clientFactory.GetData<GoodsType>().FirstOrDefault(o => o.Name.Contains(row["货品类型"].ToString().Trim()));
                         if (goodsType == null)
                         {
                             GoodsType gt = new GoodsType();
@@ -1020,7 +997,7 @@ namespace USL
                             gt.Code = Rexlib.GetSpellCode(row["货品类型"].ToString().Trim());
                             gt.Name = row["货品类型"].ToString().Trim();
                             goodsType = gt;
-                            BLLFty.Create<GoodsTypeBLL>().Insert(gt);
+                            clientFactory.Add<GoodsType>(gt);
                             //CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), string.Format("找不到货品类型[{0}]，请先添加该货品类型。", row["货品类型"].ToString().Trim()));
                             //return;
                         }
@@ -1284,7 +1261,7 @@ namespace USL
                                 }
                             }
                         }
-                        BLLFty.Create<GoodsBLL>().Import(InsertGoodsList, UpdateGoodsList);
+                        goodsService.AddAndUpdate(InsertGoodsList, UpdateGoodsList);
                         //导入物料后再导入物料清单
                         bool result = BOMImport(ds);
                         if (result == false)
@@ -1302,7 +1279,7 @@ namespace USL
             }
             finally
             {
-                ClientFactory.DataPageRefresh<VMaterial>();
+                clientFactory.DataPageRefresh<VMaterial>();
                 ((TabbedGoodsPage)itemDetail).DataRefresh();
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
@@ -1343,12 +1320,11 @@ namespace USL
                         strGoodsType = row["货品类型"].ToString().Trim();
                         iGoodsType = (int)GoodsBigType.Stuff;
                     }
-                    List<Goods> goodsList = BLLFty.Create<GoodsBLL>().GetGoods();
+                    List<Goods> goodsList = clientFactory.GetData<Goods>();
                     //检查用料
                     hasMaterial = goodsList.FirstOrDefault(o => o.Name.Contains(row["用料"].ToString().Trim()));
                     if (row["货品类型"].ToString().Trim().Contains("胶件"))
                     {
-                        //hasMaterial = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FirstOrDefault(o => o.Code == row["用料"].ToString().Trim());
                         if (hasMaterial == null)
                         {
                             Goods material = new Goods();
@@ -1362,7 +1338,7 @@ namespace USL
                                 gt.ID = Guid.NewGuid();
                                 gt.Code = Rexlib.GetSpellCode(strGoodsType);
                                 gt.Name = strGoodsType;
-                                BLLFty.Create<GoodsTypeBLL>().Insert(gt);
+                                clientFactory.Add<GoodsType>(gt);
                                 //CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), string.Format("找不到货品类型[{0}]，请先添加该货品类型。", row["货品类型"].ToString().Trim()));
                                 //return;
                             }
@@ -1373,14 +1349,12 @@ namespace USL
                             material.NWeight = 1;
                             material.CavityNumber = 1;
                             material.AddTime = DateTime.Now;
-                            BLLFty.Create<GoodsBLL>().Insert(material);
+                            clientFactory.Add<Goods>(material);
                             hasMaterial = material;
                         }
                     }
                     hasGoods = goodsList.FirstOrDefault(o => o.Code == row["货号"].ToString().Trim());
-                    hasParentGoods = BLLFty.Create<GoodsBLL>().GetVParentGoodsByBOM().FirstOrDefault(o => o.货号 == row["货号"].ToString().Trim());
-                    //hasGoods = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FirstOrDefault(o => o.Code == row["货号"].ToString().Trim());
-                    //hasParentGoods = ((List<VParentGoodsByBOM>)MainForm.dataSourceList[typeof(List<VParentGoodsByBOM>)]).FirstOrDefault(o => o.货号 == row["货号"].ToString().Trim());
+                    hasParentGoods =clientFactory.GetData<VParentGoodsByBOM>().FirstOrDefault(o => o.货号 == row["货号"].ToString().Trim());
                 }
                 else
                     continue;
@@ -1417,8 +1391,7 @@ namespace USL
                     }
                     else
                     {
-                        BOM bomCheck = BLLFty.Create<BOMBLL>().GetBOM(hasParentGoods.ID.GetValueOrDefault())[0];
-                        //BOM bomCheck = ((List<BOM>)MainForm.dataSourceList[typeof(List<BOM>)]).FirstOrDefault(o => o.ParentGoodsID == hasParentGoods.ID.GetValueOrDefault());
+                        BOM bomCheck = clientFactory.GetData<BOM>().FirstOrDefault(o => o.ParentGoodsID.Equals(hasParentGoods.ID.GetValueOrDefault()));
                         if (bomCheck != null)
                         {
                             BOM bom = new BOM();
@@ -1447,7 +1420,7 @@ namespace USL
             }
             if (InsertBOMList.Count > 0 || updateBOMList.Count > 0)
             {
-                BLLFty.Create<BOMBLL>().Import(InsertBOMList, DeleteBOMList);
+                ////////BLLFty.Create<BOMBLL>().Import(InsertBOMList, DeleteBOMList);
             }
             return true;
         }
@@ -1653,7 +1626,7 @@ namespace USL
                 AttGeneralLog attLog = null;
                 //lvLogs.Items.Clear();
                 MainForm.AxCZKEM1.EnableDevice(MainForm.AttParam.MachineNumber, false);//disable the device
-                List<AttGeneralLog> attLogs = BLLFty.Create<AttGeneralLogBLL>().GetAttGeneralLog();
+                List<AttGeneralLog> attLogs = clientFactory.GetData<AttGeneralLog>();
                 if (MainForm.AxCZKEM1.ReadGeneralLogData(MainForm.AttParam.MachineNumber))//read all the attendance records to the memory
                 {
                     while (MainForm.AxCZKEM1.SSR_GetGeneralLogData(MainForm.AttParam.MachineNumber, out sdwEnrollNumber, out idwVerifyMode,
@@ -1682,12 +1655,12 @@ namespace USL
                             attLogList.Add(attLog);
                         }
                     }
-                    BLLFty.Create<AttGeneralLogBLL>().Insert(attLogList);
+                    clientFactory.AddByBulkCopy<AttGeneralLog>(attLogList);
                     if (attLogList.Count>0)
                     {
-                        MainForm.dataSourceList[typeof(List<AttGeneralLog>)] = BLLFty.Create<AttGeneralLogBLL>().GetAttGeneralLog();
-                        MainForm.dataSourceList[typeof(List<VAttGeneralLog>)] = BLLFty.Create<AttGeneralLogBLL>().GetVAttGeneralLog();
-                        ((DataQueryPage)itemDetail).BindData(MainForm.GetData<VAttGeneralLog>());
+                        clientFactory.UpdateCache<AttGeneralLog>();
+                        List<VAttGeneralLog> vLogs = clientFactory.UpdateCache<VAttGeneralLog>();
+                        ((DataQueryPage)itemDetail).BindData(vLogs);
                         //获取并添加apt
                         MainForm.GetAttAppointments();
                     }
@@ -1707,7 +1680,7 @@ namespace USL
                 }
                 MainForm.AxCZKEM1.EnableDevice(MainForm.AttParam.MachineNumber, true);//enable the device
                 //MainForm.DataQueryPageRefresh();
-                ClientFactory.DataPageRefresh<VAttAppointments>();
+                clientFactory.DataPageRefresh<VAttAppointments>();
             }
             catch (Exception ex)
             {
@@ -1725,7 +1698,7 @@ namespace USL
         {
             HistoryQueryForm form = new HistoryQueryForm(menu, ((DataQueryPage)itemDetail).gridView.DataSource);
             form.ShowDialog();
-            ClientFactory.DataPageRefresh(menu.Name, form.Filter);
+            clientFactory.DataPageRefresh(menu.Name, form.Filter);
             //((DataQueryPage)itemDetail).InitGrid(MainForm.GetData(menu.Name));
             if (string.IsNullOrEmpty(form.Filter))
             {
@@ -1919,7 +1892,7 @@ namespace USL
         public void LoadBusinessData(MainMenu menu)
         {
             //IList list = MainForm.GetData(menu.Name);
-            IList list = ClientFactory.DataPageRefresh(menu.Name, string.Empty);
+            IList list = clientFactory.DataPageRefresh(menu.Name);
             if (list != null)
             {
                 itemDetail = new DataQueryPage(menu, list, pageGroupCore, itemDetailButtonList);
@@ -1994,7 +1967,7 @@ namespace USL
             {
                 this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
                 //MainForm.GetDataSource();
-                ClientFactory.DataPageRefresh(menu.Name, string.Empty);
+                clientFactory.DataPageRefresh(menu.Name);
             }
             catch (Exception ex)
             {
@@ -2024,7 +1997,7 @@ namespace USL
                         //if (menu.Name != MainMenuConstants.ReceiptBill && menu.Name != MainMenuConstants.PaymentBill && !menu.Name.ToUpper().Contains("WAGEBILL") &&
                         //    !menu.Name.ToUpper().Contains("STOCKIN") && !menu.Name.ToUpper().Contains("STOCKOUT") && !menu.Name.ToUpper().Contains("ORDER") && !menu.Name.Contains("MaterialBill")
                         //    && !menu.Name.ToUpper().Contains("RECEIPT") && !menu.Name.ToUpper().Contains("PAYMENT") && !menu.Name.Contains("SLSalePrice"))
-                        ClientFactory.DataPageRefresh(menu.Name, string.Empty);
+                        clientFactory.DataPageRefresh(menu.Name);
                     setNavButtonStatus(menu, ButtonType.btnSave);
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 }
@@ -2049,7 +2022,7 @@ namespace USL
                     //if (!menu.Name.ToUpper().Contains("STOCKIN") && !menu.Name.ToUpper().Contains("STOCKOUT") && !menu.Name.ToUpper().Contains("ORDER") && !menu.Name.ToUpper().Contains("WAGEBILL")
                     //     && !menu.Name.ToUpper().Contains("RECEIPT") && !menu.Name.ToUpper().Contains("PAYMENT"))
                     if (!menu.Name.ToUpper().Contains("BILL") && !menu.Name.Contains("Order") && !menu.Name.Contains("SLSalePrice"))
-                        ClientFactory.DataPageRefresh(menu.Name, string.Empty);
+                        clientFactory.DataPageRefresh(menu.Name);
                     if (!menu.Name.Contains("Query"))
                     {
                         if (btnAudit.Caption == "审核")
@@ -2343,7 +2316,7 @@ namespace USL
                 WindowsUIView view = manager.View as WindowsUIView;
                 if (view != null)
                 {
-                    foreach (DBML.MainMenu mm in menuList.FindAll(o => o.ParentID == MainForm.mainMenuList[item.Name].ParentID))
+                    foreach (MainMenu mm in menuList.FindAll(o => o.ParentID == MainForm.mainMenuList[item.Name].ParentID))
                     {
                         if (MainForm.hasItemDetailPage[mm.Name] == null)
                         {

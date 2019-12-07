@@ -31,14 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ERPToys\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,7 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAttAppointmentsService.cs" />
     <Compile Include="IBaseService.cs" />
+    <Compile Include="IGoodsService.cs" />
+    <Compile Include="IInventoryService.cs" />
+    <Compile Include="IPermissionService.cs" />
+    <Compile Include="IStockInBillService.cs" />
+    <Compile Include="ISystemInfoService.cs" />
     <Compile Include="Parameter.cs" />
     <Compile Include="SerializedParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,9 +65,12 @@
       <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\EDMX\EDMX.csproj">
-      <Project>{3BD3D61B-378B-4106-93D1-DBDB2C7A3A91}</Project>
+      <Project>{a30e02ae-347d-48bd-8971-76d4edfa4fb7}</Project>
       <Name>EDMX</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

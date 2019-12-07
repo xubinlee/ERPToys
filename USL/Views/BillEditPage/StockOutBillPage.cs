@@ -19,11 +19,13 @@ using System.Collections;
 using CommonLibrary;
 using DevExpress.XtraLayout.Utils;
 using DevExpress.XtraGrid.Views.Grid;
+using Utility.Interceptor;
 
 namespace USL
 {
     public partial class StockOutBillPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail,IExtensions
     {
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         StockOutBillHd hd;
         List<StockOutBillDtl> dtl;
         List<StockOutBillDtl> dtlByBOM;
@@ -286,7 +288,7 @@ namespace USL
             //    else
             //        hd.BillNo = "CK" + DateTime.Now.ToString("yyyyMMdd") + "001";
             //}
-            hd.BillNo = MainForm.GetBillMaxBillNo(MainMenuConstants.StockOutBillType, "CK");
+            hd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.StockOutBillType, true).MaxBillNo;
             headID = Guid.Empty;
             hd.BillDate = DateTime.Today;
             hd.DeliveryDate = DateTime.Today;
@@ -322,7 +324,7 @@ namespace USL
                     }
                     ////DataQueryPageRefresh();
                     //刷新查询界面
-                    ClientFactory.DataPageRefresh(billType, string.Empty);
+                    clientFactory.DataPageRefresh(billType);
                     //MainForm.DataQueryPageRefresh();
                     //DataQueryPage page = ClientFactory.itemDetailList[billType + "Query"] as DataQueryPage;
                     //MainForm.GetDataSource();
@@ -565,7 +567,7 @@ namespace USL
                 else
                     billDtlByBOMBindingSource.DataSource = dtlByBOM = new List<StockOutBillDtl>();
                 //MainForm.BillSaveRefresh(billType + "Query");
-                ClientFactory.DataPageRefresh(billType, string.Empty);
+                clientFactory.DataPageRefresh(billType);
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 return true;
             }
@@ -924,7 +926,7 @@ namespace USL
             {
                 //MainForm.BillSaveRefresh(billType + "Query");
                 //MainForm.InventoryRefresh();
-                ClientFactory.DataPageRefresh(billType, string.Empty);
+                clientFactory.DataPageRefresh(billType);
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
         }

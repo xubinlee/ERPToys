@@ -5,6 +5,7 @@ D:\Project\ERPToys\EDMX\bin\Release\EntityFramework.dll
 D:\Project\ERPToys\EDMX\bin\Release\EntityFramework.SqlServer.dll
 D:\Project\ERPToys\EDMX\bin\Release\EntityFramework.xml
 D:\Project\ERPToys\EDMX\bin\Release\EntityFramework.SqlServer.xml
+D:\Project\ERPToys\EDMX\bin\Release\zh-Hans\EntityFramework.resources.dll
 D:\Project\ERPToys\EDMX\obj\Release\EDMX.csprojAssemblyReference.cache
 D:\Project\ERPToys\EDMX\obj\Release\EDMX.csproj.CoreCompileInputs.cache
 D:\Project\ERPToys\EDMX\obj\Release\EDMX.csproj.CopyComplete

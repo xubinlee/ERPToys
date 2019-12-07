@@ -1,0 +1,89 @@
+2019-12-07 09:38:38.0507 | Error | 
+Exception：ERROR_005: The monthly trial period is expired. You can extend your trial by downloading the latest version as the beginning of every month. More information can be found here: https://entityframework-extensions.net/trial
+StackTrace：   在 .(ProviderType , Boolean , Boolean , Boolean , Boolean )
+   在 Z.BulkOperations.BulkOperation.Execute()
+   在 Z.EntityFramework.Extensions.EntityBulkOperation`1.BulkInsert()
+   在 .[](BulkOperation`1 this, DbContext , List`1 , Boolean , List`1 , Type , String )
+   在 .`1.(SchemaEntityType )
+   在 System.Collections.Generic.List`1.ForEach(Action`1 action)
+   在 .[](DbContext this, BulkOperation`1 , IEnumerable`1 , List`1 )
+   在 .[](BulkOperation`1 this, DbContext , IEnumerable`1 , List`1 )
+   在 DbContextExtensions.BulkInsert[T](DbContext this, IEnumerable`1 entities, Action`1 bulkOperationFactory)
+   在 DbContextExtensions.BulkInsert[T](DbContext this, IEnumerable`1 entities)
+   在 IDbSetExtensions.BulkInsert[T](IDbSet`1 this, IEnumerable`1 entities)
+   在 DAL.EfPlusDAL.DeleteAndAdd[T](DbContext db, Expression`1 delWhere, List`1 insertList) 位置 D:\Project\ERPToys\DAL\EfPlusDAL.cs:行号 87
+   在 Castle.Proxies.EfPlusDALProxy.DeleteAndAdd_callback[T](DbContext db, Expression`1 delWhere, List`1 insertList)
+   在 Castle.Proxies.Invocations.EfPlusDAL_DeleteAndAdd.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 32
+------------2019-12-07 9:38:38------------
+ 
+2019-12-07 10:08:25.1246 | Error | 
+Exception：用户 'sa' 登录失败。
+StackTrace：   在 System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling)
+   在 System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 System.Data.SqlClient.SqlBulkCopy.CreateOrValidateConnection(String method)
+   在 System.Data.SqlClient.SqlBulkCopy.WriteRowSourceToServerAsync(Int32 columnCount, CancellationToken ctoken)
+   在 System.Data.SqlClient.SqlBulkCopy.WriteToServer(DataTable table, DataRowState rowState)
+   在 System.Data.SqlClient.SqlBulkCopy.WriteToServer(DataTable table)
+   在 DAL.BaseDAL.AddByBulkCopy(String connectstring, DataTable table, String tableName) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 152
+   在 DAL.BaseDAL.AddByBulkCopy[T](DbContext db, List`1 list) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 132
+   在 Castle.Proxies.BaseDALProxy.AddByBulkCopy_callback_1[T](DbContext db, List`1 list)
+   在 Castle.Proxies.Invocations.BaseDAL_AddByBulkCopy_1.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 32
+------------2019-12-07 10:08:25------------
+ 
+2019-12-07 11:08:05.2300 | Error | 
+Exception：意外的现有事务。
+StackTrace：   在 System.Data.SqlClient.SqlBulkCopy.AnalyzeTargetAndCreateUpdateBulkCommand(BulkCopySimpleResultSet internalResults)
+   在 System.Data.SqlClient.SqlBulkCopy.WriteToServerInternalRestContinuedAsync(BulkCopySimpleResultSet internalResults, CancellationToken cts, TaskCompletionSource`1 source)
+   在 System.Data.SqlClient.SqlBulkCopy.WriteToServerInternalRestAsync(CancellationToken cts, TaskCompletionSource`1 source)
+   在 System.Data.SqlClient.SqlBulkCopy.WriteToServerInternalAsync(CancellationToken ctoken)
+   在 System.Data.SqlClient.SqlBulkCopy.WriteRowSourceToServerAsync(Int32 columnCount, CancellationToken ctoken)
+   在 System.Data.SqlClient.SqlBulkCopy.WriteToServer(DataTable table, DataRowState rowState)
+   在 System.Data.SqlClient.SqlBulkCopy.WriteToServer(DataTable table)
+   在 DAL.BaseDAL.AddByBulkCopy(SqlConnection connection, DataTable table, String tableName) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 150
+   在 DAL.BaseDAL.AddByBulkCopy[T](DbContext db, List`1 list) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 130
+   在 Castle.Proxies.BaseDALProxy.AddByBulkCopy_callback_1[T](DbContext db, List`1 list)
+   在 Castle.Proxies.Invocations.BaseDAL_AddByBulkCopy_1.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 32
+------------2019-12-07 11:08:05------------
+ 
+2019-12-07 11:21:59.7038 | Error | 
+Exception：非静态方法需要一个目标。
+StackTrace：   在 System.Reflection.RuntimeMethodInfo.CheckConsistency(Object target)
+   在 System.Reflection.RuntimeMethodInfo.InvokeArgumentsCheck(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   在 System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   在 System.Reflection.RuntimePropertyInfo.GetValue(Object obj, BindingFlags invokeAttr, Binder binder, Object[] index, CultureInfo culture)
+   在 System.Reflection.RuntimePropertyInfo.GetValue(Object obj, Object[] index)
+   在 System.Data.Entity.Migrations.DbSetMigrationsExtensions.<>c__DisplayClass2_1`1.<AddOrUpdate>b__0(PropertyPath pi)
+   在 System.Linq.Enumerable.<>c__DisplayClass7_0`3.<CombineSelectors>b__0(TSource x)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.Aggregate[TSource,TAccumulate](IEnumerable`1 source, TAccumulate seed, Func`3 func)
+   在 System.Data.Entity.Migrations.DbSetMigrationsExtensions.AddOrUpdate[TEntity](DbSet`1 set, IEnumerable`1 identifyingProperties, InternalSet`1 internalSet, TEntity[] entities)
+   在 System.Data.Entity.Migrations.DbSetMigrationsExtensions.AddOrUpdate[TEntity](IDbSet`1 set, TEntity[] entities)
+   在 IDbSetExtensions.AddOrUpdateExtension[TEntity](IDbSet`1 set, TEntity[] entities)
+   在 DAL.BaseDAL.AddOrUpdate[T](DbContext db, T model) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 173
+   在 Castle.Proxies.BaseDALProxy.AddOrUpdate_callback[T](DbContext db, T model)
+   在 Castle.Proxies.Invocations.BaseDAL_AddOrUpdate.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 32
+------------2019-12-07 11:21:59------------
+ 

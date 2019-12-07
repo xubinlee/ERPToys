@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Web;
 using System.Text;
 
 namespace IWcfServiceInterface
@@ -22,19 +23,32 @@ namespace IWcfServiceInterface
         /// <summary>
         /// 添加单个实体
         /// </summary>
-        /// <param name="model">实体对象</param>
+        /// <param name="param">已序列化的参数类</param>
         /// <returns></returns>
-        int Add(object model);
+        [OperationContract]
+        [FaultContract(typeof(ServiceExceptionDetail))]
+        [WebInvoke(Method = "POST", UriTemplate = "Add", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        int Add(SerializedParam param);
         /// <summary>
         /// 海量数据插入方法
         /// </summary>
-        /// <param name="entityType">实体类型名称</param>
-        /// <param name="list">对象列表</param>
-        void AddByBulkCopy(string entityType, IList list);
+        /// <param name="param">已序列化的参数类</param>
+        [OperationContract]
+        [FaultContract(typeof(ServiceExceptionDetail))]
+        [WebInvoke(Method = "POST", UriTemplate = "AddByBulkCopy", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        void AddByBulkCopy(SerializedParam param);
         #endregion
 
         #region 删除
-
+        /// <summary>
+        /// 删除(适用于先查询后删除的单个实体)
+        /// </summary>
+        /// <param name="param">已序列化的参数类</param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceExceptionDetail))]
+        [WebInvoke(Method = "DELETE", UriTemplate = "Delete", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        int Delete(SerializedParam param);
         #endregion
 
         #region 修改
@@ -43,27 +57,64 @@ namespace IWcfServiceInterface
         /// </summary>
         /// <param name="param">已序列化的参数类</param>
         /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceExceptionDetail))]
+        [WebInvoke(Method = "PUT", UriTemplate = "Modify", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         int Modify(SerializedParam param);
         /// <summary>
         /// 批量修改
         /// </summary>
-        /// <param name="list">修改后的实体列表</param>
+        /// <param name="param">修改后的实体列表</param>
         /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceExceptionDetail))]
+        [WebInvoke(Method ="PUT", UriTemplate = "ModifyByList", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         int ModifyByList(SerializedParam param);
         #endregion
 
         #region 查询
+        /// <summary>
+        /// 按实体类型执行查询操作（返回List不需要修改或删除）
+        /// </summary>
+        /// <param name="entityTyp">实体类型</param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceExceptionDetail))]
-        string GetModelList(string entityType);
+        [WebInvoke(UriTemplate = "GetListByNoTracking", BodyStyle = WebMessageBodyStyle.Wrapped, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SerializedParam GetListByNoTracking(SerializedParam param);
 
+        /// <summary>
+        /// 按实体类型执行查询操作
+        /// </summary>
+        /// <param name="entityTyp">实体类型</param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceExceptionDetail))]
-        string ExecuteQuery(string entityType, string sql, params SerializedSqlParam[] pars);
-        
+        [WebInvoke(UriTemplate = "GetModelList", BodyStyle = WebMessageBodyStyle.Wrapped, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SerializedParam GetModelList(SerializedParam param);
+
+        /// <summary>
+        /// 执行查询操作
+        /// </summary>
+        /// <param name="entityType">实体类型名称</param>
+        /// <param name="sql">sql语句</param>
+        /// <param name="pars">where参数</param>
+        /// <returns></returns>
+        //[OperationContract]
+        //[FaultContract(typeof(ServiceExceptionDetail))]
+        //[WebGet(UriTemplate = "ExecuteQuery?entityType={entityType}&sql={sql}&pars={pars}", BodyStyle = WebMessageBodyStyle.WrappedResponse, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        //SerializedParam ExecuteQuery(string entityType, string sql, params SerializedSqlParam[] pars);
+
+        /// <summary>
+        /// 带where条件的查询
+        /// </summary>
+        /// <param name="entityType">实体类型名称</param>
+        /// <param name="filter">where条件</param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceExceptionDetail))]
-        string ExecuteQueryByFilter(string entityType, string filter);
+        [WebInvoke(UriTemplate = "ExecuteQueryByFilter", BodyStyle = WebMessageBodyStyle.Wrapped, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SerializedParam ExecuteQueryByFilter(SerializedParam param);
         #endregion
 
     }

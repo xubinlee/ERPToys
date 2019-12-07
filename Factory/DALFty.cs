@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 using IBase;
+using Utility.Interceptor;
 
 namespace Factory
 {
@@ -22,7 +23,8 @@ namespace Factory
             object obj = m_Hashtable[typeof(T).Name];
             if (obj == null)
             {
-                oT = new T();
+                // 使用拦截器创建实例
+                oT = LoggerInterceptor.CreateProxy<T>();
                 m_Hashtable.Add(typeof(T).Name, oT);
             }
             else

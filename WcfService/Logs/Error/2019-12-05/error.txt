@@ -1,0 +1,11 @@
+2019-12-05 10:11:56.5589 | Error | 
+Exception：source 不是 IEnumerable<>
+StackTrace：   在 System.Linq.Queryable.AsQueryable(IEnumerable source)
+   在 DAL.BaseDAL.ExecuteQuery(DbContext db, Type type, String filter) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 93
+   在 Castle.Proxies.BaseDALProxy.ExecuteQuery_callback_2(DbContext db, Type type, String filter)
+   在 Castle.Proxies.Invocations.BaseDAL_ExecuteQuery_2.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 32
+------------2019-12-05 10:11:56------------
+ 

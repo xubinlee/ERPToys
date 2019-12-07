@@ -9,41 +9,47 @@
     <_PublishTargetUrl>F:\ERPServices</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
+    <File Include="AttAppointmentsService.svc">
+      <publishTime>12/06/2019 13:54:42</publishTime>
+    </File>
     <File Include="BaseService.svc">
       <publishTime>11/25/2019 09:00:35</publishTime>
     </File>
+    <File Include="bin/Castle.Core.dll">
+      <publishTime>04/05/2019 01:50:26</publishTime>
+    </File>
     <File Include="bin/Common.dll">
-      <publishTime>11/30/2019 11:58:47</publishTime>
+      <publishTime>12/02/2019 18:54:29</publishTime>
     </File>
     <File Include="bin/Common.pdb">
-      <publishTime>11/30/2019 11:58:47</publishTime>
+      <publishTime>12/02/2019 18:54:29</publishTime>
     </File>
     <File Include="bin/DAL.dll">
-      <publishTime>11/30/2019 11:58:48</publishTime>
+      <publishTime>12/06/2019 20:23:00</publishTime>
     </File>
     <File Include="bin/DAL.dll.config">
-      <publishTime>11/22/2019 16:00:06</publishTime>
+      <publishTime>12/02/2019 15:34:25</publishTime>
     </File>
     <File Include="bin/DAL.pdb">
-      <publishTime>11/30/2019 11:58:48</publishTime>
+      <publishTime>12/06/2019 20:23:00</publishTime>
     </File>
     <File Include="bin/DBML.dll">
-      <publishTime>11/27/2019 11:35:58</publishTime>
+      <publishTime>12/02/2019 14:38:57</publishTime>
     </File>
     <File Include="bin/DBML.dll.config">
       <publishTime>08/30/2016 19:59:14</publishTime>
     </File>
     <File Include="bin/DBML.pdb">
-      <publishTime>11/27/2019 11:35:58</publishTime>
+      <publishTime>12/02/2019 14:38:57</publishTime>
     </File>
     <File Include="bin/EDMX.dll">
-      <publishTime>11/30/2019 11:58:47</publishTime>
+      <publishTime>12/06/2019 20:23:00</publishTime>
     </File>
     <File Include="bin/EDMX.dll.config">
-      <publishTime>11/22/2019 09:25:41</publishTime>
+      <publishTime>12/06/2019 19:56:01</publishTime>
     </File>
     <File Include="bin/EDMX.pdb">
-      <publishTime>11/30/2019 11:58:47</publishTime>
+      <publishTime>12/06/2019 20:23:00</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>09/14/2019 17:01:18</publishTime>
@@ -52,46 +58,70 @@
       <publishTime>09/14/2019 17:01:36</publishTime>
     </File>
     <File Include="bin/Factory.dll">
-      <publishTime>11/30/2019 11:58:48</publishTime>
+      <publishTime>12/06/2019 20:23:00</publishTime>
     </File>
     <File Include="bin/Factory.dll.config">
-      <publishTime>11/22/2019 16:04:00</publishTime>
+      <publishTime>12/02/2019 15:34:25</publishTime>
     </File>
     <File Include="bin/Factory.pdb">
-      <publishTime>11/30/2019 11:58:48</publishTime>
+      <publishTime>12/06/2019 20:23:00</publishTime>
     </File>
     <File Include="bin/IBase.dll">
-      <publishTime>11/30/2019 11:58:47</publishTime>
+      <publishTime>12/06/2019 16:53:40</publishTime>
     </File>
     <File Include="bin/IBase.pdb">
-      <publishTime>11/30/2019 11:58:47</publishTime>
+      <publishTime>12/06/2019 16:53:40</publishTime>
     </File>
     <File Include="bin/IWcfServiceInterface.dll">
-      <publishTime>11/30/2019 11:58:47</publishTime>
+      <publishTime>12/06/2019 20:23:00</publishTime>
     </File>
     <File Include="bin/IWcfServiceInterface.pdb">
-      <publishTime>11/30/2019 11:58:47</publishTime>
+      <publishTime>12/06/2019 20:23:00</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>11/09/2019 00:56:44</publishTime>
     </File>
+    <File Include="bin/NLog.config">
+      <publishTime>12/02/2019 20:35:06</publishTime>
+    </File>
+    <File Include="bin/NLog.dll">
+      <publishTime>11/04/2019 21:13:18</publishTime>
+    </File>
     <File Include="bin/Utility.dll">
-      <publishTime>11/30/2019 11:58:47</publishTime>
+      <publishTime>12/06/2019 20:23:00</publishTime>
+    </File>
+    <File Include="bin/Utility.dll.config">
+      <publishTime>12/02/2019 20:09:03</publishTime>
     </File>
     <File Include="bin/Utility.pdb">
-      <publishTime>11/30/2019 11:58:47</publishTime>
+      <publishTime>12/06/2019 20:23:00</publishTime>
     </File>
     <File Include="bin/WcfService.dll">
-      <publishTime>11/30/2019 11:58:48</publishTime>
+      <publishTime>12/06/2019 20:23:00</publishTime>
     </File>
     <File Include="bin/WcfService.pdb">
-      <publishTime>11/30/2019 11:58:48</publishTime>
+      <publishTime>12/06/2019 20:23:00</publishTime>
     </File>
     <File Include="bin/Z.EntityFramework.Extensions.dll">
       <publishTime>10/23/2019 12:16:42</publishTime>
     </File>
+    <File Include="GoodsService.svc">
+      <publishTime>12/06/2019 20:14:14</publishTime>
+    </File>
+    <File Include="InventoryService.svc">
+      <publishTime>12/06/2019 20:06:22</publishTime>
+    </File>
+    <File Include="PermissionService.svc">
+      <publishTime>12/05/2019 16:09:14</publishTime>
+    </File>
+    <File Include="StockInBillService.svc">
+      <publishTime>12/06/2019 18:13:41</publishTime>
+    </File>
+    <File Include="SystemInfoService.svc">
+      <publishTime>12/05/2019 14:43:21</publishTime>
+    </File>
     <File Include="Web.config">
-      <publishTime>11/30/2019 11:58:48</publishTime>
+      <publishTime>12/06/2019 16:51:26</publishTime>
     </File>
   </ItemGroup>
 </Project>

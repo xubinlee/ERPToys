@@ -142,3 +142,4 @@ D:\Project\ERPToys\USL\obj\Debug\USL.exe
 D:\Project\ERPToys\USL\obj\Debug\USL.pdb
 D:\Project\ERPToys\USL\obj\Debug\Interop.zkemkeeper.dll
 D:\Project\ERPToys\USL\obj\Debug\USL.csproj.CopyComplete
+D:\ERPToys\NLog.config

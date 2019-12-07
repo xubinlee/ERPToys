@@ -1,0 +1,2957 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ERPToysModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AccountBook">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="WarehouseID" Type="Guid" Nullable="false" />
+    <Property Name="WarehouseType" Type="Int32" Nullable="false" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="AccntDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MEAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OtherFee" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="InQty" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="OutQty" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="BalanceQty" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="BalanceCost" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BillDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NWeight" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Alert">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Caption" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AddTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="GoodsID" Type="Guid" />
+    <Property Name="BillID" Type="Guid" />
+    <Property Name="UserID" Type="Guid" />
+    <Property Name="CompanyID" Type="Guid" />
+    <Property Name="SupplierID" Type="Guid" />
+  </EntityType>
+  <EntityType Name="Appointments">
+    <Key>
+      <PropertyRef Name="UniqueID" />
+    </Key>
+    <Property Name="UniqueID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Guid" />
+    <Property Name="GoodsID" Type="Guid" />
+    <Property Name="Weight" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="NWeight" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Machine" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Cycle" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="ManHour" Type="Decimal" Precision="3" Scale="1" />
+    <Property Name="ErrorRate" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Wages" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="WageDesignID" Type="Guid" />
+    <Property Name="PlanYield" Type="Int32" />
+    <Property Name="Yielded" Type="Int32" />
+    <Property Name="AMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Type" Type="Int32" />
+    <Property Name="StartDate" Type="DateTime" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Precision="3" />
+    <Property Name="AllDay" Type="Boolean" />
+    <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="Label" Type="Int32" />
+    <Property Name="ResourceID" Type="Int32" />
+    <Property Name="RecurrenceInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ReminderInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomField1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="WageStatus" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AttAppointments">
+    <Key>
+      <PropertyRef Name="UniqueID" />
+    </Key>
+    <Property Name="UniqueID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GLogStartID" Type="Guid" />
+    <Property Name="GLogEndID" Type="Guid" />
+    <Property Name="UserID" Type="Guid" />
+    <Property Name="SchClassID" Type="Guid" />
+    <Property Name="SchClassName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SchSerialNo" Type="Int32" Nullable="false" />
+    <Property Name="SchStartTime" Type="DateTime" Precision="3" />
+    <Property Name="SchEndTime" Type="DateTime" Precision="3" />
+    <Property Name="CheckInTime" Type="DateTime" Precision="3" />
+    <Property Name="CheckOutTime" Type="DateTime" Precision="3" />
+    <Property Name="LateMinutes" Type="Int32" />
+    <Property Name="EarlyMinutes" Type="Int32" />
+    <Property Name="AttStatus" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="Int32" />
+    <Property Name="AllDay" Type="Boolean" />
+    <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ResourceID" Type="Int32" />
+    <Property Name="RecurrenceInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ReminderInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="WageStatus" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AttGeneralLog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="EnrollNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="VerifyMode" Type="Int32" Nullable="false" />
+    <Property Name="InOutMode" Type="Int32" Nullable="false" />
+    <Property Name="AttTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Workcode" Type="Int32" Nullable="false" />
+    <Property Name="AttFlag" Type="Boolean" Nullable="false" />
+    <Property Name="AttStatus" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SchClassID" Type="Guid" />
+  </EntityType>
+  <EntityType Name="AttWageBillDtl">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="UserID" Type="Guid" />
+    <Property Name="Classes" Type="Int32" />
+    <Property Name="Late" Type="Int32" />
+    <Property Name="Early" Type="Int32" />
+    <Property Name="LateCount" Type="Int32" />
+    <Property Name="EarlyCount" Type="Int32" />
+    <Property Name="Absent" Type="Int32" />
+    <Property Name="Forget" Type="Int32" />
+    <Property Name="Leave" Type="Int32" />
+    <Property Name="Wages" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Welfare" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Deduction" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="SocialSecurity" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="IndividualIncomeTax" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="AMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AttWageBillHd">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BillDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="YearMonth" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Balance" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Maker" Type="Guid" Nullable="false" />
+    <Property Name="MakeDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Auditor" Type="Guid" />
+    <Property Name="AuditDate" Type="DateTime" Precision="3" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="BOM">
+    <Key>
+      <PropertyRef Name="GoodsID" />
+      <PropertyRef Name="ParentGoodsID" />
+    </Key>
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="ParentGoodsID" Type="Guid" Nullable="false" />
+    <Property Name="Qty" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="InnerBox" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="PriceNoTax" Type="Decimal" Precision="12" Scale="6" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OtherFee" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ButtonPermission">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Caption" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CheckBoxState" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PostCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="Contacts" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ContactTel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ContactCellPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="QQ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AccountPeriod" Type="Int32" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="ACBank" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ACNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Tax" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceAddr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceTel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="AddTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LogisticsTel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LogisticsAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Contacts" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ContactTel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ContactCellPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="QQ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="AddTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Goods">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GoodsTypeID" Type="Guid" Nullable="false" />
+    <Property Name="PackagingID" Type="Guid" Nullable="false" />
+    <Property Name="CustomerID" Type="Guid" />
+    <Property Name="Material" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Dosage" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Subpackage" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Unit" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="SPEC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="MEAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="PurchasePrice" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="PriceNoTax" Type="Decimal" Precision="12" Scale="6" Nullable="false" />
+    <Property Name="BarCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Volume" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="GWeight" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="NWeight" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="Cycle" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="InnerBox" Type="Int32" Nullable="false" />
+    <Property Name="InPutVAT" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OutPutVAT" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="UpperLimit" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="LowerLimit" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="Pic" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="AddTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+    <Property Name="MainMark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SideMark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InnerMark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CavityNumber" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Toner" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsStop" Type="Boolean" Nullable="false" />
+    <Property Name="Source" Type="Int32" />
+    <Property Name="Subsidy" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="PlanYield" Type="Int32" />
+    <NavigationProperty Name="GoodsType" Relationship="Self.FK_Goods_GoodsType" FromRole="Goods" ToRole="GoodsType" />
+    <NavigationProperty Name="OrderDtl" Relationship="Self.FK_OrderDtl_Goods" FromRole="Goods" ToRole="OrderDtl" />
+  </EntityType>
+  <EntityType Name="GoodsType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Goods" Relationship="Self.FK_Goods_GoodsType" FromRole="GoodsType" ToRole="Goods" />
+  </EntityType>
+  <EntityType Name="Inventory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="WarehouseID" Type="Guid" Nullable="false" />
+    <Property Name="WarehouseType" Type="Int32" Nullable="false" />
+    <Property Name="CompanyID" Type="Guid" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="DeptID" Type="Guid" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="Qty" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="MEAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="InnerBox" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OtherFee" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BillDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NWeight" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MainMenu">
+    <Key>
+      <PropertyRef Name="SerialNo" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="ParentID" Type="Guid" />
+    <Property Name="SerialNo" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Caption" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Subtitle" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Prefix" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CheckBoxState" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MoldAllot">
+    <Key>
+      <PropertyRef Name="SupplierID" />
+      <PropertyRef Name="GoodsID" />
+    </Key>
+    <Property Name="SupplierID" Type="Guid" Nullable="false" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="Qty" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="InnerBox" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="PriceNoTax" Type="Decimal" Precision="12" Scale="6" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderDtl">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="SerialNo" Type="Int32" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="Qty" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="MEAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="InnerBox" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="PriceNoTax" Type="Decimal" Precision="12" Scale="6" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OtherFee" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="MainMark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SideMark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InnerMark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NWeight" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="Modulus" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Goods" Relationship="Self.FK_OrderDtl_Goods" FromRole="OrderDtl" ToRole="Goods" />
+  </EntityType>
+  <EntityType Name="OrderHd">
+    <Key>
+      <PropertyRef Name="BillNo" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="WarehouseID" Type="Guid" Nullable="false" />
+    <Property Name="WarehouseType" Type="Int32" Nullable="false" />
+    <Property Name="CompanyID" Type="Guid" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="Contacts" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Maker" Type="Guid" Nullable="false" />
+    <Property Name="MakeDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Auditor" Type="Guid" />
+    <Property Name="AuditDate" Type="DateTime" Precision="3" />
+    <Property Name="MainMark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="BillType" Type="Int32" Nullable="false" />
+    <Property Name="BillAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="UnReceiptedAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Pic" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Packaging">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PaymentBillDtl">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="BillID" Type="Guid" Nullable="false" />
+    <Property Name="BillAMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="PaidAMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="UnPaidAMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="LastPaidAMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PaymentBillHd">
+    <Key>
+      <PropertyRef Name="BillNo" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BillDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CompanyID" Type="Guid" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="Contacts" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="BillType" Type="Int32" Nullable="false" />
+    <Property Name="POClear" Type="Int32" Nullable="false" />
+    <Property Name="Maker" Type="Guid" Nullable="false" />
+    <Property Name="MakeDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Auditor" Type="Guid" />
+    <Property Name="AuditDate" Type="DateTime" Precision="3" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Balance" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="PaidAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="UnPaidAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Pic" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="Caption" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ParentID" Type="Int32" Nullable="false" />
+    <Property Name="SerialNo" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Guid" Nullable="false" />
+    <Property Name="Caption" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CheckBoxState" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ReceiptBillDtl">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="BillID" Type="Guid" Nullable="false" />
+    <Property Name="BillAMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="ReceiptedAMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="UnReceiptedAMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="LastReceiptedAMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ReceiptBillHd">
+    <Key>
+      <PropertyRef Name="BillNo" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BillDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CompanyID" Type="Guid" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="Contacts" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="BillType" Type="Int32" Nullable="false" />
+    <Property Name="POClear" Type="Int32" Nullable="false" />
+    <Property Name="Maker" Type="Guid" Nullable="false" />
+    <Property Name="MakeDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Auditor" Type="Guid" />
+    <Property Name="AuditDate" Type="DateTime" Precision="3" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Balance" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="ReceiptedAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="UnReceiptedAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Pic" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Resources">
+    <Key>
+      <PropertyRef Name="UniqueID" />
+    </Key>
+    <Property Name="UniqueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ResourceID" Type="Int32" />
+    <Property Name="ResourceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Color" Type="Int32" />
+    <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="CustomField1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="SchClass">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SerialNo" Type="Int32" Nullable="false" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="LateMinutes" Type="Int32" Nullable="false" />
+    <Property Name="EarlyMinutes" Type="Int32" Nullable="false" />
+    <Property Name="CheckInStartTime" Type="DateTime" Precision="3" />
+    <Property Name="CheckInEndTime" Type="DateTime" Precision="3" />
+    <Property Name="CheckOutStartTime" Type="DateTime" Precision="3" />
+    <Property Name="CheckOutEndTime" Type="DateTime" Precision="3" />
+    <Property Name="Color" Type="Int32" />
+  </EntityType>
+  <EntityType Name="SLSalePrice">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="GoodsID" />
+      <PropertyRef Name="Type" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="PriceNoTax" Type="Decimal" Precision="12" Scale="6" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OtherFee" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="StaffSchClass">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="DeptID" Type="Guid" Nullable="false" />
+    <Property Name="SchClassID" Type="Guid" Nullable="false" />
+    <Property Name="SchSerialNo" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StockInBillDtl">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="SerialNo" Type="Int32" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="Qty" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="MEAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="InnerBox" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="PriceNoTax" Type="Decimal" Precision="12" Scale="6" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OtherFee" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="NWeight" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="TonsQty" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="TonsPrice" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="StockInBillHd">
+    <Key>
+      <PropertyRef Name="BillNo" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BillDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="WarehouseID" Type="Guid" Nullable="false" />
+    <Property Name="WarehouseType" Type="Int32" Nullable="false" />
+    <Property Name="OrderID" Type="Guid" />
+    <Property Name="OrderDate" Type="DateTime" Precision="3" />
+    <Property Name="CompanyID" Type="Guid" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="DeptID" Type="Guid" />
+    <Property Name="Contacts" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Maker" Type="Guid" Nullable="false" />
+    <Property Name="MakeDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Auditor" Type="Guid" />
+    <Property Name="AuditDate" Type="DateTime" Precision="3" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="BillAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="UnPaidAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Worker" Type="Guid" />
+  </EntityType>
+  <EntityType Name="StockOutBillDtl">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="SerialNo" Type="Int32" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Weight" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Qty" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="MEAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="PCS" Type="Int32" />
+    <Property Name="InnerBox" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="5" />
+    <Property Name="PriceNoTax" Type="Decimal" Precision="12" Scale="6" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="OtherFee" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="NWeight" Type="Decimal" Precision="12" Scale="3" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TonsQty" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="TonsPrice" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StockOutBillHd">
+    <Key>
+      <PropertyRef Name="BillNo" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="WarehouseID" Type="Guid" Nullable="false" />
+    <Property Name="WarehouseType" Type="Int32" Nullable="false" />
+    <Property Name="OrderID" Type="Guid" />
+    <Property Name="OrderDate" Type="DateTime" Precision="3" />
+    <Property Name="CompanyID" Type="Guid" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="DeptID" Type="Guid" />
+    <Property Name="Contacts" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="BillDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Maker" Type="Guid" Nullable="false" />
+    <Property Name="MakeDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Auditor" Type="Guid" />
+    <Property Name="AuditDate" Type="DateTime" Precision="3" />
+    <Property Name="MainMark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="BillAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="UnReceiptedAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Driver" Type="Guid" />
+  </EntityType>
+  <EntityType Name="Stocktaking">
+    <Key>
+      <PropertyRef Name="WarehouseType" />
+      <PropertyRef Name="Goods" />
+      <PropertyRef Name="PCS" />
+    </Key>
+    <Property Name="Warehouse" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="WarehouseType" Type="Int32" Nullable="false" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="GoodsBigType" Type="Int32" Nullable="false" />
+    <Property Name="Goods" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Qty" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="MEAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Checker" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CheckingDate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PostCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="Contacts" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ContactTel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ContactCellPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="QQ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ACBank" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ACNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Tax" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentAddr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceAddr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="AddTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="SystemInfo">
+    <Key>
+      <PropertyRef Name="Company" />
+    </Key>
+    <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CompanyType" Type="Int32" Nullable="false" />
+    <Property Name="Contracts" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Accounts" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="FtpPath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ServerUserName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ServerPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Version" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="SystemStatus">
+    <Key>
+      <PropertyRef Name="MainMenuName" />
+    </Key>
+    <Property Name="MainMenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MaxBillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TonerLabel">
+    <Key>
+      <PropertyRef Name="Customer" />
+      <PropertyRef Name="Goods" />
+    </Key>
+    <Property Name="Customer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Goods" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Material" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Dosage" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Subpackage" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="TotalQty" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="DATE" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="TypesList">
+    <Key>
+      <PropertyRef Name="Type" />
+      <PropertyRef Name="No" />
+      <PropertyRef Name="SubType" />
+    </Key>
+    <Property Name="Type" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="No" Type="Int32" Nullable="false" />
+    <Property Name="SubType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsersInfo">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DeptID" Type="Guid" />
+    <Property Name="Post" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Tel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DormNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="RoleID" Type="Guid" />
+    <Property Name="Permissions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AttCardnumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="AttPrivilege" Type="Int32" Nullable="false" />
+    <Property Name="AttEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="WageType" Type="Int32" Nullable="false" />
+    <Property Name="Wages" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="SchClassWage" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="TimeWage" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="IsDel" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WageBillDtl">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="YearMonth" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Wages" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Welfare" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Deduction" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="SocialSecurity" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="IndividualIncomeTax" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="AMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WageBillHd">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BillDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserID" Type="Guid" />
+    <Property Name="Balance" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Maker" Type="Guid" Nullable="false" />
+    <Property Name="MakeDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Auditor" Type="Guid" />
+    <Property Name="AuditDate" Type="DateTime" Precision="3" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="WageDesign">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Wages" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="ManHour" Type="Int32" />
+    <Property Name="ErrorRate" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Warehouse">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AttParameters">
+    <Key>
+      <PropertyRef Name="MachineNumber" />
+      <PropertyRef Name="CommMode" />
+    </Key>
+    <Property Name="MachineNumber" Type="Int32" Nullable="false" />
+    <Property Name="CommMode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BaudRate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="AttIP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="AttPort" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="VAccountBook">
+    <Key>
+      <PropertyRef Name="仓库" />
+      <PropertyRef Name="仓库类型" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="装箱数" />
+      <PropertyRef Name="货品大类" />
+      <PropertyRef Name="记帐日期" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="入库数量" />
+      <PropertyRef Name="出库数量" />
+      <PropertyRef Name="结存数量" />
+      <PropertyRef Name="结存金额" />
+      <PropertyRef Name="折扣" />
+      <PropertyRef Name="额外费用" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="体积" />
+      <PropertyRef Name="毛重" />
+      <PropertyRef Name="净重" />
+      <PropertyRef Name="单据编号" />
+      <PropertyRef Name="制单日期" />
+    </Key>
+    <Property Name="仓库" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="仓库类型" Type="Int32" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="装箱数" Type="Int32" Nullable="false" />
+    <Property Name="货品大类" Type="Int32" Nullable="false" />
+    <Property Name="记帐日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="入库数量" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="入库金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="出库数量" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="出库金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="结存数量" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="结存金额" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="体积" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="毛重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="单据编号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="VAlert">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="标题" />
+      <PropertyRef Name="内容" />
+      <PropertyRef Name="添加时间" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="BillID" Type="Guid" />
+    <Property Name="GoodsID" Type="Guid" />
+    <Property Name="UserID" Type="Guid" />
+    <Property Name="CompanyID" Type="Guid" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="标题" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="内容" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="添加时间" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="VAppointments">
+    <Key>
+      <PropertyRef Name="UniqueID" />
+      <PropertyRef Name="工号" />
+      <PropertyRef Name="姓名" />
+      <PropertyRef Name="工资状态" />
+    </Key>
+    <Property Name="UniqueID" Type="Int64" Nullable="false" />
+    <Property Name="UserID" Type="Guid" />
+    <Property Name="工号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="姓名" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="工资状态" Type="Int32" Nullable="false" />
+    <Property Name="年月" Type="String" MaxLength="61" FixedLength="false" Unicode="true" />
+    <Property Name="日期" Type="DateTime" Precision="3" />
+    <Property Name="班次" Type="Int32" />
+    <Property Name="机号" Type="Int32" />
+    <Property Name="GoodsID" Type="Guid" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="重量_斤" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="净重_克" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="计算周期" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="应产模数" Type="Int32" />
+    <Property Name="实产模数" Type="Int32" />
+    <Property Name="工时" Type="Decimal" Precision="3" Scale="1" />
+    <Property Name="当班金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="备注" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="VAttAppointments">
+    <Key>
+      <PropertyRef Name="UniqueID" />
+      <PropertyRef Name="工号" />
+      <PropertyRef Name="姓名" />
+      <PropertyRef Name="工资状态" />
+      <PropertyRef Name="时段" />
+      <PropertyRef Name="SchSerialNo" />
+      <PropertyRef Name="考勤状态" />
+    </Key>
+    <Property Name="UniqueID" Type="Int64" Nullable="false" />
+    <Property Name="GLogStartID" Type="Guid" />
+    <Property Name="GLogEndID" Type="Guid" />
+    <Property Name="UserID" Type="Guid" />
+    <Property Name="工号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="姓名" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="工资状态" Type="Int32" Nullable="false" />
+    <Property Name="年月" Type="String" MaxLength="61" FixedLength="false" Unicode="true" />
+    <Property Name="日期" Type="DateTime" Precision="3" />
+    <Property Name="时段" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SchSerialNo" Type="Int32" Nullable="false" />
+    <Property Name="上班时间" Type="DateTime" Precision="3" />
+    <Property Name="下班时间" Type="DateTime" Precision="3" />
+    <Property Name="签到时间" Type="DateTime" Precision="3" />
+    <Property Name="签退时间" Type="DateTime" Precision="3" />
+    <Property Name="考勤状态" Type="Int32" Nullable="false" />
+    <Property Name="迟到分钟数" Type="Int32" />
+    <Property Name="早退分钟数" Type="Int32" />
+    <Property Name="备注" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="VAttGeneralLog">
+    <Key>
+      <PropertyRef Name="账号" />
+      <PropertyRef Name="姓名" />
+      <PropertyRef Name="出勤时间" />
+      <PropertyRef Name="特权" />
+      <PropertyRef Name="验证方式" />
+    </Key>
+    <Property Name="照片" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="账号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="姓名" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="部门" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="职位" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="出勤时间" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="卡号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="特权" Type="Int32" Nullable="false" />
+    <Property Name="验证方式" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VAttWageBill">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="工资单号" />
+      <PropertyRef Name="结算日期" />
+      <PropertyRef Name="状态" />
+      <PropertyRef Name="工号" />
+      <PropertyRef Name="姓名" />
+      <PropertyRef Name="基本工资" />
+      <PropertyRef Name="福利" />
+      <PropertyRef Name="扣款" />
+      <PropertyRef Name="代扣社保" />
+      <PropertyRef Name="代扣个税" />
+      <PropertyRef Name="实发工资" />
+      <PropertyRef Name="制单日期" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="工资单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="结算日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="状态" Type="Int32" Nullable="false" />
+    <Property Name="年月" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="UserID" Type="Guid" />
+    <Property Name="工号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="姓名" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="班次" Type="Int32" />
+    <Property Name="迟到分钟数" Type="Int32" />
+    <Property Name="早退分钟数" Type="Int32" />
+    <Property Name="迟到次数" Type="Int32" />
+    <Property Name="早退次数" Type="Int32" />
+    <Property Name="旷工" Type="Int32" />
+    <Property Name="忘打卡" Type="Int32" />
+    <Property Name="请假" Type="Int32" />
+    <Property Name="基本工资" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="福利" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="扣款" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="代扣社保" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="代扣个税" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="实发工资" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="制单人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="审核人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="审核日期" Type="DateTime" Precision="3" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="VCompany">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="代码" />
+      <PropertyRef Name="名称" />
+      <PropertyRef Name="客户类型" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="客户类型" Type="Int32" Nullable="false" />
+    <Property Name="账期" Type="Int32" />
+    <Property Name="欠款" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="地址" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="邮编" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="联系电话" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="联系手机" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="QQ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="传真" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="物流地址" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="物流电话" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="开户行" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="帐号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="税号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="开票抬头" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="开票地址" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="开票电话" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CheckBoxID" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="VCustomerSalesReceiptedSummary">
+    <Key>
+      <PropertyRef Name="交货日期" />
+    </Key>
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="交货日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="箱数" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="总数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="金额" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="已收金额" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="未收金额" Type="Decimal" Precision="38" Scale="2" />
+  </EntityType>
+  <EntityType Name="VCustomerSettlement">
+    <Key>
+      <PropertyRef Name="收款单号" />
+      <PropertyRef Name="收款日期" />
+      <PropertyRef Name="客户" />
+    </Key>
+    <Property Name="收款单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="收款日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CompanyID" Type="Guid" />
+    <Property Name="客户" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="上期结欠" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="本期收款" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="共欠" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="本期结款" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="本期结欠" Type="Decimal" Precision="12" Scale="2" />
+  </EntityType>
+  <EntityType Name="VDepartment">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="代码" />
+      <PropertyRef Name="名称" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="联系电话" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="联系手机" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="QQ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="传真" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="VEMSInventoryGroupByGoods">
+    <Key>
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="货品大类" />
+      <PropertyRef Name="净重" />
+      <PropertyRef Name="一出几" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+    </Key>
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="供应商代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="供应商名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品大类" Type="Int32" Nullable="false" />
+    <Property Name="总数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="布产数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="可用数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="个数" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="一出几" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="模数" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="VFSMInventoryGroupByGoods">
+    <Key>
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="货品大类" />
+      <PropertyRef Name="净重" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+    </Key>
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="供应商代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="供应商名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品大类" Type="Int32" Nullable="false" />
+    <Property Name="总数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="布产数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="可用数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="个数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="VFSMOrder">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="订货单号" />
+      <PropertyRef Name="订货日期" />
+      <PropertyRef Name="交货日期" />
+      <PropertyRef Name="状态" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="数量" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="折扣" />
+      <PropertyRef Name="额外费用" />
+      <PropertyRef Name="仓库" />
+      <PropertyRef Name="订单类型" />
+      <PropertyRef Name="类型" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="制单日期" />
+      <PropertyRef Name="GoodsID" />
+    </Key>
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="订货单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="订货日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="交货日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="状态" Type="Int32" Nullable="false" />
+    <Property Name="供应商" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="数量" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="到货数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="未到数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="仓库" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="订单类型" Type="Int32" Nullable="false" />
+    <Property Name="类型" Type="Int32" Nullable="false" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="制单人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="审核人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="审核日期" Type="DateTime" Precision="3" />
+    <Property Name="MaterialGoodsID" Type="Guid" />
+    <Property Name="SerialNo" Type="Int32" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VFSMOrderDtlByMoldList">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="GoodsID" />
+      <PropertyRef Name="ParentGoodsID" />
+      <PropertyRef Name="PCS" />
+      <PropertyRef Name="InnerBox" />
+      <PropertyRef Name="Price" />
+      <PropertyRef Name="PriceNoTax" />
+      <PropertyRef Name="Discount" />
+      <PropertyRef Name="OtherFee" />
+      <PropertyRef Name="Type" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="ParentGoodsID" Type="Guid" Nullable="false" />
+    <Property Name="Qty" Type="Decimal" Precision="36" Scale="4" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="InnerBox" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="PriceNoTax" Type="Decimal" Precision="12" Scale="6" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OtherFee" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VFSMOrderDtlByMoldMaterial">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="GoodsID" />
+      <PropertyRef Name="ParentGoodsID" />
+      <PropertyRef Name="PCS" />
+      <PropertyRef Name="InnerBox" />
+      <PropertyRef Name="Price" />
+      <PropertyRef Name="PriceNoTax" />
+      <PropertyRef Name="Discount" />
+      <PropertyRef Name="OtherFee" />
+      <PropertyRef Name="Type" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="ParentGoodsID" Type="Guid" Nullable="false" />
+    <Property Name="Qty" Type="Decimal" Precision="36" Scale="4" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="InnerBox" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="PriceNoTax" Type="Decimal" Precision="12" Scale="6" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OtherFee" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VGoods">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="装箱数" />
+      <PropertyRef Name="内盒" />
+      <PropertyRef Name="毛重" />
+      <PropertyRef Name="净重" />
+      <PropertyRef Name="体积" />
+      <PropertyRef Name="停产" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="图片" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="包装方式" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="装箱数" Type="Int32" Nullable="false" />
+    <Property Name="内盒" Type="Int32" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="毛重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="体积" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="条形码" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CheckBoxID" Type="Boolean" />
+    <Property Name="停产" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VGoodsByBOM">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="数量" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="类型" />
+      <PropertyRef Name="ParentGoodsID" />
+      <PropertyRef Name="GoodsBigType" />
+      <PropertyRef Name="PCS" />
+      <PropertyRef Name="NWeight" />
+      <PropertyRef Name="InnerBox" />
+      <PropertyRef Name="PriceNoTax" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="数量" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="类型" Type="Int32" Nullable="false" />
+    <Property Name="ParentGoodsID" Type="Guid" Nullable="false" />
+    <Property Name="GoodsBigType" Type="Int32" Nullable="false" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="NWeight" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="InnerBox" Type="Int32" Nullable="false" />
+    <Property Name="PriceNoTax" Type="Decimal" Precision="12" Scale="6" Nullable="false" />
+    <Property Name="Source" Type="Int32" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="VGoodsByMoldAllot">
+    <Key>
+      <PropertyRef Name="SupplierID" />
+      <PropertyRef Name="数量" />
+      <PropertyRef Name="单价" />
+    </Key>
+    <Property Name="ID" Type="Guid" />
+    <Property Name="SupplierID" Type="Guid" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数量" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="VGoodsBySLSalePrice">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="Type" />
+    </Key>
+    <Property Name="GoodsID" Type="Guid" />
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VGoodsSalesSummaryByCustomer">
+    <Key>
+      <PropertyRef Name="结算类型" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="装箱数" />
+      <PropertyRef Name="内盒" />
+      <PropertyRef Name="包装方式" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="体积" />
+      <PropertyRef Name="毛重" />
+      <PropertyRef Name="净重" />
+    </Key>
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="结算类型" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="正唛" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="箱数" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="装箱数" Type="Int32" Nullable="false" />
+    <Property Name="内盒" Type="Int32" Nullable="false" />
+    <Property Name="总数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="金额" Type="Decimal" Precision="38" Scale="6" />
+    <Property Name="包装方式" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="体积" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="毛重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VGoodsType">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="类型编码" />
+      <PropertyRef Name="类型名称" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="类型编码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VInventory">
+    <Key>
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="仓库类型" />
+      <PropertyRef Name="登帐日期" />
+      <PropertyRef Name="箱数" />
+      <PropertyRef Name="装箱数" />
+      <PropertyRef Name="内盒" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="折扣" />
+      <PropertyRef Name="额外费用" />
+      <PropertyRef Name="包装方式" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="体积" />
+      <PropertyRef Name="毛重" />
+      <PropertyRef Name="净重" />
+      <PropertyRef Name="单据编号" />
+      <PropertyRef Name="制单日期" />
+      <PropertyRef Name="GoodsID" />
+    </Key>
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="客户" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" />
+    <Property Name="仓库类型" Type="Int32" Nullable="false" />
+    <Property Name="登帐日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="箱数" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="装箱数" Type="Int32" Nullable="false" />
+    <Property Name="内盒" Type="Int32" Nullable="false" />
+    <Property Name="总数量" Type="Decimal" Precision="23" Scale="2" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="包装方式" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="体积" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="毛重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="单据编号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VInventoryGroupByGoods">
+    <Key>
+      <PropertyRef Name="GoodsID" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="包装方式" />
+      <PropertyRef Name="仓库类型" />
+      <PropertyRef Name="装箱数" />
+      <PropertyRef Name="内盒" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="体积" />
+      <PropertyRef Name="毛重" />
+      <PropertyRef Name="净重" />
+    </Key>
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="包装方式" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="仓库类型" Type="Int32" Nullable="false" />
+    <Property Name="箱数" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="待发箱数" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="可用箱数" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="装箱数" Type="Int32" Nullable="false" />
+    <Property Name="内盒" Type="Int32" Nullable="false" />
+    <Property Name="总数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="单价" Type="Decimal" Precision="38" Scale="6" />
+    <Property Name="金额" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="体积" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="毛重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VMaterial">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="净重" />
+      <PropertyRef Name="一出几" />
+      <PropertyRef Name="Type" />
+      <PropertyRef Name="停产" />
+      <PropertyRef Name="PCS" />
+      <PropertyRef Name="InnerBox" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="图片" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="一出几" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="条形码" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="停产" Type="Boolean" Nullable="false" />
+    <Property Name="Source" Type="Int32" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="InnerBox" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VMaterialInventory">
+    <Key>
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="货品大类" />
+      <PropertyRef Name="数量" />
+      <PropertyRef Name="净重" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="折扣" />
+      <PropertyRef Name="额外费用" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="登帐日期" />
+      <PropertyRef Name="单据编号" />
+      <PropertyRef Name="制单日期" />
+    </Key>
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品大类" Type="Int32" Nullable="false" />
+    <Property Name="数量" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="个数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="登帐日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="单据编号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="SupplierID" Type="Guid" />
+  </EntityType>
+  <EntityType Name="VMaterialInventoryGroupByGoods">
+    <Key>
+      <PropertyRef Name="GoodsID" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="货品大类" />
+      <PropertyRef Name="净重" />
+      <PropertyRef Name="一出几" />
+    </Key>
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品大类" Type="Int32" Nullable="false" />
+    <Property Name="数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="个数" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="一出几" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="模数" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="单价" Type="Decimal" Precision="38" Scale="6" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="VMaterialStockInBill">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="入库单号" />
+      <PropertyRef Name="入库日期" />
+      <PropertyRef Name="仓库" />
+      <PropertyRef Name="类型" />
+      <PropertyRef Name="状态" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="数量" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="折扣" />
+      <PropertyRef Name="额外费用" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="制单日期" />
+    </Key>
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="入库单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="入库日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="供应商" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="部门" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="仓库" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="类型" Type="Int32" Nullable="false" />
+    <Property Name="状态" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="布产单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="数量" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="工人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="制单人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="审核人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="审核日期" Type="DateTime" Precision="3" />
+    <Property Name="SerialNo" Type="Int32" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="VMaterialStockOutBill">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="出库单号" />
+      <PropertyRef Name="出库日期" />
+      <PropertyRef Name="交货日期" />
+      <PropertyRef Name="仓库" />
+      <PropertyRef Name="类型" />
+      <PropertyRef Name="状态" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="数量" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="折扣" />
+      <PropertyRef Name="额外费用" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="制单日期" />
+    </Key>
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="出库单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="出库日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="交货日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="供应商" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="部门" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="仓库" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="类型" Type="Int32" Nullable="false" />
+    <Property Name="状态" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="数量" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="制单人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="审核人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="审核日期" Type="DateTime" Precision="3" />
+    <Property Name="SerialNo" Type="Int32" />
+    <Property Name="备注" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="VMO">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="装箱数" />
+      <PropertyRef Name="内盒" />
+      <PropertyRef Name="毛重" />
+      <PropertyRef Name="净重" />
+      <PropertyRef Name="体积" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="CustomerID" Type="Guid" />
+    <Property Name="图片" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="客户" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="装箱数" Type="Int32" Nullable="false" />
+    <Property Name="内盒" Type="Int32" Nullable="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="毛重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="体积" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="条形码" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="产量" Type="Decimal" Precision="12" Scale="2" />
+  </EntityType>
+  <EntityType Name="VMPS">
+    <Key>
+      <PropertyRef Name="Qty" />
+      <PropertyRef Name="GoodsID" />
+      <PropertyRef Name="OrderType" />
+    </Key>
+    <Property Name="Qty" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="OrderID" Type="Guid" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="OrderType" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VOrder">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="订货单号" />
+      <PropertyRef Name="订货日期" />
+      <PropertyRef Name="交货日期" />
+      <PropertyRef Name="状态" />
+      <PropertyRef Name="仓库类型" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="箱数" />
+      <PropertyRef Name="发货数量" />
+      <PropertyRef Name="装箱数" />
+      <PropertyRef Name="内盒" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="折扣" />
+      <PropertyRef Name="额外费用" />
+      <PropertyRef Name="包装方式" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="体积" />
+      <PropertyRef Name="毛重" />
+      <PropertyRef Name="净重" />
+      <PropertyRef Name="仓库" />
+      <PropertyRef Name="订单类型" />
+      <PropertyRef Name="类型" />
+      <PropertyRef Name="制单日期" />
+      <PropertyRef Name="GoodsID" />
+    </Key>
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="订货单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="订货日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="交货日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="状态" Type="Int32" Nullable="false" />
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" />
+    <Property Name="仓库类型" Type="Int32" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="正唛" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="箱数" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="发货数量" Type="Decimal" Precision="38" Scale="2" Nullable="false" />
+    <Property Name="未送数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="装箱数" Type="Int32" Nullable="false" />
+    <Property Name="内盒" Type="Int32" Nullable="false" />
+    <Property Name="总数量" Type="Decimal" Precision="23" Scale="2" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="包装方式" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="体积" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="毛重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="仓库" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="订单类型" Type="Int32" Nullable="false" />
+    <Property Name="类型" Type="Int32" Nullable="false" />
+    <Property Name="制单人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="审核人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="审核日期" Type="DateTime" Precision="3" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SerialNo" Type="Int32" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VOrderDtlByBOM">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="GoodsID" />
+      <PropertyRef Name="Yielded" />
+      <PropertyRef Name="NWeight" />
+      <PropertyRef Name="Type" />
+      <PropertyRef Name="PCS" />
+      <PropertyRef Name="InnerBox" />
+      <PropertyRef Name="Price" />
+      <PropertyRef Name="PriceNoTax" />
+      <PropertyRef Name="Discount" />
+      <PropertyRef Name="OtherFee" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="货品大类" />
+      <PropertyRef Name="一出几" />
+    </Key>
+    <Property Name="ID" Type="Guid" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="ParentGoodsID" Type="Guid" />
+    <Property Name="Qty" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="StockQty" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="Shortage" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="Yielded" Type="Decimal" Precision="38" Scale="2" Nullable="false" />
+    <Property Name="NWeight" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="Counts" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="Modulus" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="InnerBox" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="PriceNoTax" Type="Decimal" Precision="12" Scale="6" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OtherFee" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品大类" Type="Int32" Nullable="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="一出几" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Source" Type="Int32" />
+  </EntityType>
+  <EntityType Name="VOrderDtlByColor">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="Type" />
+    </Key>
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="Color" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Qty" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VPackaging">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="包装名称" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="包装名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VParentGoodsByBOM">
+    <Key>
+      <PropertyRef Name="类型" />
+    </Key>
+    <Property Name="ID" Type="Guid" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" />
+    <Property Name="去税单价" Type="Decimal" Precision="12" Scale="6" />
+    <Property Name="装箱数" Type="Int32" />
+    <Property Name="内盒" Type="Int32" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="类型" Type="Int32" Nullable="false" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="VPaymentBill">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="付款单号" />
+      <PropertyRef Name="付款日期" />
+      <PropertyRef Name="付款类型" />
+      <PropertyRef Name="状态" />
+      <PropertyRef Name="结算方式" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="BillID" />
+      <PropertyRef Name="单据编号" />
+      <PropertyRef Name="单据日期" />
+      <PropertyRef Name="类型" />
+      <PropertyRef Name="单据金额" />
+      <PropertyRef Name="已付金额" />
+      <PropertyRef Name="本次付款" />
+      <PropertyRef Name="制单日期" />
+    </Key>
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="付款单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="付款日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="付款类型" Type="Int32" Nullable="false" />
+    <Property Name="状态" Type="Int32" Nullable="false" />
+    <Property Name="CompanyID" Type="Guid" />
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="供应商代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="供应商名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="工人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="结算方式" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="BillID" Type="Guid" Nullable="false" />
+    <Property Name="单据编号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单据日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="类型" Type="Int32" Nullable="false" />
+    <Property Name="单据金额" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="已付金额" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="未付金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="本次付款" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="制单人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="审核人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="审核日期" Type="DateTime" Precision="3" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="VPaymentBillDtl">
+    <Key>
+      <PropertyRef Name="BillID" />
+      <PropertyRef Name="BillNo" />
+      <PropertyRef Name="BillDate" />
+      <PropertyRef Name="Type" />
+      <PropertyRef Name="Status" />
+    </Key>
+    <Property Name="CheckItem" Type="Boolean" />
+    <Property Name="BillID" Type="Guid" Nullable="false" />
+    <Property Name="CompanyID" Type="Guid" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BillDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="BillAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="PaidAMT" Type="Decimal" Precision="13" Scale="2" />
+    <Property Name="UnPaidAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="LastPaidAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Worker" Type="Guid" />
+  </EntityType>
+  <EntityType Name="VPO">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="订货单号" />
+      <PropertyRef Name="订货日期" />
+      <PropertyRef Name="交货日期" />
+      <PropertyRef Name="状态" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="数量" />
+      <PropertyRef Name="到货数量" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="额外费用" />
+      <PropertyRef Name="仓库" />
+      <PropertyRef Name="订单类型" />
+      <PropertyRef Name="类型" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="制单日期" />
+      <PropertyRef Name="GoodsID" />
+    </Key>
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="订货单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="订货日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="交货日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="状态" Type="Int32" Nullable="false" />
+    <Property Name="供应商" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="正唛" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="数量" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="到货数量" Type="Decimal" Precision="38" Scale="2" Nullable="false" />
+    <Property Name="未到数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="仓库" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="订单类型" Type="Int32" Nullable="false" />
+    <Property Name="类型" Type="Int32" Nullable="false" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="制单人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="审核人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="审核日期" Type="DateTime" Precision="3" />
+    <Property Name="SerialNo" Type="Int32" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VProductionOrder">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="订货单号" />
+      <PropertyRef Name="订货日期" />
+      <PropertyRef Name="交货日期" />
+      <PropertyRef Name="状态" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="包装方式" />
+      <PropertyRef Name="箱数" />
+      <PropertyRef Name="回收箱数" />
+      <PropertyRef Name="装箱数" />
+      <PropertyRef Name="内盒" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="折扣" />
+      <PropertyRef Name="额外费用" />
+      <PropertyRef Name="仓库" />
+      <PropertyRef Name="订单类型" />
+      <PropertyRef Name="类型" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="体积" />
+      <PropertyRef Name="毛重" />
+      <PropertyRef Name="净重" />
+      <PropertyRef Name="制单日期" />
+      <PropertyRef Name="GoodsID" />
+    </Key>
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="订货单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="订货日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="交货日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="状态" Type="Int32" Nullable="false" />
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" />
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="正唛" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="包装方式" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="箱数" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="回收箱数" Type="Decimal" Precision="38" Scale="2" Nullable="false" />
+    <Property Name="未收箱数" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="装箱数" Type="Int32" Nullable="false" />
+    <Property Name="内盒" Type="Int32" Nullable="false" />
+    <Property Name="总数量" Type="Decimal" Precision="23" Scale="2" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="仓库" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="订单类型" Type="Int32" Nullable="false" />
+    <Property Name="类型" Type="Int32" Nullable="false" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="体积" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="毛重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="制单人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="审核人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="审核日期" Type="DateTime" Precision="3" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="SerialNo" Type="Int32" />
+    <Property Name="CompanyID" Type="Guid" />
+    <Property Name="SupplierID" Type="Guid" />
+  </EntityType>
+  <EntityType Name="VProductionOrderDtlForPrint">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="GoodsID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="210" FixedLength="false" Unicode="false" />
+    <Property Name="正唛" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="侧唛" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="内盒唛" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="VProfitAndLoss">
+    <Key>
+      <PropertyRef Name="WarehouseID" />
+      <PropertyRef Name="仓库类型" />
+      <PropertyRef Name="GoodsID" />
+      <PropertyRef Name="仓库" />
+      <PropertyRef Name="货品大类" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="装箱数" />
+      <PropertyRef Name="内盒" />
+      <PropertyRef Name="单价" />
+    </Key>
+    <Property Name="WarehouseID" Type="Guid" Nullable="false" />
+    <Property Name="仓库类型" Type="Int32" Nullable="false" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="仓库" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="盘点厂商" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="货品大类" Type="Int32" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="盘点数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="库存数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="盈亏数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="装箱数" Type="Int32" Nullable="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="内盒" Type="Int32" Nullable="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VReceiptBill">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="收款单号" />
+      <PropertyRef Name="收款日期" />
+      <PropertyRef Name="收款类型" />
+      <PropertyRef Name="状态" />
+      <PropertyRef Name="结算方式" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="BillID" />
+      <PropertyRef Name="单据编号" />
+      <PropertyRef Name="单据日期" />
+      <PropertyRef Name="类型" />
+      <PropertyRef Name="单据金额" />
+      <PropertyRef Name="已收金额" />
+      <PropertyRef Name="本次收款" />
+      <PropertyRef Name="制单日期" />
+    </Key>
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="收款单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="收款日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="收款类型" Type="Int32" Nullable="false" />
+    <Property Name="状态" Type="Int32" Nullable="false" />
+    <Property Name="CompanyID" Type="Guid" />
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="供应商代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="供应商名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="结算方式" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="BillID" Type="Guid" Nullable="false" />
+    <Property Name="单据编号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单据日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="类型" Type="Int32" Nullable="false" />
+    <Property Name="单据金额" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="已收金额" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="未收金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="本次收款" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="制单人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="审核人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="审核日期" Type="DateTime" Precision="3" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="VReceiptBillDtl">
+    <Key>
+      <PropertyRef Name="BillID" />
+      <PropertyRef Name="BillNo" />
+      <PropertyRef Name="BillDate" />
+      <PropertyRef Name="Type" />
+      <PropertyRef Name="Status" />
+    </Key>
+    <Property Name="CheckItem" Type="Boolean" />
+    <Property Name="BillID" Type="Guid" Nullable="false" />
+    <Property Name="CompanyID" Type="Guid" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MainMark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BillDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="BillAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="ReceiptedAMT" Type="Decimal" Precision="13" Scale="2" />
+    <Property Name="UnReceiptedAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="LastReceiptedAMT" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="VSalesBillSummary">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="出库单号" />
+      <PropertyRef Name="出库日期" />
+      <PropertyRef Name="交货日期" />
+      <PropertyRef Name="状态" />
+      <PropertyRef Name="结算类型" />
+    </Key>
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="出库单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="出库日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="交货日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="状态" Type="Int32" Nullable="false" />
+    <Property Name="结算类型" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="箱数" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="总数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="重量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="成本" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="毛利" Type="Decimal" Precision="13" Scale="2" />
+    <Property Name="毛利率" Type="Decimal" Precision="28" Scale="15" />
+  </EntityType>
+  <EntityType Name="VSalesSummaryByCustomer">
+    <Key>
+      <PropertyRef Name="结算类型" />
+      <PropertyRef Name="单据日期" />
+    </Key>
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="结算类型" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单据日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="箱数" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="总数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="金额" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="已收金额" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="未收金额" Type="Decimal" Precision="38" Scale="2" />
+  </EntityType>
+  <EntityType Name="VSalesSummaryByGoods">
+    <Key>
+      <PropertyRef Name="结算类型" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="装箱数" />
+      <PropertyRef Name="内盒" />
+      <PropertyRef Name="包装方式" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="体积" />
+      <PropertyRef Name="毛重" />
+      <PropertyRef Name="净重" />
+    </Key>
+    <Property Name="结算类型" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="正唛" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="箱数" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="装箱数" Type="Int32" Nullable="false" />
+    <Property Name="内盒" Type="Int32" Nullable="false" />
+    <Property Name="总数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="金额" Type="Decimal" Precision="38" Scale="6" />
+    <Property Name="包装方式" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="体积" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="毛重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VSampleStockOut">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="出库单号" />
+      <PropertyRef Name="出库日期" />
+      <PropertyRef Name="交货日期" />
+      <PropertyRef Name="客户代码" />
+      <PropertyRef Name="客户名称" />
+      <PropertyRef Name="客户类型" />
+      <PropertyRef Name="仓库" />
+      <PropertyRef Name="类型" />
+      <PropertyRef Name="状态" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="数量" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="折扣" />
+      <PropertyRef Name="额外费用" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="制单人" />
+      <PropertyRef Name="制单日期" />
+    </Key>
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="出库单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="出库日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="交货日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="客户类型" Type="Int32" Nullable="false" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="仓库" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="类型" Type="Int32" Nullable="false" />
+    <Property Name="状态" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="数量" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="制单人" Type="Guid" Nullable="false" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="审核人" Type="Guid" />
+    <Property Name="审核日期" Type="DateTime" Precision="3" />
+    <Property Name="SerialNo" Type="Int32" />
+  </EntityType>
+  <EntityType Name="VStaffSchClass">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="DeptID" />
+      <PropertyRef Name="SchClassID" />
+      <PropertyRef Name="SchSerialNo" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="LateMinutes" />
+      <PropertyRef Name="EarlyMinutes" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="DeptID" Type="Guid" Nullable="false" />
+    <Property Name="SchClassID" Type="Guid" Nullable="false" />
+    <Property Name="SchSerialNo" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="LateMinutes" Type="Int32" Nullable="false" />
+    <Property Name="EarlyMinutes" Type="Int32" Nullable="false" />
+    <Property Name="CheckInStartTime" Type="DateTime" Precision="3" />
+    <Property Name="CheckInEndTime" Type="DateTime" Precision="3" />
+    <Property Name="CheckOutStartTime" Type="DateTime" Precision="3" />
+    <Property Name="CheckOutEndTime" Type="DateTime" Precision="3" />
+    <Property Name="Color" Type="Int32" />
+  </EntityType>
+  <EntityType Name="VStatementOfAccountToCustomer">
+    <Key>
+      <PropertyRef Name="结算类型" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="装箱数" />
+      <PropertyRef Name="内盒" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="折扣" />
+      <PropertyRef Name="额外费用" />
+      <PropertyRef Name="包装方式" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="体积" />
+      <PropertyRef Name="毛重" />
+      <PropertyRef Name="净重" />
+    </Key>
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" />
+    <Property Name="结算类型" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单据日期" Type="DateTime" Precision="3" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="正唛" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="箱数" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="装箱数" Type="Int32" Nullable="false" />
+    <Property Name="内盒" Type="Int32" Nullable="false" />
+    <Property Name="总数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="包装方式" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="体积" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="毛重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VStatementOfAccountToSupplier">
+    <Key>
+      <PropertyRef Name="结算类型" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="折扣" />
+      <PropertyRef Name="额外费用" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+    </Key>
+    <Property Name="供应商代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="供应商名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="结算类型" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="结算日期" Type="DateTime" Precision="3" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="数量" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VStockInBill">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="入库单号" />
+      <PropertyRef Name="入库日期" />
+      <PropertyRef Name="仓库" />
+      <PropertyRef Name="仓库类型" />
+      <PropertyRef Name="类型" />
+      <PropertyRef Name="状态" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="箱数" />
+      <PropertyRef Name="装箱数" />
+      <PropertyRef Name="内盒" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="折扣" />
+      <PropertyRef Name="额外费用" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="体积" />
+      <PropertyRef Name="毛重" />
+      <PropertyRef Name="净重" />
+      <PropertyRef Name="制单日期" />
+    </Key>
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="入库单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="入库日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="供应商" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="仓库" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="仓库类型" Type="Int32" Nullable="false" />
+    <Property Name="类型" Type="Int32" Nullable="false" />
+    <Property Name="状态" Type="Int32" Nullable="false" />
+    <Property Name="已退料入库" Type="Boolean" />
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="包装方式" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="箱数" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="装箱数" Type="Int32" Nullable="false" />
+    <Property Name="内盒" Type="Int32" Nullable="false" />
+    <Property Name="总数量" Type="Decimal" Precision="23" Scale="2" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="体积" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="毛重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="工人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="制单人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="审核人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="审核日期" Type="DateTime" Precision="3" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SerialNo" Type="Int32" />
+  </EntityType>
+  <EntityType Name="VStockInBillDtlByBOM">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="GoodsID" />
+      <PropertyRef Name="PCS" />
+      <PropertyRef Name="InnerBox" />
+      <PropertyRef Name="NWeight" />
+      <PropertyRef Name="Price" />
+      <PropertyRef Name="PriceNoTax" />
+      <PropertyRef Name="Discount" />
+      <PropertyRef Name="OtherFee" />
+      <PropertyRef Name="Type" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="货品大类" />
+      <PropertyRef Name="一出几" />
+    </Key>
+    <Property Name="ID" Type="Guid" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="ParentGoodsID" Type="Guid" />
+    <Property Name="Qty" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="StockQty" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="Shortage" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="InnerBox" Type="Int32" Nullable="false" />
+    <Property Name="NWeight" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="Counts" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="Modulus" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="PriceNoTax" Type="Decimal" Precision="12" Scale="6" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OtherFee" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品大类" Type="Int32" Nullable="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="一出几" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Source" Type="Int32" />
+  </EntityType>
+  <EntityType Name="VStockInBillDtlByColor">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="Type" />
+    </Key>
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="Color" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Qty" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VStockOutBill">
+    <Key>
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="出库单号" />
+      <PropertyRef Name="出库日期" />
+      <PropertyRef Name="交货日期" />
+      <PropertyRef Name="状态" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="毛重" />
+      <PropertyRef Name="货品类型代码" />
+      <PropertyRef Name="货品类型名称" />
+      <PropertyRef Name="体积" />
+      <PropertyRef Name="仓库类型" />
+      <PropertyRef Name="仓库" />
+      <PropertyRef Name="类型" />
+      <PropertyRef Name="制单日期" />
+      <PropertyRef Name="GoodsID" />
+    </Key>
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="勾选" Type="Boolean" />
+    <Property Name="出库单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="出库日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="交货日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="状态" Type="Int32" Nullable="false" />
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" />
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="正唛" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="箱数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" />
+    <Property Name="装箱数" Type="Int32" />
+    <Property Name="总数量" Type="Decimal" Precision="23" Scale="2" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" />
+    <Property Name="毛重" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="订单编号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="内盒" Type="Int32" />
+    <Property Name="重量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="包装方式" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="适用料" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="用量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="分包数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="体积" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="仓库类型" Type="Int32" Nullable="false" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="仓库" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="类型" Type="Int32" Nullable="false" />
+    <Property Name="物流地址" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="物流电话" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="制单人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="审核人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="审核日期" Type="DateTime" Precision="3" />
+    <Property Name="SerialNo" Type="Int32" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="CompanyID" Type="Guid" />
+  </EntityType>
+  <EntityType Name="VStockOutBillDtlByBOM">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="GoodsID" />
+      <PropertyRef Name="ParentGoodsID" />
+      <PropertyRef Name="PCS" />
+      <PropertyRef Name="InnerBox" />
+      <PropertyRef Name="Price" />
+      <PropertyRef Name="PriceNoTax" />
+      <PropertyRef Name="Type" />
+      <PropertyRef Name="Code" />
+      <PropertyRef Name="BOMQty" />
+      <PropertyRef Name="MaterialCode" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="ParentGoodsID" Type="Guid" Nullable="false" />
+    <Property Name="Qty" Type="Decimal" Precision="36" Scale="4" />
+    <Property Name="PCS" Type="Int32" Nullable="false" />
+    <Property Name="InnerBox" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="PriceNoTax" Type="Decimal" Precision="12" Scale="6" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="OtherFee" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BOMQty" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="MaterialCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MaterialUnit" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="GoodsQty" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="GoodsUnit" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Subpackage" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="TotalQty" Type="Decimal" Precision="25" Scale="4" />
+    <Property Name="Material" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Mod" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="TotalMod" Type="Decimal" Precision="25" Scale="4" />
+    <Property Name="NWeight" Type="Decimal" Precision="12" Scale="3" />
+  </EntityType>
+  <EntityType Name="VStocktaking">
+    <Key>
+      <PropertyRef Name="WarehouseID" />
+      <PropertyRef Name="GoodsID" />
+      <PropertyRef Name="盘点仓库" />
+      <PropertyRef Name="仓库类型" />
+      <PropertyRef Name="货品大类" />
+      <PropertyRef Name="货号" />
+      <PropertyRef Name="品名" />
+      <PropertyRef Name="盘点数量" />
+      <PropertyRef Name="装箱数" />
+      <PropertyRef Name="内盒" />
+      <PropertyRef Name="单价" />
+      <PropertyRef Name="盘点人" />
+      <PropertyRef Name="盘点日期" />
+    </Key>
+    <Property Name="WarehouseID" Type="Guid" Nullable="false" />
+    <Property Name="GoodsID" Type="Guid" Nullable="false" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="盘点仓库" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="仓库类型" Type="Int32" Nullable="false" />
+    <Property Name="盘点厂商" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="货品大类" Type="Int32" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="盘点数量" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="装箱数" Type="Int32" Nullable="false" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="内盒" Type="Int32" Nullable="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="盘点人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="盘点日期" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="VSupplier">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="代码" />
+      <PropertyRef Name="名称" />
+      <PropertyRef Name="供应商类型" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="供应商类型" Type="Int32" Nullable="false" />
+    <Property Name="地址" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="邮编" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="联系人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="联系电话" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="联系手机" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="QQ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="传真" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="开户行" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="帐号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="税号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="付款地址" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="付款抬头" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="发票地址" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="VSupplierSettlement">
+    <Key>
+      <PropertyRef Name="付款单号" />
+      <PropertyRef Name="付款日期" />
+      <PropertyRef Name="供应商" />
+    </Key>
+    <Property Name="付款单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="付款日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="SupplierID" Type="Guid" />
+    <Property Name="供应商" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="上期结欠" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="本期付款" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="共欠" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="本期结款" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="本期结欠" Type="Decimal" Precision="12" Scale="2" />
+  </EntityType>
+  <EntityType Name="VUsersInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="姓名" />
+      <PropertyRef Name="账号" />
+      <PropertyRef Name="考勤特权" />
+      <PropertyRef Name="启用考勤" />
+      <PropertyRef Name="已删除" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="照片" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="姓名" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="账号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="部门" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="职位" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="电话" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="地址" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="宿舍号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="考勤卡号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="考勤特权" Type="Int32" Nullable="false" />
+    <Property Name="启用考勤" Type="Boolean" Nullable="false" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="已删除" Type="Boolean" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="VWageBill">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="HdID" />
+      <PropertyRef Name="工资单号" />
+      <PropertyRef Name="结算日期" />
+      <PropertyRef Name="状态" />
+      <PropertyRef Name="工号" />
+      <PropertyRef Name="姓名" />
+      <PropertyRef Name="基本工资" />
+      <PropertyRef Name="福利" />
+      <PropertyRef Name="扣款" />
+      <PropertyRef Name="代扣社保" />
+      <PropertyRef Name="代扣个税" />
+      <PropertyRef Name="实发工资" />
+      <PropertyRef Name="制单日期" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="HdID" Type="Guid" Nullable="false" />
+    <Property Name="工资单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="结算日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="状态" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Guid" />
+    <Property Name="工号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="姓名" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="年月" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="基本工资" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="福利" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="扣款" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="代扣社保" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="代扣个税" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="实发工资" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="制单人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="制单日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="审核人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="审核日期" Type="DateTime" Precision="3" />
+    <Property Name="备注" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="VWageBillDtl">
+    <Key>
+      <PropertyRef Name="WageStatus" />
+    </Key>
+    <Property Name="UserID" Type="Guid" />
+    <Property Name="YearMonth" Type="String" MaxLength="61" FixedLength="false" Unicode="true" />
+    <Property Name="Wages" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="Welfare" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Deduction" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="SocialSecurity" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="IndividualIncomeTax" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="AMT" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="WageStatus" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Goods_GoodsType">
+    <End Role="GoodsType" Type="Self.GoodsType" Multiplicity="1" />
+    <End Role="Goods" Type="Self.Goods" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GoodsType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Goods">
+        <PropertyRef Name="GoodsTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDtl_Goods">
+    <End Role="Goods" Type="Self.Goods" Multiplicity="1" />
+    <End Role="OrderDtl" Type="Self.OrderDtl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Goods">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderDtl">
+        <PropertyRef Name="GoodsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ERPToysContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AccountBook" EntityType="Self.AccountBook" />
+    <EntitySet Name="Alert" EntityType="Self.Alert" />
+    <EntitySet Name="Appointments" EntityType="Self.Appointments" />
+    <EntitySet Name="AttAppointments" EntityType="Self.AttAppointments" />
+    <EntitySet Name="AttGeneralLog" EntityType="Self.AttGeneralLog" />
+    <EntitySet Name="AttWageBillDtl" EntityType="Self.AttWageBillDtl" />
+    <EntitySet Name="AttWageBillHd" EntityType="Self.AttWageBillHd" />
+    <EntitySet Name="BOM" EntityType="Self.BOM" />
+    <EntitySet Name="ButtonPermission" EntityType="Self.ButtonPermission" />
+    <EntitySet Name="Company" EntityType="Self.Company" />
+    <EntitySet Name="Department" EntityType="Self.Department" />
+    <EntitySet Name="Goods" EntityType="Self.Goods" />
+    <EntitySet Name="GoodsType" EntityType="Self.GoodsType" />
+    <EntitySet Name="Inventory" EntityType="Self.Inventory" />
+    <EntitySet Name="MainMenu" EntityType="Self.MainMenu" />
+    <EntitySet Name="MoldAllot" EntityType="Self.MoldAllot" />
+    <EntitySet Name="OrderDtl" EntityType="Self.OrderDtl" />
+    <EntitySet Name="OrderHd" EntityType="Self.OrderHd" />
+    <EntitySet Name="Packaging" EntityType="Self.Packaging" />
+    <EntitySet Name="PaymentBillDtl" EntityType="Self.PaymentBillDtl" />
+    <EntitySet Name="PaymentBillHd" EntityType="Self.PaymentBillHd" />
+    <EntitySet Name="Permission" EntityType="Self.Permission" />
+    <EntitySet Name="ReceiptBillDtl" EntityType="Self.ReceiptBillDtl" />
+    <EntitySet Name="ReceiptBillHd" EntityType="Self.ReceiptBillHd" />
+    <EntitySet Name="Resources" EntityType="Self.Resources" />
+    <EntitySet Name="SchClass" EntityType="Self.SchClass" />
+    <EntitySet Name="SLSalePrice" EntityType="Self.SLSalePrice" />
+    <EntitySet Name="StaffSchClass" EntityType="Self.StaffSchClass" />
+    <EntitySet Name="StockInBillDtl" EntityType="Self.StockInBillDtl" />
+    <EntitySet Name="StockInBillHd" EntityType="Self.StockInBillHd" />
+    <EntitySet Name="StockOutBillDtl" EntityType="Self.StockOutBillDtl" />
+    <EntitySet Name="StockOutBillHd" EntityType="Self.StockOutBillHd" />
+    <EntitySet Name="Stocktaking" EntityType="Self.Stocktaking" />
+    <EntitySet Name="Supplier" EntityType="Self.Supplier" />
+    <EntitySet Name="SystemInfo" EntityType="Self.SystemInfo" />
+    <EntitySet Name="SystemStatus" EntityType="Self.SystemStatus" />
+    <EntitySet Name="TonerLabel" EntityType="Self.TonerLabel" />
+    <EntitySet Name="TypesList" EntityType="Self.TypesList" />
+    <EntitySet Name="UsersInfo" EntityType="Self.UsersInfo" />
+    <EntitySet Name="WageBillDtl" EntityType="Self.WageBillDtl" />
+    <EntitySet Name="WageBillHd" EntityType="Self.WageBillHd" />
+    <EntitySet Name="WageDesign" EntityType="Self.WageDesign" />
+    <EntitySet Name="Warehouse" EntityType="Self.Warehouse" />
+    <EntitySet Name="AttParameters" EntityType="Self.AttParameters" />
+    <EntitySet Name="VAccountBook" EntityType="Self.VAccountBook" />
+    <EntitySet Name="VAlert" EntityType="Self.VAlert" />
+    <EntitySet Name="VAppointments" EntityType="Self.VAppointments" />
+    <EntitySet Name="VAttAppointments" EntityType="Self.VAttAppointments" />
+    <EntitySet Name="VAttGeneralLog" EntityType="Self.VAttGeneralLog" />
+    <EntitySet Name="VAttWageBill" EntityType="Self.VAttWageBill" />
+    <EntitySet Name="VCompany" EntityType="Self.VCompany" />
+    <EntitySet Name="VCustomerSalesReceiptedSummary" EntityType="Self.VCustomerSalesReceiptedSummary" />
+    <EntitySet Name="VCustomerSettlement" EntityType="Self.VCustomerSettlement" />
+    <EntitySet Name="VDepartment" EntityType="Self.VDepartment" />
+    <EntitySet Name="VEMSInventoryGroupByGoods" EntityType="Self.VEMSInventoryGroupByGoods" />
+    <EntitySet Name="VFSMInventoryGroupByGoods" EntityType="Self.VFSMInventoryGroupByGoods" />
+    <EntitySet Name="VFSMOrder" EntityType="Self.VFSMOrder" />
+    <EntitySet Name="VFSMOrderDtlByMoldList" EntityType="Self.VFSMOrderDtlByMoldList" />
+    <EntitySet Name="VFSMOrderDtlByMoldMaterial" EntityType="Self.VFSMOrderDtlByMoldMaterial" />
+    <EntitySet Name="VGoods" EntityType="Self.VGoods" />
+    <EntitySet Name="VGoodsByBOM" EntityType="Self.VGoodsByBOM" />
+    <EntitySet Name="VGoodsByMoldAllot" EntityType="Self.VGoodsByMoldAllot" />
+    <EntitySet Name="VGoodsBySLSalePrice" EntityType="Self.VGoodsBySLSalePrice" />
+    <EntitySet Name="VGoodsSalesSummaryByCustomer" EntityType="Self.VGoodsSalesSummaryByCustomer" />
+    <EntitySet Name="VGoodsType" EntityType="Self.VGoodsType" />
+    <EntitySet Name="VInventory" EntityType="Self.VInventory" />
+    <EntitySet Name="VInventoryGroupByGoods" EntityType="Self.VInventoryGroupByGoods" />
+    <EntitySet Name="VMaterial" EntityType="Self.VMaterial" />
+    <EntitySet Name="VMaterialInventory" EntityType="Self.VMaterialInventory" />
+    <EntitySet Name="VMaterialInventoryGroupByGoods" EntityType="Self.VMaterialInventoryGroupByGoods" />
+    <EntitySet Name="VMaterialStockInBill" EntityType="Self.VMaterialStockInBill" />
+    <EntitySet Name="VMaterialStockOutBill" EntityType="Self.VMaterialStockOutBill" />
+    <EntitySet Name="VMO" EntityType="Self.VMO" />
+    <EntitySet Name="VMPS" EntityType="Self.VMPS" />
+    <EntitySet Name="VOrder" EntityType="Self.VOrder" />
+    <EntitySet Name="VOrderDtlByBOM" EntityType="Self.VOrderDtlByBOM" />
+    <EntitySet Name="VOrderDtlByColor" EntityType="Self.VOrderDtlByColor" />
+    <EntitySet Name="VPackaging" EntityType="Self.VPackaging" />
+    <EntitySet Name="VParentGoodsByBOM" EntityType="Self.VParentGoodsByBOM" />
+    <EntitySet Name="VPaymentBill" EntityType="Self.VPaymentBill" />
+    <EntitySet Name="VPaymentBillDtl" EntityType="Self.VPaymentBillDtl" />
+    <EntitySet Name="VPO" EntityType="Self.VPO" />
+    <EntitySet Name="VProductionOrder" EntityType="Self.VProductionOrder" />
+    <EntitySet Name="VProductionOrderDtlForPrint" EntityType="Self.VProductionOrderDtlForPrint" />
+    <EntitySet Name="VProfitAndLoss" EntityType="Self.VProfitAndLoss" />
+    <EntitySet Name="VReceiptBill" EntityType="Self.VReceiptBill" />
+    <EntitySet Name="VReceiptBillDtl" EntityType="Self.VReceiptBillDtl" />
+    <EntitySet Name="VSalesBillSummary" EntityType="Self.VSalesBillSummary" />
+    <EntitySet Name="VSalesSummaryByCustomer" EntityType="Self.VSalesSummaryByCustomer" />
+    <EntitySet Name="VSalesSummaryByGoods" EntityType="Self.VSalesSummaryByGoods" />
+    <EntitySet Name="VSampleStockOut" EntityType="Self.VSampleStockOut" />
+    <EntitySet Name="VStaffSchClass" EntityType="Self.VStaffSchClass" />
+    <EntitySet Name="VStatementOfAccountToCustomer" EntityType="Self.VStatementOfAccountToCustomer" />
+    <EntitySet Name="VStatementOfAccountToSupplier" EntityType="Self.VStatementOfAccountToSupplier" />
+    <EntitySet Name="VStockInBill" EntityType="Self.VStockInBill" />
+    <EntitySet Name="VStockInBillDtlByBOM" EntityType="Self.VStockInBillDtlByBOM" />
+    <EntitySet Name="VStockInBillDtlByColor" EntityType="Self.VStockInBillDtlByColor" />
+    <EntitySet Name="VStockOutBill" EntityType="Self.VStockOutBill" />
+    <EntitySet Name="VStockOutBillDtlByBOM" EntityType="Self.VStockOutBillDtlByBOM" />
+    <EntitySet Name="VStocktaking" EntityType="Self.VStocktaking" />
+    <EntitySet Name="VSupplier" EntityType="Self.VSupplier" />
+    <EntitySet Name="VSupplierSettlement" EntityType="Self.VSupplierSettlement" />
+    <EntitySet Name="VUsersInfo" EntityType="Self.VUsersInfo" />
+    <EntitySet Name="VWageBill" EntityType="Self.VWageBill" />
+    <EntitySet Name="VWageBillDtl" EntityType="Self.VWageBillDtl" />
+    <AssociationSet Name="FK_Goods_GoodsType" Association="Self.FK_Goods_GoodsType">
+      <End Role="GoodsType" EntitySet="GoodsType" />
+      <End Role="Goods" EntitySet="Goods" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDtl_Goods" Association="Self.FK_OrderDtl_Goods">
+      <End Role="Goods" EntitySet="Goods" />
+      <End Role="OrderDtl" EntitySet="OrderDtl" />
+    </AssociationSet>
+    <FunctionImport Name="USPGetAnnualSalesSummaryByCustomerReport">
+      <Parameter Name="Filter" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USPGetAnnualSalesSummaryByGoodsReport">
+      <Parameter Name="Filter" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USPGetAttWageBillDtl" />
+    <FunctionImport Name="USPGetEMSGoodsTrackingDailyReport" />
+    <FunctionImport Name="USPGetEstimatedYieldReport" />
+    <FunctionImport Name="USPGetFSMGoodsTrackingDailyReport" />
+    <FunctionImport Name="USPGetGoodsSalesSummaryByCustomerReport">
+      <Parameter Name="Filter" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USPGetSalesSummaryByCustomerReport">
+      <Parameter Name="Filter" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USPGetSalesSummaryByGoodsPriceReport">
+      <Parameter Name="Filter" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USPGetSalesSummaryByGoodsReport">
+      <Parameter Name="Filter" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USPGetSalesSummaryMonthlyReport">
+      <Parameter Name="Filter" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USPGetStatementOfAccountBasketToSupplierReport">
+      <Parameter Name="BillNo" Mode="In" Type="String" />
+      <Parameter Name="SupplierID" Mode="In" Type="Guid" />
+      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+      <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+      <Parameter Name="SupplierType" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USPGetStatementOfAccountMaterialToSupplierReport">
+      <Parameter Name="BillNo" Mode="In" Type="String" />
+      <Parameter Name="SupplierID" Mode="In" Type="Guid" />
+      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+      <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+      <Parameter Name="SupplierType" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USPGetStatementOfAccountOfEMSReport">
+      <Parameter Name="BillNo" Mode="In" Type="String" />
+      <Parameter Name="SupplierID" Mode="In" Type="Guid" />
+      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+      <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="USPGetStatementOfAccountSummaryToSupplierReport">
+      <Parameter Name="Filter" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USPGetStatementOfAccountToBulkSalesReport">
+      <Parameter Name="Filter" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USPGetStatementOfAccountToCustomerReport">
+      <Parameter Name="Filter" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USPGetStatementOfAccountToSupplierReport">
+      <Parameter Name="Filter" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>

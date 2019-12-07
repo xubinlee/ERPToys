@@ -16,11 +16,13 @@ using Utility;
 using CommonLibrary;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Columns;
+using Utility.Interceptor;
 
 namespace USL
 {
     public partial class ReceiptBillPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail, IExtensions
     {
+        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         ReceiptBillHd hd;
         List<VReceiptBillDtl> dtl;
         List<StatementOfAccountToCustomerReport> soa;
@@ -142,7 +144,7 @@ namespace USL
             //    else
             //        hd.BillNo = "SK" + DateTime.Now.ToString("yyyyMMdd") + "001";
             //}
-            hd.BillNo = MainForm.GetBillMaxBillNo(MainMenuConstants.ReceiptBill, "SK");
+            hd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.ReceiptBill, true).MaxBillNo;
             meLastAMT.EditValue = null;
             meTotalAMT.EditValue = null;
             headID = Guid.Empty;
@@ -179,7 +181,7 @@ namespace USL
 
                     }
                     //刷新查询界面
-                    ClientFactory.DataPageRefresh<VReceiptBill>();
+                    clientFactory.DataPageRefresh<VReceiptBill>();
                     receiptBillHdBindingSource.DataSource = hd = new ReceiptBillHd();
                     vReceiptBillDtlBindingSource.DataSource = dtl = new List<VReceiptBillDtl>();
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "删除成功");
@@ -331,7 +333,7 @@ namespace USL
                 meLastAMT.EditValue = billAMT;
                 meTotalAMT.EditValue = (hd.Balance == null ? 0 : hd.Balance) + billAMT;
                 headID = hd.ID;
-                ClientFactory.DataPageRefresh<VReceiptBill>();
+                clientFactory.DataPageRefresh<VReceiptBill>();
                 //MainForm.BillSaveRefresh(MainMenuConstants.ReceiptBillQuery);
                 ////MainForm.DataQueryPageRefresh();
                 statementOfAccountToCustomerReportBindingSource.DataSource = soa = //BLLFty.Create<ReportBLL>().GetStatementOfAccountToCustomerReport(string.Format("收款单号='{0}'", hd.BillNo));
@@ -475,7 +477,7 @@ namespace USL
             finally
             {
                 //MainForm.BillSaveRefresh(MainMenuConstants.ReceiptBillQuery);
-                ClientFactory.DataPageRefresh<VReceiptBill>();
+                clientFactory.DataPageRefresh<VReceiptBill>();
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
         }

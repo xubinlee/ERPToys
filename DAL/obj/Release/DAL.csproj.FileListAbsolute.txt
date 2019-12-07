@@ -12,3 +12,4 @@ D:\Project\ERPToys\DAL\obj\Release\DAL.csproj.CoreCompileInputs.cache
 D:\Project\ERPToys\DAL\obj\Release\DAL.csproj.CopyComplete
 D:\Project\ERPToys\DAL\obj\Release\DAL.dll
 D:\Project\ERPToys\DAL\obj\Release\DAL.pdb
+D:\ERPToys\NLog.config
