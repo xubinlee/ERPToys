@@ -10,13 +10,20 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VOrderDtlByColor
     {
+    	[DataMember]
         public System.Guid HdID { get; set; }
+    	[DataMember]
         public string Color { get; set; }
+    	[DataMember]
         public Nullable<decimal> Qty { get; set; }
+    	[DataMember]
         public int Type { get; set; }
     }
 }

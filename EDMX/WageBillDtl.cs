@@ -10,18 +10,30 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class WageBillDtl
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public System.Guid HdID { get; set; }
+    	[DataMember]
         public string YearMonth { get; set; }
+    	[DataMember]
         public decimal Wages { get; set; }
+    	[DataMember]
         public decimal Welfare { get; set; }
+    	[DataMember]
         public decimal Deduction { get; set; }
+    	[DataMember]
         public decimal SocialSecurity { get; set; }
+    	[DataMember]
         public decimal IndividualIncomeTax { get; set; }
+    	[DataMember]
         public decimal AMT { get; set; }
     }
 }

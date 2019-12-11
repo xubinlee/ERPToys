@@ -10,38 +10,70 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class Appointments
     {
+    	[DataMember]
         public long UniqueID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> UserID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> GoodsID { get; set; }
+    	[DataMember]
         public Nullable<decimal> Weight { get; set; }
+    	[DataMember]
         public Nullable<decimal> NWeight { get; set; }
+    	[DataMember]
         public string Machine { get; set; }
+    	[DataMember]
         public Nullable<decimal> Cycle { get; set; }
+    	[DataMember]
         public Nullable<decimal> ManHour { get; set; }
+    	[DataMember]
         public Nullable<decimal> ErrorRate { get; set; }
+    	[DataMember]
         public Nullable<decimal> Price { get; set; }
+    	[DataMember]
         public Nullable<decimal> Wages { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> WageDesignID { get; set; }
+    	[DataMember]
         public Nullable<int> PlanYield { get; set; }
+    	[DataMember]
         public Nullable<int> Yielded { get; set; }
+    	[DataMember]
         public Nullable<decimal> AMT { get; set; }
+    	[DataMember]
         public Nullable<int> Type { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> StartDate { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> EndDate { get; set; }
+    	[DataMember]
         public Nullable<bool> AllDay { get; set; }
+    	[DataMember]
         public string Subject { get; set; }
+    	[DataMember]
         public string Location { get; set; }
+    	[DataMember]
         public string Description { get; set; }
+    	[DataMember]
         public Nullable<int> Status { get; set; }
+    	[DataMember]
         public Nullable<int> Label { get; set; }
+    	[DataMember]
         public Nullable<int> ResourceID { get; set; }
+    	[DataMember]
         public string RecurrenceInfo { get; set; }
+    	[DataMember]
         public string ReminderInfo { get; set; }
+    	[DataMember]
         public string CustomField1 { get; set; }
+    	[DataMember]
         public int WageStatus { get; set; }
     }
 }

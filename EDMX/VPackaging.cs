@@ -10,11 +10,16 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VPackaging
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public string 包装名称 { get; set; }
     }
 }

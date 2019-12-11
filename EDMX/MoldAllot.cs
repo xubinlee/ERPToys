@@ -10,16 +10,26 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class MoldAllot
     {
+    	[DataMember]
         public System.Guid SupplierID { get; set; }
+    	[DataMember]
         public System.Guid GoodsID { get; set; }
+    	[DataMember]
         public decimal Qty { get; set; }
+    	[DataMember]
         public int PCS { get; set; }
+    	[DataMember]
         public int InnerBox { get; set; }
+    	[DataMember]
         public decimal Price { get; set; }
+    	[DataMember]
         public decimal PriceNoTax { get; set; }
     }
 }

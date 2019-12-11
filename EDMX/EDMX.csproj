@@ -39,9 +39,14 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ERPToys\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -88,6 +93,7 @@
     <Compile Include="Department.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Extension\EntityType.cs" />
     <Compile Include="ERPToysModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -127,6 +133,7 @@
     <Compile Include="Packaging.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Extension\Parameter.cs" />
     <Compile Include="PaymentBillDtl.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
@@ -149,6 +156,8 @@
     <Compile Include="SchClass.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Extension\SerializedParam.cs" />
+    <Compile Include="Extension\SerializedSqlParam.cs" />
     <Compile Include="SLSalePrice.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
@@ -385,6 +394,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <EntityDeploy Include="ERPToysModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ERPToysModel.Designer.cs</LastGenOutput>
@@ -408,9 +420,6 @@
       <DependentUpon>ERPToysModel.edmx</DependentUpon>
       <LastGenOutput>ERPToysModel.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

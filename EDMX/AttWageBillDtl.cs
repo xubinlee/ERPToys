@@ -10,26 +10,46 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class AttWageBillDtl
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public System.Guid HdID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> UserID { get; set; }
+    	[DataMember]
         public Nullable<int> Classes { get; set; }
+    	[DataMember]
         public Nullable<int> Late { get; set; }
+    	[DataMember]
         public Nullable<int> Early { get; set; }
+    	[DataMember]
         public Nullable<int> LateCount { get; set; }
+    	[DataMember]
         public Nullable<int> EarlyCount { get; set; }
+    	[DataMember]
         public Nullable<int> Absent { get; set; }
+    	[DataMember]
         public Nullable<int> Forget { get; set; }
+    	[DataMember]
         public Nullable<int> Leave { get; set; }
+    	[DataMember]
         public decimal Wages { get; set; }
+    	[DataMember]
         public decimal Welfare { get; set; }
+    	[DataMember]
         public decimal Deduction { get; set; }
+    	[DataMember]
         public decimal SocialSecurity { get; set; }
+    	[DataMember]
         public decimal IndividualIncomeTax { get; set; }
+    	[DataMember]
         public decimal AMT { get; set; }
     }
 }

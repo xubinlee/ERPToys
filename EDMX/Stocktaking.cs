@@ -10,19 +10,32 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class Stocktaking
     {
+    	[DataMember]
         public string Warehouse { get; set; }
+    	[DataMember]
         public int WarehouseType { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> SupplierID { get; set; }
+    	[DataMember]
         public int GoodsBigType { get; set; }
+    	[DataMember]
         public string Goods { get; set; }
+    	[DataMember]
         public decimal Qty { get; set; }
+    	[DataMember]
         public int PCS { get; set; }
+    	[DataMember]
         public string MEAS { get; set; }
+    	[DataMember]
         public string Checker { get; set; }
+    	[DataMember]
         public System.DateTime CheckingDate { get; set; }
     }
 }

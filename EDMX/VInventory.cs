@@ -10,35 +10,64 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VInventory
     {
+    	[DataMember]
         public string 货号 { get; set; }
+    	[DataMember]
         public string 品名 { get; set; }
+    	[DataMember]
         public string 客户 { get; set; }
+    	[DataMember]
         public Nullable<int> 客户类型 { get; set; }
+    	[DataMember]
         public int 仓库类型 { get; set; }
+    	[DataMember]
         public System.DateTime 登帐日期 { get; set; }
+    	[DataMember]
         public decimal 箱数 { get; set; }
+    	[DataMember]
         public int 装箱数 { get; set; }
+    	[DataMember]
         public int 内盒 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 总数量 { get; set; }
+    	[DataMember]
         public decimal 单价 { get; set; }
+    	[DataMember]
         public decimal 折扣 { get; set; }
+    	[DataMember]
         public decimal 额外费用 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 金额 { get; set; }
+    	[DataMember]
         public string 包装方式 { get; set; }
+    	[DataMember]
         public string 货品类型代码 { get; set; }
+    	[DataMember]
         public string 货品类型名称 { get; set; }
+    	[DataMember]
         public string 单位 { get; set; }
+    	[DataMember]
         public string 规格 { get; set; }
+    	[DataMember]
         public string 外箱规格 { get; set; }
+    	[DataMember]
         public decimal 体积 { get; set; }
+    	[DataMember]
         public decimal 毛重 { get; set; }
+    	[DataMember]
         public decimal 净重 { get; set; }
+    	[DataMember]
         public string 单据编号 { get; set; }
+    	[DataMember]
         public System.DateTime 制单日期 { get; set; }
+    	[DataMember]
         public System.Guid GoodsID { get; set; }
     }
 }

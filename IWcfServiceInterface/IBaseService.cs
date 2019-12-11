@@ -80,7 +80,7 @@ namespace IWcfServiceInterface
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceExceptionDetail))]
-        [WebInvoke(UriTemplate = "GetListByNoTracking", BodyStyle = WebMessageBodyStyle.Wrapped, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        [WebInvoke(Method = "POST", UriTemplate = "GetListByNoTracking", BodyStyle = WebMessageBodyStyle.Wrapped, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SerializedParam GetListByNoTracking(SerializedParam param);
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace IWcfServiceInterface
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceExceptionDetail))]
-        [WebInvoke(UriTemplate = "GetModelList", BodyStyle = WebMessageBodyStyle.Wrapped, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        [WebInvoke(Method = "POST", UriTemplate = "GetModelList", BodyStyle = WebMessageBodyStyle.Wrapped, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SerializedParam GetModelList(SerializedParam param);
 
         /// <summary>
@@ -113,8 +113,20 @@ namespace IWcfServiceInterface
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceExceptionDetail))]
-        [WebInvoke(UriTemplate = "ExecuteQueryByFilter", BodyStyle = WebMessageBodyStyle.Wrapped, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        [WebInvoke(Method = "POST", UriTemplate = "ExecuteQueryByFilter", BodyStyle = WebMessageBodyStyle.Wrapped, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SerializedParam ExecuteQueryByFilter(SerializedParam param);
+
+        /// <summary>
+        /// 贪婪加载列表
+        /// 例子：http://localhost:51172/BaseService.svc/GetListByInclude?type=StockInBillHd&path=StockInBillDtl
+        /// </summary>
+        /// <param name="type">实体类型</param>
+        /// <param name="path">延迟加载对象</param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceExceptionDetail))]
+        [WebGet(UriTemplate = "GetListByInclude?type={type}&path={path}", BodyStyle = WebMessageBodyStyle.Wrapped, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SerializedParam GetListByInclude(EntityType type, string path);
         #endregion
 
     }

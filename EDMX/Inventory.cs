@@ -10,27 +10,48 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class Inventory
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public System.Guid WarehouseID { get; set; }
+    	[DataMember]
         public int WarehouseType { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> CompanyID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> SupplierID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> DeptID { get; set; }
+    	[DataMember]
         public System.Guid GoodsID { get; set; }
+    	[DataMember]
         public decimal Qty { get; set; }
+    	[DataMember]
         public string MEAS { get; set; }
+    	[DataMember]
         public int PCS { get; set; }
+    	[DataMember]
         public int InnerBox { get; set; }
+    	[DataMember]
         public decimal Price { get; set; }
+    	[DataMember]
         public decimal Discount { get; set; }
+    	[DataMember]
         public decimal OtherFee { get; set; }
+    	[DataMember]
         public System.DateTime EntryDate { get; set; }
+    	[DataMember]
         public string BillNo { get; set; }
+    	[DataMember]
         public System.DateTime BillDate { get; set; }
+    	[DataMember]
         public decimal NWeight { get; set; }
     }
 }

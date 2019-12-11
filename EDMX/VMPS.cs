@@ -10,13 +10,20 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VMPS
     {
+    	[DataMember]
         public decimal Qty { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> OrderID { get; set; }
+    	[DataMember]
         public System.Guid GoodsID { get; set; }
+    	[DataMember]
         public int OrderType { get; set; }
     }
 }

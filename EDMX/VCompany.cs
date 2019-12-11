@@ -10,32 +10,58 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VCompany
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public string 代码 { get; set; }
+    	[DataMember]
         public string 名称 { get; set; }
+    	[DataMember]
         public int 客户类型 { get; set; }
+    	[DataMember]
         public Nullable<int> 账期 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 欠款 { get; set; }
+    	[DataMember]
         public string 地址 { get; set; }
+    	[DataMember]
         public string 邮编 { get; set; }
+    	[DataMember]
         public string 联系人 { get; set; }
+    	[DataMember]
         public string 联系电话 { get; set; }
+    	[DataMember]
         public string 联系手机 { get; set; }
+    	[DataMember]
         public string QQ { get; set; }
+    	[DataMember]
         public string 传真 { get; set; }
+    	[DataMember]
         public string 物流地址 { get; set; }
+    	[DataMember]
         public string 物流电话 { get; set; }
+    	[DataMember]
         public string 开户行 { get; set; }
+    	[DataMember]
         public string 帐号 { get; set; }
+    	[DataMember]
         public string 税号 { get; set; }
+    	[DataMember]
         public string 开票抬头 { get; set; }
+    	[DataMember]
         public string 开票地址 { get; set; }
+    	[DataMember]
         public string 开票电话 { get; set; }
+    	[DataMember]
         public string 备注 { get; set; }
+    	[DataMember]
         public Nullable<bool> CheckBoxID { get; set; }
     }
 }

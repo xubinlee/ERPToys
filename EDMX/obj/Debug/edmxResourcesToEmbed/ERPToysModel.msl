@@ -2319,23 +2319,5 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="USPGetAnnualSalesSummaryByCustomerReport" FunctionName="ERPToysModel.Store.USPGetAnnualSalesSummaryByCustomerReport" />
-    <FunctionImportMapping FunctionImportName="USPGetAnnualSalesSummaryByGoodsReport" FunctionName="ERPToysModel.Store.USPGetAnnualSalesSummaryByGoodsReport" />
-    <FunctionImportMapping FunctionImportName="USPGetAttWageBillDtl" FunctionName="ERPToysModel.Store.USPGetAttWageBillDtl" />
-    <FunctionImportMapping FunctionImportName="USPGetEMSGoodsTrackingDailyReport" FunctionName="ERPToysModel.Store.USPGetEMSGoodsTrackingDailyReport" />
-    <FunctionImportMapping FunctionImportName="USPGetEstimatedYieldReport" FunctionName="ERPToysModel.Store.USPGetEstimatedYieldReport" />
-    <FunctionImportMapping FunctionImportName="USPGetFSMGoodsTrackingDailyReport" FunctionName="ERPToysModel.Store.USPGetFSMGoodsTrackingDailyReport" />
-    <FunctionImportMapping FunctionImportName="USPGetGoodsSalesSummaryByCustomerReport" FunctionName="ERPToysModel.Store.USPGetGoodsSalesSummaryByCustomerReport" />
-    <FunctionImportMapping FunctionImportName="USPGetSalesSummaryByCustomerReport" FunctionName="ERPToysModel.Store.USPGetSalesSummaryByCustomerReport" />
-    <FunctionImportMapping FunctionImportName="USPGetSalesSummaryByGoodsPriceReport" FunctionName="ERPToysModel.Store.USPGetSalesSummaryByGoodsPriceReport" />
-    <FunctionImportMapping FunctionImportName="USPGetSalesSummaryByGoodsReport" FunctionName="ERPToysModel.Store.USPGetSalesSummaryByGoodsReport" />
-    <FunctionImportMapping FunctionImportName="USPGetSalesSummaryMonthlyReport" FunctionName="ERPToysModel.Store.USPGetSalesSummaryMonthlyReport" />
-    <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountBasketToSupplierReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountBasketToSupplierReport" />
-    <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountMaterialToSupplierReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountMaterialToSupplierReport" />
-    <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountOfEMSReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountOfEMSReport" />
-    <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountSummaryToSupplierReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountSummaryToSupplierReport" />
-    <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountToBulkSalesReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountToBulkSalesReport" />
-    <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountToCustomerReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountToCustomerReport" />
-    <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountToSupplierReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountToSupplierReport" />
   </EntityContainerMapping>
 </Mapping>

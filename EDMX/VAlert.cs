@@ -10,18 +10,30 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VAlert
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> BillID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> GoodsID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> UserID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> CompanyID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> SupplierID { get; set; }
+    	[DataMember]
         public string 标题 { get; set; }
+    	[DataMember]
         public string 内容 { get; set; }
+    	[DataMember]
         public System.DateTime 添加时间 { get; set; }
     }
 }

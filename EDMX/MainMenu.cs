@@ -10,19 +10,32 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class MainMenu
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> ParentID { get; set; }
+    	[DataMember]
         public int SerialNo { get; set; }
+    	[DataMember]
         public string Name { get; set; }
+    	[DataMember]
         public string Caption { get; set; }
+    	[DataMember]
         public string Subtitle { get; set; }
+    	[DataMember]
         public string Prefix { get; set; }
+    	[DataMember]
         public string ImagePath { get; set; }
+    	[DataMember]
         public string Description { get; set; }
+    	[DataMember]
         public bool CheckBoxState { get; set; }
     }
 }

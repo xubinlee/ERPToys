@@ -1,0 +1,90 @@
+2019-12-09 19:41:41.5783 | Error | 
+Exception：Unable to load the specified metadata resource.
+StackTrace：   在 System.Data.Entity.Core.Metadata.Edm.MetadataArtifactLoaderCompositeResource.LoadResources(String assemblyName, String resourceName, ICollection`1 uriRegistry, MetadataArtifactAssemblyResolver resolver)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataArtifactLoaderCompositeResource.CreateResourceLoader(String path, ExtensionCheck extensionCheck, String validExtension, ICollection`1 uriRegistry, MetadataArtifactAssemblyResolver resolver)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataArtifactLoader.Create(String path, ExtensionCheck extensionCheck, String validExtension, ICollection`1 uriRegistry, MetadataArtifactAssemblyResolver resolver)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataCache.SplitPaths(String paths)
+   在 System.Data.Entity.Core.Common.Utils.Memoizer`2.<>c__DisplayClass4_0.<Evaluate>b__0()
+   在 System.Data.Entity.Core.Common.Utils.Memoizer`2.Result.GetValue()
+   在 System.Data.Entity.Core.Common.Utils.Memoizer`2.Evaluate(TArg arg)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetArtifactLoader(DbConnectionOptions effectiveConnectionOptions)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   在 System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   在 System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   在 System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   在 System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   在 System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   在 System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   在 System.Data.Entity.Internal.InternalContext.Initialize()
+   在 System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   在 System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   在 System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   在 System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   在 DAL.BaseDAL.GetListByInclude[T](DbContext db, String path) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 317
+   在 Castle.Proxies.BaseDALProxy.GetListByInclude_callback[T](DbContext db, String path)
+   在 Castle.Proxies.Invocations.BaseDAL_GetListByInclude.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 32
+------------2019-12-09 19:41:41------------
+ 
+2019-12-09 19:45:49.9574 | Error | 
+Exception：Unable to load the specified metadata resource.
+StackTrace：   在 System.Data.Entity.Core.Metadata.Edm.MetadataArtifactLoaderCompositeResource.LoadResources(String assemblyName, String resourceName, ICollection`1 uriRegistry, MetadataArtifactAssemblyResolver resolver)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataArtifactLoaderCompositeResource.CreateResourceLoader(String path, ExtensionCheck extensionCheck, String validExtension, ICollection`1 uriRegistry, MetadataArtifactAssemblyResolver resolver)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataArtifactLoader.Create(String path, ExtensionCheck extensionCheck, String validExtension, ICollection`1 uriRegistry, MetadataArtifactAssemblyResolver resolver)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataCache.SplitPaths(String paths)
+   在 System.Data.Entity.Core.Common.Utils.Memoizer`2.<>c__DisplayClass4_0.<Evaluate>b__0()
+   在 System.Data.Entity.Core.Common.Utils.Memoizer`2.Result.GetValue()
+   在 System.Data.Entity.Core.Common.Utils.Memoizer`2.Evaluate(TArg arg)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetArtifactLoader(DbConnectionOptions effectiveConnectionOptions)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   在 System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   在 System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   在 System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   在 System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   在 System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   在 System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   在 System.Data.Entity.Internal.InternalContext.Initialize()
+   在 System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   在 System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   在 System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   在 System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   在 DAL.BaseDAL.GetListByInclude[T](DbContext db, String path) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 317
+   在 Castle.Proxies.BaseDALProxy.GetListByInclude_callback[T](DbContext db, String path)
+   在 Castle.Proxies.Invocations.BaseDAL_GetListByInclude.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 32
+------------2019-12-09 19:45:49------------
+ 
+2019-12-09 19:46:24.6537 | Error | 
+Exception：Unable to load the specified metadata resource.
+StackTrace：   在 System.Data.Entity.Core.Metadata.Edm.MetadataArtifactLoaderCompositeResource.LoadResources(String assemblyName, String resourceName, ICollection`1 uriRegistry, MetadataArtifactAssemblyResolver resolver)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataArtifactLoaderCompositeResource.CreateResourceLoader(String path, ExtensionCheck extensionCheck, String validExtension, ICollection`1 uriRegistry, MetadataArtifactAssemblyResolver resolver)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataArtifactLoader.Create(String path, ExtensionCheck extensionCheck, String validExtension, ICollection`1 uriRegistry, MetadataArtifactAssemblyResolver resolver)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataCache.SplitPaths(String paths)
+   在 System.Data.Entity.Core.Common.Utils.Memoizer`2.<>c__DisplayClass4_0.<Evaluate>b__0()
+   在 System.Data.Entity.Core.Common.Utils.Memoizer`2.Result.GetValue()
+   在 System.Data.Entity.Core.Common.Utils.Memoizer`2.Evaluate(TArg arg)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetArtifactLoader(DbConnectionOptions effectiveConnectionOptions)
+   在 System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   在 System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   在 System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   在 System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   在 System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   在 System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   在 System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   在 System.Data.Entity.Internal.InternalContext.Initialize()
+   在 System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   在 System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   在 System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   在 System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   在 DAL.BaseDAL.GetListByInclude[T](DbContext db, String path) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 317
+   在 Castle.Proxies.BaseDALProxy.GetListByInclude_callback[T](DbContext db, String path)
+   在 Castle.Proxies.Invocations.BaseDAL_GetListByInclude.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 32
+------------2019-12-09 19:46:24------------
+ 

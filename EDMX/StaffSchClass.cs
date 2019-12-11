@@ -10,13 +10,20 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class StaffSchClass
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public System.Guid DeptID { get; set; }
+    	[DataMember]
         public System.Guid SchClassID { get; set; }
+    	[DataMember]
         public int SchSerialNo { get; set; }
     }
 }

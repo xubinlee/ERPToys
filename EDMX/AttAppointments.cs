@@ -10,32 +10,58 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class AttAppointments
     {
+    	[DataMember]
         public long UniqueID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> GLogStartID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> GLogEndID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> UserID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> SchClassID { get; set; }
+    	[DataMember]
         public string SchClassName { get; set; }
+    	[DataMember]
         public int SchSerialNo { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> SchStartTime { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> SchEndTime { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> CheckInTime { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> CheckOutTime { get; set; }
+    	[DataMember]
         public Nullable<int> LateMinutes { get; set; }
+    	[DataMember]
         public Nullable<int> EarlyMinutes { get; set; }
+    	[DataMember]
         public int AttStatus { get; set; }
+    	[DataMember]
         public Nullable<int> Type { get; set; }
+    	[DataMember]
         public Nullable<bool> AllDay { get; set; }
+    	[DataMember]
         public string Subject { get; set; }
+    	[DataMember]
         public string Location { get; set; }
+    	[DataMember]
         public Nullable<int> ResourceID { get; set; }
+    	[DataMember]
         public string RecurrenceInfo { get; set; }
+    	[DataMember]
         public string ReminderInfo { get; set; }
+    	[DataMember]
         public string Description { get; set; }
+    	[DataMember]
         public int WageStatus { get; set; }
     }
 }

@@ -10,28 +10,50 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VAttAppointments
     {
+    	[DataMember]
         public long UniqueID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> GLogStartID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> GLogEndID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> UserID { get; set; }
+    	[DataMember]
         public string 工号 { get; set; }
+    	[DataMember]
         public string 姓名 { get; set; }
+    	[DataMember]
         public int 工资状态 { get; set; }
+    	[DataMember]
         public string 年月 { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> 日期 { get; set; }
+    	[DataMember]
         public string 时段 { get; set; }
+    	[DataMember]
         public int SchSerialNo { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> 上班时间 { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> 下班时间 { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> 签到时间 { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> 签退时间 { get; set; }
+    	[DataMember]
         public int 考勤状态 { get; set; }
+    	[DataMember]
         public Nullable<int> 迟到分钟数 { get; set; }
+    	[DataMember]
         public Nullable<int> 早退分钟数 { get; set; }
+    	[DataMember]
         public string 备注 { get; set; }
     }
 }

@@ -10,33 +10,60 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VStockOutBillDtlByBOM
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public System.Guid HdID { get; set; }
+    	[DataMember]
         public System.Guid GoodsID { get; set; }
+    	[DataMember]
         public System.Guid ParentGoodsID { get; set; }
+    	[DataMember]
         public Nullable<decimal> Qty { get; set; }
+    	[DataMember]
         public int PCS { get; set; }
+    	[DataMember]
         public int InnerBox { get; set; }
+    	[DataMember]
         public decimal Price { get; set; }
+    	[DataMember]
         public decimal PriceNoTax { get; set; }
+    	[DataMember]
         public Nullable<decimal> Discount { get; set; }
+    	[DataMember]
         public Nullable<decimal> OtherFee { get; set; }
+    	[DataMember]
         public int Type { get; set; }
+    	[DataMember]
         public string Code { get; set; }
+    	[DataMember]
         public decimal BOMQty { get; set; }
+    	[DataMember]
         public string MaterialCode { get; set; }
+    	[DataMember]
         public string MaterialUnit { get; set; }
+    	[DataMember]
         public Nullable<decimal> GoodsQty { get; set; }
+    	[DataMember]
         public string GoodsUnit { get; set; }
+    	[DataMember]
         public Nullable<decimal> Subpackage { get; set; }
+    	[DataMember]
         public Nullable<decimal> TotalQty { get; set; }
+    	[DataMember]
         public string Material { get; set; }
+    	[DataMember]
         public Nullable<decimal> Mod { get; set; }
+    	[DataMember]
         public Nullable<decimal> TotalMod { get; set; }
+    	[DataMember]
         public Nullable<decimal> NWeight { get; set; }
     }
 }

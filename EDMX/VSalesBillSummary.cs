@@ -10,26 +10,46 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VSalesBillSummary
     {
+    	[DataMember]
         public System.Guid HdID { get; set; }
+    	[DataMember]
         public string 出库单号 { get; set; }
+    	[DataMember]
         public System.DateTime 出库日期 { get; set; }
+    	[DataMember]
         public System.DateTime 交货日期 { get; set; }
+    	[DataMember]
         public string 客户代码 { get; set; }
+    	[DataMember]
         public string 客户名称 { get; set; }
+    	[DataMember]
         public Nullable<int> 客户类型 { get; set; }
+    	[DataMember]
         public string 联系人 { get; set; }
+    	[DataMember]
         public int 状态 { get; set; }
+    	[DataMember]
         public string 结算类型 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 箱数 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 总数量 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 重量 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 成本 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 金额 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 毛利 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 毛利率 { get; set; }
     }
 }

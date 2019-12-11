@@ -561,7 +561,7 @@
         </EntityType>
         <EntityType Name="StockInBillHd">
           <Key>
-            <PropertyRef Name="BillNo" />
+            <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="BillNo" Type="varchar" MaxLength="30" Nullable="false" />
@@ -610,7 +610,7 @@
         </EntityType>
         <EntityType Name="StockOutBillHd">
           <Key>
-            <PropertyRef Name="BillNo" />
+            <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="BillNo" Type="varchar" MaxLength="30" Nullable="false" />
@@ -2907,63 +2907,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="USPGetAnnualSalesSummaryByCustomerReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Filter" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="USPGetAnnualSalesSummaryByGoodsReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Filter" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="USPGetAttWageBillDtl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="USPGetEMSGoodsTrackingDailyReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="USPGetEstimatedYieldReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="USPGetFSMGoodsTrackingDailyReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="USPGetGoodsSalesSummaryByCustomerReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Filter" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="USPGetSalesSummaryByCustomerReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Filter" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="USPGetSalesSummaryByGoodsPriceReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Filter" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="USPGetSalesSummaryByGoodsReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Filter" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="USPGetSalesSummaryMonthlyReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Filter" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="USPGetStatementOfAccountBasketToSupplierReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="BillNo" Type="varchar" Mode="In" />
-          <Parameter Name="SupplierID" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="StartDate" Type="datetime" Mode="In" />
-          <Parameter Name="EndDate" Type="datetime" Mode="In" />
-          <Parameter Name="SupplierType" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="USPGetStatementOfAccountMaterialToSupplierReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="BillNo" Type="varchar" Mode="In" />
-          <Parameter Name="SupplierID" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="StartDate" Type="datetime" Mode="In" />
-          <Parameter Name="EndDate" Type="datetime" Mode="In" />
-          <Parameter Name="SupplierType" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="USPGetStatementOfAccountOfEMSReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="BillNo" Type="varchar" Mode="In" />
-          <Parameter Name="SupplierID" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="StartDate" Type="datetime" Mode="In" />
-          <Parameter Name="EndDate" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="USPGetStatementOfAccountSummaryToSupplierReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Filter" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="USPGetStatementOfAccountToBulkSalesReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Filter" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="USPGetStatementOfAccountToCustomerReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Filter" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="USPGetStatementOfAccountToSupplierReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Filter" Type="nvarchar" Mode="In" />
-        </Function>
+        <Association Name="FK_StockInBillDtl_StockInBillHd">
+          <End Role="StockInBillHd" Type="Self.StockInBillHd" Multiplicity="1" />
+          <End Role="StockInBillDtl" Type="Self.StockInBillDtl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockInBillHd">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInBillDtl">
+              <PropertyRef Name="HdID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOutBillDtl_StockOutBillHd">
+          <End Role="StockOutBillHd" Type="Self.StockOutBillHd" Multiplicity="1" />
+          <End Role="StockOutBillDtl" Type="Self.StockOutBillDtl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockOutBillHd">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOutBillDtl">
+              <PropertyRef Name="HdID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ERPToysModelStoreContainer">
           <EntitySet Name="AccountBook" EntityType="Self.AccountBook" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Alert" EntityType="Self.Alert" Schema="dbo" store:Type="Tables" />
@@ -4395,6 +4362,14 @@
             <End Role="Goods" EntitySet="Goods" />
             <End Role="OrderDtl" EntitySet="OrderDtl" />
           </AssociationSet>
+          <AssociationSet Name="FK_StockInBillDtl_StockInBillHd" Association="Self.FK_StockInBillDtl_StockInBillHd">
+            <End Role="StockInBillHd" EntitySet="StockInBillHd" />
+            <End Role="StockInBillDtl" EntitySet="StockInBillDtl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOutBillDtl_StockOutBillHd" Association="Self.FK_StockOutBillDtl_StockOutBillHd">
+            <End Role="StockOutBillHd" EntitySet="StockOutBillHd" />
+            <End Role="StockOutBillDtl" EntitySet="StockOutBillDtl" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -4945,10 +4920,11 @@
           <Property Name="TonsQty" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
           <Property Name="TonsPrice" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="StockInBillHd" Relationship="Self.FK_StockInBillDtl_StockInBillHd" FromRole="StockInBillDtl" ToRole="StockInBillHd" />
         </EntityType>
         <EntityType Name="StockInBillHd">
           <Key>
-            <PropertyRef Name="BillNo" />
+            <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
@@ -4971,6 +4947,7 @@
           <Property Name="BillAMT" Type="Decimal" Precision="12" Scale="2" />
           <Property Name="UnPaidAMT" Type="Decimal" Precision="12" Scale="2" />
           <Property Name="Worker" Type="Guid" />
+          <NavigationProperty Name="StockInBillDtl" Relationship="Self.FK_StockInBillDtl_StockInBillHd" FromRole="StockInBillHd" ToRole="StockInBillDtl" />
         </EntityType>
         <EntityType Name="StockOutBillDtl">
           <Key>
@@ -4994,10 +4971,11 @@
           <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="TonsQty" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
           <Property Name="TonsPrice" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <NavigationProperty Name="StockOutBillHd" Relationship="Self.FK_StockOutBillDtl_StockOutBillHd" FromRole="StockOutBillDtl" ToRole="StockOutBillHd" />
         </EntityType>
         <EntityType Name="StockOutBillHd">
           <Key>
-            <PropertyRef Name="BillNo" />
+            <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
@@ -5022,6 +5000,7 @@
           <Property Name="BillAMT" Type="Decimal" Precision="12" Scale="2" />
           <Property Name="UnReceiptedAMT" Type="Decimal" Precision="12" Scale="2" />
           <Property Name="Driver" Type="Guid" />
+          <NavigationProperty Name="StockOutBillDtl" Relationship="Self.FK_StockOutBillDtl_StockOutBillHd" FromRole="StockOutBillHd" ToRole="StockOutBillDtl" />
         </EntityType>
         <EntityType Name="Stocktaking">
           <Key>
@@ -7183,6 +7162,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StockInBillDtl_StockInBillHd">
+          <End Role="StockInBillHd" Type="Self.StockInBillHd" Multiplicity="1" />
+          <End Role="StockInBillDtl" Type="Self.StockInBillDtl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockInBillHd">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInBillDtl">
+              <PropertyRef Name="HdID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOutBillDtl_StockOutBillHd">
+          <End Role="StockOutBillHd" Type="Self.StockOutBillHd" Multiplicity="1" />
+          <End Role="StockOutBillDtl" Type="Self.StockOutBillDtl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockOutBillHd">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOutBillDtl">
+              <PropertyRef Name="HdID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ERPToysContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AccountBook" EntityType="Self.AccountBook" />
           <EntitySet Name="Alert" EntityType="Self.Alert" />
@@ -7297,63 +7300,14 @@
             <End Role="Goods" EntitySet="Goods" />
             <End Role="OrderDtl" EntitySet="OrderDtl" />
           </AssociationSet>
-          <FunctionImport Name="USPGetAnnualSalesSummaryByCustomerReport">
-            <Parameter Name="Filter" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="USPGetAnnualSalesSummaryByGoodsReport">
-            <Parameter Name="Filter" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="USPGetAttWageBillDtl" />
-          <FunctionImport Name="USPGetEMSGoodsTrackingDailyReport" />
-          <FunctionImport Name="USPGetEstimatedYieldReport" />
-          <FunctionImport Name="USPGetFSMGoodsTrackingDailyReport" />
-          <FunctionImport Name="USPGetGoodsSalesSummaryByCustomerReport">
-            <Parameter Name="Filter" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="USPGetSalesSummaryByCustomerReport">
-            <Parameter Name="Filter" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="USPGetSalesSummaryByGoodsPriceReport">
-            <Parameter Name="Filter" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="USPGetSalesSummaryByGoodsReport">
-            <Parameter Name="Filter" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="USPGetSalesSummaryMonthlyReport">
-            <Parameter Name="Filter" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="USPGetStatementOfAccountBasketToSupplierReport">
-            <Parameter Name="BillNo" Mode="In" Type="String" />
-            <Parameter Name="SupplierID" Mode="In" Type="Guid" />
-            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
-            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
-            <Parameter Name="SupplierType" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="USPGetStatementOfAccountMaterialToSupplierReport">
-            <Parameter Name="BillNo" Mode="In" Type="String" />
-            <Parameter Name="SupplierID" Mode="In" Type="Guid" />
-            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
-            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
-            <Parameter Name="SupplierType" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="USPGetStatementOfAccountOfEMSReport">
-            <Parameter Name="BillNo" Mode="In" Type="String" />
-            <Parameter Name="SupplierID" Mode="In" Type="Guid" />
-            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
-            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="USPGetStatementOfAccountSummaryToSupplierReport">
-            <Parameter Name="Filter" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="USPGetStatementOfAccountToBulkSalesReport">
-            <Parameter Name="Filter" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="USPGetStatementOfAccountToCustomerReport">
-            <Parameter Name="Filter" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="USPGetStatementOfAccountToSupplierReport">
-            <Parameter Name="Filter" Mode="In" Type="String" />
-          </FunctionImport>
+          <AssociationSet Name="FK_StockInBillDtl_StockInBillHd" Association="Self.FK_StockInBillDtl_StockInBillHd">
+            <End Role="StockInBillHd" EntitySet="StockInBillHd" />
+            <End Role="StockInBillDtl" EntitySet="StockInBillDtl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOutBillDtl_StockOutBillHd" Association="Self.FK_StockOutBillDtl_StockOutBillHd">
+            <End Role="StockOutBillHd" EntitySet="StockOutBillHd" />
+            <End Role="StockOutBillDtl" EntitySet="StockOutBillDtl" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -9679,24 +9633,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="USPGetAnnualSalesSummaryByCustomerReport" FunctionName="ERPToysModel.Store.USPGetAnnualSalesSummaryByCustomerReport" />
-          <FunctionImportMapping FunctionImportName="USPGetAnnualSalesSummaryByGoodsReport" FunctionName="ERPToysModel.Store.USPGetAnnualSalesSummaryByGoodsReport" />
-          <FunctionImportMapping FunctionImportName="USPGetAttWageBillDtl" FunctionName="ERPToysModel.Store.USPGetAttWageBillDtl" />
-          <FunctionImportMapping FunctionImportName="USPGetEMSGoodsTrackingDailyReport" FunctionName="ERPToysModel.Store.USPGetEMSGoodsTrackingDailyReport" />
-          <FunctionImportMapping FunctionImportName="USPGetEstimatedYieldReport" FunctionName="ERPToysModel.Store.USPGetEstimatedYieldReport" />
-          <FunctionImportMapping FunctionImportName="USPGetFSMGoodsTrackingDailyReport" FunctionName="ERPToysModel.Store.USPGetFSMGoodsTrackingDailyReport" />
-          <FunctionImportMapping FunctionImportName="USPGetGoodsSalesSummaryByCustomerReport" FunctionName="ERPToysModel.Store.USPGetGoodsSalesSummaryByCustomerReport" />
-          <FunctionImportMapping FunctionImportName="USPGetSalesSummaryByCustomerReport" FunctionName="ERPToysModel.Store.USPGetSalesSummaryByCustomerReport" />
-          <FunctionImportMapping FunctionImportName="USPGetSalesSummaryByGoodsPriceReport" FunctionName="ERPToysModel.Store.USPGetSalesSummaryByGoodsPriceReport" />
-          <FunctionImportMapping FunctionImportName="USPGetSalesSummaryByGoodsReport" FunctionName="ERPToysModel.Store.USPGetSalesSummaryByGoodsReport" />
-          <FunctionImportMapping FunctionImportName="USPGetSalesSummaryMonthlyReport" FunctionName="ERPToysModel.Store.USPGetSalesSummaryMonthlyReport" />
-          <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountBasketToSupplierReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountBasketToSupplierReport" />
-          <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountMaterialToSupplierReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountMaterialToSupplierReport" />
-          <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountOfEMSReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountOfEMSReport" />
-          <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountSummaryToSupplierReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountSummaryToSupplierReport" />
-          <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountToBulkSalesReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountToBulkSalesReport" />
-          <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountToCustomerReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountToCustomerReport" />
-          <FunctionImportMapping FunctionImportName="USPGetStatementOfAccountToSupplierReport" FunctionName="ERPToysModel.Store.USPGetStatementOfAccountToSupplierReport" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

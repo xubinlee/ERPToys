@@ -10,17 +10,28 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class SLSalePrice
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public System.Guid GoodsID { get; set; }
+    	[DataMember]
         public int Type { get; set; }
+    	[DataMember]
         public decimal Price { get; set; }
+    	[DataMember]
         public decimal PriceNoTax { get; set; }
+    	[DataMember]
         public decimal Discount { get; set; }
+    	[DataMember]
         public decimal OtherFee { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> UpdateTime { get; set; }
     }
 }

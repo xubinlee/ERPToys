@@ -556,7 +556,7 @@
   </EntityType>
   <EntityType Name="StockInBillHd">
     <Key>
-      <PropertyRef Name="BillNo" />
+      <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="BillNo" Type="varchar" MaxLength="30" Nullable="false" />
@@ -605,7 +605,7 @@
   </EntityType>
   <EntityType Name="StockOutBillHd">
     <Key>
-      <PropertyRef Name="BillNo" />
+      <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="BillNo" Type="varchar" MaxLength="30" Nullable="false" />
@@ -2902,6 +2902,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_StockInBillDtl_StockInBillHd">
+    <End Role="StockInBillHd" Type="Self.StockInBillHd" Multiplicity="1" />
+    <End Role="StockInBillDtl" Type="Self.StockInBillDtl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StockInBillHd">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StockInBillDtl">
+        <PropertyRef Name="HdID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockInBillHd_StockInBillHd">
+    <End Role="StockInBillHd" Type="Self.StockInBillHd" Multiplicity="1" />
+    <End Role="StockInBillHd1" Type="Self.StockInBillHd" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="StockInBillHd">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StockInBillHd1">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockOutBillHd_StockOutBillHd">
+    <End Role="StockOutBillHd" Type="Self.StockOutBillHd" Multiplicity="1" />
+    <End Role="StockOutBillHd1" Type="Self.StockOutBillHd" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="StockOutBillHd">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StockOutBillHd1">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="USPGetAnnualSalesSummaryByCustomerReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Filter" Type="nvarchar" Mode="In" />
   </Function>
@@ -4389,6 +4425,18 @@
     <AssociationSet Name="FK_OrderDtl_Goods" Association="Self.FK_OrderDtl_Goods">
       <End Role="Goods" EntitySet="Goods" />
       <End Role="OrderDtl" EntitySet="OrderDtl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockInBillDtl_StockInBillHd" Association="Self.FK_StockInBillDtl_StockInBillHd">
+      <End Role="StockInBillHd" EntitySet="StockInBillHd" />
+      <End Role="StockInBillDtl" EntitySet="StockInBillDtl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockInBillHd_StockInBillHd" Association="Self.FK_StockInBillHd_StockInBillHd">
+      <End Role="StockInBillHd" EntitySet="StockInBillHd" />
+      <End Role="StockInBillHd1" EntitySet="StockInBillHd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockOutBillHd_StockOutBillHd" Association="Self.FK_StockOutBillHd_StockOutBillHd">
+      <End Role="StockOutBillHd" EntitySet="StockOutBillHd" />
+      <End Role="StockOutBillHd1" EntitySet="StockOutBillHd" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

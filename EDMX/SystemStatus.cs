@@ -10,12 +10,18 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class SystemStatus
     {
+    	[DataMember]
         public string MainMenuName { get; set; }
+    	[DataMember]
         public string MaxBillNo { get; set; }
+    	[DataMember]
         public int Status { get; set; }
     }
 }

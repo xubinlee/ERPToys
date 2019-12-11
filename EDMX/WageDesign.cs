@@ -10,16 +10,26 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class WageDesign
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public string Name { get; set; }
+    	[DataMember]
         public Nullable<decimal> Wages { get; set; }
+    	[DataMember]
         public Nullable<decimal> Price { get; set; }
+    	[DataMember]
         public Nullable<int> ManHour { get; set; }
+    	[DataMember]
         public Nullable<decimal> ErrorRate { get; set; }
+    	[DataMember]
         public string Remark { get; set; }
     }
 }

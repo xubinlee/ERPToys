@@ -10,25 +10,44 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VStocktaking
     {
+    	[DataMember]
         public System.Guid WarehouseID { get; set; }
+    	[DataMember]
         public System.Guid GoodsID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> SupplierID { get; set; }
+    	[DataMember]
         public string 盘点仓库 { get; set; }
+    	[DataMember]
         public int 仓库类型 { get; set; }
+    	[DataMember]
         public string 盘点厂商 { get; set; }
+    	[DataMember]
         public int 货品大类 { get; set; }
+    	[DataMember]
         public string 货号 { get; set; }
+    	[DataMember]
         public string 品名 { get; set; }
+    	[DataMember]
         public decimal 盘点数量 { get; set; }
+    	[DataMember]
         public int 装箱数 { get; set; }
+    	[DataMember]
         public string 外箱规格 { get; set; }
+    	[DataMember]
         public int 内盒 { get; set; }
+    	[DataMember]
         public decimal 单价 { get; set; }
+    	[DataMember]
         public string 盘点人 { get; set; }
+    	[DataMember]
         public System.DateTime 盘点日期 { get; set; }
     }
 }

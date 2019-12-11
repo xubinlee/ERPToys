@@ -10,16 +10,26 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class TonerLabel
     {
+    	[DataMember]
         public string Customer { get; set; }
+    	[DataMember]
         public string Goods { get; set; }
+    	[DataMember]
         public string Material { get; set; }
+    	[DataMember]
         public Nullable<decimal> Dosage { get; set; }
+    	[DataMember]
         public Nullable<decimal> Subpackage { get; set; }
+    	[DataMember]
         public Nullable<decimal> TotalQty { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> DATE { get; set; }
     }
 }

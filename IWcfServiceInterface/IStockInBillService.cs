@@ -23,5 +23,14 @@ namespace IWcfServiceInterface
         [FaultContract(typeof(ServiceExceptionDetail))]
         [WebInvoke(Method = "POST", UriTemplate = "Insert", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         void Insert(StockInBillHd hd, List<StockInBillDtl> dtlList);
+
+        /// <summary>
+        /// 获取入库列表
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceExceptionDetail))]
+        [WebInvoke(Method = "POST", UriTemplate = "GetStockInBill", BodyStyle = WebMessageBodyStyle.WrappedResponse, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<StockInBillHd> GetStockInBill();
     }
 }

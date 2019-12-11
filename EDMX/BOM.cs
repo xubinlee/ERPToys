@@ -10,20 +10,34 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class BOM
     {
+    	[DataMember]
         public System.Guid GoodsID { get; set; }
+    	[DataMember]
         public System.Guid ParentGoodsID { get; set; }
+    	[DataMember]
         public decimal Qty { get; set; }
+    	[DataMember]
         public int PCS { get; set; }
+    	[DataMember]
         public int InnerBox { get; set; }
+    	[DataMember]
         public decimal Price { get; set; }
+    	[DataMember]
         public decimal PriceNoTax { get; set; }
+    	[DataMember]
         public int Type { get; set; }
+    	[DataMember]
         public decimal Discount { get; set; }
+    	[DataMember]
         public decimal OtherFee { get; set; }
+    	[DataMember]
         public string Remark { get; set; }
     }
 }

@@ -10,24 +10,42 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VUsersInfo
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public byte[] 照片 { get; set; }
+    	[DataMember]
         public string 姓名 { get; set; }
+    	[DataMember]
         public string 账号 { get; set; }
+    	[DataMember]
         public string 部门 { get; set; }
+    	[DataMember]
         public string 职位 { get; set; }
+    	[DataMember]
         public string 电话 { get; set; }
+    	[DataMember]
         public string 地址 { get; set; }
+    	[DataMember]
         public string 宿舍号 { get; set; }
+    	[DataMember]
         public string 考勤卡号 { get; set; }
+    	[DataMember]
         public int 考勤特权 { get; set; }
+    	[DataMember]
         public bool 启用考勤 { get; set; }
+    	[DataMember]
         public string 备注 { get; set; }
+    	[DataMember]
         public bool 已删除 { get; set; }
+    	[DataMember]
         public string Password { get; set; }
     }
 }

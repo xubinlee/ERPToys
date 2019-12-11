@@ -132,6 +132,16 @@ namespace WcfService
                 return QueryableResult(queryable);
             }
         }
+
+        public SerializedParam GetListByInclude(EntityType entityType, string path)
+        {
+            using (ERPToysContext db = EDMXFty.Dc)
+            {
+                IQueryable queryable = DALFty.Create<BaseDAL>().GetListByInclude(db, entityType.GetType(), path);
+                return QueryableResult(queryable);
+            }
+        }
         #endregion
+
     }
 }

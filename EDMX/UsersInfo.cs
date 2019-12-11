@@ -10,30 +10,54 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class UsersInfo
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public string Code { get; set; }
+    	[DataMember]
         public string Name { get; set; }
+    	[DataMember]
         public string Password { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> DeptID { get; set; }
+    	[DataMember]
         public string Post { get; set; }
+    	[DataMember]
         public string Tel { get; set; }
+    	[DataMember]
         public string Address { get; set; }
+    	[DataMember]
         public string DormNo { get; set; }
+    	[DataMember]
         public byte[] Photo { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> RoleID { get; set; }
+    	[DataMember]
         public string Permissions { get; set; }
+    	[DataMember]
         public string Remark { get; set; }
+    	[DataMember]
         public string AttCardnumber { get; set; }
+    	[DataMember]
         public int AttPrivilege { get; set; }
+    	[DataMember]
         public bool AttEnabled { get; set; }
+    	[DataMember]
         public int WageType { get; set; }
+    	[DataMember]
         public decimal Wages { get; set; }
+    	[DataMember]
         public decimal SchClassWage { get; set; }
+    	[DataMember]
         public decimal TimeWage { get; set; }
+    	[DataMember]
         public bool IsDel { get; set; }
     }
 }

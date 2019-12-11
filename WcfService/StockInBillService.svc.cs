@@ -20,5 +20,12 @@ namespace WcfService
                 DALFty.Create<BaseDAL>().AddBill(db, hd, dtlList);
             }
         }
+        public List<StockInBillHd> GetStockInBill()
+        {
+            using (ERPToysContext db = EDMXFty.Dc)
+            {
+                return DALFty.Create<BaseDAL>().GetListByInclude<StockInBillHd>(db, nameof(StockInBillDtl));
+            }
+        }
     }
 }

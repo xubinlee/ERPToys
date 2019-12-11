@@ -10,16 +10,26 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VProductionOrderDtlForPrint
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public System.Guid HdID { get; set; }
+    	[DataMember]
         public System.Guid GoodsID { get; set; }
+    	[DataMember]
         public string 货号 { get; set; }
+    	[DataMember]
         public string 正唛 { get; set; }
+    	[DataMember]
         public string 侧唛 { get; set; }
+    	[DataMember]
         public string 内盒唛 { get; set; }
     }
 }

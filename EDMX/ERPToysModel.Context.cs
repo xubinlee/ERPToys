@@ -10,16 +10,33 @@
 namespace EDMX
 {
     using System;
+    using System.Data.Entity.Core.Objects;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
     
     public partial class ERPToysContext : DbContext
     {
-        public ERPToysContext()
+    	public ERPToysContext()
+            : this(false) { }
+    
+        public ERPToysContext(bool proxyCreationEnabled)
             : base("name=ERPToysContext")
         {
+    		        this.Configuration.ProxyCreationEnabled = proxyCreationEnabled;
+        }
+    	
+        public ERPToysContext(string connectionString)
+          : this(connectionString, false) { }
+    	  
+        public ERPToysContext(string connectionString, bool proxyCreationEnabled)
+            : base(connectionString)
+        {
+    		        this.Configuration.ProxyCreationEnabled = proxyCreationEnabled;
+        }	
+    	
+        public ObjectContext ObjectContext
+        {
+          get { return ((IObjectContextAdapter)this).ObjectContext; }
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -132,195 +149,5 @@ namespace EDMX
         public virtual DbSet<VUsersInfo> VUsersInfo { get; set; }
         public virtual DbSet<VWageBill> VWageBill { get; set; }
         public virtual DbSet<VWageBillDtl> VWageBillDtl { get; set; }
-    
-        public virtual int USPGetAnnualSalesSummaryByCustomerReport(string filter)
-        {
-            var filterParameter = filter != null ?
-                new ObjectParameter("Filter", filter) :
-                new ObjectParameter("Filter", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetAnnualSalesSummaryByCustomerReport", filterParameter);
-        }
-    
-        public virtual int USPGetAnnualSalesSummaryByGoodsReport(string filter)
-        {
-            var filterParameter = filter != null ?
-                new ObjectParameter("Filter", filter) :
-                new ObjectParameter("Filter", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetAnnualSalesSummaryByGoodsReport", filterParameter);
-        }
-    
-        public virtual int USPGetAttWageBillDtl()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetAttWageBillDtl");
-        }
-    
-        public virtual int USPGetEMSGoodsTrackingDailyReport()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetEMSGoodsTrackingDailyReport");
-        }
-    
-        public virtual int USPGetEstimatedYieldReport()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetEstimatedYieldReport");
-        }
-    
-        public virtual int USPGetFSMGoodsTrackingDailyReport()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetFSMGoodsTrackingDailyReport");
-        }
-    
-        public virtual int USPGetGoodsSalesSummaryByCustomerReport(string filter)
-        {
-            var filterParameter = filter != null ?
-                new ObjectParameter("Filter", filter) :
-                new ObjectParameter("Filter", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetGoodsSalesSummaryByCustomerReport", filterParameter);
-        }
-    
-        public virtual int USPGetSalesSummaryByCustomerReport(string filter)
-        {
-            var filterParameter = filter != null ?
-                new ObjectParameter("Filter", filter) :
-                new ObjectParameter("Filter", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetSalesSummaryByCustomerReport", filterParameter);
-        }
-    
-        public virtual int USPGetSalesSummaryByGoodsPriceReport(string filter)
-        {
-            var filterParameter = filter != null ?
-                new ObjectParameter("Filter", filter) :
-                new ObjectParameter("Filter", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetSalesSummaryByGoodsPriceReport", filterParameter);
-        }
-    
-        public virtual int USPGetSalesSummaryByGoodsReport(string filter)
-        {
-            var filterParameter = filter != null ?
-                new ObjectParameter("Filter", filter) :
-                new ObjectParameter("Filter", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetSalesSummaryByGoodsReport", filterParameter);
-        }
-    
-        public virtual int USPGetSalesSummaryMonthlyReport(string filter)
-        {
-            var filterParameter = filter != null ?
-                new ObjectParameter("Filter", filter) :
-                new ObjectParameter("Filter", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetSalesSummaryMonthlyReport", filterParameter);
-        }
-    
-        public virtual int USPGetStatementOfAccountBasketToSupplierReport(string billNo, Nullable<System.Guid> supplierID, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, string supplierType)
-        {
-            var billNoParameter = billNo != null ?
-                new ObjectParameter("BillNo", billNo) :
-                new ObjectParameter("BillNo", typeof(string));
-    
-            var supplierIDParameter = supplierID.HasValue ?
-                new ObjectParameter("SupplierID", supplierID) :
-                new ObjectParameter("SupplierID", typeof(System.Guid));
-    
-            var startDateParameter = startDate.HasValue ?
-                new ObjectParameter("StartDate", startDate) :
-                new ObjectParameter("StartDate", typeof(System.DateTime));
-    
-            var endDateParameter = endDate.HasValue ?
-                new ObjectParameter("EndDate", endDate) :
-                new ObjectParameter("EndDate", typeof(System.DateTime));
-    
-            var supplierTypeParameter = supplierType != null ?
-                new ObjectParameter("SupplierType", supplierType) :
-                new ObjectParameter("SupplierType", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetStatementOfAccountBasketToSupplierReport", billNoParameter, supplierIDParameter, startDateParameter, endDateParameter, supplierTypeParameter);
-        }
-    
-        public virtual int USPGetStatementOfAccountMaterialToSupplierReport(string billNo, Nullable<System.Guid> supplierID, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, string supplierType)
-        {
-            var billNoParameter = billNo != null ?
-                new ObjectParameter("BillNo", billNo) :
-                new ObjectParameter("BillNo", typeof(string));
-    
-            var supplierIDParameter = supplierID.HasValue ?
-                new ObjectParameter("SupplierID", supplierID) :
-                new ObjectParameter("SupplierID", typeof(System.Guid));
-    
-            var startDateParameter = startDate.HasValue ?
-                new ObjectParameter("StartDate", startDate) :
-                new ObjectParameter("StartDate", typeof(System.DateTime));
-    
-            var endDateParameter = endDate.HasValue ?
-                new ObjectParameter("EndDate", endDate) :
-                new ObjectParameter("EndDate", typeof(System.DateTime));
-    
-            var supplierTypeParameter = supplierType != null ?
-                new ObjectParameter("SupplierType", supplierType) :
-                new ObjectParameter("SupplierType", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetStatementOfAccountMaterialToSupplierReport", billNoParameter, supplierIDParameter, startDateParameter, endDateParameter, supplierTypeParameter);
-        }
-    
-        public virtual int USPGetStatementOfAccountOfEMSReport(string billNo, Nullable<System.Guid> supplierID, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
-        {
-            var billNoParameter = billNo != null ?
-                new ObjectParameter("BillNo", billNo) :
-                new ObjectParameter("BillNo", typeof(string));
-    
-            var supplierIDParameter = supplierID.HasValue ?
-                new ObjectParameter("SupplierID", supplierID) :
-                new ObjectParameter("SupplierID", typeof(System.Guid));
-    
-            var startDateParameter = startDate.HasValue ?
-                new ObjectParameter("StartDate", startDate) :
-                new ObjectParameter("StartDate", typeof(System.DateTime));
-    
-            var endDateParameter = endDate.HasValue ?
-                new ObjectParameter("EndDate", endDate) :
-                new ObjectParameter("EndDate", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetStatementOfAccountOfEMSReport", billNoParameter, supplierIDParameter, startDateParameter, endDateParameter);
-        }
-    
-        public virtual int USPGetStatementOfAccountSummaryToSupplierReport(string filter)
-        {
-            var filterParameter = filter != null ?
-                new ObjectParameter("Filter", filter) :
-                new ObjectParameter("Filter", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetStatementOfAccountSummaryToSupplierReport", filterParameter);
-        }
-    
-        public virtual int USPGetStatementOfAccountToBulkSalesReport(string filter)
-        {
-            var filterParameter = filter != null ?
-                new ObjectParameter("Filter", filter) :
-                new ObjectParameter("Filter", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetStatementOfAccountToBulkSalesReport", filterParameter);
-        }
-    
-        public virtual int USPGetStatementOfAccountToCustomerReport(string filter)
-        {
-            var filterParameter = filter != null ?
-                new ObjectParameter("Filter", filter) :
-                new ObjectParameter("Filter", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetStatementOfAccountToCustomerReport", filterParameter);
-        }
-    
-        public virtual int USPGetStatementOfAccountToSupplierReport(string filter)
-        {
-            var filterParameter = filter != null ?
-                new ObjectParameter("Filter", filter) :
-                new ObjectParameter("Filter", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USPGetStatementOfAccountToSupplierReport", filterParameter);
-        }
     }
 }

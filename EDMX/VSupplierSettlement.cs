@@ -10,18 +10,30 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VSupplierSettlement
     {
+    	[DataMember]
         public string 付款单号 { get; set; }
+    	[DataMember]
         public System.DateTime 付款日期 { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> SupplierID { get; set; }
+    	[DataMember]
         public string 供应商 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 上期结欠 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 本期付款 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 共欠 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 本期结款 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 本期结欠 { get; set; }
     }
 }

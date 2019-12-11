@@ -10,29 +10,52 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
+    [KnownType(typeof(Goods))]
     
     public partial class OrderDtl
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public System.Guid HdID { get; set; }
+    	[DataMember]
         public Nullable<int> SerialNo { get; set; }
+    	[DataMember]
         public System.Guid GoodsID { get; set; }
+    	[DataMember]
         public decimal Qty { get; set; }
+    	[DataMember]
         public string MEAS { get; set; }
+    	[DataMember]
         public int PCS { get; set; }
+    	[DataMember]
         public int InnerBox { get; set; }
+    	[DataMember]
         public decimal Price { get; set; }
+    	[DataMember]
         public decimal PriceNoTax { get; set; }
+    	[DataMember]
         public decimal Discount { get; set; }
+    	[DataMember]
         public decimal OtherFee { get; set; }
+    	[DataMember]
         public string MainMark { get; set; }
+    	[DataMember]
         public string SideMark { get; set; }
+    	[DataMember]
         public string InnerMark { get; set; }
+    	[DataMember]
         public decimal NWeight { get; set; }
+    	[DataMember]
         public Nullable<decimal> Modulus { get; set; }
+    	[DataMember]
         public string Remark { get; set; }
     
+    	[DataMember]
         public virtual Goods Goods { get; set; }
     }
 }

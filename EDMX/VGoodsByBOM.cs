@@ -10,25 +10,44 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VGoodsByBOM
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public string 货号 { get; set; }
+    	[DataMember]
         public string 品名 { get; set; }
+    	[DataMember]
         public decimal 数量 { get; set; }
+    	[DataMember]
         public decimal 单价 { get; set; }
+    	[DataMember]
         public string 单位 { get; set; }
+    	[DataMember]
         public string 规格 { get; set; }
+    	[DataMember]
         public int 类型 { get; set; }
+    	[DataMember]
         public System.Guid ParentGoodsID { get; set; }
+    	[DataMember]
         public int GoodsBigType { get; set; }
+    	[DataMember]
         public int PCS { get; set; }
+    	[DataMember]
         public decimal NWeight { get; set; }
+    	[DataMember]
         public int InnerBox { get; set; }
+    	[DataMember]
         public decimal PriceNoTax { get; set; }
+    	[DataMember]
         public Nullable<int> Source { get; set; }
+    	[DataMember]
         public string 备注 { get; set; }
     }
 }

@@ -10,20 +10,34 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class AttWageBillHd
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public string BillNo { get; set; }
+    	[DataMember]
         public System.DateTime BillDate { get; set; }
+    	[DataMember]
         public string YearMonth { get; set; }
+    	[DataMember]
         public Nullable<decimal> Balance { get; set; }
+    	[DataMember]
         public int Status { get; set; }
+    	[DataMember]
         public System.Guid Maker { get; set; }
+    	[DataMember]
         public System.DateTime MakeDate { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> Auditor { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> AuditDate { get; set; }
+    	[DataMember]
         public string Remark { get; set; }
     }
 }

@@ -10,27 +10,48 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VSupplier
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public string 代码 { get; set; }
+    	[DataMember]
         public string 名称 { get; set; }
+    	[DataMember]
         public int 供应商类型 { get; set; }
+    	[DataMember]
         public string 地址 { get; set; }
+    	[DataMember]
         public string 邮编 { get; set; }
+    	[DataMember]
         public string 联系人 { get; set; }
+    	[DataMember]
         public string 联系电话 { get; set; }
+    	[DataMember]
         public string 联系手机 { get; set; }
+    	[DataMember]
         public string QQ { get; set; }
+    	[DataMember]
         public string 传真 { get; set; }
+    	[DataMember]
         public string 开户行 { get; set; }
+    	[DataMember]
         public string 帐号 { get; set; }
+    	[DataMember]
         public string 税号 { get; set; }
+    	[DataMember]
         public string 付款地址 { get; set; }
+    	[DataMember]
         public string 付款抬头 { get; set; }
+    	[DataMember]
         public string 发票地址 { get; set; }
+    	[DataMember]
         public string 备注 { get; set; }
     }
 }

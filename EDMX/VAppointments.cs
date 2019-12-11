@@ -10,29 +10,52 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VAppointments
     {
+    	[DataMember]
         public long UniqueID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> UserID { get; set; }
+    	[DataMember]
         public string 工号 { get; set; }
+    	[DataMember]
         public string 姓名 { get; set; }
+    	[DataMember]
         public int 工资状态 { get; set; }
+    	[DataMember]
         public string 年月 { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> 日期 { get; set; }
+    	[DataMember]
         public Nullable<int> 班次 { get; set; }
+    	[DataMember]
         public Nullable<int> 机号 { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> GoodsID { get; set; }
+    	[DataMember]
         public string 货号 { get; set; }
+    	[DataMember]
         public string 品名 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 重量_斤 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 净重_克 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 计算周期 { get; set; }
+    	[DataMember]
         public Nullable<int> 应产模数 { get; set; }
+    	[DataMember]
         public Nullable<int> 实产模数 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 工时 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 当班金额 { get; set; }
+    	[DataMember]
         public string 备注 { get; set; }
     }
 }

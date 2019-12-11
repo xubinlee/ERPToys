@@ -1891,8 +1891,22 @@ namespace USL
 
         public void LoadBusinessData(MainMenu menu)
         {
-            //IList list = MainForm.GetData(menu.Name);
-            IList list = clientFactory.DataPageRefresh(menu.Name);
+            IList list = null;
+            // 按单据贪婪加载
+            if (menu.Name.ToLower().Contains("order"))
+            {
+                list = clientFactory.GetListByInclude<OrderHd>(nameof(OrderDtl));
+            }
+            else if (menu.Name.ToLower().Contains("stockinbill"))
+            {
+                list = clientFactory.GetListByInclude<StockInBillHd>(nameof(StockInBillDtl));
+            }
+            else if (menu.Name.ToLower().Contains("stockoutbill"))
+            {
+                list = clientFactory.GetListByInclude<StockOutBillHd>(nameof(StockOutBillDtl));
+            }
+            else
+                list = clientFactory.ExecuteQuery(menu.Name, string.Empty);
             if (list != null)
             {
                 itemDetail = new DataQueryPage(menu, list, pageGroupCore, itemDetailButtonList);

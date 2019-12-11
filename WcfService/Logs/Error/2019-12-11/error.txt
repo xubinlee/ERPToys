@@ -1,0 +1,54 @@
+2019-12-11 11:24:27.5236 | Error | 
+Exception：The entity type String is not part of the model for the current context.
+StackTrace：   在 System.Data.Entity.Internal.InternalContext.UpdateEntitySetMappingsForType(Type entityType)
+   在 System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   在 System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   在 System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   在 System.Data.Entity.Internal.Linq.InternalDbSet`1.Include(String path)
+   在 DAL.BaseDAL.GetListByInclude(DbContext db, Type type, String path) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 324
+   在 Castle.Proxies.BaseDALProxy.GetListByInclude_callback_1(DbContext db, Type type, String path)
+   在 Castle.Proxies.Invocations.BaseDAL_GetListByInclude_1.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 32
+------------2019-12-11 11:24:27------------
+ 
+2019-12-11 13:59:52.8832 | Error | 
+Exception：值不能为 null。
+参数名: entityType
+StackTrace：   在 System.Data.Entity.Utilities.Check.NotNull[T](T value, String parameterName)
+   在 System.Data.Entity.DbContext.Set(Type entityType)
+   在 DAL.BaseDAL.GetListByInclude(DbContext db, Type type, String path) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 324
+   在 Castle.Proxies.BaseDALProxy.GetListByInclude_callback_1(DbContext db, Type type, String path)
+   在 Castle.Proxies.Invocations.BaseDAL_GetListByInclude_1.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 32
+------------2019-12-11 13:59:52------------
+ 
+2019-12-11 14:03:58.1943 | Error | 
+Exception：值不能为 null。
+参数名: entityType
+StackTrace：   在 System.Data.Entity.Utilities.Check.NotNull[T](T value, String parameterName)
+   在 System.Data.Entity.DbContext.Set(Type entityType)
+   在 DAL.BaseDAL.GetListByInclude(DbContext db, Type type, String path) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 324
+   在 Castle.Proxies.BaseDALProxy.GetListByInclude_callback_1(DbContext db, Type type, String path)
+   在 Castle.Proxies.Invocations.BaseDAL_GetListByInclude_1.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 32
+------------2019-12-11 14:03:58------------
+ 
+2019-12-11 14:05:12.1000 | Error | 
+Exception：值不能为 null。
+参数名: entityType
+StackTrace：   在 System.Data.Entity.Utilities.Check.NotNull[T](T value, String parameterName)
+   在 System.Data.Entity.DbContext.Set(Type entityType)
+   在 DAL.BaseDAL.GetListByInclude(DbContext db, Type type, String path) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 324
+   在 Castle.Proxies.BaseDALProxy.GetListByInclude_callback_1(DbContext db, Type type, String path)
+   在 Castle.Proxies.Invocations.BaseDAL_GetListByInclude_1.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 32
+------------2019-12-11 14:05:12------------
+ 

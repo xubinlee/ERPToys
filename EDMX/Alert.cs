@@ -10,18 +10,30 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class Alert
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public string Caption { get; set; }
+    	[DataMember]
         public string Text { get; set; }
+    	[DataMember]
         public System.DateTime AddTime { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> GoodsID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> BillID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> UserID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> CompanyID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> SupplierID { get; set; }
     }
 }

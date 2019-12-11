@@ -544,10 +544,11 @@
     <Property Name="TonsQty" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
     <Property Name="TonsPrice" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="StockInBillHd" Relationship="Self.FK_StockInBillDtl_StockInBillHd" FromRole="StockInBillDtl" ToRole="StockInBillHd" />
   </EntityType>
   <EntityType Name="StockInBillHd">
     <Key>
-      <PropertyRef Name="BillNo" />
+      <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Guid" Nullable="false" />
     <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
@@ -570,6 +571,9 @@
     <Property Name="BillAMT" Type="Decimal" Precision="12" Scale="2" />
     <Property Name="UnPaidAMT" Type="Decimal" Precision="12" Scale="2" />
     <Property Name="Worker" Type="Guid" />
+    <NavigationProperty Name="StockInBillDtl" Relationship="Self.FK_StockInBillDtl_StockInBillHd" FromRole="StockInBillHd" ToRole="StockInBillDtl" />
+    <NavigationProperty Name="StockInBillHd1" Relationship="Self.FK_StockInBillHd_StockInBillHd" FromRole="StockInBillHd" ToRole="StockInBillHd1" />
+    <NavigationProperty Name="StockInBillHd2" Relationship="Self.FK_StockInBillHd_StockInBillHd" FromRole="StockInBillHd1" ToRole="StockInBillHd" />
   </EntityType>
   <EntityType Name="StockOutBillDtl">
     <Key>
@@ -596,7 +600,7 @@
   </EntityType>
   <EntityType Name="StockOutBillHd">
     <Key>
-      <PropertyRef Name="BillNo" />
+      <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Guid" Nullable="false" />
     <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
@@ -621,6 +625,8 @@
     <Property Name="BillAMT" Type="Decimal" Precision="12" Scale="2" />
     <Property Name="UnReceiptedAMT" Type="Decimal" Precision="12" Scale="2" />
     <Property Name="Driver" Type="Guid" />
+    <NavigationProperty Name="StockOutBillHd1" Relationship="Self.FK_StockOutBillHd_StockOutBillHd" FromRole="StockOutBillHd" ToRole="StockOutBillHd1" />
+    <NavigationProperty Name="StockOutBillHd2" Relationship="Self.FK_StockOutBillHd_StockOutBillHd" FromRole="StockOutBillHd1" ToRole="StockOutBillHd" />
   </EntityType>
   <EntityType Name="Stocktaking">
     <Key>
@@ -2782,6 +2788,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_StockInBillDtl_StockInBillHd">
+    <End Role="StockInBillHd" Type="Self.StockInBillHd" Multiplicity="1" />
+    <End Role="StockInBillDtl" Type="Self.StockInBillDtl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StockInBillHd">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StockInBillDtl">
+        <PropertyRef Name="HdID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockInBillHd_StockInBillHd">
+    <End Role="StockInBillHd" Type="Self.StockInBillHd" Multiplicity="1" />
+    <End Role="StockInBillHd1" Type="Self.StockInBillHd" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="StockInBillHd">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StockInBillHd1">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockOutBillHd_StockOutBillHd">
+    <End Role="StockOutBillHd" Type="Self.StockOutBillHd" Multiplicity="1" />
+    <End Role="StockOutBillHd1" Type="Self.StockOutBillHd" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="StockOutBillHd">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StockOutBillHd1">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="ERPToysContext" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="AccountBook" EntityType="Self.AccountBook" />
     <EntitySet Name="Alert" EntityType="Self.Alert" />
@@ -2895,6 +2937,18 @@
     <AssociationSet Name="FK_OrderDtl_Goods" Association="Self.FK_OrderDtl_Goods">
       <End Role="Goods" EntitySet="Goods" />
       <End Role="OrderDtl" EntitySet="OrderDtl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockInBillDtl_StockInBillHd" Association="Self.FK_StockInBillDtl_StockInBillHd">
+      <End Role="StockInBillHd" EntitySet="StockInBillHd" />
+      <End Role="StockInBillDtl" EntitySet="StockInBillDtl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockInBillHd_StockInBillHd" Association="Self.FK_StockInBillHd_StockInBillHd">
+      <End Role="StockInBillHd" EntitySet="StockInBillHd" />
+      <End Role="StockInBillHd1" EntitySet="StockInBillHd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockOutBillHd_StockOutBillHd" Association="Self.FK_StockOutBillHd_StockOutBillHd">
+      <End Role="StockOutBillHd" EntitySet="StockOutBillHd" />
+      <End Role="StockOutBillHd1" EntitySet="StockOutBillHd" />
     </AssociationSet>
     <FunctionImport Name="USPGetAnnualSalesSummaryByCustomerReport">
       <Parameter Name="Filter" Mode="In" Type="String" />

@@ -161,7 +161,7 @@ namespace USL
             if (hdID is Guid && ((Guid)hdID) != Guid.Empty)
             {
                 headID = (Guid)hdID;
-                stockOutBillHdBindingSource.DataSource = hd = BLLFty.Create<StockOutBillBLL>().GetStockOutBillHd(headID);
+                stockOutBillHdBindingSource.DataSource = hd = clientFactory.GetData<StockOutBillHd>().FirstOrDefault(o => o.ID.Equals(headID));
                 stockOutBillDtlBindingSource.DataSource = dtl = BLLFty.Create<StockOutBillBLL>().GetStockOutBillDtl(headID);
                 if (billType == MainMenuConstants.EMSStockOutBill && (lueType.ItemIndex == 0 || lueType.ItemIndex == -1) ||
                     billType == MainMenuConstants.FSMDPReturnBill)

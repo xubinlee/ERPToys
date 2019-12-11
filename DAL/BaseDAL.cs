@@ -310,6 +310,20 @@ namespace DAL
             return db.Set<T>().Where(whereLambda).ToList();
         }
 
+        public virtual List<T> GetListByInclude<T>(DbContext db, string path) where T : class, new()
+        {
+            // 关闭延迟加载
+            db.Configuration.LazyLoadingEnabled = false;
+            return db.Set<T>().Include(path).ToList();
+        }
+
+        public virtual IQueryable GetListByInclude(DbContext db, Type type, string path)
+        {
+            // 关闭延迟加载
+            db.Configuration.LazyLoadingEnabled = false;
+            return db.Set(type).Include(path).AsQueryable();
+        }
+
         /// <summary>
         /// 根据条件排序和查询
         /// </summary>

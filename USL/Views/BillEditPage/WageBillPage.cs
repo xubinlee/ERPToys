@@ -57,10 +57,10 @@ namespace USL
             if (hdID is Guid && ((Guid)hdID) != Guid.Empty)
             {
                 headID = (Guid)hdID;
-                wageBillHdBindingSource.DataSource = hd = BLLFty.Create<WageBillBLL>().GetWageBillHd(headID);
-                dtl = BLLFty.Create<WageBillBLL>().GetVWageBillDtl().FindAll(o =>
+                wageBillHdBindingSource.DataSource = hd = clientFactory.GetData<WageBillHd>().FirstOrDefault(o => o.ID.Equals(headID));
+                dtl =clientFactory.GetData<VWageBillDtl>().FindAll(o =>
                                     o.UserID == new Guid(lueBusinessContact.EditValue.ToString()));
-                List<VWageBill> list = ((List<VWageBill>)MainForm.dataSourceList[typeof(List<VWageBill>)]).FindAll(o => o.HdID == headID);
+                List<VWageBill> list =clientFactory.GetData<VWageBill>().FindAll(o => o.HdID == headID);
                 for (int i = dtl.Count - 1; i >= 0; i--)
                 {
                     VWageBill obj = list.Find(o => o.年月 == dtl[i].YearMonth);

@@ -10,16 +10,26 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class ReceiptBillDtl
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public System.Guid HdID { get; set; }
+    	[DataMember]
         public System.Guid BillID { get; set; }
+    	[DataMember]
         public decimal BillAMT { get; set; }
+    	[DataMember]
         public decimal ReceiptedAMT { get; set; }
+    	[DataMember]
         public decimal UnReceiptedAMT { get; set; }
+    	[DataMember]
         public decimal LastReceiptedAMT { get; set; }
     }
 }

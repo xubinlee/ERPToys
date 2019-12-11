@@ -10,21 +10,36 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VParentGoodsByBOM
     {
+    	[DataMember]
         public Nullable<System.Guid> ID { get; set; }
+    	[DataMember]
         public string 货号 { get; set; }
+    	[DataMember]
         public string 品名 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 单价 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 去税单价 { get; set; }
+    	[DataMember]
         public Nullable<int> 装箱数 { get; set; }
+    	[DataMember]
         public Nullable<int> 内盒 { get; set; }
+    	[DataMember]
         public string 单位 { get; set; }
+    	[DataMember]
         public string 外箱规格 { get; set; }
+    	[DataMember]
         public string 规格 { get; set; }
+    	[DataMember]
         public int 类型 { get; set; }
+    	[DataMember]
         public string 备注 { get; set; }
     }
 }

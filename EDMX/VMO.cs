@@ -10,26 +10,46 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VMO
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> CustomerID { get; set; }
+    	[DataMember]
         public byte[] 图片 { get; set; }
+    	[DataMember]
         public string 货号 { get; set; }
+    	[DataMember]
         public string 品名 { get; set; }
+    	[DataMember]
         public string 客户 { get; set; }
+    	[DataMember]
         public decimal 单价 { get; set; }
+    	[DataMember]
         public int 装箱数 { get; set; }
+    	[DataMember]
         public int 内盒 { get; set; }
+    	[DataMember]
         public string 规格 { get; set; }
+    	[DataMember]
         public string 外箱规格 { get; set; }
+    	[DataMember]
         public string 单位 { get; set; }
+    	[DataMember]
         public decimal 毛重 { get; set; }
+    	[DataMember]
         public decimal 净重 { get; set; }
+    	[DataMember]
         public decimal 体积 { get; set; }
+    	[DataMember]
         public string 条形码 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 产量 { get; set; }
     }
 }

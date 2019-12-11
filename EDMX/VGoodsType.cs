@@ -10,12 +10,18 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VGoodsType
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public string 类型编码 { get; set; }
+    	[DataMember]
         public string 类型名称 { get; set; }
     }
 }

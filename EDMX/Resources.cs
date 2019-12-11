@@ -10,15 +10,24 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class Resources
     {
+    	[DataMember]
         public int UniqueID { get; set; }
+    	[DataMember]
         public Nullable<int> ResourceID { get; set; }
+    	[DataMember]
         public string ResourceName { get; set; }
+    	[DataMember]
         public Nullable<int> Color { get; set; }
+    	[DataMember]
         public byte[] Image { get; set; }
+    	[DataMember]
         public string CustomField1 { get; set; }
     }
 }

@@ -10,34 +10,62 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VStockInBillDtlByBOM
     {
+    	[DataMember]
         public Nullable<System.Guid> ID { get; set; }
+    	[DataMember]
         public System.Guid HdID { get; set; }
+    	[DataMember]
         public System.Guid GoodsID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> ParentGoodsID { get; set; }
+    	[DataMember]
         public Nullable<decimal> Qty { get; set; }
+    	[DataMember]
         public Nullable<decimal> StockQty { get; set; }
+    	[DataMember]
         public Nullable<decimal> Shortage { get; set; }
+    	[DataMember]
         public int PCS { get; set; }
+    	[DataMember]
         public int InnerBox { get; set; }
+    	[DataMember]
         public decimal NWeight { get; set; }
+    	[DataMember]
         public Nullable<decimal> Counts { get; set; }
+    	[DataMember]
         public Nullable<decimal> Modulus { get; set; }
+    	[DataMember]
         public decimal Price { get; set; }
+    	[DataMember]
         public decimal PriceNoTax { get; set; }
+    	[DataMember]
         public decimal Discount { get; set; }
+    	[DataMember]
         public decimal OtherFee { get; set; }
+    	[DataMember]
         public int Type { get; set; }
+    	[DataMember]
         public string 货号 { get; set; }
+    	[DataMember]
         public string 品名 { get; set; }
+    	[DataMember]
         public int 货品大类 { get; set; }
+    	[DataMember]
         public string 规格 { get; set; }
+    	[DataMember]
         public string 单位 { get; set; }
+    	[DataMember]
         public decimal 一出几 { get; set; }
+    	[DataMember]
         public string Remark { get; set; }
+    	[DataMember]
         public Nullable<int> Source { get; set; }
     }
 }

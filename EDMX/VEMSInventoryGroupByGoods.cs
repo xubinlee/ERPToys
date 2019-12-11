@@ -10,28 +10,50 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VEMSInventoryGroupByGoods
     {
+    	[DataMember]
         public Nullable<System.Guid> SupplierID { get; set; }
+    	[DataMember]
         public string 供应商代码 { get; set; }
+    	[DataMember]
         public string 供应商名称 { get; set; }
+    	[DataMember]
         public string 货号 { get; set; }
+    	[DataMember]
         public string 品名 { get; set; }
+    	[DataMember]
         public int 货品大类 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 总数量 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 布产数量 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 可用数量 { get; set; }
+    	[DataMember]
         public decimal 净重 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 个数 { get; set; }
+    	[DataMember]
         public decimal 一出几 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 模数 { get; set; }
+    	[DataMember]
         public decimal 单价 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 金额 { get; set; }
+    	[DataMember]
         public string 货品类型代码 { get; set; }
+    	[DataMember]
         public string 货品类型名称 { get; set; }
+    	[DataMember]
         public string 单位 { get; set; }
+    	[DataMember]
         public string 规格 { get; set; }
     }
 }

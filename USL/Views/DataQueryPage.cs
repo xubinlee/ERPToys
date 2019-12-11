@@ -56,8 +56,8 @@ namespace USL
             mainMenu = menu;
             dataSource = list;
             //itemDetailPageList = new Dictionary<string, ItemDetailPage>();
-            types = MainForm.dataSourceList[typeof(List<TypesList>)] as List<TypesList>;
-            warehouseList = MainForm.dataSourceList[typeof(List<Warehouse>)] as List<Warehouse>;
+            types = clientFactory.GetData<TypesList>();
+            warehouseList = clientFactory.GetData<Warehouse>();
         }
 
         void GetItemDetailPage()
@@ -616,7 +616,7 @@ namespace USL
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
                                 if (result == System.Windows.Forms.DialogResult.OK)
                                 {
-                                    page.Hd = BLLFty.Create<StockOutBillBLL>().GetStockOutBillHd(bill.HdID);
+                                    page.Hd = BLLFty.Create<StockOutBillBLL>().GetStockOutBillHd(bill.HdID); //clientFactory.GetData<StockOutBillHd>().FirstOrDefault(o => o.ID.Equals(bill.HdID));
                                     return page.Audit();
                                 }
                             }
@@ -629,7 +629,7 @@ namespace USL
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
                                 if (result == System.Windows.Forms.DialogResult.OK)
                                 {
-                                    page.Hd = BLLFty.Create<StockOutBillBLL>().GetStockOutBillHd(bill.HdID);
+                                    page.Hd = BLLFty.Create<StockOutBillBLL>().GetStockOutBillHd(bill.HdID);// clientFactory.GetData<StockOutBillHd>().FirstOrDefault(o => o.ID.Equals(bill.HdID));
                                     return page.Audit();
                                 }
                             }
@@ -707,7 +707,7 @@ namespace USL
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
                                 if (result == System.Windows.Forms.DialogResult.OK)
                                 {
-                                    page.Hd = BLLFty.Create<WageBillBLL>().GetWageBillHd(bill.HdID);
+                                    page.Hd = BLLFty.Create<WageBillBLL>().GetWageBillHd(bill.HdID); //clientFactory.GetData<WageBillHd>().FirstOrDefault(o=>o.ID.Equals(bill.HdID));
                                     return page.Audit();
                                 }
                             }

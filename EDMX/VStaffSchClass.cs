@@ -10,23 +10,40 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VStaffSchClass
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public System.Guid DeptID { get; set; }
+    	[DataMember]
         public System.Guid SchClassID { get; set; }
+    	[DataMember]
         public int SchSerialNo { get; set; }
+    	[DataMember]
         public string Name { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> StartTime { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> EndTime { get; set; }
+    	[DataMember]
         public int LateMinutes { get; set; }
+    	[DataMember]
         public int EarlyMinutes { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> CheckInStartTime { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> CheckInEndTime { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> CheckOutStartTime { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> CheckOutEndTime { get; set; }
+    	[DataMember]
         public Nullable<int> Color { get; set; }
     }
 }

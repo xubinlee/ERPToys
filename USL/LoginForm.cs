@@ -25,6 +25,7 @@ namespace USL
 {
     public partial class LoginForm : DevExpress.XtraEditors.XtraForm
     {
+        private static IStockInBillService stockInBillService = ServiceProxyFactory.Create<IStockInBillService>("StockInBillService");
         private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
         public LoginForm()
         {

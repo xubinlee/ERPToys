@@ -10,13 +10,20 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class TypesList
     {
+    	[DataMember]
         public string Type { get; set; }
+    	[DataMember]
         public int No { get; set; }
+    	[DataMember]
         public string SubType { get; set; }
+    	[DataMember]
         public string Name { get; set; }
     }
 }

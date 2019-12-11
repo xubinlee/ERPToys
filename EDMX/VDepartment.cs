@@ -10,18 +10,30 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VDepartment
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public string 代码 { get; set; }
+    	[DataMember]
         public string 名称 { get; set; }
+    	[DataMember]
         public string 联系人 { get; set; }
+    	[DataMember]
         public string 联系电话 { get; set; }
+    	[DataMember]
         public string 联系手机 { get; set; }
+    	[DataMember]
         public string QQ { get; set; }
+    	[DataMember]
         public string 传真 { get; set; }
+    	[DataMember]
         public string 备注 { get; set; }
     }
 }

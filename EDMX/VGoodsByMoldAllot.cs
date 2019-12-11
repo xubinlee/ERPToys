@@ -10,17 +10,28 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VGoodsByMoldAllot
     {
+    	[DataMember]
         public Nullable<System.Guid> ID { get; set; }
+    	[DataMember]
         public System.Guid SupplierID { get; set; }
+    	[DataMember]
         public string 货号 { get; set; }
+    	[DataMember]
         public string 品名 { get; set; }
+    	[DataMember]
         public decimal 数量 { get; set; }
+    	[DataMember]
         public decimal 单价 { get; set; }
+    	[DataMember]
         public string 单位 { get; set; }
+    	[DataMember]
         public string 规格 { get; set; }
     }
 }

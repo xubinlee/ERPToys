@@ -10,14 +10,22 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class ButtonPermission
     {
+    	[DataMember]
         public int ID { get; set; }
+    	[DataMember]
         public System.Guid UserID { get; set; }
+    	[DataMember]
         public string Name { get; set; }
+    	[DataMember]
         public string Caption { get; set; }
+    	[DataMember]
         public bool CheckBoxState { get; set; }
     }
 }

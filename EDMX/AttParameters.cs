@@ -10,14 +10,22 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class AttParameters
     {
+    	[DataMember]
         public int MachineNumber { get; set; }
+    	[DataMember]
         public string CommMode { get; set; }
+    	[DataMember]
         public string BaudRate { get; set; }
+    	[DataMember]
         public string AttIP { get; set; }
+    	[DataMember]
         public string AttPort { get; set; }
     }
 }

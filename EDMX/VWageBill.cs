@@ -10,29 +10,52 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VWageBill
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public System.Guid HdID { get; set; }
+    	[DataMember]
         public string 工资单号 { get; set; }
+    	[DataMember]
         public System.DateTime 结算日期 { get; set; }
+    	[DataMember]
         public int 状态 { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> UserID { get; set; }
+    	[DataMember]
         public string 工号 { get; set; }
+    	[DataMember]
         public string 姓名 { get; set; }
+    	[DataMember]
         public string 年月 { get; set; }
+    	[DataMember]
         public decimal 基本工资 { get; set; }
+    	[DataMember]
         public decimal 福利 { get; set; }
+    	[DataMember]
         public decimal 扣款 { get; set; }
+    	[DataMember]
         public decimal 代扣社保 { get; set; }
+    	[DataMember]
         public decimal 代扣个税 { get; set; }
+    	[DataMember]
         public decimal 实发工资 { get; set; }
+    	[DataMember]
         public string 制单人 { get; set; }
+    	[DataMember]
         public System.DateTime 制单日期 { get; set; }
+    	[DataMember]
         public string 审核人 { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> 审核日期 { get; set; }
+    	[DataMember]
         public string 备注 { get; set; }
     }
 }

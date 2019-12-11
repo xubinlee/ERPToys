@@ -270,7 +270,8 @@ namespace USL
                     {
                         if (menuList[i].ParentID == null)
                             continue;
-                        if (pList.FirstOrDefault(o => o.Caption.Trim() == menuList[i].Caption.Trim()).CheckBoxState == false)
+                        Permission p = pList.FirstOrDefault(o => o.Caption.Trim() == menuList[i].Caption.Trim());
+                        if (p!=null && p.CheckBoxState == false)
                         {
                             menuList.RemoveAt(i);
                             continue;
@@ -318,7 +319,7 @@ namespace USL
         private List<Permission> updatePermission(List<Permission> pList)
         {
             List<Permission> insertList = new List<Permission>();
-            menuList.FindAll(o => o.CheckBoxState).ForEach(menu =>
+            menuList.ForEach(menu =>
             {
                 Permission p = pList.FirstOrDefault(o => o.UserID == usersInfo.ID && o.Caption == menu.Caption);
                 Permission obj = new Permission();
@@ -340,7 +341,7 @@ namespace USL
             if (insertList.Count > 0)
             {
                 permissionService.DeleteAndAdd(usersInfo.ID, insertList);
-                return clientFactory.UpdateCache<Permission>();
+                return clientFactory.UpdateCache<Permission>().FindAll(o => o.UserID == usersInfo.ID);
             }
             else
                 return pList;

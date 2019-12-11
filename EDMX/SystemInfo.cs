@@ -10,17 +10,28 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class SystemInfo
     {
+    	[DataMember]
         public string Company { get; set; }
+    	[DataMember]
         public int CompanyType { get; set; }
+    	[DataMember]
         public string Contracts { get; set; }
+    	[DataMember]
         public string Accounts { get; set; }
+    	[DataMember]
         public string FtpPath { get; set; }
+    	[DataMember]
         public string ServerUserName { get; set; }
+    	[DataMember]
         public string ServerPassword { get; set; }
+    	[DataMember]
         public string Version { get; set; }
     }
 }

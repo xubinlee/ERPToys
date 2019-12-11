@@ -10,26 +10,46 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class AccountBook
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public System.Guid WarehouseID { get; set; }
+    	[DataMember]
         public int WarehouseType { get; set; }
+    	[DataMember]
         public System.Guid GoodsID { get; set; }
+    	[DataMember]
         public System.DateTime AccntDate { get; set; }
+    	[DataMember]
         public string MEAS { get; set; }
+    	[DataMember]
         public int PCS { get; set; }
+    	[DataMember]
         public decimal Price { get; set; }
+    	[DataMember]
         public decimal Discount { get; set; }
+    	[DataMember]
         public decimal OtherFee { get; set; }
+    	[DataMember]
         public decimal InQty { get; set; }
+    	[DataMember]
         public decimal OutQty { get; set; }
+    	[DataMember]
         public decimal BalanceQty { get; set; }
+    	[DataMember]
         public decimal BalanceCost { get; set; }
+    	[DataMember]
         public string BillNo { get; set; }
+    	[DataMember]
         public System.DateTime BillDate { get; set; }
+    	[DataMember]
         public decimal NWeight { get; set; }
     }
 }

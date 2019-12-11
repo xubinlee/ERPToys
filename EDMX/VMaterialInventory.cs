@@ -10,27 +10,48 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VMaterialInventory
     {
+    	[DataMember]
         public string 货号 { get; set; }
+    	[DataMember]
         public string 品名 { get; set; }
+    	[DataMember]
         public int 货品大类 { get; set; }
+    	[DataMember]
         public decimal 数量 { get; set; }
+    	[DataMember]
         public decimal 净重 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 个数 { get; set; }
+    	[DataMember]
         public decimal 单价 { get; set; }
+    	[DataMember]
         public decimal 折扣 { get; set; }
+    	[DataMember]
         public decimal 额外费用 { get; set; }
+    	[DataMember]
         public Nullable<decimal> 金额 { get; set; }
+    	[DataMember]
         public string 货品类型代码 { get; set; }
+    	[DataMember]
         public string 货品类型名称 { get; set; }
+    	[DataMember]
         public string 单位 { get; set; }
+    	[DataMember]
         public string 规格 { get; set; }
+    	[DataMember]
         public System.DateTime 登帐日期 { get; set; }
+    	[DataMember]
         public string 单据编号 { get; set; }
+    	[DataMember]
         public System.DateTime 制单日期 { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> SupplierID { get; set; }
     }
 }

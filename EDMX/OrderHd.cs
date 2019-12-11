@@ -10,30 +10,54 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class OrderHd
     {
+    	[DataMember]
         public System.Guid ID { get; set; }
+    	[DataMember]
         public string BillNo { get; set; }
+    	[DataMember]
         public System.Guid WarehouseID { get; set; }
+    	[DataMember]
         public int WarehouseType { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> CompanyID { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> SupplierID { get; set; }
+    	[DataMember]
         public string Contacts { get; set; }
+    	[DataMember]
         public System.DateTime OrderDate { get; set; }
+    	[DataMember]
         public System.DateTime DeliveryDate { get; set; }
+    	[DataMember]
         public System.Guid Maker { get; set; }
+    	[DataMember]
         public System.DateTime MakeDate { get; set; }
+    	[DataMember]
         public Nullable<System.Guid> Auditor { get; set; }
+    	[DataMember]
         public Nullable<System.DateTime> AuditDate { get; set; }
+    	[DataMember]
         public string MainMark { get; set; }
+    	[DataMember]
         public string Remark { get; set; }
+    	[DataMember]
         public int Type { get; set; }
+    	[DataMember]
         public int Status { get; set; }
+    	[DataMember]
         public int BillType { get; set; }
+    	[DataMember]
         public Nullable<decimal> BillAMT { get; set; }
+    	[DataMember]
         public Nullable<decimal> UnReceiptedAMT { get; set; }
+    	[DataMember]
         public byte[] Pic { get; set; }
     }
 }

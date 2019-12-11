@@ -10,18 +10,30 @@
 namespace EDMX
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
+    
+    [DataContract]
     
     public partial class VAttGeneralLog
     {
+    	[DataMember]
         public byte[] 照片 { get; set; }
+    	[DataMember]
         public string 账号 { get; set; }
+    	[DataMember]
         public string 姓名 { get; set; }
+    	[DataMember]
         public string 部门 { get; set; }
+    	[DataMember]
         public string 职位 { get; set; }
+    	[DataMember]
         public System.DateTime 出勤时间 { get; set; }
+    	[DataMember]
         public string 卡号 { get; set; }
+    	[DataMember]
         public int 特权 { get; set; }
+    	[DataMember]
         public int 验证方式 { get; set; }
     }
 }
