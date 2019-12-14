@@ -35,9 +35,10 @@ namespace Utility.Interceptor
             {
                 // 方法执行中抛异常时记录日志
                 string split = "\r\n------------" + DateTime.Now.ToString() + "------------\r\n";
-                string exception = string.Format("\r\nException：{0}\r\nStackTrace：{1}{2}",
-                    ex.Message, ex.StackTrace, split);
+                string exception = string.Format("\r\nInnerException：{0}\r\nException：{1}\r\nStackTrace：{2}{3}", ex.InnerException, ex.Message, ex.StackTrace, split);
                 Logger.Error(exception);
+                //if (invocation.TargetType == typeof(USL))
+                //    XtraMessageBox.Show(ex.Message, "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

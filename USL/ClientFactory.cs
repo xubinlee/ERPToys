@@ -105,7 +105,7 @@ namespace USL
         /// <typeparam name="T">实体类型</typeparam>
         /// <param name="model">实体对象</param>
         /// <returns></returns>
-        public virtual int Modify<T>(T model) where T : class, new()
+        public virtual int Update<T>(T model) where T : class, new()
         {
             Parameter parameter = new Parameter();
             parameter.entityType = typeof(T);
@@ -177,7 +177,7 @@ namespace USL
         /// <returns></returns>
         private Type Reflect(string entityName)
         {
-            string assemblyString = "EDMX";
+            string assemblyString = nameof(EDMX);
             Assembly assembly = Assembly.Load(assemblyString);
             return assembly.GetType(string.Format("{0}.{1}", assemblyString, entityName));
         }
@@ -302,13 +302,13 @@ namespace USL
         }
 
         /// <summary>
-        /// 刷新所有界面
+        /// 刷新界面,同时更新缓存
         /// </summary>
         /// <typeparam name="T">类型</typeparam>
         /// <returns></returns>
         public virtual List<T> DataPageRefresh<T>() where T : class, new()
         {
-            List<T> list = GetData<T>();
+            List<T> list = UpdateCache<T>();// GetData<T>();
             foreach (KeyValuePair<String, IItemDetail> kvp in itemDetailList)
             {
                 kvp.Value.BindData(list);

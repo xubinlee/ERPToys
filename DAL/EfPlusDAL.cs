@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace DAL
 {
@@ -18,6 +19,9 @@ namespace DAL
         /// <param name="list"></param>
         public virtual void AddByBulk<T>(DbContext db, List<T> list) where T : class, new()
         {
+            // 让使用nameof(T)标签的所有缓存过期
+            QueryCacheManager.ExpireTag(nameof(T));
+            db.Configuration.AutoDetectChangesEnabled = false;// 解决批量性能问题
             db.Set<T>().BulkInsert(list);
         }
 
@@ -28,6 +32,8 @@ namespace DAL
         /// <param name="list"></param>
         public virtual void UpdateByBulk<T>(DbContext db, List<T> list) where T : class, new()
         {
+            // 让使用nameof(T)标签的所有缓存过期
+            QueryCacheManager.ExpireTag(nameof(T));
             db.Set<T>().BulkUpdate(list);
         }
 
@@ -41,6 +47,9 @@ namespace DAL
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
+                // 让使用nameof(T)标签的所有缓存过期
+                QueryCacheManager.ExpireTag(nameof(T));
+                db.Configuration.AutoDetectChangesEnabled = false;// 解决批量性能问题
                 db.Set<T>().BulkInsert(insertList);
                 db.Set<T>().BulkUpdate(updateList);
                 trans.Commit();
@@ -57,6 +66,9 @@ namespace DAL
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
+                // 让使用nameof(T)标签的所有缓存过期
+                QueryCacheManager.ExpireTag(nameof(T));
+                db.Configuration.AutoDetectChangesEnabled = false;// 解决批量性能问题
                 db.Set<H>().Add(hd);
                 db.Set<T>().BulkInsert(dtlList);
                 trans.Commit();
@@ -70,6 +82,8 @@ namespace DAL
         /// <returns></returns>
         public virtual int DeleteByBulk<T>(DbContext db, Expression<Func<T, bool>> delWhere) where T : class, new()
         {
+            // 让使用nameof(T)标签的所有缓存过期
+            QueryCacheManager.ExpireTag(nameof(T));
             return db.Set<T>().Where(delWhere).DeleteFromQuery();
         }
 
@@ -83,6 +97,9 @@ namespace DAL
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
+                // 让使用nameof(T)标签的所有缓存过期
+                QueryCacheManager.ExpireTag(nameof(T));
+                db.Configuration.AutoDetectChangesEnabled = false;// 解决批量性能问题
                 db.Set<T>().Where(delWhere).DeleteFromQuery();
                 db.Set<T>().BulkInsert(insertList);
                 trans.Commit();

@@ -1068,7 +1068,7 @@ namespace USL
                 {
                     currentObj = gridView.GetRow(gridView.FocusedRowHandle);
                     Goods goods = currentObj as Goods;
-                    clientFactory.Modify<Goods>(goods);
+                    clientFactory.Update<Goods>(goods);
                     clientFactory.DataPageRefresh(mainMenu.Name, string.Empty);
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "货品设置停产成功");
                 }

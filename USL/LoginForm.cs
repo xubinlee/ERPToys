@@ -53,12 +53,6 @@ namespace USL
                 txtCode.Focus();
                 txtCode.SelectAll();
             }
-            else if (user.Password == null || user.Password.Equals(string.Empty))
-            {
-                XtraMessageBox.Show("该用户没有登录权限，请为该用户设置密码。", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtCode.Focus();
-                txtCode.SelectAll();
-            }
             else if (user.Password != txtPassword.Text.Trim())
             {
                 XtraMessageBox.Show("密码不正确。", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Error);

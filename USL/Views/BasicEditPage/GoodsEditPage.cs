@@ -207,7 +207,7 @@ namespace USL
 
                 }
                 else
-                    clientFactory.Modify<Goods>(goods);
+                    clientFactory.Update<Goods>(goods);
 
                 //CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 //保存成功后，显示原来清晰的图片
