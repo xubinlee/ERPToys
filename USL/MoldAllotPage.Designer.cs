@@ -154,7 +154,7 @@
             // 
             // vSupplierBindingSource
             // 
-            this.vSupplierBindingSource.DataSource = typeof(DBML.VSupplier);
+            this.vSupplierBindingSource.DataSource = typeof(EDMX.VSupplier);
             // 
             // winExplorerView
             // 
@@ -345,7 +345,7 @@
             // 
             // bOMBindingSource
             // 
-            this.bOMBindingSource.DataSource = typeof(DBML.BOM);
+            this.bOMBindingSource.DataSource = typeof(EDMX.BOM);
             // 
             // gridView
             // 
@@ -417,7 +417,7 @@
             // 
             // goodsBindingSource
             // 
-            this.goodsBindingSource.DataSource = typeof(DBML.Goods);
+            this.goodsBindingSource.DataSource = typeof(EDMX.Goods);
             // 
             // colName
             // 

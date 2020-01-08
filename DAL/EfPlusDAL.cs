@@ -6,12 +6,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Utility;
 using Z.EntityFramework.Plus;
 
 namespace DAL
 {
     public class EfPlusDAL : IDALBase
     {
+        RedisHelper redis = new RedisHelper();
         /// <summary>
         /// 海量数据插入方法(该插件新增功能要收费，免费版本需要定期更新)
         /// </summary>
@@ -19,8 +21,9 @@ namespace DAL
         /// <param name="list"></param>
         public virtual void AddByBulk<T>(DbContext db, List<T> list) where T : class, new()
         {
-            // 让使用nameof(T)标签的所有缓存过期
-            QueryCacheManager.ExpireTag(nameof(T));
+            // 让使用typeof(T).Name标签的所有缓存过期
+            QueryCacheManager.ExpireTag(typeof(T).Name);
+            redis.KeyDelete(typeof(T).Name);
             db.Configuration.AutoDetectChangesEnabled = false;// 解决批量性能问题
             db.Set<T>().BulkInsert(list);
         }
@@ -32,8 +35,9 @@ namespace DAL
         /// <param name="list"></param>
         public virtual void UpdateByBulk<T>(DbContext db, List<T> list) where T : class, new()
         {
-            // 让使用nameof(T)标签的所有缓存过期
-            QueryCacheManager.ExpireTag(nameof(T));
+            // 让使用typeof(T).Name标签的所有缓存过期
+            QueryCacheManager.ExpireTag(typeof(T).Name);
+            redis.KeyDelete(typeof(T).Name);
             db.Set<T>().BulkUpdate(list);
         }
 
@@ -47,8 +51,9 @@ namespace DAL
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
-                // 让使用nameof(T)标签的所有缓存过期
-                QueryCacheManager.ExpireTag(nameof(T));
+                // 让使用typeof(T).Name标签的所有缓存过期
+                QueryCacheManager.ExpireTag(typeof(T).Name);
+                redis.KeyDelete(typeof(T).Name);
                 db.Configuration.AutoDetectChangesEnabled = false;// 解决批量性能问题
                 db.Set<T>().BulkInsert(insertList);
                 db.Set<T>().BulkUpdate(updateList);
@@ -66,10 +71,12 @@ namespace DAL
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
-                // 让使用nameof(T)标签的所有缓存过期
-                QueryCacheManager.ExpireTag(nameof(T));
+                // 让使用typeof(T).Name标签的所有缓存过期
+                QueryCacheManager.ExpireTag(typeof(T).Name);
+                redis.KeyDelete(typeof(T).Name);
                 db.Configuration.AutoDetectChangesEnabled = false;// 解决批量性能问题
                 db.Set<H>().Add(hd);
+                db.SaveChanges();
                 db.Set<T>().BulkInsert(dtlList);
                 trans.Commit();
             }
@@ -82,8 +89,9 @@ namespace DAL
         /// <returns></returns>
         public virtual int DeleteByBulk<T>(DbContext db, Expression<Func<T, bool>> delWhere) where T : class, new()
         {
-            // 让使用nameof(T)标签的所有缓存过期
-            QueryCacheManager.ExpireTag(nameof(T));
+            // 让使用typeof(T).Name标签的所有缓存过期
+            QueryCacheManager.ExpireTag(typeof(T).Name);
+            redis.KeyDelete(typeof(T).Name);
             return db.Set<T>().Where(delWhere).DeleteFromQuery();
         }
 
@@ -97,8 +105,9 @@ namespace DAL
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
-                // 让使用nameof(T)标签的所有缓存过期
-                QueryCacheManager.ExpireTag(nameof(T));
+                // 让使用typeof(T).Name标签的所有缓存过期
+                QueryCacheManager.ExpireTag(typeof(T).Name);
+                redis.KeyDelete(typeof(T).Name);
                 db.Configuration.AutoDetectChangesEnabled = false;// 解决批量性能问题
                 db.Set<T>().Where(delWhere).DeleteFromQuery();
                 db.Set<T>().BulkInsert(insertList);

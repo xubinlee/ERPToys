@@ -11,7 +11,7 @@ using DevExpress.XtraEditors;
 using IBase;
 using Factory;
 using BLL;
-using DBML;
+using EDMX;
 using CommonLibrary;
 using Utility;
 using DevExpress.XtraGrid.Views.Grid;
@@ -20,11 +20,15 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using System.Data.Linq;
 using DevExpress.XtraCharts;
 using DevExpress.XtraEditors.Controls;
+using Utility.Interceptor;
+using MainMenu = EDMX.MainMenu;
+using ClientFactory;
 
 namespace USL
 {
     public partial class CustomerChartPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         IList dataSource;
         Hashtable hasSeries = new Hashtable();
         public CustomerChartPage()
@@ -52,14 +56,14 @@ namespace USL
 
         public void BindData(object obj)
         {
-            vBusinessContactBindingSource.DataSource = ((List<VCompany>)MainForm.dataSourceList[typeof(List<VCompany>)]);
+            vBusinessContactBindingSource.DataSource = baseFactory.GetModelList<VCompany>();
             GetYearMonthList();
             GetDataSource(winExplorerView.GetFocusedDataSourceRowIndex());
         }
 
         void GetYearMonthList()
         {
-            List<AnnualSalesSummaryByCustomerReport> report = ((List<AnnualSalesSummaryByCustomerReport>)MainForm.dataSourceList[typeof(List<AnnualSalesSummaryByCustomerReport>)]).OrderBy(o => o.年月).ToList();
+            List<AnnualSalesSummaryByCustomerReport> report = baseFactory.GetModelList<AnnualSalesSummaryByCustomerReport>().OrderBy(o => o.年月).ToList();
             Hashtable ht = new Hashtable();
             clbYearMonth.Items.Clear();
             foreach (AnnualSalesSummaryByCustomerReport item in report)
@@ -131,7 +135,7 @@ namespace USL
             {
                 if (item.CheckState == CheckState.Checked)
                 {
-                    AnnualSalesSummaryByCustomerReport obj = ((List<AnnualSalesSummaryByCustomerReport>)MainForm.dataSourceList[typeof(List<AnnualSalesSummaryByCustomerReport>)]).FirstOrDefault(o =>
+                    AnnualSalesSummaryByCustomerReport obj = baseFactory.GetModelList<AnnualSalesSummaryByCustomerReport>().FirstOrDefault(o =>
                         o.客户名称 == customer && o.年月 == item.Value.ToString());
                     dsList.Add(obj);
                 }
@@ -185,8 +189,8 @@ namespace USL
                 PrintSettingController psc = new PrintSettingController(chartControl1);
                 //页眉 
                 psc.PrintCompany = MainForm.Company;
-                DBML.MainMenu mm = ((List<DBML.MainMenu>)MainForm.dataSourceList[typeof(List<DBML.MainMenu>)]).FirstOrDefault(o =>
-                    o.Name == MainMenuConstants.AnnualSalesSummaryByCustomerReport);
+                MainMenu mm = baseFactory.GetModelList<MainMenu>().FirstOrDefault(o =>
+                    o.Name == MainMenuEnum.AnnualSalesSummaryByCustomerReport.ToString());
                 if (mm != null)
                     psc.PrintHeader = mm.Caption;
                 psc.PrintSubTitle = MainForm.Contacts.Replace("\\r\\n", "\r\n");

@@ -11,7 +11,7 @@ using DevExpress.XtraEditors;
 using IBase;
 using Factory;
 using BLL;
-using DBML;
+using EDMX;
 using CommonLibrary;
 using Utility;
 using DevExpress.XtraGrid.Views.Grid;
@@ -19,12 +19,13 @@ using System.Collections;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using System.Data.Linq;
 using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class SLSalePricePage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
-        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         List<SLSalePrice> sLSalePriceList;
         List<SLSalePrice> SLSalePriceList;
         Guid focusedID;
@@ -55,19 +56,19 @@ namespace USL
             if (businessContactType == BusinessContactType.Customer)
             {
                 //内销客户
-                vBusinessContactBindingSource.DataSource = ((List<VCompany>)MainForm.dataSourceList[typeof(List<VCompany>)]).FindAll(o => o.客户类型 == (int)CustomerType.DomesticSales);
-                goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)GoodsBigType.Goods);
+                vBusinessContactBindingSource.DataSource = baseFactory.GetModelList<VCompany>().FindAll(o => o.客户类型 == (int)CustomerTypeEnum.DomesticSales);
+                goodsBindingSource.DataSource = baseFactory.GetModelList<Goods>().FindAll(o => o.Type.Equals((int)GoodsBigTypeEnum.Goods)); 
                 dpCustomer.Text = "客户列表";
                 SetDtlHeader(true);
             }
             else
             {
-                vBusinessContactBindingSource.DataSource = ((List<VSupplier>)MainForm.dataSourceList[typeof(List<VSupplier>)]);
-                goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type > 0);
+                vBusinessContactBindingSource.DataSource = baseFactory.GetModelList<VSupplier>();
+                goodsBindingSource.DataSource = baseFactory.GetModelList<Goods>().FindAll(o => o.Type > 0);
                 dpCustomer.Text = "供应商列表";
                 SetDtlHeader(false);
             }
-            sLSalePriceList = ((List<SLSalePrice>)MainForm.dataSourceList[typeof(List<SLSalePrice>)]);
+            sLSalePriceList = baseFactory.GetModelList<SLSalePrice>();
             GetMoldAllotDataSource();
         }
 
@@ -86,7 +87,7 @@ namespace USL
             if (winExplorerView.GetFocusedRowCellValue(colID) != null)
             {
                 focusedID = new Guid(winExplorerView.GetFocusedRowCellValue(colID).ToString());
-                sLSalePriceList = ((List<SLSalePrice>)MainForm.dataSourceList[typeof(List<SLSalePrice>)]);
+                sLSalePriceList = baseFactory.GetModelList<SLSalePrice>();
                 if (sLSalePriceList != null)
                 {
                     bOMBindingSource.DataSource = SLSalePriceList = sLSalePriceList.FindAll(o => o.ID == focusedID);
@@ -169,7 +170,6 @@ namespace USL
                     BLLFty.Create<SLSalePriceBLL>().Update(focusedID, SLSalePriceList);
                 addNew = false;
                 //DataQueryPageRefresh();
-                MainForm.dataSourceList[typeof(List<SLSalePrice>)] = BLLFty.Create<SLSalePriceBLL>().GetSLSalePrice();
                 BindData(null);
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 return true;
@@ -240,7 +240,7 @@ namespace USL
             List<SLSalePrice> list = ((BindingSource)view.DataSource).DataSource as List<SLSalePrice>;
             if (e.IsGetData && list != null && list.Count > 0)
             {
-                Goods goods = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).Find(o => o.ID == list[e.ListSourceRowIndex].GoodsID);
+                Goods goods = baseFactory.GetModelList<Goods>().Find(o => o.ID == list[e.ListSourceRowIndex].GoodsID);
                 if (goods != null)
                 {
                     if (e.Column == colName)
@@ -248,7 +248,7 @@ namespace USL
                     if (e.Column == colPic)
                         e.Value = goods.Pic;
                     if (e.Column == colPackaging && goods.PackagingID != null && goods.PackagingID != Guid.Empty)
-                        e.Value = ((List<Packaging>)MainForm.dataSourceList[typeof(List<Packaging>)]).Find(o => o.ID == goods.PackagingID).Name;
+                        e.Value = baseFactory.GetModelList<Packaging>().Find(o => o.ID == goods.PackagingID).Name;
                     if (e.Column == colMEAS)
                         e.Value = goods.MEAS;
                     if (e.Column == colSPEC)
@@ -311,23 +311,23 @@ namespace USL
         private void gridView_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             Save();
-            string menuName = string.Empty;
+            MainMenuEnum menuName;
             if (businessContactType == BusinessContactType.Customer)
-                menuName = MainMenuConstants.CustomerSLSalePrice;
+                menuName = MainMenuEnum.CustomerSLSalePrice;
             else
-                menuName = MainMenuConstants.SupplierSLSalePrice;
-            clientFactory.DataPageRefresh(menuName);
+                menuName = MainMenuEnum.SupplierSLSalePrice;
+            baseFactory.DataPageRefresh(menuName);
         }
 
         private void gridView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
             Save();
-            string menuName = string.Empty;
+            MainMenuEnum menuName;
             if (businessContactType == BusinessContactType.Customer)
-                menuName = MainMenuConstants.CustomerSLSalePrice;
+                menuName = MainMenuEnum.CustomerSLSalePrice;
             else
-                menuName = MainMenuConstants.SupplierSLSalePrice;
-            clientFactory.DataPageRefresh(menuName);
+                menuName = MainMenuEnum.SupplierSLSalePrice;
+            baseFactory.DataPageRefresh(menuName);
         }
     }
 }

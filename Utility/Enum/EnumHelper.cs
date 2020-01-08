@@ -32,6 +32,7 @@
                 ListItem<T> item = new ListItem<T>();
                 item.Name = GetDescription<T>(values[i], english);
                 item.Value = values[i];
+                item.Index = i;
                 results.Add(item);
 
             }
@@ -44,9 +45,9 @@
         /// <typeparam name="typeName">枚举类型名称</typeparam>
         /// <param name="english">是否英文环境</param>
         /// <returns>返回枚举成员列表</returns>
-        public static List<ListItem> GetEnumValues(String typeName, bool english)
+        public static List<ListItem> GetEnumValues(String assemblyString, String typeName, bool english)
         {
-            string assemblyString = "Utility";
+            //string assemblyString = "Utility";
             Assembly assembly = Assembly.Load(assemblyString);
             Type type = assembly.GetType(string.Format("{0}.{1}", assemblyString, typeName));
             if (type.IsEnum == false)
@@ -56,11 +57,13 @@
 
             string[] names = Enum.GetNames(type);
             List<ListItem> results = new List<ListItem>();
+            int iCount = 0;
             foreach (var value in Enum.GetValues(type))
             {
                 ListItem item = new ListItem();
                 item.Name = GetDescription(type, value, english);
                 item.Value = value;
+                item.Index = iCount++;
                 results.Add(item);
             }
             return results;
@@ -91,6 +94,11 @@
                 get { return name; }
                 set { name = value; }
             }
+
+            int index;
+
+            public int Index { get => index; set => index = value; }
+
         }
 
         /// <summary>
@@ -117,6 +125,10 @@
                 get { return name; }
                 set { name = value; }
             }
+
+            int index;
+
+            public int Index { get => index; set => index = value; }
         }
 
         /// <summary>

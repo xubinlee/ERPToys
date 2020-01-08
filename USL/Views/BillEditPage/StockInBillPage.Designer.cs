@@ -209,24 +209,20 @@
             this.lueWarehouseType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.lueWarehouseType.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "", 20, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near)});
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "", 20, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default)});
             this.lueWarehouseType.Properties.DataSource = this.warehouseTypeBindingSource;
             this.lueWarehouseType.Properties.DisplayMember = "Name";
             this.lueWarehouseType.Properties.NullText = "";
             this.lueWarehouseType.Properties.PopupSizeable = false;
             this.lueWarehouseType.Properties.ShowHeader = false;
-            this.lueWarehouseType.Properties.ValueMember = "No";
+            this.lueWarehouseType.Properties.ValueMember = "Index";
             this.lueWarehouseType.Size = new System.Drawing.Size(210, 20);
             this.lueWarehouseType.StyleController = this.layoutControl;
             this.lueWarehouseType.TabIndex = 10;
             // 
             // stockInBillHdBindingSource
             // 
-            this.stockInBillHdBindingSource.DataSource = typeof(DBML.StockInBillHd);
-            // 
-            // warehouseTypeBindingSource
-            // 
-            this.warehouseTypeBindingSource.DataSource = typeof(DBML.TypesList);
+            this.stockInBillHdBindingSource.DataSource = typeof(EDMX.StockInBillHd);
             // 
             // gridControl
             // 
@@ -248,7 +244,7 @@
             // 
             // stockInBillDtlBindingSource
             // 
-            this.stockInBillDtlBindingSource.DataSource = typeof(DBML.StockInBillDtl);
+            this.stockInBillDtlBindingSource.DataSource = typeof(EDMX.StockInBillDtl);
             // 
             // gridView
             // 
@@ -367,14 +363,14 @@
             this.repositoryItemLueGoods.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.repositoryItemLueGoods.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Code", "货号", 38, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "品名", 41, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Price", "单价", 36, DevExpress.Utils.FormatType.Numeric, "", true, DevExpress.Utils.HorzAlignment.Far),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Code", "货号", 38, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "品名", 41, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Price", "单价", 36, DevExpress.Utils.FormatType.Numeric, "", true, DevExpress.Utils.HorzAlignment.Far, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default),
             new DevExpress.XtraEditors.Controls.LookUpColumnInfo("MEAS", "外箱规格"),
             new DevExpress.XtraEditors.Controls.LookUpColumnInfo("SPEC", "规格"),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PCS", "装箱数", 31, DevExpress.Utils.FormatType.Numeric, "", true, DevExpress.Utils.HorzAlignment.Far),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("InnerBox", "内盒", 63, DevExpress.Utils.FormatType.Numeric, "", true, DevExpress.Utils.HorzAlignment.Far),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Unit", "单位", 32, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near)});
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PCS", "装箱数", 31, DevExpress.Utils.FormatType.Numeric, "", true, DevExpress.Utils.HorzAlignment.Far, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("InnerBox", "内盒", 63, DevExpress.Utils.FormatType.Numeric, "", true, DevExpress.Utils.HorzAlignment.Far, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Unit", "单位", 32, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default)});
             this.repositoryItemLueGoods.DataSource = this.goodsBindingSource;
             this.repositoryItemLueGoods.DisplayMember = "Code";
             this.repositoryItemLueGoods.DropDownRows = 15;
@@ -385,7 +381,7 @@
             // 
             // goodsBindingSource
             // 
-            this.goodsBindingSource.DataSource = typeof(DBML.Goods);
+            this.goodsBindingSource.DataSource = typeof(EDMX.Goods);
             // 
             // colName
             // 
@@ -674,21 +670,17 @@
             this.lueType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.lueType.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "Name", 41, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near)});
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "Name", 41, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default)});
             this.lueType.Properties.DataSource = this.typesListBindingSource;
             this.lueType.Properties.DisplayMember = "Name";
             this.lueType.Properties.NullText = "";
             this.lueType.Properties.PopupSizeable = false;
             this.lueType.Properties.ShowHeader = false;
-            this.lueType.Properties.ValueMember = "No";
+            this.lueType.Properties.ValueMember = "Index";
             this.lueType.Size = new System.Drawing.Size(174, 20);
             this.lueType.StyleController = this.layoutControl;
             this.lueType.TabIndex = 2;
             this.lueType.EditValueChanged += new System.EventHandler(this.lueType_EditValueChanged);
-            // 
-            // typesListBindingSource
-            // 
-            this.typesListBindingSource.DataSource = typeof(DBML.TypesList);
             // 
             // lueWarehouse
             // 
@@ -711,7 +703,7 @@
             // 
             // warehouseBindingSource
             // 
-            this.warehouseBindingSource.DataSource = typeof(DBML.Warehouse);
+            this.warehouseBindingSource.DataSource = typeof(EDMX.Warehouse);
             // 
             // lueBusinessContact
             // 
@@ -722,11 +714,11 @@
             this.lueBusinessContact.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.lueBusinessContact.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("代码", "代码", 34, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("名称", "名称", 34, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("地址", "地址", 34, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("联系人", "联系人", 46, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("联系电话", "联系电话", 58, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near)});
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("代码", "代码", 34, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("名称", "名称", 34, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("地址", "地址", 34, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("联系人", "联系人", 46, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("联系电话", "联系电话", 58, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default)});
             this.lueBusinessContact.Properties.DataSource = this.businessContactBindingSource;
             this.lueBusinessContact.Properties.DisplayMember = "名称";
             this.lueBusinessContact.Properties.DropDownRows = 15;
@@ -741,7 +733,7 @@
             // 
             // businessContactBindingSource
             // 
-            this.businessContactBindingSource.DataSource = typeof(DBML.VCompany);
+            this.businessContactBindingSource.DataSource = typeof(EDMX.VCompany);
             // 
             // deAuditDate
             // 
@@ -840,7 +832,7 @@
             // 
             // vUsersInfoBindingSource
             // 
-            this.vUsersInfoBindingSource.DataSource = typeof(DBML.VUsersInfo);
+            this.vUsersInfoBindingSource.DataSource = typeof(EDMX.VUsersInfo);
             // 
             // lueAuditor
             // 
@@ -869,7 +861,7 @@
             this.lueOrderNo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.lueOrderNo.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("BillNo", "订单编号", 42, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near)});
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("BillNo", "订单编号", 42, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default)});
             this.lueOrderNo.Properties.DataSource = this.orderHdBindingSource;
             this.lueOrderNo.Properties.DisplayMember = "BillNo";
             this.lueOrderNo.Properties.DropDownRows = 15;
@@ -883,7 +875,7 @@
             // 
             // orderHdBindingSource
             // 
-            this.orderHdBindingSource.DataSource = typeof(DBML.OrderHd);
+            this.orderHdBindingSource.DataSource = typeof(EDMX.OrderHd);
             // 
             // layoutControlGroup1
             // 
@@ -894,7 +886,6 @@
             this.layoutControlGroup2,
             this.lciPrev,
             this.lciNext});
-            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup1.Name = "Root";
             this.layoutControlGroup1.Size = new System.Drawing.Size(640, 480);
             this.layoutControlGroup1.TextVisible = false;
@@ -938,8 +929,8 @@
             // 
             this.lciBillDate.Control = this.deBillDate;
             this.lciBillDate.CustomizationFormText = "入库日期";
-            this.lciBillDate.Image = global::USL.Properties.Resources.mark;
-            this.lciBillDate.ImageAlignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciBillDate.ImageOptions.Alignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciBillDate.ImageOptions.Image = global::USL.Properties.Resources.mark;
             this.lciBillDate.Location = new System.Drawing.Point(250, 0);
             this.lciBillDate.Name = "lciBillDate";
             this.lciBillDate.Size = new System.Drawing.Size(286, 24);
@@ -1009,8 +1000,8 @@
             // lciBusinessContact
             // 
             this.lciBusinessContact.Control = this.lueBusinessContact;
-            this.lciBusinessContact.Image = ((System.Drawing.Image)(resources.GetObject("lciBusinessContact.Image")));
-            this.lciBusinessContact.ImageAlignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciBusinessContact.ImageOptions.Alignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciBusinessContact.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("lciBusinessContact.ImageOptions.Image")));
             this.lciBusinessContact.Location = new System.Drawing.Point(0, 48);
             this.lciBusinessContact.Name = "lciBusinessContact";
             this.lciBusinessContact.Size = new System.Drawing.Size(250, 24);
@@ -1020,8 +1011,8 @@
             // lciBillType
             // 
             this.lciBillType.Control = this.lueType;
-            this.lciBillType.Image = global::USL.Properties.Resources.mark;
-            this.lciBillType.ImageAlignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciBillType.ImageOptions.Alignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciBillType.ImageOptions.Image = global::USL.Properties.Resources.mark;
             this.lciBillType.Location = new System.Drawing.Point(0, 24);
             this.lciBillType.Name = "lciBillType";
             this.lciBillType.Size = new System.Drawing.Size(250, 24);

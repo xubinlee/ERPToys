@@ -46,6 +46,8 @@ namespace EDMX
     
         public virtual DbSet<AccountBook> AccountBook { get; set; }
         public virtual DbSet<Alert> Alert { get; set; }
+        public virtual DbSet<AnnualSalesSummaryByCustomerReport> AnnualSalesSummaryByCustomerReport { get; set; }
+        public virtual DbSet<AnnualSalesSummaryByGoodsReport> AnnualSalesSummaryByGoodsReport { get; set; }
         public virtual DbSet<Appointments> Appointments { get; set; }
         public virtual DbSet<AttAppointments> AttAppointments { get; set; }
         public virtual DbSet<AttGeneralLog> AttGeneralLog { get; set; }
@@ -55,7 +57,10 @@ namespace EDMX
         public virtual DbSet<ButtonPermission> ButtonPermission { get; set; }
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<Department> Department { get; set; }
+        public virtual DbSet<EMSGoodsTrackingDailyReport> EMSGoodsTrackingDailyReport { get; set; }
+        public virtual DbSet<FSMGoodsTrackingDailyReport> FSMGoodsTrackingDailyReport { get; set; }
         public virtual DbSet<Goods> Goods { get; set; }
+        public virtual DbSet<GoodsSalesSummaryByCustomerReport> GoodsSalesSummaryByCustomerReport { get; set; }
         public virtual DbSet<GoodsType> GoodsType { get; set; }
         public virtual DbSet<Inventory> Inventory { get; set; }
         public virtual DbSet<MainMenu> MainMenu { get; set; }
@@ -69,9 +74,19 @@ namespace EDMX
         public virtual DbSet<ReceiptBillDtl> ReceiptBillDtl { get; set; }
         public virtual DbSet<ReceiptBillHd> ReceiptBillHd { get; set; }
         public virtual DbSet<Resources> Resources { get; set; }
+        public virtual DbSet<SalesSummaryByCustomerReport> SalesSummaryByCustomerReport { get; set; }
+        public virtual DbSet<SalesSummaryByGoodsPriceReport> SalesSummaryByGoodsPriceReport { get; set; }
+        public virtual DbSet<SalesSummaryByGoodsReport> SalesSummaryByGoodsReport { get; set; }
+        public virtual DbSet<SalesSummaryMonthlyReport> SalesSummaryMonthlyReport { get; set; }
         public virtual DbSet<SchClass> SchClass { get; set; }
         public virtual DbSet<SLSalePrice> SLSalePrice { get; set; }
         public virtual DbSet<StaffSchClass> StaffSchClass { get; set; }
+        public virtual DbSet<StatementOfAccountBasketToSupplierReport> StatementOfAccountBasketToSupplierReport { get; set; }
+        public virtual DbSet<StatementOfAccountMaterialToSupplierReport> StatementOfAccountMaterialToSupplierReport { get; set; }
+        public virtual DbSet<StatementOfAccountSummaryToSupplierReport> StatementOfAccountSummaryToSupplierReport { get; set; }
+        public virtual DbSet<StatementOfAccountToBulkSalesReport> StatementOfAccountToBulkSalesReport { get; set; }
+        public virtual DbSet<StatementOfAccountToCustomerReport> StatementOfAccountToCustomerReport { get; set; }
+        public virtual DbSet<StatementOfAccountToSupplierReport> StatementOfAccountToSupplierReport { get; set; }
         public virtual DbSet<StockInBillDtl> StockInBillDtl { get; set; }
         public virtual DbSet<StockInBillHd> StockInBillHd { get; set; }
         public virtual DbSet<StockOutBillDtl> StockOutBillDtl { get; set; }
@@ -83,6 +98,7 @@ namespace EDMX
         public virtual DbSet<TonerLabel> TonerLabel { get; set; }
         public virtual DbSet<TypesList> TypesList { get; set; }
         public virtual DbSet<UsersInfo> UsersInfo { get; set; }
+        public virtual DbSet<USPAttWageBillDtl> USPAttWageBillDtl { get; set; }
         public virtual DbSet<WageBillDtl> WageBillDtl { get; set; }
         public virtual DbSet<WageBillHd> WageBillHd { get; set; }
         public virtual DbSet<WageDesign> WageDesign { get; set; }

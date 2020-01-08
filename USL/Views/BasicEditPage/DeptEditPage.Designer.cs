@@ -139,7 +139,7 @@
             // 
             // departmentBindingSource
             // 
-            this.departmentBindingSource.DataSource = typeof(DBML.Department);
+            this.departmentBindingSource.DataSource = typeof(EDMX.Department);
             // 
             // lblQQ
             // 

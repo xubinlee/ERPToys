@@ -11,7 +11,7 @@ namespace USL
 {
     static class Program
     {
-        private static ClientFactory clientFactory = Utility.Interceptor.LoggerInterceptor.CreateProxy<ClientFactory>();
+        private static ClientFactory baseFactory = Utility.Interceptor.LoggerInterceptor.CreateProxy<ClientFactory>();
         private static DateTime sysDateTime = DateTime.Now;
 
         public static DateTime SysDateTime

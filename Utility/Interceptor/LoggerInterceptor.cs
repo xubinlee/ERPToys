@@ -1,10 +1,12 @@
 ﻿using Castle.DynamicProxy;
+using DevExpress.XtraEditors;
 using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Utility.Interceptor
 {
@@ -38,7 +40,7 @@ namespace Utility.Interceptor
                 string exception = string.Format("\r\nInnerException：{0}\r\nException：{1}\r\nStackTrace：{2}{3}", ex.InnerException, ex.Message, ex.StackTrace, split);
                 Logger.Error(exception);
                 //if (invocation.TargetType == typeof(USL))
-                //    XtraMessageBox.Show(ex.Message, "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                XtraMessageBox.Show(ex.Message, "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

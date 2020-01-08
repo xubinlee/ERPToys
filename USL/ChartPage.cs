@@ -11,18 +11,21 @@ using DevExpress.XtraEditors;
 using IBase;
 using System.Collections;
 using Utility;
-using DBML;
+using EDMX;
 using DevExpress.XtraCharts;
+using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class ChartPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
-        public DBML.MainMenu mainMenu;
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
+        public MainMenuEnum mainMenu;
         IList dataSource;
         List<Company> customers;
         List<Goods> goodsList;
-        public ChartPage(DBML.MainMenu menu)
+        public ChartPage(MainMenuEnum menu)
         {
             InitializeComponent();
             mainMenu = menu;
@@ -31,25 +34,25 @@ namespace USL
 
         public void BindData(object obj)
         {
-            //if (mainMenu.Name==MainMenuConstants.AnnualSalesSummaryByCustomerReport)
-            //    dataSource = MainForm.dataSourceList[typeof(List<AnnualSalesSummaryByCustomerReport>)] as IList;
-            //else if (mainMenu.Name == MainMenuConstants.AnnualSalesSummaryByGoodsReport)
-            //    dataSource = MainForm.dataSourceList[typeof(List<AnnualSalesSummaryByGoodsReport>)] as IList;
-            customers = MainForm.dataSourceList[typeof(List<Company>)] as List<Company>;
-            goodsList = MainForm.dataSourceList[typeof(List<Goods>)] as List<Goods>;
+            //if (mainMenu.Name==MainMenuEnum.AnnualSalesSummaryByCustomerReport)
+            //    dataSource = baseFactory.GetModelList<AnnualSalesSummaryByCustomerReport>)] as IList;
+            //else if (mainMenu.Name == MainMenuEnum.AnnualSalesSummaryByGoodsReport)
+            //    dataSource = baseFactory.GetModelList<AnnualSalesSummaryByGoodsReport>)] as IList;
+            customers = baseFactory.GetModelList<Company>();
+            goodsList = baseFactory.GetModelList<Goods>();
             BindChart();
         }
 
         void BindChart()
         {
             chartControl1.Series.Clear();
-            if (mainMenu.Name == MainMenuConstants.AnnualSalesSummaryByCustomerReport)
+            if (mainMenu == MainMenuEnum.AnnualSalesSummaryByCustomerReport)
             {
                 foreach (Company item in customers)
                 {
                     // 柱状图里的第一个柱 
                     Series series = new Series(item.Name, ViewType.Bar3D);
-                    dataSource = ((List<AnnualSalesSummaryByCustomerReport>)MainForm.dataSourceList[typeof(List<AnnualSalesSummaryByCustomerReport>)]).FindAll(o =>
+                    dataSource = baseFactory.GetModelList<AnnualSalesSummaryByCustomerReport>().FindAll(o =>
                         o.客户代码 == item.Code);
                     series.DataSource = dataSource;
                     series.ArgumentScaleType = ScaleType.Qualitative;
@@ -65,13 +68,13 @@ namespace USL
                     chartControl1.Series.Add(series);
                 }
             }
-            //else if (mainMenu.Name == MainMenuConstants.AnnualSalesSummaryByGoodsReport)
+            //else if (mainMenu.Name == MainMenuEnum.AnnualSalesSummaryByGoodsReport)
             //{
             //    foreach (Goods item in goodsList)
             //    {
             //        // 柱状图里的第一个柱 
             //        Series series = new Series(item.Name, ViewType.Bar3D);
-            //        dataSource = ((List<AnnualSalesSummaryByGoodsReport>)MainForm.dataSourceList[typeof(List<AnnualSalesSummaryByGoodsReport>)]).FindAll(o =>
+            //        dataSource = baseFactory.GetModelList<AnnualSalesSummaryByGoodsReport>().FindAll(o =>
             //            o.货号 == item.Code);
             //        series.DataSource = dataSource;
             //        series.ArgumentScaleType = ScaleType.Qualitative;

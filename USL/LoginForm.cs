@@ -11,22 +11,19 @@ using DevExpress.XtraEditors;
 using Factory;
 using BLL;
 using System.Configuration;
-using Common;
 using System.Linq.Expressions;
 using System.Collections;
-using IWcfServiceInterface;
-using Newtonsoft.Json;
 using Utility;
 using EDMX;
 using Utility.Interceptor;
 using System.Data.Entity;
+using ClientFactory;
 
 namespace USL
 {
     public partial class LoginForm : DevExpress.XtraEditors.XtraForm
     {
-        private static IStockInBillService stockInBillService = ServiceProxyFactory.Create<IStockInBillService>("StockInBillService");
-        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         public LoginForm()
         {
             InitializeComponent();
@@ -40,13 +37,13 @@ namespace USL
 
         public void BindData()
         {
-            usersInfoBindingSource.DataSource = clientFactory.GetData<UsersInfo>().FindAll(o => o.IsDel == false && !string.IsNullOrEmpty(o.Password));
+            usersInfoBindingSource.DataSource = baseFactory.GetListByNoTracking<UsersInfo>().FindAll(o => o.IsDel == false && !string.IsNullOrEmpty(o.Password));
             txtCode.EditValue = Utility.ConfigAppSettings.GetValue("User");
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            UsersInfo user = clientFactory.GetData<UsersInfo>().FirstOrDefault(o => o.Code.Equals(txtCode.Text.Trim()));
+            UsersInfo user = baseFactory.GetListByNoTracking<UsersInfo>().FirstOrDefault(o => o.Code.Equals(txtCode.Text.Trim()));
             if (user == null)
             {
                 XtraMessageBox.Show("用户不存在。", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Error);

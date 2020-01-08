@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using Common;
+using DAL;
 using EDMX;
 using Factory;
 using IWcfServiceInterface;
@@ -11,13 +12,13 @@ using System.Text;
 
 namespace WcfService
 {
-    public class SystemInfoService : ISystemInfoService
+    public class SystemInfoService : ServiceBase, ISystemInfoService
     {
         public int AddOrUpdate(SystemStatus entity)
         {
             using (ERPToysContext db = EDMXFty.Dc)
             {
-                return DALFty.Create<BaseDAL>().AddOrUpdate(db, entity);
+                return DALFty.Create<BaseDAL>().AddOrUpdate<SystemStatus>(db, entity);
             }
         }
     }

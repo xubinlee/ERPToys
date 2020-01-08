@@ -253,7 +253,7 @@
             // 
             // attWageBillHdBindingSource
             // 
-            this.attWageBillHdBindingSource.DataSource = typeof(DBML.AttWageBillHd);
+            this.attWageBillHdBindingSource.DataSource = typeof(EDMX.AttWageBillHd);
             // 
             // btnNext
             // 
@@ -300,7 +300,7 @@
             // 
             // uSPAttWageBillDtlBindingSource
             // 
-            this.uSPAttWageBillDtlBindingSource.DataSource = typeof(DBML.USPAttWageBillDtl);
+            this.uSPAttWageBillDtlBindingSource.DataSource = typeof(EDMX.USPAttWageBillDtl);
             // 
             // imageListCheck
             // 
@@ -1101,7 +1101,7 @@
             // 
             // vUsersInfoBindingSource
             // 
-            this.vUsersInfoBindingSource.DataSource = typeof(DBML.VUsersInfo);
+            this.vUsersInfoBindingSource.DataSource = typeof(EDMX.VUsersInfo);
             // 
             // dockManager
             // 
@@ -1173,7 +1173,7 @@
             // 
             // vAttAppointmentsBindingSource
             // 
-            this.vAttAppointmentsBindingSource.DataSource = typeof(DBML.VAttAppointments);
+            this.vAttAppointmentsBindingSource.DataSource = typeof(EDMX.VAttAppointments);
             // 
             // gvAPT
             // 

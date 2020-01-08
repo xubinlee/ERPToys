@@ -1318,15 +1318,15 @@
             // 
             // sfGoodsByBOMBindingSource
             // 
-            this.sfGoodsByBOMBindingSource.DataSource = typeof(DBML.VMaterialStockInBill);
+            this.sfGoodsByBOMBindingSource.DataSource = typeof(EDMX.VMaterialStockInBill);
             // 
             // assembleBindingSource
             // 
-            this.assembleBindingSource.DataSource = typeof(DBML.VStockInBillDtlByBOM);
+            this.assembleBindingSource.DataSource = typeof(EDMX.VStockInBillDtlByBOM);
             // 
             // colorBindingSource
             // 
-            this.colorBindingSource.DataSource = typeof(DBML.VStockInBillDtlByColor);
+            this.colorBindingSource.DataSource = typeof(EDMX.VStockInBillDtlByColor);
             // 
             // XtraAssembleMRPReport
             // 

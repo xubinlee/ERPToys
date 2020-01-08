@@ -36,6 +36,32 @@
     <Property Name="CompanyID" Type="Guid" />
     <Property Name="SupplierID" Type="Guid" />
   </EntityType>
+  <EntityType Name="AnnualSalesSummaryByCustomerReport">
+    <Key>
+      <PropertyRef Name="客户代码" />
+    </Key>
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" />
+    <Property Name="年月" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="箱数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="总数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="已收金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="未收金额" Type="Decimal" Precision="12" Scale="2" />
+  </EntityType>
+  <EntityType Name="AnnualSalesSummaryByGoodsReport">
+    <Key>
+      <PropertyRef Name="年月" />
+      <PropertyRef Name="货号" />
+    </Key>
+    <Property Name="年月" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="箱数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="总数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+  </EntityType>
   <EntityType Name="Appointments">
     <Key>
       <PropertyRef Name="UniqueID" />
@@ -134,6 +160,7 @@
     <Property Name="SocialSecurity" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="IndividualIncomeTax" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="AMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <NavigationProperty Name="AttWageBillHd" Relationship="Self.FK_AttWageBillDtl_AttWageBillHd" FromRole="AttWageBillDtl" ToRole="AttWageBillHd" />
   </EntityType>
   <EntityType Name="AttWageBillHd">
     <Key>
@@ -150,6 +177,7 @@
     <Property Name="Auditor" Type="Guid" />
     <Property Name="AuditDate" Type="DateTime" Precision="3" />
     <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AttWageBillDtl" Relationship="Self.FK_AttWageBillDtl_AttWageBillHd" FromRole="AttWageBillHd" ToRole="AttWageBillDtl" />
   </EntityType>
   <EntityType Name="BOM">
     <Key>
@@ -225,6 +253,43 @@
     <Property Name="UpdateTime" Type="DateTime" Precision="3" />
     <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
+  <EntityType Name="EMSGoodsTrackingDailyReport">
+    <Key>
+      <PropertyRef Name="委托厂商" />
+      <PropertyRef Name="日期" />
+      <PropertyRef Name="货号" />
+    </Key>
+    <Property Name="委托厂商" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="应收货品数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="本日发料数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="本日交货数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="已用物料数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="本日退料数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="未收货品数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="厂商存料数量" Type="Decimal" Precision="12" Scale="2" />
+  </EntityType>
+  <EntityType Name="FSMGoodsTrackingDailyReport">
+    <Key>
+      <PropertyRef Name="委托厂商" />
+      <PropertyRef Name="日期" />
+      <PropertyRef Name="货号" />
+    </Key>
+    <Property Name="委托厂商" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="日期" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="损耗率" Type="Decimal" Precision="12" Scale="3" />
+    <Property Name="应收成品数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="本日发料数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="本日交货数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="已用物料数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="本日退料数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="未收成品数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="厂商存料数量" Type="Decimal" Precision="12" Scale="2" />
+  </EntityType>
   <EntityType Name="Goods">
     <Key>
       <PropertyRef Name="ID" />
@@ -271,7 +336,21 @@
     <Property Name="Subsidy" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="PlanYield" Type="Int32" />
     <NavigationProperty Name="GoodsType" Relationship="Self.FK_Goods_GoodsType" FromRole="Goods" ToRole="GoodsType" />
-    <NavigationProperty Name="OrderDtl" Relationship="Self.FK_OrderDtl_Goods" FromRole="Goods" ToRole="OrderDtl" />
+  </EntityType>
+  <EntityType Name="GoodsSalesSummaryByCustomerReport">
+    <Key>
+      <PropertyRef Name="客户代码" />
+    </Key>
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" Nullable="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="箱数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="总数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="重量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
   </EntityType>
   <EntityType Name="GoodsType">
     <Key>
@@ -355,11 +434,11 @@
     <Property Name="NWeight" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
     <Property Name="Modulus" Type="Decimal" Precision="12" Scale="2" />
     <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Goods" Relationship="Self.FK_OrderDtl_Goods" FromRole="OrderDtl" ToRole="Goods" />
+    <NavigationProperty Name="OrderHd" Relationship="Self.FK_OrderDtl_OrderHd" FromRole="OrderDtl" ToRole="OrderHd" />
   </EntityType>
   <EntityType Name="OrderHd">
     <Key>
-      <PropertyRef Name="BillNo" />
+      <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Guid" Nullable="false" />
     <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
@@ -382,6 +461,7 @@
     <Property Name="BillAMT" Type="Decimal" Precision="12" Scale="2" />
     <Property Name="UnReceiptedAMT" Type="Decimal" Precision="12" Scale="2" />
     <Property Name="Pic" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="OrderDtl" Relationship="Self.FK_OrderDtl_OrderHd" FromRole="OrderHd" ToRole="OrderDtl" />
   </EntityType>
   <EntityType Name="Packaging">
     <Key>
@@ -401,10 +481,11 @@
     <Property Name="PaidAMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="UnPaidAMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="LastPaidAMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <NavigationProperty Name="PaymentBillHd" Relationship="Self.FK_PaymentBillDtl_PaymentBillHd" FromRole="PaymentBillDtl" ToRole="PaymentBillHd" />
   </EntityType>
   <EntityType Name="PaymentBillHd">
     <Key>
-      <PropertyRef Name="BillNo" />
+      <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Guid" Nullable="false" />
     <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
@@ -424,6 +505,7 @@
     <Property Name="PaidAMT" Type="Decimal" Precision="12" Scale="2" />
     <Property Name="UnPaidAMT" Type="Decimal" Precision="12" Scale="2" />
     <Property Name="Pic" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="PaymentBillDtl" Relationship="Self.FK_PaymentBillDtl_PaymentBillHd" FromRole="PaymentBillHd" ToRole="PaymentBillDtl" />
   </EntityType>
   <EntityType Name="Permission">
     <Key>
@@ -448,10 +530,11 @@
     <Property Name="ReceiptedAMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="UnReceiptedAMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="LastReceiptedAMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <NavigationProperty Name="ReceiptBillHd" Relationship="Self.FK_ReceiptBillDtl_ReceiptBillHd" FromRole="ReceiptBillDtl" ToRole="ReceiptBillHd" />
   </EntityType>
   <EntityType Name="ReceiptBillHd">
     <Key>
-      <PropertyRef Name="BillNo" />
+      <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Guid" Nullable="false" />
     <Property Name="BillNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
@@ -471,6 +554,7 @@
     <Property Name="ReceiptedAMT" Type="Decimal" Precision="12" Scale="2" />
     <Property Name="UnReceiptedAMT" Type="Decimal" Precision="12" Scale="2" />
     <Property Name="Pic" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="ReceiptBillDtl" Relationship="Self.FK_ReceiptBillDtl_ReceiptBillHd" FromRole="ReceiptBillHd" ToRole="ReceiptBillDtl" />
   </EntityType>
   <EntityType Name="Resources">
     <Key>
@@ -482,6 +566,56 @@
     <Property Name="Color" Type="Int32" />
     <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
     <Property Name="CustomField1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="SalesSummaryByCustomerReport">
+    <Key>
+      <PropertyRef Name="客户代码" />
+    </Key>
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" />
+    <Property Name="箱数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="总数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="重量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="已收金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="未收金额" Type="Decimal" Precision="12" Scale="2" />
+  </EntityType>
+  <EntityType Name="SalesSummaryByGoodsPriceReport">
+    <Key>
+      <PropertyRef Name="货号" />
+    </Key>
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="5" Nullable="false" />
+    <Property Name="箱数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="总数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="重量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+  </EntityType>
+  <EntityType Name="SalesSummaryByGoodsReport">
+    <Key>
+      <PropertyRef Name="货号" />
+    </Key>
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="箱数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="总数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="重量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+  </EntityType>
+  <EntityType Name="SalesSummaryMonthlyReport">
+    <Key>
+      <PropertyRef Name="年月" />
+    </Key>
+    <Property Name="年月" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="箱数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="总数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="已收金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="未收金额" Type="Decimal" Precision="12" Scale="2" />
   </EntityType>
   <EntityType Name="SchClass">
     <Key>
@@ -523,6 +657,132 @@
     <Property Name="DeptID" Type="Guid" Nullable="false" />
     <Property Name="SchClassID" Type="Guid" Nullable="false" />
     <Property Name="SchSerialNo" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StatementOfAccountBasketToSupplierReport">
+    <Key>
+      <PropertyRef Name="CompanyID" />
+    </Key>
+    <Property Name="CompanyID" Type="Guid" Nullable="false" />
+    <Property Name="筐类" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="上期欠筐" Type="Int32" />
+    <Property Name="本期去筐" Type="Int32" />
+    <Property Name="本期来筐" Type="Int32" />
+    <Property Name="共欠" Type="Int32" />
+  </EntityType>
+  <EntityType Name="StatementOfAccountMaterialToSupplierReport">
+    <Key>
+      <PropertyRef Name="CompanyID" />
+    </Key>
+    <Property Name="CompanyID" Type="Guid" Nullable="false" />
+    <Property Name="料名" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="上期存料" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="本期去料" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="存料合计" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="生产用料" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="损耗" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="用料合计" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="结存" Type="Decimal" Precision="12" Scale="2" />
+  </EntityType>
+  <EntityType Name="StatementOfAccountSummaryToSupplierReport">
+    <Key>
+      <PropertyRef Name="厂家代码" />
+      <PropertyRef Name="货号" />
+    </Key>
+    <Property Name="厂家代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="厂家名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="用料" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="模重" Type="Decimal" Precision="12" Scale="3" />
+    <Property Name="模数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="3" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="备注" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="StatementOfAccountToBulkSalesReport">
+    <Key>
+      <PropertyRef Name="收款单号" />
+    </Key>
+    <Property Name="收款单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="收款日期" Type="DateTime" Precision="3" />
+    <Property Name="状态" Type="Int32" />
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="结算类型" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="出库日期" Type="DateTime" Precision="3" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="个数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="3" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="应收金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="实收金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="StatementOfAccountToCustomerReport">
+    <Key>
+      <PropertyRef Name="收款单号" />
+    </Key>
+    <Property Name="收款单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="收款日期" Type="DateTime" Precision="3" />
+    <Property Name="状态" Type="Int32" />
+    <Property Name="客户代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="客户名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="客户类型" Type="Int32" />
+    <Property Name="结算类型" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="出库日期" Type="DateTime" Precision="3" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="正唛" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="外箱规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="箱数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="装箱数" Type="Int32" />
+    <Property Name="内盒" Type="Int32" />
+    <Property Name="总数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="3" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="应收金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="实收金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="StatementOfAccountToSupplierReport">
+    <Key>
+      <PropertyRef Name="付款单号" />
+    </Key>
+    <Property Name="付款单号" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="付款日期" Type="DateTime" Precision="3" />
+    <Property Name="状态" Type="Int32" />
+    <Property Name="供应商代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="供应商名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="结算类型" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="结算日期" Type="DateTime" Precision="3" />
+    <Property Name="货号" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="品名" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数量" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="净重" Type="Decimal" Precision="12" Scale="3" />
+    <Property Name="模数" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="单价" Type="Decimal" Precision="12" Scale="3" />
+    <Property Name="折扣" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="额外费用" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="金额" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="规格" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="货品类型代码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="货品类型名称" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="备注" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="StockInBillDtl">
     <Key>
@@ -740,6 +1000,31 @@
     <Property Name="TimeWage" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="IsDel" Type="Boolean" Nullable="false" />
   </EntityType>
+  <EntityType Name="USPAttWageBillDtl">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="YearMonth" />
+    </Key>
+    <Property Name="CheckItem" Type="Boolean" Nullable="false" />
+    <Property Name="UserID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="YearMonth" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Classes" Type="Int32" />
+    <Property Name="Late" Type="Int32" />
+    <Property Name="Early" Type="Int32" />
+    <Property Name="LateCount" Type="Int32" />
+    <Property Name="EarlyCount" Type="Int32" />
+    <Property Name="Absent" Type="Int32" />
+    <Property Name="Forget" Type="Int32" />
+    <Property Name="Leave" Type="Int32" />
+    <Property Name="Wages" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Welfare" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Deduction" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="SocialSecurity" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="IndividualIncomeTax" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="AMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="WageStatus" Type="Int32" Nullable="false" />
+  </EntityType>
   <EntityType Name="WageBillDtl">
     <Key>
       <PropertyRef Name="ID" />
@@ -753,6 +1038,7 @@
     <Property Name="SocialSecurity" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="IndividualIncomeTax" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="AMT" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <NavigationProperty Name="WageBillHd" Relationship="Self.FK_WageBillDtl_WageBillHd" FromRole="WageBillDtl" ToRole="WageBillHd" />
   </EntityType>
   <EntityType Name="WageBillHd">
     <Key>
@@ -769,6 +1055,7 @@
     <Property Name="Auditor" Type="Guid" />
     <Property Name="AuditDate" Type="DateTime" Precision="3" />
     <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="WageBillDtl" Relationship="Self.FK_WageBillDtl_WageBillHd" FromRole="WageBillHd" ToRole="WageBillDtl" />
   </EntityType>
   <EntityType Name="WageDesign">
     <Key>
@@ -2762,6 +3049,18 @@
     <Property Name="AMT" Type="Decimal" Precision="38" Scale="2" />
     <Property Name="WageStatus" Type="Int32" Nullable="false" />
   </EntityType>
+  <Association Name="FK_AttWageBillDtl_AttWageBillHd">
+    <End Role="AttWageBillHd" Type="Self.AttWageBillHd" Multiplicity="1" />
+    <End Role="AttWageBillDtl" Type="Self.AttWageBillDtl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AttWageBillHd">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AttWageBillDtl">
+        <PropertyRef Name="HdID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Goods_GoodsType">
     <End Role="GoodsType" Type="Self.GoodsType" Multiplicity="1" />
     <End Role="Goods" Type="Self.Goods" Multiplicity="*" />
@@ -2774,15 +3073,39 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_OrderDtl_Goods">
-    <End Role="Goods" Type="Self.Goods" Multiplicity="1" />
+  <Association Name="FK_OrderDtl_OrderHd">
+    <End Role="OrderHd" Type="Self.OrderHd" Multiplicity="1" />
     <End Role="OrderDtl" Type="Self.OrderDtl" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Goods">
+      <Principal Role="OrderHd">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="OrderDtl">
-        <PropertyRef Name="GoodsID" />
+        <PropertyRef Name="HdID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PaymentBillDtl_PaymentBillHd">
+    <End Role="PaymentBillHd" Type="Self.PaymentBillHd" Multiplicity="1" />
+    <End Role="PaymentBillDtl" Type="Self.PaymentBillDtl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentBillHd">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PaymentBillDtl">
+        <PropertyRef Name="HdID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiptBillDtl_ReceiptBillHd">
+    <End Role="ReceiptBillHd" Type="Self.ReceiptBillHd" Multiplicity="1" />
+    <End Role="ReceiptBillDtl" Type="Self.ReceiptBillDtl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ReceiptBillHd">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ReceiptBillDtl">
+        <PropertyRef Name="HdID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2810,9 +3133,23 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_WageBillDtl_WageBillHd">
+    <End Role="WageBillHd" Type="Self.WageBillHd" Multiplicity="1" />
+    <End Role="WageBillDtl" Type="Self.WageBillDtl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WageBillHd">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WageBillDtl">
+        <PropertyRef Name="HdID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="ERPToysContext" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="AccountBook" EntityType="Self.AccountBook" />
     <EntitySet Name="Alert" EntityType="Self.Alert" />
+    <EntitySet Name="AnnualSalesSummaryByCustomerReport" EntityType="Self.AnnualSalesSummaryByCustomerReport" />
+    <EntitySet Name="AnnualSalesSummaryByGoodsReport" EntityType="Self.AnnualSalesSummaryByGoodsReport" />
     <EntitySet Name="Appointments" EntityType="Self.Appointments" />
     <EntitySet Name="AttAppointments" EntityType="Self.AttAppointments" />
     <EntitySet Name="AttGeneralLog" EntityType="Self.AttGeneralLog" />
@@ -2822,7 +3159,10 @@
     <EntitySet Name="ButtonPermission" EntityType="Self.ButtonPermission" />
     <EntitySet Name="Company" EntityType="Self.Company" />
     <EntitySet Name="Department" EntityType="Self.Department" />
+    <EntitySet Name="EMSGoodsTrackingDailyReport" EntityType="Self.EMSGoodsTrackingDailyReport" />
+    <EntitySet Name="FSMGoodsTrackingDailyReport" EntityType="Self.FSMGoodsTrackingDailyReport" />
     <EntitySet Name="Goods" EntityType="Self.Goods" />
+    <EntitySet Name="GoodsSalesSummaryByCustomerReport" EntityType="Self.GoodsSalesSummaryByCustomerReport" />
     <EntitySet Name="GoodsType" EntityType="Self.GoodsType" />
     <EntitySet Name="Inventory" EntityType="Self.Inventory" />
     <EntitySet Name="MainMenu" EntityType="Self.MainMenu" />
@@ -2836,9 +3176,19 @@
     <EntitySet Name="ReceiptBillDtl" EntityType="Self.ReceiptBillDtl" />
     <EntitySet Name="ReceiptBillHd" EntityType="Self.ReceiptBillHd" />
     <EntitySet Name="Resources" EntityType="Self.Resources" />
+    <EntitySet Name="SalesSummaryByCustomerReport" EntityType="Self.SalesSummaryByCustomerReport" />
+    <EntitySet Name="SalesSummaryByGoodsPriceReport" EntityType="Self.SalesSummaryByGoodsPriceReport" />
+    <EntitySet Name="SalesSummaryByGoodsReport" EntityType="Self.SalesSummaryByGoodsReport" />
+    <EntitySet Name="SalesSummaryMonthlyReport" EntityType="Self.SalesSummaryMonthlyReport" />
     <EntitySet Name="SchClass" EntityType="Self.SchClass" />
     <EntitySet Name="SLSalePrice" EntityType="Self.SLSalePrice" />
     <EntitySet Name="StaffSchClass" EntityType="Self.StaffSchClass" />
+    <EntitySet Name="StatementOfAccountBasketToSupplierReport" EntityType="Self.StatementOfAccountBasketToSupplierReport" />
+    <EntitySet Name="StatementOfAccountMaterialToSupplierReport" EntityType="Self.StatementOfAccountMaterialToSupplierReport" />
+    <EntitySet Name="StatementOfAccountSummaryToSupplierReport" EntityType="Self.StatementOfAccountSummaryToSupplierReport" />
+    <EntitySet Name="StatementOfAccountToBulkSalesReport" EntityType="Self.StatementOfAccountToBulkSalesReport" />
+    <EntitySet Name="StatementOfAccountToCustomerReport" EntityType="Self.StatementOfAccountToCustomerReport" />
+    <EntitySet Name="StatementOfAccountToSupplierReport" EntityType="Self.StatementOfAccountToSupplierReport" />
     <EntitySet Name="StockInBillDtl" EntityType="Self.StockInBillDtl" />
     <EntitySet Name="StockInBillHd" EntityType="Self.StockInBillHd" />
     <EntitySet Name="StockOutBillDtl" EntityType="Self.StockOutBillDtl" />
@@ -2850,6 +3200,7 @@
     <EntitySet Name="TonerLabel" EntityType="Self.TonerLabel" />
     <EntitySet Name="TypesList" EntityType="Self.TypesList" />
     <EntitySet Name="UsersInfo" EntityType="Self.UsersInfo" />
+    <EntitySet Name="USPAttWageBillDtl" EntityType="Self.USPAttWageBillDtl" />
     <EntitySet Name="WageBillDtl" EntityType="Self.WageBillDtl" />
     <EntitySet Name="WageBillHd" EntityType="Self.WageBillHd" />
     <EntitySet Name="WageDesign" EntityType="Self.WageDesign" />
@@ -2916,13 +3267,25 @@
     <EntitySet Name="VUsersInfo" EntityType="Self.VUsersInfo" />
     <EntitySet Name="VWageBill" EntityType="Self.VWageBill" />
     <EntitySet Name="VWageBillDtl" EntityType="Self.VWageBillDtl" />
+    <AssociationSet Name="FK_AttWageBillDtl_AttWageBillHd" Association="Self.FK_AttWageBillDtl_AttWageBillHd">
+      <End Role="AttWageBillHd" EntitySet="AttWageBillHd" />
+      <End Role="AttWageBillDtl" EntitySet="AttWageBillDtl" />
+    </AssociationSet>
     <AssociationSet Name="FK_Goods_GoodsType" Association="Self.FK_Goods_GoodsType">
       <End Role="GoodsType" EntitySet="GoodsType" />
       <End Role="Goods" EntitySet="Goods" />
     </AssociationSet>
-    <AssociationSet Name="FK_OrderDtl_Goods" Association="Self.FK_OrderDtl_Goods">
-      <End Role="Goods" EntitySet="Goods" />
+    <AssociationSet Name="FK_OrderDtl_OrderHd" Association="Self.FK_OrderDtl_OrderHd">
+      <End Role="OrderHd" EntitySet="OrderHd" />
       <End Role="OrderDtl" EntitySet="OrderDtl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PaymentBillDtl_PaymentBillHd" Association="Self.FK_PaymentBillDtl_PaymentBillHd">
+      <End Role="PaymentBillHd" EntitySet="PaymentBillHd" />
+      <End Role="PaymentBillDtl" EntitySet="PaymentBillDtl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiptBillDtl_ReceiptBillHd" Association="Self.FK_ReceiptBillDtl_ReceiptBillHd">
+      <End Role="ReceiptBillHd" EntitySet="ReceiptBillHd" />
+      <End Role="ReceiptBillDtl" EntitySet="ReceiptBillDtl" />
     </AssociationSet>
     <AssociationSet Name="FK_StockInBillDtl_StockInBillHd" Association="Self.FK_StockInBillDtl_StockInBillHd">
       <End Role="StockInBillHd" EntitySet="StockInBillHd" />
@@ -2931,6 +3294,10 @@
     <AssociationSet Name="FK_StockOutBillDtl_StockOutBillHd" Association="Self.FK_StockOutBillDtl_StockOutBillHd">
       <End Role="StockOutBillHd" EntitySet="StockOutBillHd" />
       <End Role="StockOutBillDtl" EntitySet="StockOutBillDtl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WageBillDtl_WageBillHd" Association="Self.FK_WageBillDtl_WageBillHd">
+      <End Role="WageBillHd" EntitySet="WageBillHd" />
+      <End Role="WageBillDtl" EntitySet="WageBillDtl" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

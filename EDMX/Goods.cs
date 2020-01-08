@@ -13,17 +13,11 @@ namespace EDMX
     using System.Runtime.Serialization;
     using System.Collections.Generic;
     
-    [DataContract]
+    [DataContract(IsReference = true)]
     [KnownType(typeof(GoodsType))]
-    [KnownType(typeof(OrderDtl))]
     
     public partial class Goods
     {
-        public Goods()
-        {
-            this.OrderDtl = new HashSet<OrderDtl>();
-        }
-    
     	[DataMember]
         public System.Guid ID { get; set; }
     	[DataMember]
@@ -109,7 +103,5 @@ namespace EDMX
     
     	[DataMember]
         public virtual GoodsType GoodsType { get; set; }
-    	[DataMember]
-        public virtual ICollection<OrderDtl> OrderDtl { get; set; }
     }
 }

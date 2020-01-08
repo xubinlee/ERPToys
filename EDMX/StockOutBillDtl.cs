@@ -13,7 +13,7 @@ namespace EDMX
     using System.Runtime.Serialization;
     using System.Collections.Generic;
     
-    [DataContract]
+    [DataContract(IsReference = true)]
     [KnownType(typeof(StockOutBillHd))]
     
     public partial class StockOutBillDtl

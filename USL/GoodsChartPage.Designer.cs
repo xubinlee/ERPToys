@@ -221,7 +221,7 @@
             // 
             // vGoodsBindingSource
             // 
-            this.vGoodsBindingSource.DataSource = typeof(DBML.VGoods);
+            this.vGoodsBindingSource.DataSource = typeof(EDMX.VGoods);
             // 
             // winExplorerView
             // 

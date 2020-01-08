@@ -243,7 +243,7 @@
             // 
             // paymentBillHdBindingSource
             // 
-            this.paymentBillHdBindingSource.DataSource = typeof(DBML.PaymentBillHd);
+            this.paymentBillHdBindingSource.DataSource = typeof(EDMX.PaymentBillHd);
             // 
             // mePaidAMT
             // 
@@ -302,7 +302,7 @@
             // 
             // vPaymentBillDtlBindingSource
             // 
-            this.vPaymentBillDtlBindingSource.DataSource = typeof(DBML.VPaymentBillDtl);
+            this.vPaymentBillDtlBindingSource.DataSource = typeof(EDMX.VPaymentBillDtl);
             // 
             // imageListCheck
             // 
@@ -565,7 +565,7 @@
             // 
             // businessContactBindingSource
             // 
-            this.businessContactBindingSource.DataSource = typeof(DBML.VCompany);
+            this.businessContactBindingSource.DataSource = typeof(EDMX.VCompany);
             // 
             // lueBillType
             // 
@@ -582,15 +582,11 @@
             this.lueBillType.Properties.NullText = "";
             this.lueBillType.Properties.PopupSizeable = false;
             this.lueBillType.Properties.ShowHeader = false;
-            this.lueBillType.Properties.ValueMember = "No";
+            this.lueBillType.Properties.ValueMember = "Index";
             this.lueBillType.Size = new System.Drawing.Size(148, 20);
             this.lueBillType.StyleController = this.layoutControl;
             this.lueBillType.TabIndex = 3;
             this.lueBillType.EditValueChanged += new System.EventHandler(this.lueBillType_EditValueChanged);
-            // 
-            // billTypeBindingSource
-            // 
-            this.billTypeBindingSource.DataSource = typeof(DBML.TypesList);
             // 
             // lueWarehouse
             // 
@@ -713,7 +709,7 @@
             // 
             // vUsersInfoBindingSource
             // 
-            this.vUsersInfoBindingSource.DataSource = typeof(DBML.VUsersInfo);
+            this.vUsersInfoBindingSource.DataSource = typeof(EDMX.VUsersInfo);
             // 
             // lueAuditor
             // 
@@ -747,14 +743,10 @@
             this.luePOClear.Properties.NullText = "";
             this.luePOClear.Properties.PopupSizeable = false;
             this.luePOClear.Properties.ShowHeader = false;
-            this.luePOClear.Properties.ValueMember = "No";
+            this.luePOClear.Properties.ValueMember = "Index";
             this.luePOClear.Size = new System.Drawing.Size(242, 20);
             this.luePOClear.StyleController = this.layoutControl;
             this.luePOClear.TabIndex = 4;
-            // 
-            // pOClearBindingSource
-            // 
-            this.pOClearBindingSource.DataSource = typeof(DBML.TypesList);
             // 
             // meBalance
             // 
@@ -1137,7 +1129,7 @@
             // 
             // statementOfAccountToSupplierReportBindingSource
             // 
-            this.statementOfAccountToSupplierReportBindingSource.DataSource = typeof(DBML.StatementOfAccountToSupplierReport);
+            this.statementOfAccountToSupplierReportBindingSource.DataSource = typeof(EDMX.StatementOfAccountToSupplierReport);
             // 
             // gvSOA
             // 

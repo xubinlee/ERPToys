@@ -13,10 +13,16 @@ namespace EDMX
     using System.Runtime.Serialization;
     using System.Collections.Generic;
     
-    [DataContract]
+    [DataContract(IsReference = true)]
+    [KnownType(typeof(PaymentBillDtl))]
     
     public partial class PaymentBillHd
     {
+        public PaymentBillHd()
+        {
+            this.PaymentBillDtl = new HashSet<PaymentBillDtl>();
+        }
+    
     	[DataMember]
         public System.Guid ID { get; set; }
     	[DataMember]
@@ -53,5 +59,8 @@ namespace EDMX
         public Nullable<decimal> UnPaidAMT { get; set; }
     	[DataMember]
         public byte[] Pic { get; set; }
+    
+    	[DataMember]
+        public virtual ICollection<PaymentBillDtl> PaymentBillDtl { get; set; }
     }
 }

@@ -789,7 +789,7 @@
             // 
             // materialBindingSource
             // 
-            this.materialBindingSource.DataSource = typeof(DBML.StatementOfAccountMaterialToSupplierReport);
+            this.materialBindingSource.DataSource = typeof(EDMX.StatementOfAccountMaterialToSupplierReport);
             // 
             // DetailReportSummary
             // 
@@ -1128,7 +1128,7 @@
             // 
             // summaryBindingSource
             // 
-            this.summaryBindingSource.DataSource = typeof(DBML.StatementOfAccountSummaryToSupplierReport);
+            this.summaryBindingSource.DataSource = typeof(EDMX.StatementOfAccountSummaryToSupplierReport);
             // 
             // DetailReportBasket
             // 
@@ -1398,7 +1398,7 @@
             // 
             // basketBindingSource
             // 
-            this.basketBindingSource.DataSource = typeof(DBML.StatementOfAccountBasketToSupplierReport);
+            this.basketBindingSource.DataSource = typeof(EDMX.StatementOfAccountBasketToSupplierReport);
             // 
             // ReportHeader
             // 

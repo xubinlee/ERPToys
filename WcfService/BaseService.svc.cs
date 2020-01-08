@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using Utility;
 
 namespace WcfService
 {
@@ -51,6 +52,20 @@ namespace WcfService
             {
                 Parameter p = param.GetParameter();
                 return DALFty.Create<BaseDAL>().Delete(db, p.entityType, p.model);
+            }
+        }
+
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public int DelByBulk(SerializedParam param)
+        {
+            using (ERPToysContext db = EDMXFty.Dc)
+            {
+                Parameter p = param.GetParameter();
+                return DALFty.Create<BaseDAL>().DelByBulk(db, p.entityType, p.list);
             }
         }
         #endregion
@@ -113,7 +128,7 @@ namespace WcfService
             }
         }
 
-        public SerializedParam GetListByNoTracking(SerializedParam param)
+        public virtual SerializedParam GetListByNoTracking(SerializedParam param)
         {
             using (ERPToysContext db = EDMXFty.Dc)
             {

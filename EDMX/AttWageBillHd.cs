@@ -13,10 +13,16 @@ namespace EDMX
     using System.Runtime.Serialization;
     using System.Collections.Generic;
     
-    [DataContract]
+    [DataContract(IsReference = true)]
+    [KnownType(typeof(AttWageBillDtl))]
     
     public partial class AttWageBillHd
     {
+        public AttWageBillHd()
+        {
+            this.AttWageBillDtl = new HashSet<AttWageBillDtl>();
+        }
+    
     	[DataMember]
         public System.Guid ID { get; set; }
     	[DataMember]
@@ -39,5 +45,8 @@ namespace EDMX
         public Nullable<System.DateTime> AuditDate { get; set; }
     	[DataMember]
         public string Remark { get; set; }
+    
+    	[DataMember]
+        public virtual ICollection<AttWageBillDtl> AttWageBillDtl { get; set; }
     }
 }

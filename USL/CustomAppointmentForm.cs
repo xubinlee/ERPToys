@@ -22,7 +22,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraScheduler;
-using DBML;
+using EDMX;
 using Utility;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
@@ -32,11 +32,14 @@ using System.IO;
 using System.Linq;
 using Factory;
 using BLL;
+using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class CustomAppointmentForm : DevExpress.XtraScheduler.UI.AppointmentForm
     {
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         private int PrevCheckedRow; // this is the selected row's handle
         object CheckedRow; // this is a DataRowView instance
         int CheckedRowIndex = -1;
@@ -67,10 +70,10 @@ namespace USL
         /// </summary>
         public override void LoadFormData(DevExpress.XtraScheduler.Appointment appointment)
         {
-            goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)GoodsBigType.Mold);
-            wageDesignBindingSource.DataSource = MainForm.dataSourceList[typeof(List<WageDesign>)];
+            goodsBindingSource.DataSource = baseFactory.GetModelList<Goods>().FindAll(o => o.Type.Equals((int)GoodsBigTypeEnum.Mold));
+            wageDesignBindingSource.DataSource = baseFactory.GetModelList<WageDesign>();
             //if (appointment.CustomFields["UniqueID"] != null)
-            //    prevApt = ((List<Appointments>)MainForm.dataSourceList[typeof(List<Appointments>)]).FirstOrDefault(o => o.UniqueID == (Int64)appointment.CustomFields["UniqueID"]);
+            //    prevApt = baseFactory.GetModelList<Appointments>().FirstOrDefault(o => o.UniqueID == (Int64)appointment.CustomFields["UniqueID"]);
             if (appointment.CustomFields["GoodsID"] == null)
             {
                 lueGoods.EditValue = null;
@@ -93,7 +96,7 @@ namespace USL
             //    else
             //    {
             //        WageDesignID = prevApt.WageDesignID.Value.ToString();
-            //        CheckedRow = ((List<WageDesign>)MainForm.dataSourceList[typeof(List<WageDesign>)]).Find(o => o.ID == new Guid(WageDesignID));
+            //        CheckedRow = baseFactory.GetModelList<WageDesign>().Find(o => o.ID == new Guid(WageDesignID));
             //    }
             //    if (!string.IsNullOrEmpty(prevApt.Location))
             //        tbLocation.EditValue = decimal.Parse(prevApt.Location);
@@ -114,7 +117,7 @@ namespace USL
             else
             {
                 WageDesignID = appointment.CustomFields["WageDesignID"].ToString();
-                CheckedRow = ((List<WageDesign>)MainForm.dataSourceList[typeof(List<WageDesign>)]).Find(o => o.ID == new Guid(WageDesignID));
+                CheckedRow = baseFactory.GetModelList<WageDesign>().Find(o => o.ID == new Guid(WageDesignID));
             }
             GetTotal();
             if (!string.IsNullOrEmpty(appointment.Location))
@@ -146,7 +149,7 @@ namespace USL
             appointment.CustomFields["AMT"] = tbLocation.EditValue;
             if (lueGoods.EditValue != null)  //修改净重和计算周期
             {
-                Goods goods = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FirstOrDefault(o =>
+                Goods goods = baseFactory.GetModelList<Goods>().FirstOrDefault(o =>
                     o.ID == new Guid(lueGoods.EditValue.ToString()));
                 if (goods != null && 
                     ((!string.IsNullOrEmpty(txtNWeight.Text) && goods.NWeight != decimal.Parse(txtNWeight.Text)) ||
@@ -254,7 +257,7 @@ namespace USL
                 else
                 {
                     //一班工时小于6（比如停电），工价按公班价格算
-                    WageDesign obj = ((List<WageDesign>)MainForm.dataSourceList[typeof(List<WageDesign>)]).Find(o => o.Name.Contains("公班"));
+                    WageDesign obj = baseFactory.GetModelList<WageDesign>().Find(o => o.Name.Contains("公班"));
                     if (obj != null)
                         wages = obj.Wages.Value;
                 }

@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using Common;
+using DAL;
 using EDMX;
 using Factory;
 using IWcfServiceInterface;
@@ -11,13 +12,13 @@ using System.Text;
 
 namespace WcfService
 {
-    public class AttAppointmentsService : IAttAppointmentsService
+    public class AttAppointmentsService : ServiceBase, IAttAppointmentsService
     {
         public void AddAndUpdate(List<AttAppointments> insertList, List<AttAppointments> updateList)
         {
             using (ERPToysContext db = EDMXFty.Dc)
             {
-                DALFty.Create<BaseDAL>().AddAndUpdate(db, insertList, updateList);
+                DALFty.Create<BaseDAL>().AddAndUpdate<AttAppointments>(db, insertList, updateList);
             }
         }
     }

@@ -122,7 +122,7 @@
             // 
             // packagingBindingSource
             // 
-            this.packagingBindingSource.DataSource = typeof(DBML.Packaging);
+            this.packagingBindingSource.DataSource = typeof(EDMX.Packaging);
             // 
             // PackagingEditPage
             // 

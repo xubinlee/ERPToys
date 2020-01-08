@@ -11,7 +11,7 @@ using DevExpress.XtraEditors;
 using IBase;
 using Factory;
 using BLL;
-using DBML;
+using EDMX;
 using CommonLibrary;
 using Utility;
 using DevExpress.XtraGrid.Views.Grid;
@@ -21,12 +21,13 @@ using System.Data.Linq;
 using DevExpress.XtraGrid.Views.WinExplorer;
 using DevExpress.XtraGrid.Views.Layout;
 using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class StaffSchClassPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
-        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         Guid focused;
         //List<UsersInfo> focusedUsers;
         List<StaffSchClass> staffSchClassList;
@@ -43,8 +44,8 @@ namespace USL
 
         public void BindData(object obj)
         {
-            departmentBindingSource.DataSource = MainForm.dataSourceList[typeof(List<Department>)];
-            schClassBindingSource.DataSource = MainForm.dataSourceList[typeof(List<SchClass>)] as List<SchClass>;
+            departmentBindingSource.DataSource = baseFactory.GetModelList<Department>();
+            schClassBindingSource.DataSource = baseFactory.GetModelList<SchClass>();
             GetDataSource();
         }
 
@@ -63,13 +64,13 @@ namespace USL
             //focused = winExplorerView.GetFocusedDisplayText();
             //if (string.IsNullOrEmpty(focused))
             //    focused = winExplorerView.GetGroupRowDisplayText(winExplorerView.FocusedRowHandle);
-            //focusedUsers = ((List<UsersInfo>)MainForm.dataSourceList[typeof(List<UsersInfo>)]).FindAll(o =>
+            //focusedUsers = baseFactory.GetModelList<UsersInfo>().FindAll(o =>
             //    o.IsDel == false && (o.Code == focused || o.Dept == focused));
             //staffSchClassBindingSource.DataSource = staffSchClassList = GetStaffSchClass(focusedUsers);
             if (winExplorerView.GetFocusedRowCellValue(colID) != null)
             {
                 focused = new Guid(winExplorerView.GetFocusedRowCellValue(colID).ToString());
-                staffSchClassBindingSource.DataSource = staffSchClassList = ((List<StaffSchClass>)MainForm.dataSourceList[typeof(List<StaffSchClass>)]).FindAll(o =>
+                staffSchClassBindingSource.DataSource = staffSchClassList = baseFactory.GetModelList<StaffSchClass>().FindAll(o =>
                     o.DeptID == focused).OrderBy(o => o.SchSerialNo).ToList();
             }
         }
@@ -80,7 +81,7 @@ namespace USL
         //    Hashtable hasSch = new Hashtable();
         //    foreach (UsersInfo user in users)
         //    {
-        //        List<StaffSchClass> ssc = ((List<StaffSchClass>)MainForm.dataSourceList[typeof(List<StaffSchClass>)]).FindAll(o =>
+        //        List<StaffSchClass> ssc = baseFactory.GetModelList<StaffSchClass>().FindAll(o =>
         //            o.UserID == user.ID).OrderBy(o => o.SchSerialNo).ToList();
         //        foreach (StaffSchClass  item in ssc)
         //        {
@@ -115,12 +116,12 @@ namespace USL
         /// </summary>
         //void PageRefresh()
         //{
-        //    MainForm.dataSourceList[typeof(List<StaffSchClass>)] = BLLFty.Create<StaffSchClassBLL>().GetStaffSchClass();
-        //    MainForm.dataSourceList[typeof(List<VStaffSchClass>)] = BLLFty.Create<StaffSchClassBLL>().GetVStaffSchClass();
+        //    baseFactory.GetModelList<StaffSchClass>)] = BLLFty.Create<StaffSchClassBLL>().GetStaffSchClass();
+        //    baseFactory.GetModelList<VStaffSchClass>)] = BLLFty.Create<StaffSchClassBLL>().GetVStaffSchClass();
         //    BindData();
-        //    if (ClientFactory.itemDetailList.ContainsKey(MainMenuConstants.StaffAttendance))
+        //    if (ClientFactory.itemDetailList.ContainsKey(MainMenuEnum.StaffAttendance))
         //    {
-        //        AttendanceSchedulingPage page = ClientFactory.itemDetailList[MainMenuConstants.StaffAttendance] as AttendanceSchedulingPage;
+        //        AttendanceSchedulingPage page = ClientFactory.itemDetailList[MainMenuEnum.StaffAttendance] as AttendanceSchedulingPage;
         //        page.PageRefresh();
         //    }
         //}
@@ -152,7 +153,7 @@ namespace USL
                         return false;
                     }
                     staffSchClassList[i].SchSerialNo = i;
-                    StaffSchClass ssc = ((List<StaffSchClass>)MainForm.dataSourceList[typeof(List<StaffSchClass>)]).FirstOrDefault(o =>
+                    StaffSchClass ssc = baseFactory.GetModelList<StaffSchClass>().FirstOrDefault(o =>
                             o.DeptID == focused && o.SchClassID == staffSchClassList[i].SchClassID);
                     if (ssc == null)
                     {
@@ -165,7 +166,7 @@ namespace USL
                     sscList.Add(ssc);
                     //foreach (UsersInfo user in focusedUsers)
                     //{
-                    //    StaffSchClass ssc = ((List<StaffSchClass>)MainForm.dataSourceList[typeof(List<StaffSchClass>)]).FirstOrDefault(o =>
+                    //    StaffSchClass ssc = baseFactory.GetModelList<StaffSchClass>().FirstOrDefault(o =>
                     //        o.UserID == user.ID && o.SchClassID == staffSchClassList[i].SchClassID);
                     //    if (ssc==null)
                     //    {
@@ -182,8 +183,8 @@ namespace USL
                 //addNew = false;
                 //刷新数据
                 //PageRefresh();
-                clientFactory.DataPageRefresh<StaffSchClass>();
-                clientFactory.DataPageRefresh<VStaffSchClass>();
+                baseFactory.DataPageRefresh<StaffSchClass>();
+                baseFactory.DataPageRefresh<VStaffSchClass>();
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 return true;
             }
@@ -211,13 +212,13 @@ namespace USL
         private void layoutView_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             Save();
-            clientFactory.DataPageRefresh<VStaffSchClass>();
+            baseFactory.DataPageRefresh<VStaffSchClass>();
         }
 
         private void layoutView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
             Save();
-            clientFactory.DataPageRefresh<VStaffSchClass>();
+            baseFactory.DataPageRefresh<VStaffSchClass>();
         }
 
         private void layoutView_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
@@ -226,7 +227,7 @@ namespace USL
             List<StaffSchClass> list = ((BindingSource)view.DataSource).DataSource as List<StaffSchClass>;
             if (e.IsGetData && list != null && list.Count > 0 && list[e.ListSourceRowIndex] != null)
             {
-                SchClass sch = ((List<SchClass>)MainForm.dataSourceList[typeof(List<SchClass>)]).Find(o => o.ID == list[e.ListSourceRowIndex].SchClassID);
+                SchClass sch = baseFactory.GetModelList<SchClass>().Find(o => o.ID == list[e.ListSourceRowIndex].SchClassID);
                 if (sch != null)
                 {
                     if (e.Column == colStartTime)

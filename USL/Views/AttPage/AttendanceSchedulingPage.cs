@@ -11,7 +11,7 @@ using DevExpress.XtraEditors;
 using IBase;
 using Factory;
 using BLL;
-using DBML;
+using EDMX;
 using CommonLibrary;
 using Utility;
 using DevExpress.XtraGrid.Views.Grid;
@@ -24,12 +24,13 @@ using SchedulerReportingExample;
 using DevExpress.XtraScheduler.Reporting;
 using DevExpress.XtraReports.UI;
 using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class AttendanceSchedulingPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
-        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         Guid focusedID;
         Guid focusedDeptID;
         //bool addNew = false;  //是否新增
@@ -50,7 +51,7 @@ namespace USL
         public void BindData(object obj)
         {
             schedulerStorage.BeginUpdate();
-            vUsersInfoBindingSource.DataSource = ((List<VUsersInfo>)MainForm.dataSourceList[typeof(List<VUsersInfo>)]).FindAll(o =>
+            vUsersInfoBindingSource.DataSource = baseFactory.GetModelList<VUsersInfo>().FindAll(o =>
                o.已删除==false && o.部门 != "注塑机");
             GetStatus();
             GetLabels();
@@ -61,8 +62,8 @@ namespace USL
 
         void GetStatus()
         {
-            //List<SchClass> schList = MainForm.dataSourceList[typeof(List<SchClass>)] as List<SchClass>;
-            List<VStaffSchClass> schList = ((List<VStaffSchClass>)MainForm.dataSourceList[typeof(List<VStaffSchClass>)]).FindAll(o =>
+            //List<SchClass> schList = baseFactory.GetModelList<SchClass>();
+            List<VStaffSchClass> schList = baseFactory.GetModelList<VStaffSchClass>().FindAll(o =>
                 o.DeptID == focusedDeptID).OrderBy(o => o.SchSerialNo).ToList();
             schedulerStorage.Appointments.Statuses.Clear();
             foreach (VStaffSchClass sch in schList)
@@ -97,7 +98,7 @@ namespace USL
             {
                 focusedID = new Guid(winExplorerView.GetFocusedRowCellValue(colID).ToString());
                 focusedDeptID = GetDeptID(focusedID);
-                attAppointmentsBindingSource.DataSource = ((List<AttAppointments>)MainForm.dataSourceList[typeof(List<AttAppointments>)]).FindAll(o => o.UserID == focusedID);
+                attAppointmentsBindingSource.DataSource = baseFactory.GetModelList<AttAppointments>().FindAll(o => o.UserID == focusedID);
                 GetStatus();
                 picStatus.Visible = false;
                 //DataView dv = erpToysDataSet.Appointments.DefaultView;
@@ -108,7 +109,7 @@ namespace USL
 
         Guid GetDeptID(Guid? userID)
         {
-            return ((List<UsersInfo>)MainForm.dataSourceList[typeof(List<UsersInfo>)]).FirstOrDefault(o =>
+            return baseFactory.GetModelList<UsersInfo>().FirstOrDefault(o =>
                 o.ID == userID).DeptID.GetValueOrDefault();
         }
         public void Add()
@@ -147,9 +148,9 @@ namespace USL
                 new SchedulerControlPrintAdapter(this.schedulerControl1);
             xr.SchedulerAdapter = scPrintAdapter;
             xr.CreateDocument(true);
-            xr.paramUserName.Value = ((List<UsersInfo>)MainForm.dataSourceList[typeof(List<UsersInfo>)]).FirstOrDefault(o =>
+            xr.paramUserName.Value = baseFactory.GetModelList<UsersInfo>().FirstOrDefault(o =>
                 o.ID == focusedID).Name;
-            //xr.paramAMT.Value = ((List<VAppointments>)MainForm.dataSourceList[typeof(List<VAppointments>)]).FindAll(o =>
+            //xr.paramAMT.Value = ((List<VAppointments>)baseFactory.GetModelList<VAppointments>().FindAll(o =>
             //    o.UserID == focusedID && o.日期.Value.Month == dateNavigator.DateTime.Month).Sum(o => o.当班金额);
 
             using (ReportPrintTool printTool = new ReportPrintTool(xr))
@@ -167,7 +168,7 @@ namespace USL
                 AttAppointments dbApt = (AttAppointments)apt.GetSourceObject(this.schedulerStorage);
                 if (dbApt == null || dbApt.UserID == null || dbApt.UserID == Guid.Empty)
                     continue;
-                VStaffSchClass vssc = ((List<VStaffSchClass>)MainForm.dataSourceList[typeof(List<VStaffSchClass>)]).FirstOrDefault(o =>
+                VStaffSchClass vssc = baseFactory.GetModelList<VStaffSchClass>().FirstOrDefault(o =>
                     o.SchClassID == dbApt.SchClassID && o.DeptID ==  GetDeptID(dbApt.UserID));
                 if (dbApt.AttStatus < (int)AttStatusType.Absent)
                 {
@@ -205,8 +206,8 @@ namespace USL
         //        AttAppointments dbApt = (AttAppointments)apt.GetSourceObject(this.schedulerStorage);
         //        if (dbApt == null || dbApt.UserID == null || dbApt.UserID == Guid.Empty)
         //            continue;
-        //        UsersInfo user = ((List<UsersInfo>)MainForm.dataSourceList[typeof(List<UsersInfo>)]).FirstOrDefault(o => o.ID == dbApt.UserID);
-        //        AttGeneralLog dbLogStart = ((List<AttGeneralLog>)MainForm.dataSourceList[typeof(List<AttGeneralLog>)]).FirstOrDefault(o => o.ID == dbApt.GLogStartID);
+        //        UsersInfo user = baseFactory.GetModelList<UsersInfo>().FirstOrDefault(o => o.ID == dbApt.UserID);
+        //        AttGeneralLog dbLogStart = baseFactory.GetModelList<AttGeneralLog>().FirstOrDefault(o => o.ID == dbApt.GLogStartID);
         //        if (dbLogStart != null)
         //        {
         //            dbLogStart.AttFlag = true;
@@ -216,7 +217,7 @@ namespace USL
         //            dbLogStart.Description = dbApt.Description;
         //            logList.Add(dbLogStart);
         //        }
-        //        AttGeneralLog dbLogEnd = ((List<AttGeneralLog>)MainForm.dataSourceList[typeof(List<AttGeneralLog>)]).FirstOrDefault(o => o.ID == dbApt.GLogEndID);
+        //        AttGeneralLog dbLogEnd = baseFactory.GetModelList<AttGeneralLog>().FirstOrDefault(o => o.ID == dbApt.GLogEndID);
         //        if (dbLogEnd != null)
         //        {
         //            dbLogEnd.AttFlag = false;
@@ -234,8 +235,8 @@ namespace USL
         {
             BLLFty.Create<AttAppointmentsBLL>().Update(GetAttAppointmentsList(e.Objects));
             //刷新数据
-            clientFactory.UpdateCache<AttAppointments>();
-            clientFactory.DataPageRefresh<VAttAppointments>();
+            baseFactory.DataPageRefresh<AttAppointments>();
+            baseFactory.DataPageRefresh<VAttAppointments>();
         }
 
         private void schedulerStorage_AppointmentsInserted(object sender, PersistentObjectsEventArgs e)
@@ -250,7 +251,7 @@ namespace USL
                     CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "添加失败，请刷新数据后重试。");
                     break;
                 }
-                //UsersInfo user = ((List<UsersInfo>)MainForm.dataSourceList[typeof(List<UsersInfo>)]).FirstOrDefault(o => o.ID == dbApt.UserID);
+                //UsersInfo user = baseFactory.GetModelList<UsersInfo>().FirstOrDefault(o => o.ID == dbApt.UserID);
                 //AttGeneralLog dbLogStart = new AttGeneralLog();
                 //dbLogStart.ID = Guid.NewGuid();
                 //dbLogStart.AttFlag = true;
@@ -269,7 +270,7 @@ namespace USL
                 //dbLogEnd.Description = dbApt.Description;
                 //dbLogEnd.SchClassID = dbApt.SchClassID;
                 //logList.Add(dbLogEnd);
-                VStaffSchClass vssc=((List<VStaffSchClass>)MainForm.dataSourceList[typeof(List<VStaffSchClass>)]).FirstOrDefault(o =>
+                VStaffSchClass vssc=baseFactory.GetModelList<VStaffSchClass>().FirstOrDefault(o =>
                     o.SchClassID == dbApt.SchClassID && o.DeptID == GetDeptID(dbApt.UserID));
                 AttAppointments attApt = new AttAppointments();
                 attApt.GLogStartID = Guid.NewGuid();
@@ -309,8 +310,8 @@ namespace USL
             BLLFty.Create<AttAppointmentsBLL>().Insert(attAptList);
             //BLLFty.Create<AttGeneralLogBLL>().Insert(logList);
             //刷新数据
-            clientFactory.UpdateCache<AttAppointments>();
-            clientFactory.DataPageRefresh<VAttAppointments>();
+            baseFactory.DataPageRefresh<AttAppointments>();
+            baseFactory.DataPageRefresh<VAttAppointments>();
         }
 
         int SetAttStaus( DateTime? checkinTime, DateTime? checkOutTime,int late, int early)
@@ -346,7 +347,7 @@ namespace USL
             //        CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "删除失败，请刷新数据后重试。");
             //        break;
             //    }
-            //    //List<AttGeneralLog> dbLogs = ((List<AttGeneralLog>)MainForm.dataSourceList[typeof(List<AttGeneralLog>)]).FindAll(o =>
+            //    //List<AttGeneralLog> dbLogs = baseFactory.GetModelList<AttGeneralLog>().FindAll(o =>
             //    //    o.ID == dbApt.GLogStartID || o.ID == dbApt.GLogEndID);
             //    BLLFty.Create<AttGeneralLogBLL>().Delete(dbApt);
             //}
@@ -360,8 +361,8 @@ namespace USL
                 BLLFty.Create<AttAppointmentsBLL>().Delete((Int64)apt.Id);
             }
             //刷新数据
-            clientFactory.UpdateCache<AttAppointments>();
-            clientFactory.DataPageRefresh<VAttAppointments>();
+            baseFactory.DataPageRefresh<AttAppointments>();
+            baseFactory.DataPageRefresh<VAttAppointments>();
         }
 
         private void schedulerStorage_AppointmentDeleting(object sender, PersistentObjectCancelEventArgs e)
@@ -392,7 +393,7 @@ namespace USL
 
         private void schedulerControl1_SelectionChanged(object sender, EventArgs e)
         {
-            VAttWageBill wage = ((List<VAttWageBill>)MainForm.dataSourceList[typeof(List<VAttWageBill>)]).FirstOrDefault(o => o.UserID==focusedID &&
+            VAttWageBill wage = baseFactory.GetModelList<VAttWageBill>().FirstOrDefault(o => o.UserID==focusedID &&
                 o.年月 == Convert.ToString(((SchedulerControl)sender).SelectedInterval.Start.Year + "-" + ((SchedulerControl)sender).SelectedInterval.Start.Month.ToString().PadLeft(2,'0')));
             if (wage != null && wage.状态 == (int)BillStatus.Audited)
             {

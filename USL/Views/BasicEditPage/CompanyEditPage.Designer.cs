@@ -29,16 +29,44 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions3 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject9 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject10 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject11 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject12 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions4 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject13 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject14 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject15 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject16 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions5 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject17 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject18 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject19 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject20 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions6 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject21 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject22 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject23 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject24 = new DevExpress.Utils.SerializableAppearanceObject();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CompanyEditPage));
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             this.layoutControl = new DevExpress.XtraLayout.LayoutControl();
+            this.txtLogisticsTel = new DevExpress.XtraEditors.ButtonEdit();
+            this.companyBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.txtLogisticsAddress = new DevExpress.XtraEditors.TextEdit();
             this.txtAccountPeriod = new DevExpress.XtraEditors.TextEdit();
             this.lueType = new DevExpress.XtraEditors.LookUpEdit();
+            this.typesListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.txtQQ = new DevExpress.XtraEditors.ButtonEdit();
             this.meRemark = new DevExpress.XtraEditors.MemoEdit();
             this.txtInvoiceTel = new DevExpress.XtraEditors.ButtonEdit();
@@ -74,16 +102,16 @@
             this.lciQQ = new DevExpress.XtraLayout.LayoutControlItem();
             this.lciType = new DevExpress.XtraLayout.LayoutControlItem();
             this.lciAccountPeriod = new DevExpress.XtraLayout.LayoutControlItem();
-            this.txtLogisticsAddress = new DevExpress.XtraEditors.TextEdit();
             this.lciLogisticsAddress = new DevExpress.XtraLayout.LayoutControlItem();
-            this.txtLogisticsTel = new DevExpress.XtraEditors.ButtonEdit();
             this.lciLogisticsTel = new DevExpress.XtraLayout.LayoutControlItem();
-            this.companyBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.typesListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl)).BeginInit();
             this.layoutControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtLogisticsTel.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.companyBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtLogisticsAddress.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAccountPeriod.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lueType.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.typesListBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtQQ.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.meRemark.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtInvoiceTel.Properties)).BeginInit();
@@ -119,12 +147,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.lciQQ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciAccountPeriod)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtLogisticsAddress.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciLogisticsAddress)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtLogisticsTel.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciLogisticsTel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.companyBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.typesListBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // layoutControl
@@ -158,6 +182,33 @@
             this.layoutControl.TabIndex = 0;
             this.layoutControl.Text = "layoutControl1";
             // 
+            // txtLogisticsTel
+            // 
+            this.txtLogisticsTel.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.companyBindingSource, "LogisticsTel", true));
+            this.txtLogisticsTel.EnterMoveNextControl = true;
+            this.txtLogisticsTel.Location = new System.Drawing.Point(484, 206);
+            this.txtLogisticsTel.Name = "txtLogisticsTel";
+            editorButtonImageOptions1.Image = global::USL.Properties.Resources.HomePhone;
+            this.txtLogisticsTel.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
+            this.txtLogisticsTel.Size = new System.Drawing.Size(144, 22);
+            this.txtLogisticsTel.StyleController = this.layoutControl;
+            this.txtLogisticsTel.TabIndex = 36;
+            // 
+            // companyBindingSource
+            // 
+            this.companyBindingSource.DataSource = typeof(EDMX.Company);
+            // 
+            // txtLogisticsAddress
+            // 
+            this.txtLogisticsAddress.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.companyBindingSource, "LogisticsAddress", true));
+            this.txtLogisticsAddress.EnterMoveNextControl = true;
+            this.txtLogisticsAddress.Location = new System.Drawing.Point(84, 206);
+            this.txtLogisticsAddress.Name = "txtLogisticsAddress";
+            this.txtLogisticsAddress.Size = new System.Drawing.Size(324, 20);
+            this.txtLogisticsAddress.StyleController = this.layoutControl;
+            this.txtLogisticsAddress.TabIndex = 35;
+            // 
             // txtAccountPeriod
             // 
             this.txtAccountPeriod.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.companyBindingSource, "AccountPeriod", true));
@@ -177,13 +228,13 @@
             this.lueType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.lueType.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "", 20, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near)});
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "", 20, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default)});
             this.lueType.Properties.DataSource = this.typesListBindingSource;
             this.lueType.Properties.DisplayMember = "Name";
             this.lueType.Properties.NullText = "";
             this.lueType.Properties.PopupSizeable = false;
             this.lueType.Properties.ShowHeader = false;
-            this.lueType.Properties.ValueMember = "No";
+            this.lueType.Properties.ValueMember = "Index";
             this.lueType.Size = new System.Drawing.Size(144, 20);
             this.lueType.StyleController = this.layoutControl;
             this.lueType.TabIndex = 8;
@@ -194,8 +245,9 @@
             this.txtQQ.EnterMoveNextControl = true;
             this.txtQQ.Location = new System.Drawing.Point(84, 156);
             this.txtQQ.Name = "txtQQ";
+            editorButtonImageOptions2.Image = global::USL.Properties.Resources.QQ_16;
             this.txtQQ.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::USL.Properties.Resources.QQ_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.txtQQ.Size = new System.Drawing.Size(544, 22);
             this.txtQQ.StyleController = this.layoutControl;
             this.txtQQ.TabIndex = 31;
@@ -217,8 +269,9 @@
             this.txtInvoiceTel.EnterMoveNextControl = true;
             this.txtInvoiceTel.Location = new System.Drawing.Point(84, 376);
             this.txtInvoiceTel.Name = "txtInvoiceTel";
+            editorButtonImageOptions3.Image = global::USL.Properties.Resources.HomePhone;
             this.txtInvoiceTel.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::USL.Properties.Resources.HomePhone, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject3, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions3, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.txtInvoiceTel.Properties.Mask.EditMask = "(\\(\\d\\d\\d\\))?\\d{1,4}-(\\(\\d\\d\\d\\))?\\d{1,8}";
             this.txtInvoiceTel.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
             this.txtInvoiceTel.Size = new System.Drawing.Size(544, 22);
@@ -286,8 +339,9 @@
             this.txtFax.EnterMoveNextControl = true;
             this.txtFax.Location = new System.Drawing.Point(84, 182);
             this.txtFax.Name = "txtFax";
+            editorButtonImageOptions4.Image = global::USL.Properties.Resources.fax;
             this.txtFax.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::USL.Properties.Resources.fax, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject4, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions4, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.txtFax.Size = new System.Drawing.Size(544, 22);
             this.txtFax.StyleController = this.layoutControl;
             this.txtFax.TabIndex = 26;
@@ -298,8 +352,9 @@
             this.txtContactCellPhone.EnterMoveNextControl = true;
             this.txtContactCellPhone.Location = new System.Drawing.Point(84, 132);
             this.txtContactCellPhone.Name = "txtContactCellPhone";
+            editorButtonImageOptions5.Image = global::USL.Properties.Resources.MobilePhone;
             this.txtContactCellPhone.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::USL.Properties.Resources.MobilePhone, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions5, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject17, serializableAppearanceObject18, serializableAppearanceObject19, serializableAppearanceObject20, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.txtContactCellPhone.Size = new System.Drawing.Size(544, 22);
             this.txtContactCellPhone.StyleController = this.layoutControl;
             this.txtContactCellPhone.TabIndex = 25;
@@ -310,8 +365,9 @@
             this.txtContactTel.EnterMoveNextControl = true;
             this.txtContactTel.Location = new System.Drawing.Point(84, 108);
             this.txtContactTel.Name = "txtContactTel";
+            editorButtonImageOptions6.Image = global::USL.Properties.Resources.HomePhone;
             this.txtContactTel.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::USL.Properties.Resources.HomePhone, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject6, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions6, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject21, serializableAppearanceObject22, serializableAppearanceObject23, serializableAppearanceObject24, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.txtContactTel.Size = new System.Drawing.Size(544, 22);
             this.txtContactTel.StyleController = this.layoutControl;
             this.txtContactTel.TabIndex = 24;
@@ -398,7 +454,6 @@
             this.lciAccountPeriod,
             this.lciLogisticsAddress,
             this.lciLogisticsTel});
-            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup1.Name = "Root";
             this.layoutControlGroup1.Size = new System.Drawing.Size(640, 480);
             this.layoutControlGroup1.TextVisible = false;
@@ -408,8 +463,8 @@
             this.lciCode.Control = this.txtCode;
             this.lciCode.CustomizationFormText = "代码";
             this.lciCode.Enabled = false;
-            this.lciCode.Image = ((System.Drawing.Image)(resources.GetObject("lciCode.Image")));
-            this.lciCode.ImageAlignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciCode.ImageOptions.Alignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciCode.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("lciCode.ImageOptions.Image")));
             this.lciCode.Location = new System.Drawing.Point(0, 0);
             this.lciCode.Name = "lciCode";
             this.lciCode.Size = new System.Drawing.Size(620, 24);
@@ -420,8 +475,8 @@
             // 
             this.lciName.Control = this.txtName;
             this.lciName.CustomizationFormText = "名称";
-            this.lciName.Image = ((System.Drawing.Image)(resources.GetObject("lciName.Image")));
-            this.lciName.ImageAlignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciName.ImageOptions.Alignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciName.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("lciName.ImageOptions.Image")));
             this.lciName.Location = new System.Drawing.Point(0, 24);
             this.lciName.Name = "lciName";
             this.lciName.Size = new System.Drawing.Size(400, 24);
@@ -581,8 +636,8 @@
             // 
             this.lciType.Control = this.lueType;
             this.lciType.CustomizationFormText = "客户类型";
-            this.lciType.Image = ((System.Drawing.Image)(resources.GetObject("lciType.Image")));
-            this.lciType.ImageAlignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciType.ImageOptions.Alignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciType.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("lciType.ImageOptions.Image")));
             this.lciType.Location = new System.Drawing.Point(400, 24);
             this.lciType.Name = "lciType";
             this.lciType.Size = new System.Drawing.Size(220, 24);
@@ -599,16 +654,6 @@
             this.lciAccountPeriod.Text = "账期(天)";
             this.lciAccountPeriod.TextSize = new System.Drawing.Size(69, 14);
             // 
-            // txtLogisticsAddress
-            // 
-            this.txtLogisticsAddress.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.companyBindingSource, "LogisticsAddress", true));
-            this.txtLogisticsAddress.EnterMoveNextControl = true;
-            this.txtLogisticsAddress.Location = new System.Drawing.Point(84, 206);
-            this.txtLogisticsAddress.Name = "txtLogisticsAddress";
-            this.txtLogisticsAddress.Size = new System.Drawing.Size(324, 20);
-            this.txtLogisticsAddress.StyleController = this.layoutControl;
-            this.txtLogisticsAddress.TabIndex = 35;
-            // 
             // lciLogisticsAddress
             // 
             this.lciLogisticsAddress.Control = this.txtLogisticsAddress;
@@ -617,18 +662,6 @@
             this.lciLogisticsAddress.Size = new System.Drawing.Size(400, 26);
             this.lciLogisticsAddress.Text = "物流地址";
             this.lciLogisticsAddress.TextSize = new System.Drawing.Size(69, 14);
-            // 
-            // txtLogisticsTel
-            // 
-            this.txtLogisticsTel.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.companyBindingSource, "LogisticsTel", true));
-            this.txtLogisticsTel.EnterMoveNextControl = true;
-            this.txtLogisticsTel.Location = new System.Drawing.Point(484, 206);
-            this.txtLogisticsTel.Name = "txtLogisticsTel";
-            this.txtLogisticsTel.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::USL.Properties.Resources.HomePhone, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, null, true)});
-            this.txtLogisticsTel.Size = new System.Drawing.Size(144, 22);
-            this.txtLogisticsTel.StyleController = this.layoutControl;
-            this.txtLogisticsTel.TabIndex = 36;
             // 
             // lciLogisticsTel
             // 
@@ -639,14 +672,6 @@
             this.lciLogisticsTel.Text = "物流电话";
             this.lciLogisticsTel.TextSize = new System.Drawing.Size(69, 14);
             // 
-            // companyBindingSource
-            // 
-            this.companyBindingSource.DataSource = typeof(DBML.Company);
-            // 
-            // typesListBindingSource
-            // 
-            this.typesListBindingSource.DataSource = typeof(DBML.TypesList);
-            // 
             // CompanyEditPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -656,8 +681,12 @@
             this.Size = new System.Drawing.Size(640, 480);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl)).EndInit();
             this.layoutControl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.txtLogisticsTel.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.companyBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtLogisticsAddress.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAccountPeriod.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lueType.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.typesListBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtQQ.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.meRemark.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtInvoiceTel.Properties)).EndInit();
@@ -693,12 +722,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.lciQQ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciAccountPeriod)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtLogisticsAddress.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciLogisticsAddress)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtLogisticsTel.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciLogisticsTel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.companyBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.typesListBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

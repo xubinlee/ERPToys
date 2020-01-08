@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WcfService</RootNamespace>
     <AssemblyName>WcfService</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,12 +52,14 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.EnterpriseServices" />
@@ -68,14 +71,24 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Z.EntityFramework.Extensions, Version=4.0.11.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ERPToys\Z.EntityFramework.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.EntityFramework.Plus.EF6, Version=1.12.3.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ERPToys\Z.EntityFramework.Plus.EF6.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="AttAppointmentsService.svc" />
     <Content Include="BaseService.svc" />
     <Content Include="GoodsService.svc" />
     <Content Include="InventoryService.svc" />
+    <Content Include="OrderService.svc" />
     <Content Include="PermissionService.svc" />
     <Content Include="StockInBillService.svc" />
+    <Content Include="StockOutBillService.svc" />
     <Content Include="SystemInfoService.svc" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -92,12 +105,18 @@
     <Compile Include="InventoryService.svc.cs">
       <DependentUpon>InventoryService.svc</DependentUpon>
     </Compile>
+    <Compile Include="OrderService.svc.cs">
+      <DependentUpon>OrderService.svc</DependentUpon>
+    </Compile>
     <Compile Include="PermissionService.svc.cs">
       <DependentUpon>PermissionService.svc</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StockInBillService.svc.cs">
       <DependentUpon>StockInBillService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="StockOutBillService.svc.cs">
+      <DependentUpon>StockOutBillService.svc</DependentUpon>
     </Compile>
     <Compile Include="SystemInfoService.svc.cs">
       <DependentUpon>SystemInfoService.svc</DependentUpon>
@@ -118,7 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{79951FCF-E737-4E62-AEA7-EFAE14F3DB96}</Project>
+      <Project>{79951fcf-e737-4e62-aea7-efae14f3db96}</Project>
       <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\DAL\DAL.csproj">

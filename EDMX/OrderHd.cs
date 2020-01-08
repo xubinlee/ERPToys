@@ -13,10 +13,16 @@ namespace EDMX
     using System.Runtime.Serialization;
     using System.Collections.Generic;
     
-    [DataContract]
+    [DataContract(IsReference = true)]
+    [KnownType(typeof(OrderDtl))]
     
     public partial class OrderHd
     {
+        public OrderHd()
+        {
+            this.OrderDtl = new HashSet<OrderDtl>();
+        }
+    
     	[DataMember]
         public System.Guid ID { get; set; }
     	[DataMember]
@@ -59,5 +65,8 @@ namespace EDMX
         public Nullable<decimal> UnReceiptedAMT { get; set; }
     	[DataMember]
         public byte[] Pic { get; set; }
+    
+    	[DataMember]
+        public virtual ICollection<OrderDtl> OrderDtl { get; set; }
     }
 }

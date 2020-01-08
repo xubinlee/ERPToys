@@ -11,7 +11,7 @@ using DevExpress.XtraEditors;
 using IBase;
 using Factory;
 using BLL;
-using DBML;
+using EDMX;
 using CommonLibrary;
 using Utility;
 using DevExpress.XtraGrid.Views.Grid;
@@ -20,11 +20,15 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using System.Data.Linq;
 using DevExpress.XtraCharts;
 using DevExpress.XtraEditors.Controls;
+using Utility.Interceptor;
+using MainMenu = EDMX.MainMenu;
+using ClientFactory;
 
 namespace USL
 {
     public partial class MonthlyChartPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         IList dataSource;
         Hashtable hasSeries = new Hashtable();
         public MonthlyChartPage()
@@ -57,7 +61,7 @@ namespace USL
 
         void GetYearMonthList()
         {
-            List<SalesSummaryMonthlyReport> report = ((List<SalesSummaryMonthlyReport>)MainForm.dataSourceList[typeof(List<SalesSummaryMonthlyReport>)]).OrderBy(o => o.年月).ToList();
+            List<SalesSummaryMonthlyReport> report = baseFactory.GetModelList<SalesSummaryMonthlyReport>().OrderBy(o => o.年月).ToList();
             Hashtable ht = new Hashtable();
             clbYearMonth.Items.Clear();
             foreach (SalesSummaryMonthlyReport item in report)
@@ -98,7 +102,7 @@ namespace USL
                 series = new Series(yearMonth, ViewType.Bar);
             else
                 series = new Series(yearMonth, ViewType.Bar3D);
-            dataSource = ((List<SalesSummaryMonthlyReport>)MainForm.dataSourceList[typeof(List<SalesSummaryMonthlyReport>)]).FindAll(o =>
+            dataSource = baseFactory.GetModelList<SalesSummaryMonthlyReport>().FindAll(o =>
                     o.年月 == yearMonth);
             series.DataSource = dataSource;
             series.ArgumentScaleType = ScaleType.Qualitative;
@@ -147,7 +151,7 @@ namespace USL
                 PrintSettingController psc = new PrintSettingController(chartControl1);
                 //页眉 
                 psc.PrintCompany = MainForm.Company;
-                DBML.MainMenu mm = ((List<DBML.MainMenu>)MainForm.dataSourceList[typeof(List<DBML.MainMenu>)]).FirstOrDefault(o => o.Name == MainMenuConstants.SalesSummaryMonthlyReport);
+                MainMenu mm = baseFactory.GetModelList<MainMenu>().FirstOrDefault(o => o.Name == MainMenuEnum.SalesSummaryMonthlyReport.ToString());
                 if (mm != null)
                     psc.PrintHeader = mm.Caption;
                 psc.PrintSubTitle = MainForm.Contacts.Replace("\\r\\n", "\r\n");

@@ -215,7 +215,7 @@
             // 
             // vBusinessContactBindingSource
             // 
-            this.vBusinessContactBindingSource.DataSource = typeof(DBML.VCompany);
+            this.vBusinessContactBindingSource.DataSource = typeof(EDMX.VCompany);
             // 
             // winExplorerView
             // 

@@ -185,7 +185,7 @@
             // 
             // departmentBindingSource
             // 
-            this.departmentBindingSource.DataSource = typeof(DBML.Department);
+            this.departmentBindingSource.DataSource = typeof(EDMX.Department);
             // 
             // winExplorerView
             // 
@@ -356,7 +356,7 @@
             // 
             // staffSchClassBindingSource
             // 
-            this.staffSchClassBindingSource.DataSource = typeof(DBML.StaffSchClass);
+            this.staffSchClassBindingSource.DataSource = typeof(EDMX.StaffSchClass);
             // 
             // layoutView
             // 
@@ -472,7 +472,7 @@
             // 
             // schClassBindingSource
             // 
-            this.schClassBindingSource.DataSource = typeof(DBML.SchClass);
+            this.schClassBindingSource.DataSource = typeof(EDMX.SchClass);
             // 
             // layoutViewField_layoutViewColumn3
             // 

@@ -283,7 +283,7 @@ namespace USL
             // 
             // goodsBindingSource
             // 
-            this.goodsBindingSource.DataSource = typeof(DBML.Goods);
+            this.goodsBindingSource.DataSource = typeof(EDMX.Goods);
             // 
             // txtNWeight
             // 
@@ -401,7 +401,7 @@ namespace USL
             // 
             // wageDesignBindingSource
             // 
-            this.wageDesignBindingSource.DataSource = typeof(DBML.WageDesign);
+            this.wageDesignBindingSource.DataSource = typeof(EDMX.WageDesign);
             // 
             // gridView
             // 

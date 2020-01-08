@@ -79,7 +79,7 @@
             // 
             // goodsTypeBindingSource
             // 
-            this.goodsTypeBindingSource.DataSource = typeof(DBML.GoodsType);
+            this.goodsTypeBindingSource.DataSource = typeof(EDMX.GoodsType);
             // 
             // txtCode
             // 

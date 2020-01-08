@@ -11,7 +11,7 @@ using DevExpress.XtraEditors;
 using IBase;
 using Factory;
 using BLL;
-using DBML;
+using EDMX;
 using CommonLibrary;
 using Utility;
 using DevExpress.XtraGrid.Views.Grid;
@@ -20,19 +20,20 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using System.Data.Linq;
 using DevExpress.XtraGrid.Views.WinExplorer;
 using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class BOMEditPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
-        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         List<BOM> bomList;
         List<BOM> goodsBOMList;
         Guid focusedGoodsID;
         bool addNew = false;  //是否新增BOM
         BOMType bomType;
-        GoodsBigType goodsBigType = GoodsBigType.Goods;  //Goods大类
-        GoodsBigType lueGoodsBigType = GoodsBigType.Goods;  //下拉Goods大类
+        GoodsBigTypeEnum goodsBigType = GoodsBigTypeEnum.Goods;  //Goods大类
+        GoodsBigTypeEnum lueGoodsBigType = GoodsBigTypeEnum.Goods;  //下拉Goods大类
         public BOMEditPage(BOMType type)
         {
             InitializeComponent();
@@ -47,26 +48,26 @@ namespace USL
                 case BOMType.BOM:
                     dpGoods.Text = "成品列表";
                     dpBOM.Text = "包装列表";
-                    goodsBigType = GoodsBigType.Goods;
-                    lueGoodsBigType = GoodsBigType.SFGoods;
+                    goodsBigType = GoodsBigTypeEnum.Goods;
+                    lueGoodsBigType = GoodsBigTypeEnum.SFGoods;
                     break;
                 case BOMType.MoldList:
                     dpGoods.Text = "模具列表";
                     dpBOM.Text = "装配材料";
-                    goodsBigType = GoodsBigType.Mold;
-                    lueGoodsBigType = GoodsBigType.Stuff;
+                    goodsBigType = GoodsBigTypeEnum.Mold;
+                    lueGoodsBigType = GoodsBigTypeEnum.Stuff;
                     break;
                 case BOMType.MoldMaterial:
                     dpGoods.Text = "模具列表";
                     dpBOM.Text = "原料信息";
-                    goodsBigType = GoodsBigType.Mold;
-                    lueGoodsBigType = GoodsBigType.Material;
+                    goodsBigType = GoodsBigTypeEnum.Mold;
+                    lueGoodsBigType = GoodsBigTypeEnum.Material;
                     break;
                 case BOMType.Assemble:
                     dpGoods.Text = "包装/装配列表";
                     dpBOM.Text = "装配材料";
-                    goodsBigType = GoodsBigType.SFGoods;
-                    lueGoodsBigType = GoodsBigType.Stuff;
+                    goodsBigType = GoodsBigTypeEnum.SFGoods;
+                    lueGoodsBigType = GoodsBigTypeEnum.Stuff;
                     break;
                 default:
                     break;
@@ -77,30 +78,31 @@ namespace USL
 
         public void BindData(object obj)
         {
+            List<Goods> goodsList = baseFactory.GetModelList<Goods>();
             if (bomType == BOMType.Assemble)
             {
                 Guid bzID = Guid.Empty;
                 Guid pjID = Guid.Empty;
-                GoodsType bz = ((List<GoodsType>)MainForm.dataSourceList[typeof(List<GoodsType>)]).Find(t => t.Name.Contains("包装"));
+                GoodsType bz = baseFactory.GetModelList<GoodsType>().Find(t => t.Name.Contains("包装"));
                 if (bz != null)
                     bzID = bz.ID;
-                GoodsType pj = ((List<GoodsType>)MainForm.dataSourceList[typeof(List<GoodsType>)]).Find(t => t.Name.Contains("配件"));
+                GoodsType pj = baseFactory.GetModelList<GoodsType>().Find(t => t.Name.Contains("配件"));
                 if (pj != null)
                     pjID = pj.ID;
-                goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o =>
-                (o.Type == (int)GoodsBigType.SFGoods && o.GoodsTypeID != bzID) || (o.Type == (int)GoodsBigType.Stuff && o.GoodsTypeID != pjID));
+                goodsBindingSource.DataSource = goodsList.FindAll(o =>
+                (o.Type == (int)GoodsBigTypeEnum.SFGoods && o.GoodsTypeID != bzID) || (o.Type == (int)GoodsBigTypeEnum.Stuff && o.GoodsTypeID != pjID));
             }
             else
-                goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)goodsBigType);
+                goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type == (int)goodsBigType);
             if (bomType == BOMType.BOM)
-                lueGoodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o =>
-                    o.Type == (int)GoodsBigType.SFGoods || o.Type == (int)GoodsBigType.Stuff);  //一些自动机生产的材料可以直接用来包装成成品
+                lueGoodsBindingSource.DataSource = goodsList.FindAll(o =>
+                    o.Type == (int)GoodsBigTypeEnum.SFGoods || o.Type == (int)GoodsBigTypeEnum.Stuff);  //一些自动机生产的材料可以直接用来包装成成品
             else if (bomType==BOMType.Assemble)
-                lueGoodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o =>
-                    o.Type == (int)GoodsBigType.Stuff || o.Type == (int)GoodsBigType.Material || o.Type == (int)GoodsBigType.Mold);  //外加工装配，自动机材料按损耗率扣减原料
+                lueGoodsBindingSource.DataSource = goodsList.FindAll(o =>
+                    o.Type == (int)GoodsBigTypeEnum.Stuff || o.Type == (int)GoodsBigTypeEnum.Material || o.Type == (int)GoodsBigTypeEnum.Mold);  //外加工装配，自动机材料按损耗率扣减原料
             else
-                lueGoodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)lueGoodsBigType);
-            bomList = ((List<BOM>)MainForm.dataSourceList[typeof(List<BOM>)]).FindAll(o => o.Type == (int)bomType);
+                lueGoodsBindingSource.DataSource = baseFactory.GetModelList<Goods>().FindAll(o => o.Type == (int)lueGoodsBigType);
+            bomList = baseFactory.GetModelList<BOM>().FindAll(o => o.Type == (int)bomType);
             GetBOMDataSource();
         }
 
@@ -119,7 +121,7 @@ namespace USL
             if (winExplorerView.GetFocusedRowCellValue(colID) != null)
             {
                 focusedGoodsID = new Guid(winExplorerView.GetFocusedRowCellValue(colID).ToString());
-                bomList = ((List<BOM>)MainForm.dataSourceList[typeof(List<BOM>)]).FindAll(o => o.Type == (int)bomType);
+                bomList = baseFactory.GetModelList<BOM>().FindAll(o => o.Type == (int)bomType);
                 if (bomList != null)
                 {
                     bOMBindingSource.DataSource = goodsBOMList = bomList.FindAll(o => o.ParentGoodsID == focusedGoodsID);
@@ -249,7 +251,7 @@ namespace USL
                 //}
                 if (flag)
                     return;
-                Goods parentGoods = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).Find(o => o.ID == focusedGoodsID);
+                Goods parentGoods = baseFactory.GetModelList<Goods>().Find(o => o.ID == focusedGoodsID);
                 gridView.SetRowCellValue(gridView.FocusedRowHandle, colPCS, parentGoods.PCS);
                 gridView.SetRowCellValue(gridView.FocusedRowHandle, colInnerBox, goods.InnerBox);
                 gridView.SetRowCellValue(gridView.FocusedRowHandle, colPrice, goods.Price);
@@ -263,7 +265,7 @@ namespace USL
             List<BOM> list = ((BindingSource)view.DataSource).DataSource as List<BOM>;
             if (e.IsGetData && list != null && list.Count > 0)
             {
-                Goods goods = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).Find(o => o.ID == list[e.ListSourceRowIndex].GoodsID);
+                Goods goods = baseFactory.GetModelList<Goods>().Find(o => o.ID == list[e.ListSourceRowIndex].GoodsID);
                 if (goods != null)
                 {
                     if (e.Column == colPic1)
@@ -336,7 +338,7 @@ namespace USL
             List<Goods> list = ((BindingSource)view.DataSource).DataSource as List<Goods>;
             if (e.IsGetData && list != null && list.Count > 0)
             {
-                GoodsType goodsType = ((List<GoodsType>)MainForm.dataSourceList[typeof(List<GoodsType>)]).FirstOrDefault(o => o.ID == list[e.ListSourceRowIndex].GoodsTypeID);
+                GoodsType goodsType = baseFactory.GetModelList<GoodsType>().FirstOrDefault(o => o.ID == list[e.ListSourceRowIndex].GoodsTypeID);
                 if (goodsType != null)
                 {
                     if (e.Column == colGoodsType)
@@ -348,13 +350,13 @@ namespace USL
         private void gridView_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             Save();
-            clientFactory.DataPageRefresh<BOM>();
+            baseFactory.DataPageRefresh<BOM>();
         }
 
         private void gridView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
             this.Save();
-            clientFactory.DataPageRefresh<BOM>();
+            baseFactory.DataPageRefresh<BOM>();
         }
     }
 }

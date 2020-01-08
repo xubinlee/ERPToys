@@ -9,25 +9,26 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using IBase;
-using DBML;
+using EDMX;
 using System.Collections;
 using CommonLibrary;
 using Factory;
 using BLL;
 using Utility;
 using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class SchClassPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
-        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         //bool addNew = false;
         List<SchClass> schClassList;
         public SchClassPage()
         {
             InitializeComponent();
-            schClassBindingSource.DataSource = schClassList = MainForm.dataSourceList[typeof(List<SchClass>)] as List<SchClass>;
+            schClassBindingSource.DataSource = schClassList = baseFactory.GetModelList<SchClass>();
         }
 
         public void Add()
@@ -120,14 +121,14 @@ namespace USL
         private void layoutView_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             Save();
-            //ClientFactory.DataPageRefresh(MainMenuConstants.SchClass);
-            clientFactory.DataPageRefresh<SchClass>();
+            //ClientFactory.DataPageRefresh(MainMenuEnum.SchClass);
+            baseFactory.DataPageRefresh<SchClass>();
         }
 
         private void layoutView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
             Save();
-            clientFactory.DataPageRefresh<SchClass>();
+            baseFactory.DataPageRefresh<SchClass>();
         }
 
         public void BindData(object obj)

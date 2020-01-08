@@ -13,7 +13,8 @@ namespace EDMX
     using System.Runtime.Serialization;
     using System.Collections.Generic;
     
-    [DataContract]
+    [DataContract(IsReference = true)]
+    [KnownType(typeof(WageBillHd))]
     
     public partial class WageBillDtl
     {
@@ -35,5 +36,8 @@ namespace EDMX
         public decimal IndividualIncomeTax { get; set; }
     	[DataMember]
         public decimal AMT { get; set; }
+    
+    	//[DataMember]
+        public virtual WageBillHd WageBillHd { get; set; }
     }
 }

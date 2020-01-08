@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using IBase;
-using DBML;
+using EDMX;
 using Factory;
 using BLL;
 using Utility;
@@ -17,12 +17,13 @@ using CommonLibrary;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Columns;
 using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class AttWageBillPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail, IExtensions
     {
-        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         AttWageBillHd hd;
         List<USPAttWageBillDtl> dtl;
         List<VAttAppointments> apt;
@@ -60,7 +61,7 @@ namespace USL
                 attWageBillHdBindingSource.DataSource = hd = BLLFty.Create<AttWageBillBLL>().GetAttWageBillHd(headID);
                 dtl = BLLFty.Create<AttWageBillBLL>().GetUSPAttWageBillDtl().FindAll(o =>
                                     o.YearMonth == Convert.ToDateTime(deYearMonth.EditValue).ToString("yyyy-MM"));
-                List<VAttWageBill> list = ((List<VAttWageBill>)MainForm.dataSourceList[typeof(List<VAttWageBill>)]).FindAll(o => o.HdID == headID);
+                List<VAttWageBill> list = baseFactory.GetModelList<VAttWageBill>().FindAll(o => o.HdID == headID);
                 for (int i = dtl.Count - 1; i >= 0; i--)
                 {
                     VAttWageBill obj = list.Find(o => o.UserID == dtl[i].UserID);
@@ -77,16 +78,16 @@ namespace USL
                 }
                 uSPAttWageBillDtlBindingSource.DataSource = dtl;
                 //vAttAppointmentsBindingSource.DataSource = apt =
-                //    ((List<VAttAppointments>)MainForm.dataSourceList[typeof(List<VAttAppointments>)]).FindAll(o =>
+                //    baseFactory.GetModelList<VAttAppointments>().FindAll(o =>
                 //        o.UserID == hd.UserID && (o.日期.Value.ToString("yyyy-MM").Equals(dtl.Min(m => m.YearMonth)) || o.日期.Value.ToString("yyyy-MM").Equals(dtl.Max(m => m.YearMonth))));
                 vAttAppointmentsBindingSource.DataSource = apt =
-                    ((List<VAttAppointments>)MainForm.dataSourceList[typeof(List<VAttAppointments>)]).FindAll(o =>
+                    baseFactory.GetModelList<VAttAppointments>().FindAll(o =>
                         o.日期.Value.ToString("yyyy-MM").Equals(hd.YearMonth));
                 decimal billAMT = dtl.Sum(o => o.AMT);
                 meLastAMT.EditValue = billAMT;
                 meTotalAMT.EditValue = (hd.Balance == null ? 0 : hd.Balance) + billAMT;
             }
-            vUsersInfoBindingSource.DataSource = ((List<VUsersInfo>)MainForm.dataSourceList[typeof(List<VUsersInfo>)]).FindAll(o => o.已删除 == false && o.部门 != "注塑机");
+            vUsersInfoBindingSource.DataSource = baseFactory.GetModelList<VUsersInfo>().FindAll(o => o.已删除 == false && o.部门 != "注塑机");
             gridView.BestFitColumns();
             gridView.FindFilterText = string.Empty;
             gridControl.EndUpdate();
@@ -96,7 +97,7 @@ namespace USL
         {
             attWageBillHdBindingSource.DataSource = hd = new AttWageBillHd();
             uSPAttWageBillDtlBindingSource.DataSource = dtl = new List<USPAttWageBillDtl>();
-            hd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.WageBill, true).MaxBillNo;
+            hd.BillNo = MainForm.GetMaxBillNo(MainMenuEnum.WageBill, true).MaxBillNo;
             meLastAMT.EditValue = null;
             meTotalAMT.EditValue = null;
             headID = Guid.Empty;
@@ -132,7 +133,7 @@ namespace USL
 
                     }
                     //刷新查询界面
-                    clientFactory.DataPageRefresh<VAttWageBill>();
+                    baseFactory.DataPageRefresh<VAttWageBill>();
                     attWageBillHdBindingSource.DataSource = hd = new AttWageBillHd();
                     uSPAttWageBillDtlBindingSource.DataSource = dtl = new List<USPAttWageBillDtl>();
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "删除成功");
@@ -243,15 +244,15 @@ namespace USL
                 meTotalAMT.EditValue = (hd.Balance == null ? 0 : hd.Balance) + billAMT;
                 headID = hd.ID;
                 //vAttAppointmentsBindingSource.DataSource = apt =
-                //    ((List<VAttAppointments>)MainForm.dataSourceList[typeof(List<VAttAppointments>)]).FindAll(o =>
+                //    baseFactory.GetModelList<VAttAppointments>().FindAll(o =>
                 //        o.UserID == hd.UserID && (o.日期.Value.ToString("yyyy-MM").Equals(dtl.Min(m => m.YearMonth)) || o.日期.Value.ToString("yyyy-MM").Equals(dtl.Max(m => m.YearMonth))));
                 vAttAppointmentsBindingSource.DataSource = apt =
-                    ((List<VAttAppointments>)MainForm.dataSourceList[typeof(List<VAttAppointments>)]).FindAll(o =>
+                    baseFactory.GetModelList<VAttAppointments>().FindAll(o =>
                         o.日期.Value.ToString("yyyy-MM").Equals(hd.YearMonth));
                 //DataQueryPageRefresh();
                 //QueryPageRefresh();
-                clientFactory.DataPageRefresh<VAttWageBill>();
-                //MainForm.BillSaveRefresh(MainMenuConstants.AttWageBillQuery);
+                baseFactory.DataPageRefresh<VAttWageBill>();
+                //MainForm.BillSaveRefresh(MainMenuEnum.AttWageBillQuery);
                 ////MainForm.DataQueryPageRefresh();
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 return true;
@@ -291,9 +292,9 @@ namespace USL
                     List<Alert> dellist = new List<Alert>();
                     foreach (USPAttWageBillDtl item in dtl)
                     {
-                        UsersInfo user = ((List<UsersInfo>)MainForm.dataSourceList[typeof(List<UsersInfo>)]).FirstOrDefault(o =>
+                        UsersInfo user = baseFactory.GetModelList<UsersInfo>().FirstOrDefault(o =>
                             o.ID == item.UserID);
-                        List<AttAppointments> apts = ((List<AttAppointments>)MainForm.dataSourceList[typeof(List<AttAppointments>)]).FindAll(o =>
+                        List<AttAppointments> apts = baseFactory.GetModelList<AttAppointments>().FindAll(o =>
                         o.UserID == item.UserID && o.CheckInTime.Value.ToString("yyyy-MM").Equals(item.YearMonth));
                         if (wage != null && wage.Status == 1)  //取消审核
                         {
@@ -314,11 +315,11 @@ namespace USL
                         }
                         aptList.AddRange(apts);
                         //删除考勤机下载记录
-                        List<AttGeneralLog> logs = ((List<AttGeneralLog>)MainForm.dataSourceList[typeof(List<AttGeneralLog>)]).FindAll(o =>
+                        List<AttGeneralLog> logs = baseFactory.GetModelList<AttGeneralLog>().FindAll(o =>
                         o.EnrollNumber == user.Code && o.AttTime.ToString("yyyy-MM").Equals(item.YearMonth));
                         logList.AddRange(logs);
                         //删除提醒信息
-                        //Alert alert = ((List<Alert>)MainForm.dataSourceList[typeof(List<Alert>)]).Find(o => o.BillID == item.BillID);
+                        //Alert alert = baseFactory.GetModelList<Alert>().Find(o => o.BillID == item.BillID);
                         //if (alert != null)
                         //    dellist.Add(alert);
                     }
@@ -346,8 +347,8 @@ namespace USL
             }
             finally
             {
-                //MainForm.BillSaveRefresh(MainMenuConstants.AttWageBillQuery);
-                clientFactory.DataPageRefresh<VAttWageBill>();
+                //MainForm.BillSaveRefresh(MainMenuEnum.AttWageBillQuery);
+                baseFactory.DataPageRefresh<VAttWageBill>();
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
         }
@@ -462,7 +463,7 @@ namespace USL
         {
             if (!string.IsNullOrEmpty(txtBillNo.Text.Trim()))
             {
-                List<AttWageBillHd> bills = ((List<AttWageBillHd>)MainForm.dataSourceList[typeof(List<AttWageBillHd>)]).OrderBy(o => o.BillNo).ToList();
+                List<AttWageBillHd> bills = baseFactory.GetModelList<AttWageBillHd>().OrderBy(o => o.BillNo).ToList();
                 for (int i = 0; i < bills.Count; i++)
                 {
                     if (bills[i].BillNo.Equals(txtBillNo.Text.Trim()))
@@ -474,9 +475,9 @@ namespace USL
                             if (i - 1 == 0)
                                 btnPrev.Enabled = false;
                             if (bills[i - 1].Status == 0)
-                                MainForm.itemDetailPageList[MainMenuConstants.AttWageBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuConstants.AttWageBill], ButtonType.btnSave);
+                                MainForm.itemDetailPageList[MainMenuEnum.AttWageBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuEnum.AttWageBill], ButtonType.btnSave);
                             else
-                                MainForm.itemDetailPageList[MainMenuConstants.AttWageBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuConstants.AttWageBill], ButtonType.btnAudit);
+                                MainForm.itemDetailPageList[MainMenuEnum.AttWageBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuEnum.AttWageBill], ButtonType.btnAudit);
                             break;
                         }
                         else
@@ -494,7 +495,7 @@ namespace USL
         {
             if (!string.IsNullOrEmpty(txtBillNo.Text.Trim()))
             {
-                List<AttWageBillHd> bills = ((List<AttWageBillHd>)MainForm.dataSourceList[typeof(List<AttWageBillHd>)]).OrderBy(o => o.BillNo).ToList();
+                List<AttWageBillHd> bills = baseFactory.GetModelList<AttWageBillHd>().OrderBy(o => o.BillNo).ToList();
                 for (int i = 0; i < bills.Count; i++)
                 {
                     if (bills[i].BillNo.Equals(txtBillNo.Text.Trim()))
@@ -506,9 +507,9 @@ namespace USL
                             if (i + 1 == bills.Count - 1)
                                 btnNext.Enabled = false;
                             if (bills[i + 1].Status == 0)
-                                MainForm.itemDetailPageList[MainMenuConstants.AttWageBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuConstants.AttWageBill], ButtonType.btnSave);
+                                MainForm.itemDetailPageList[MainMenuEnum.AttWageBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuEnum.AttWageBill], ButtonType.btnSave);
                             else
-                                MainForm.itemDetailPageList[MainMenuConstants.AttWageBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuConstants.AttWageBill], ButtonType.btnAudit);
+                                MainForm.itemDetailPageList[MainMenuEnum.AttWageBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuEnum.AttWageBill], ButtonType.btnAudit);
                             break;
                         }
                         else

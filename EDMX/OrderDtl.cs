@@ -13,8 +13,8 @@ namespace EDMX
     using System.Runtime.Serialization;
     using System.Collections.Generic;
     
-    [DataContract]
-    [KnownType(typeof(Goods))]
+    [DataContract(IsReference = true)]
+    [KnownType(typeof(OrderHd))]
     
     public partial class OrderDtl
     {
@@ -55,7 +55,7 @@ namespace EDMX
     	[DataMember]
         public string Remark { get; set; }
     
-    	[DataMember]
-        public virtual Goods Goods { get; set; }
+    	//[DataMember]
+        public virtual OrderHd OrderHd { get; set; }
     }
 }

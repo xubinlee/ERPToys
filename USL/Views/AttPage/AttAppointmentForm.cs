@@ -23,14 +23,17 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraScheduler;
-using DBML;
+using EDMX;
 using Utility;
 using DevExpress.XtraEditors.Controls;
+using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class AttAppointmentForm : DevExpress.XtraScheduler.UI.AppointmentForm
     {
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         int? lateMinutes;
         int? earlyMinutes;
         Guid? schClassID;
@@ -91,7 +94,7 @@ namespace USL
         /// </summary>
         public override bool SaveFormData(DevExpress.XtraScheduler.Appointment appointment)
         {
-            SchClass sch = ((List<SchClass>)MainForm.dataSourceList[typeof(List<SchClass>)]).FirstOrDefault(o => o.Name == edtShowTimeAs.Text);
+            SchClass sch = baseFactory.GetModelList<SchClass>().FirstOrDefault(o => o.Name == edtShowTimeAs.Text);
             if (sch != null)
             {
                 appointment.CustomFields["SchClassID"] = sch.ID;
@@ -130,7 +133,7 @@ namespace USL
 
         void SetSchTime(string schName)
         {
-            SchClass sch = ((List<SchClass>)MainForm.dataSourceList[typeof(List<SchClass>)]).FirstOrDefault(o =>
+            SchClass sch = baseFactory.GetModelList<SchClass>().FirstOrDefault(o =>
                 o.Name == schName);
             if (sch != null)
             {

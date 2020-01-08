@@ -294,7 +294,7 @@
             // 
             // goodsBindingSource
             // 
-            this.goodsBindingSource.DataSource = typeof(DBML.Goods);
+            this.goodsBindingSource.DataSource = typeof(EDMX.Goods);
             // 
             // lblCycle
             // 
@@ -748,7 +748,7 @@
             // 
             // goodsTypeBindingSource
             // 
-            this.goodsTypeBindingSource.DataSource = typeof(DBML.GoodsType);
+            this.goodsTypeBindingSource.DataSource = typeof(EDMX.GoodsType);
             // 
             // luePackaging
             // 
@@ -773,7 +773,7 @@
             // 
             // packagingBindingSource
             // 
-            this.packagingBindingSource.DataSource = typeof(DBML.Packaging);
+            this.packagingBindingSource.DataSource = typeof(EDMX.Packaging);
             // 
             // txtUnit
             // 

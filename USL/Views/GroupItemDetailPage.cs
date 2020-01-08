@@ -2,6 +2,7 @@
 using DevExpress.XtraBars.Docking2010.Views.WindowsUI;
 using DevExpress.XtraBars.Docking2010;
 using EDMX;
+using ClientFactory;
 
 namespace USL
 {
@@ -38,7 +39,8 @@ namespace USL
             {
                 if (MainForm.hasItemDetailPage[mainMenu.Name] == null)
                 {
-                    MainForm.itemDetailPageList[mainMenu.Name].LoadBusinessData(mainMenu);
+                    MainMenuEnum menuEnum = (MainMenuEnum)Enum.Parse(typeof(MainMenuEnum), mainMenu.Name);
+                    MainForm.itemDetailPageList[menuEnum].LoadBusinessData(mainMenu);
                     MainForm.hasItemDetailPage.Add(mainMenu.Name, true);
                 }
                 pageGroupCore.Parent = this.Tag as IContentContainer;

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using DBML;
+using EDMX;
 using DevExpress.XtraBars.Docking2010.Views.WindowsUI;
 using Factory;
 using BLL;
@@ -21,36 +21,30 @@ using DevExpress.XtraBars.Alerter;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports.UI;
 using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class StockInBillPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail, IExtensions
     {
-        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
-        StockInBillHd hd;
-        List<StockInBillDtl> dtl;
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
+        private static StockInBillFactory stockInBillFactory = LoggerInterceptor.CreateProxy<StockInBillFactory>();
+        private static StockOutBillFactory stockOutBillFactory = LoggerInterceptor.CreateProxy<StockOutBillFactory>();
+        private static InventoryFactory inventoryFactory = LoggerInterceptor.CreateProxy<InventoryFactory>();
+        private static OrderFactory orderFactory = LoggerInterceptor.CreateProxy<OrderFactory>();
+        //StockInBillHd hd;
+        //List<StockInBillDtl> dtl;
         List<Warehouse> warehouseList;
         Guid headID;
-        String billType;
+        MainMenuEnum billType;
         //bool isSLSalePrice = false;
         PageGroup pageGroupCore;
-        GoodsBigType goodsBigType = GoodsBigType.Goods;
+        GoodsBigTypeEnum goodsBigType = GoodsBigTypeEnum.Goods;
         int businessContactType = 0;
 
-        public StockInBillHd Hd
-        {
-            get
-            {
-                return hd;
-            }
+        public Guid HeadID { get => headID; set => headID = value; }
 
-            set
-            {
-                hd = value;
-            }
-        }
-
-        public StockInBillPage(Guid hdID, PageGroup child, String type)
+        public StockInBillPage(Guid hdID, PageGroup child, MainMenuEnum type)
         {
             InitializeComponent();
             if (MainForm.Company.Contains("创萌"))
@@ -63,17 +57,17 @@ namespace USL
                 this.colPrice.Caption = "单价";
                 this.colAMT.Caption = "金额";
             }
-            headID = hdID;
+            HeadID = hdID;
             pageGroupCore = child;
             billType = type;
-            BindData(headID);
+            BindData(HeadID);
 
-            if (type == MainMenuConstants.ProductionStockInBill || type == MainMenuConstants.SalesReturnBill)
+            if (type == MainMenuEnum.ProductionStockInBill || type == MainMenuEnum.SalesReturnBill)
             {
                 SetDtlHeader(true);
                 businessContactType = (int)BusinessContactType.Customer;
             }
-            else if (MainForm.SysInfo.CompanyType == (int)CompanyType.Trade && type == MainMenuConstants.FGStockInBill)
+            else if (MainForm.SysInfo.CompanyType == (int)CompanyType.Trade && type == MainMenuEnum.FGStockInBill)
             {
                 SetDtlHeader(true);
                 businessContactType = (int)BusinessContactType.Supplier;
@@ -89,7 +83,7 @@ namespace USL
         {
             if (flag)
             {
-                if (billType == MainMenuConstants.SalesReturnBill)
+                if (billType == MainMenuEnum.SalesReturnBill)
                 {
                     colQty.Caption = "数量";
                     colPackaging.Visible = false;
@@ -99,7 +93,7 @@ namespace USL
                     colModulus.Visible = false;
                     colCounts.Visible = false;
                 }
-                else if (MainForm.SysInfo.CompanyType == (int)CompanyType.Trade && billType == MainMenuConstants.FGStockInBill)
+                else if (MainForm.SysInfo.CompanyType == (int)CompanyType.Trade && billType == MainMenuEnum.FGStockInBill)
                 {
                     colCavityNumber.Visible = false;
                     colModulus.Visible = false;
@@ -110,8 +104,8 @@ namespace USL
             }
             else
             {
-                if (MainForm.SysInfo.CompanyType == (int)CompanyType.Factory && (billType == MainMenuConstants.FSMStockInBill || billType == MainMenuConstants.EMSReturnBill || billType == MainMenuConstants.FGStockInBill
-                    || (billType == MainMenuConstants.ReturnedMaterialBill && lueType.EditValue != null && Convert.ToInt32(lueType.EditValue) == 4)))
+                if (MainForm.SysInfo.CompanyType == (int)CompanyType.Factory && (billType == MainMenuEnum.FSMStockInBill || billType == MainMenuEnum.EMSReturnBill || billType == MainMenuEnum.FGStockInBill
+                    || (billType == MainMenuEnum.ReturnedMaterialBill && lueType.EditValue != null && Convert.ToInt32(lueType.EditValue) == 4)))
                 {
                     colQty.Caption = "重量";
                     colModulus.Visible = true;
@@ -126,7 +120,7 @@ namespace USL
             }
             colMEAS.Visible = flag;
             colSPEC.Visible = !flag;
-            if (billType != MainMenuConstants.SalesReturnBill)
+            if (billType != MainMenuEnum.SalesReturnBill)
             {
                 colPackaging.Visible = flag;
                 colPCS.Visible = flag;
@@ -136,7 +130,7 @@ namespace USL
             colNWeight.Visible = !flag;
             colCavityNumber.Visible = !flag;
             colUnit.Visible = !flag;
-            if (MainForm.SysInfo.CompanyType == (int)CompanyType.Factory && billType == MainMenuConstants.SFGStockInBill)
+            if (MainForm.SysInfo.CompanyType == (int)CompanyType.Factory && billType == MainMenuEnum.SFGStockInBill)
             {
                 colTonsQty.Visible = true;
                 colTonsPrice.Visible = true;
@@ -159,100 +153,102 @@ namespace USL
         {
             switch (billType)
             {
-                case MainMenuConstants.ProductionStockInBill:
-                case MainMenuConstants.SalesReturnBill:
-                    goodsBigType = GoodsBigType.Goods;
+                case MainMenuEnum.ProductionStockInBill:
+                case MainMenuEnum.SalesReturnBill:
+                    goodsBigType = GoodsBigTypeEnum.Goods;
                     break;
-                case MainMenuConstants.FGStockInBill:
-                    goodsBigType = GoodsBigType.Stuff;
+                case MainMenuEnum.FGStockInBill:
+                    goodsBigType = GoodsBigTypeEnum.Stuff;
                     break;
-                case MainMenuConstants.AssembleStockInBill:
-                    goodsBigType = GoodsBigType.SFGoods;
+                case MainMenuEnum.AssembleStockInBill:
+                    goodsBigType = GoodsBigTypeEnum.SFGoods;
                     break;
-                case MainMenuConstants.EMSReturnBill:
-                case MainMenuConstants.FSMStockInBill:
-                    goodsBigType = GoodsBigType.Stuff;
+                case MainMenuEnum.EMSReturnBill:
+                case MainMenuEnum.FSMStockInBill:
+                    goodsBigType = GoodsBigTypeEnum.Stuff;
                     break;
                 //case TypesListConstants.SFGStockInBill:
                 //    break;
-                case MainMenuConstants.FSMReturnBill:
-                    goodsBigType = GoodsBigType.Material;
+                case MainMenuEnum.FSMReturnBill:
+                    goodsBigType = GoodsBigTypeEnum.Material;
                     break;
             }
-            if (billType == MainMenuConstants.SFGStockInBill)
-                goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type > (int)GoodsBigType.Goods);
-            else if (billType == MainMenuConstants.ReturnedMaterialBill)
+            List<Goods> goodsList = baseFactory.GetModelList<Goods>();
+            if (billType == MainMenuEnum.SFGStockInBill)
+                goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type > (int)GoodsBigTypeEnum.Goods);
+            else if (billType == MainMenuEnum.ReturnedMaterialBill)
             {
                 switch (Convert.ToInt32(lueType.EditValue))
                 {
                     case 4:
                         if (MainForm.SysInfo.CompanyType == (int)CompanyType.Factory)
-                        goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)GoodsBigType.Stuff);
+                        goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type.Equals((int)GoodsBigTypeEnum.Stuff));
                         else
-                            goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type > (int)GoodsBigType.Goods);
+                            goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type > (int)GoodsBigTypeEnum.Goods);
                         break;
                     case 7:
-                        goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)GoodsBigType.Material || o.Type == (int)GoodsBigType.Basket);
+                        goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type == (int)GoodsBigTypeEnum.Material || o.Type == (int)GoodsBigTypeEnum.Basket);
                         break;
                     case 9:
-                        goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)GoodsBigType.SFGoods || o.Type == (int)GoodsBigType.Stuff || o.Type == (int)GoodsBigType.Mold);
+                        goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type == (int)GoodsBigTypeEnum.SFGoods || o.Type == (int)GoodsBigTypeEnum.Stuff || o.Type == (int)GoodsBigTypeEnum.Mold);
                         break;
                     default:
                         break;
                 }
             }
-            else if (billType == MainMenuConstants.FSMStockInBill || billType == MainMenuConstants.FGStockInBill)
+            else if (billType == MainMenuEnum.FSMStockInBill || billType == MainMenuEnum.FGStockInBill)
             {
                 if (MainForm.SysInfo.CompanyType == (int)CompanyType.Factory)
-                    goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)goodsBigType || o.Type == (int)GoodsBigType.Basket);
+                    goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type == (int)goodsBigType || o.Type == (int)GoodsBigTypeEnum.Basket);
                 else
-                    goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)GoodsBigType.Goods);
-                if (!string.IsNullOrEmpty(lueBusinessContact.Text.Trim()) && billType == MainMenuConstants.FGStockInBill)
-                    orderHdBindingSource.DataSource = BLLFty.Create<OrderBLL>().GetOrderHd().FindAll(o =>
-                    o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Status == (int)BillStatus.Audited);
+                    goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type == (int)GoodsBigTypeEnum.Goods);
+                //if (!string.IsNullOrEmpty(lueBusinessContact.Text.Trim()) && billType == MainMenuEnum.FGStockInBill)
+                //    orderHdBindingSource.DataSource = BLLFty.Create<OrderBLL>().GetOrderHd().FindAll(o =>
+                    //o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Status == (int)BillStatus.Audited);
             }
-            else if (billType == MainMenuConstants.AssembleStockInBill)
-                goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)GoodsBigType.SFGoods || o.Type == (int)GoodsBigType.Stuff);
+            else if (billType == MainMenuEnum.AssembleStockInBill)
+                goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type == (int)GoodsBigTypeEnum.SFGoods || o.Type == (int)GoodsBigTypeEnum.Stuff);
             else
-                goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)goodsBigType);
+                goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type == (int)goodsBigType);
 
             if (hdID is Guid && ((Guid)hdID) != Guid.Empty)
             {
-                headID = (Guid)hdID;
-                stockInBillHdBindingSource.DataSource = hd = BLLFty.Create<StockInBillBLL>().GetStockInBillHd(headID);
-                stockInBillDtlBindingSource.DataSource = dtl = BLLFty.Create<StockInBillBLL>().GetStockInBillDtl(headID);
+                HeadID = (Guid)hdID;
+                StockInBillHd hd = stockInBillFactory.GetStockInBill(HeadID).FirstOrDefault();
+                stockInBillHdBindingSource.DataSource = hd;
+                stockInBillDtlBindingSource.DataSource = hd.StockInBillDtl.ToList();
             }
-            vUsersInfoBindingSource.DataSource = MainForm.dataSourceList[typeof(List<VUsersInfo>)];
-            warehouseBindingSource.DataSource = warehouseList = MainForm.dataSourceList[typeof(List<Warehouse>)] as List<Warehouse>;
-            List<TypesList> types = MainForm.dataSourceList[typeof(List<TypesList>)] as List<TypesList>;
+            vUsersInfoBindingSource.DataSource = baseFactory.GetModelList<VUsersInfo>();
+            warehouseBindingSource.DataSource = warehouseList = baseFactory.GetModelList<Warehouse>();
+            List<TypesList> types = baseFactory.GetModelList<TypesList>();
             //入库单类型
-            if (billType == MainMenuConstants.ReturnedMaterialBill)
+            if (billType == MainMenuEnum.ReturnedMaterialBill)
             {
                 if (MainForm.ISnowSoftVersion == ISnowSoftVersion.PurchaseSellStock)
-                    typesListBindingSource.DataSource = types.FindAll(o => o.Type == MainMenuConstants.StockInBillType && o.No == 9);
+                    typesListBindingSource.DataSource = types.FindAll(o => o.Type == MainMenuEnum.StockInBillType.ToString() && o.No == 9);
                 else if (MainForm.ISnowSoftVersion == ISnowSoftVersion.EMS)
-                    typesListBindingSource.DataSource = types.FindAll(o => o.Type == MainMenuConstants.StockInBillType && (o.No == 4 || o.No == 9));
+                    typesListBindingSource.DataSource = types.FindAll(o => o.Type == MainMenuEnum.StockInBillType.ToString() && (o.No == 4 || o.No == 9));
                 else if (MainForm.ISnowSoftVersion == ISnowSoftVersion.FSM)
-                    typesListBindingSource.DataSource = types.FindAll(o => o.Type == MainMenuConstants.StockInBillType && (o.No == 7 || o.No == 9));
+                    typesListBindingSource.DataSource = types.FindAll(o => o.Type == MainMenuEnum.StockInBillType.ToString() && (o.No == 7 || o.No == 9));
                 else if (MainForm.SysInfo.CompanyType == (int)CompanyType.Factory)
-                    typesListBindingSource.DataSource = types.FindAll(o => o.Type == MainMenuConstants.StockInBillType && (o.No == 4 || o.No == 7 || o.No == 9 || o.No == 10));
+                    typesListBindingSource.DataSource = types.FindAll(o => o.Type == MainMenuEnum.StockInBillType.ToString() && (o.No == 4 || o.No == 7 || o.No == 9 || o.No == 10));
                 else
-                    typesListBindingSource.DataSource = types.FindAll(o => o.Type == MainMenuConstants.StockInBillType && (o.No == 4 || o.No == 10));
+                    typesListBindingSource.DataSource = types.FindAll(o => o.Type == MainMenuEnum.StockInBillType.ToString() && (o.No == 4 || o.No == 10));
             }
             else
-                typesListBindingSource.DataSource = types.FindAll(o => o.SubType == billType);
+                typesListBindingSource.DataSource = EnumHelper.GetEnumValues<StockInBillTypeEnum>(false).FindAll(o=>o.Index==(int)billType);//types.FindAll(o => o.SubType == billType.ToString());
             //仓库类型
-            warehouseTypeBindingSource.DataSource = types.FindAll(o => o.Type == TypesListConstants.CustomerType);
+            warehouseTypeBindingSource.DataSource = EnumHelper.GetEnumValues<CustomerTypeEnum>(false); //types.FindAll(o => o.Type == TypesListConstants.CustomerType);
 
             //SetBusinessContact(false);
             //businessContactBindingSource.DataSource = null;
             //txtContacts.EditValue = null;
-            if (billType == MainMenuConstants.ProductionStockInBill || billType == MainMenuConstants.SalesReturnBill)
+            if (billType == MainMenuEnum.ProductionStockInBill || billType == MainMenuEnum.SalesReturnBill)
             {
                 SetDtlHeader(true);
                 businessContactType = (int)BusinessContactType.Customer;
             }
-            else if (MainForm.SysInfo.CompanyType == (int)CompanyType.Trade && billType == MainMenuConstants.FGStockInBill)
+            else if (MainForm.SysInfo.CompanyType == (int)CompanyType.Trade && billType == MainMenuEnum.FGStockInBill)
             {
                 SetDtlHeader(true);
                 businessContactType = (int)BusinessContactType.Supplier;
@@ -273,22 +269,13 @@ namespace USL
 
         public void Add()
         {
-            stockInBillHdBindingSource.DataSource = hd = new StockInBillHd();
-            stockInBillDtlBindingSource.DataSource = dtl = new List<StockInBillDtl>();
+            StockInBillHd hd = new StockInBillHd();
+            stockInBillHdBindingSource.DataSource = hd;
+            stockInBillDtlBindingSource.DataSource = new List<StockInBillDtl>();
             gridView.AddNewRow();
             gridView.FocusedColumn = colGoodsID;
-            //string no = BLLFty.Create<StockInBillBLL>().GetMaxBillNo();
-            //if (no == null)
-            //    hd.BillNo = "RK" + DateTime.Now.ToString("yyyyMMdd") + "001";
-            //else
-            //{
-            //    if (no.Substring(2, 8).Equals(DateTime.Now.ToString("yyyyMMdd")))
-            //        hd.BillNo = "RK" + DateTime.Now.ToString("yyyyMMdd") + Convert.ToString(int.Parse(no.Substring(10, 3)) + 1).PadLeft(3, '0');
-            //    else
-            //        hd.BillNo = "RK" + DateTime.Now.ToString("yyyyMMdd") + "001";
-            //}
-            hd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.StockInBillType, true).MaxBillNo;
-            headID = Guid.Empty;
+            hd.BillNo = MainForm.GetMaxBillNo(MainMenuEnum.StockInBillType, true).MaxBillNo;
+            HeadID = Guid.Empty;
             hd.BillDate = DateTime.Today;
             lueType.Focus();
         }
@@ -307,11 +294,11 @@ namespace USL
                 System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
-                    if (hd != null)
+                    if (headID != null && headID != Guid.Empty)
                     {
-                        StockInBillHd dCheck = BLLFty.Create<StockInBillBLL>().GetStockInBillHd(hd.ID);
-                        if (dCheck.Status == (int)BillStatus.UnAudited)
-                            BLLFty.Create<StockInBillBLL>().Delete(hd.ID);
+                        StockInBillHd dCheck = stockInBillFactory.GetStockInBill(headID).FirstOrDefault();
+                        if (dCheck != null && dCheck.Status == (int)BillStatus.UnAudited)
+                            stockInBillFactory.Delete(headID);
                         else
                         {
                             CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "该单据已审核，不允许删除。");
@@ -321,13 +308,13 @@ namespace USL
                     }
                     ////DataQueryPageRefresh();
                     //刷新查询界面
-                    clientFactory.DataPageRefresh(billType);
+                    baseFactory.DataPageRefresh(billType);
                     //MainForm.DataQueryPageRefresh();
                     //DataQueryPage page = ClientFactory.itemDetailList[billType + "Query"] as DataQueryPage;
                     //MainForm.GetDataSource();
                     //page.InitGrid(MainForm.GetData(billType + "Query"));
-                    stockInBillHdBindingSource.DataSource = hd = new StockInBillHd();
-                    stockInBillDtlBindingSource.DataSource = dtl = new List<StockInBillDtl>();
+                    stockInBillHdBindingSource.DataSource = new StockInBillHd();
+                    stockInBillDtlBindingSource.DataSource = new List<StockInBillDtl>();
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "删除成功");
                 }
             }
@@ -345,6 +332,8 @@ namespace USL
         {
             bool flag = true;
             Hashtable hasGoods = new Hashtable();
+            StockInBillHd hd = stockInBillHdBindingSource.DataSource as StockInBillHd;
+            List<StockInBillDtl> dtl = stockInBillDtlBindingSource.DataSource as List<StockInBillDtl>;
             if (hd == null)
             {
                 CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "请完整填写表头信息");
@@ -356,12 +345,12 @@ namespace USL
                 flag = false;
             }
             //if (billType != TypesListConstants.ProductionStockInBill && lueBusinessContact.EditValue == null)
-            if (billType != MainMenuConstants.ProductionStockInBill && lueBusinessContact.Enabled == true && string.IsNullOrEmpty(lueBusinessContact.Text.Trim()))
+            if (billType != MainMenuEnum.ProductionStockInBill && lueBusinessContact.Enabled == true && string.IsNullOrEmpty(lueBusinessContact.Text.Trim()))
             {
                 CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "请填写业务往来信息");
                 flag = false;
             }
-            if (billType ==MainMenuConstants.FGStockInBill && MainForm.SysInfo.CompanyType == (int)CompanyType.Trade && string.IsNullOrEmpty(lueOrderNo.Text.Trim()))
+            if (billType ==MainMenuEnum.FGStockInBill && MainForm.SysInfo.CompanyType == (int)CompanyType.Trade && string.IsNullOrEmpty(lueOrderNo.Text.Trim()))
             {
                 CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), string.Format("请填写{0}", lciOrderNo.Text));
                 flag = false;
@@ -389,19 +378,19 @@ namespace USL
                     flag = false;
                     continue;
                 }
-                Goods goods = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).Find(o => o.ID.Equals(dtl[i].GoodsID));
+                Goods goods = baseFactory.GetModelList<Goods>().Find(o => o.ID.Equals(dtl[i].GoodsID));
                 //获取或设置客户商品售价
                 //if (isSLSalePrice && lueBusinessContact.Enabled == true && !string.IsNullOrEmpty(lueBusinessContact.Text.Trim()))
                 //销售退货价格可能低于销售价格，所以退货单不保存客户价格
-                if (lueBusinessContact.Enabled == true && !string.IsNullOrEmpty(lueBusinessContact.Text.Trim()) && billType != MainMenuConstants.SalesReturnBill)
+                if (lueBusinessContact.Enabled == true && !string.IsNullOrEmpty(lueBusinessContact.Text.Trim()) && billType != MainMenuEnum.SalesReturnBill)
                 {
-                   // SLSalePrice cSLSalePrice = ((List<SLSalePrice>)MainForm.dataSourceList[typeof(List<SLSalePrice>)]).Find(o =>
+                   // SLSalePrice cSLSalePrice = baseFactory.GetModelList<SLSalePrice>().Find(o =>
                    //o.CustomerID == new Guid(lueBusinessContact.EditValue.ToString()) && o.GoodsID == dtl[i].GoodsID);
-                    if (billType == MainMenuConstants.ProductionStockInBill || billType == MainMenuConstants.SalesReturnBill)
+                    if (billType == MainMenuEnum.ProductionStockInBill || billType == MainMenuEnum.SalesReturnBill)
                         businessContactType = (int)BusinessContactType.Customer;
                     else
                         businessContactType = (int)BusinessContactType.Supplier;
-                    SLSalePrice cSLSalePrice = BLLFty.Create<SLSalePriceBLL>().GetSLSalePrice().FirstOrDefault(o =>
+                    SLSalePrice cSLSalePrice =baseFactory.GetModelList<SLSalePrice>().FirstOrDefault(o =>
                    o.ID == new Guid(lueBusinessContact.EditValue.ToString()) && o.GoodsID == dtl[i].GoodsID && o.Type == businessContactType);
                     if (cSLSalePrice == null)
                     {
@@ -413,7 +402,7 @@ namespace USL
                         obj.PriceNoTax = dtl[i].PriceNoTax;
                         obj.Discount = dtl[i].Discount==0?1: dtl[i].Discount;
                         obj.OtherFee = dtl[i].OtherFee;
-                        BLLFty.Create<SLSalePriceBLL>().Insert(obj);
+                        baseFactory.Add<SLSalePrice>(obj);
                     }
                     else if (cSLSalePrice.Price != dtl[i].Price || cSLSalePrice.Discount != dtl[i].Discount || cSLSalePrice.OtherFee != dtl[i].OtherFee)
                     {
@@ -421,22 +410,22 @@ namespace USL
                         cSLSalePrice.PriceNoTax = dtl[i].PriceNoTax;
                         cSLSalePrice.Discount = dtl[i].Discount == 0 ? 1 : dtl[i].Discount;
                         cSLSalePrice.OtherFee = dtl[i].OtherFee;
-                        BLLFty.Create<SLSalePriceBLL>().Update(cSLSalePrice);
+                        baseFactory.Update<SLSalePrice>(cSLSalePrice);
                     }
                 }
 
-                if (billType != MainMenuConstants.ProductionStockInBill && billType != MainMenuConstants.SalesReturnBill)
+                if (billType != MainMenuEnum.ProductionStockInBill && billType != MainMenuEnum.SalesReturnBill)
                 {
                     if (goods.NWeight != dtl[i].NWeight)
                     {
                         goods.NWeight = dtl[i].NWeight;
-                        BLLFty.Create<GoodsBLL>().Update(goods);
+                        baseFactory.Update<Goods>(goods);
                     }
                 }
                 //if (status == BillStatus.Audited)
                 //{
                 //    List<Inventory> lst = BLLFty.Create<InventoryBLL>().GetInventory(hd.WarehouseID, dtl[i].GoodsID);
-                //    Goods goods = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).Find(o => o.ID.Equals(dtl[i].GoodsID));
+                //    Goods goods = baseFactory.GetModelList<Goods>().Find(o => o.ID.Equals(dtl[i].GoodsID));
                 //    if (lst.Count >= 0 && (lst.Sum(o => o.Qty) - dtl[i].Qty) < 0)
                 //    {
                 //        CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), string.Format("货品[{0}]出库数量大于现库存数量，不允许出库！", goods.Code));
@@ -446,7 +435,7 @@ namespace USL
                 if (dtl[i].PCS == 0)
                     dtl[i].PCS = 1;
                 hd.BillAMT += decimal.Round((goods.Unit == "斤" 
-                    && (billType!=MainMenuConstants.SFGStockInBill && billType != MainMenuConstants.ProductionStockInBill && billType != MainMenuConstants.SalesReturnBill) 
+                    && (billType!=MainMenuEnum.SFGStockInBill && billType != MainMenuEnum.ProductionStockInBill && billType != MainMenuEnum.SalesReturnBill) 
                     ? dtl[i].Qty * 500 / (goods.NWeight == 0 ? 1 : goods.NWeight) : dtl[i].Qty) * dtl[i].PCS * dtl[i].Price * dtl[i].Discount + dtl[i].OtherFee, 2);
             }
             hd.UnPaidAMT = hd.BillAMT;
@@ -464,8 +453,8 @@ namespace USL
             {
                 this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
                 gridView.CloseEditForm();
-                hd = stockInBillHdBindingSource.DataSource as StockInBillHd;
-                dtl = stockInBillDtlBindingSource.DataSource as List<StockInBillDtl>;
+                StockInBillHd hd = stockInBillHdBindingSource.DataSource as StockInBillHd;
+                List<StockInBillDtl> dtl = stockInBillDtlBindingSource.DataSource as List<StockInBillDtl>;
                 if (string.IsNullOrEmpty(txtBillNo.Text.Trim()))
                 {
                     CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "单据编号不能为空，请点击添加按钮添加单据。");
@@ -480,27 +469,27 @@ namespace USL
                 hd.Status = 0;
                 switch (billType)
                 {
-                    case MainMenuConstants.ProductionStockInBill:
-                    case MainMenuConstants.SalesReturnBill:
-                        hd.WarehouseID = warehouseList.FirstOrDefault(o=>o.Code==WarehouseConstants.FG).ID;  //成品仓
+                    case MainMenuEnum.ProductionStockInBill:
+                    case MainMenuEnum.SalesReturnBill:
+                        hd.WarehouseID = warehouseList.FirstOrDefault(o=>o.Code==WarehouseEnum.FG.ToString()).ID;  //成品仓
                         break;
-                    case MainMenuConstants.EMSReturnBill:
-                    case MainMenuConstants.SFGStockInBill:
-                    case MainMenuConstants.FSMStockInBill:
-                    case MainMenuConstants.FSMReturnBill:
-                    case MainMenuConstants.AssembleStockInBill:
-                    case MainMenuConstants.ReturnedMaterialBill:
-                        hd.WarehouseID = warehouseList.FirstOrDefault(o=>o.Code==WarehouseConstants.SFG).ID;  //半成品
+                    case MainMenuEnum.EMSReturnBill:
+                    case MainMenuEnum.SFGStockInBill:
+                    case MainMenuEnum.FSMStockInBill:
+                    case MainMenuEnum.FSMReturnBill:
+                    case MainMenuEnum.AssembleStockInBill:
+                    case MainMenuEnum.ReturnedMaterialBill:
+                        hd.WarehouseID = warehouseList.FirstOrDefault(o=>o.Code==WarehouseEnum.SFG.ToString()).ID;  //半成品
                         break;
-                    case MainMenuConstants.FGStockInBill:
+                    case MainMenuEnum.FGStockInBill:
                         if (MainForm.SysInfo.CompanyType == (int)CompanyType.Factory)
-                            hd.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseConstants.SFG).ID;  //半成品
+                            hd.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseEnum.SFG.ToString()).ID;  //半成品
                         else
-                            hd.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseConstants.FG).ID;  //成品仓
+                            hd.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseEnum.FG.ToString()).ID;  //成品仓
                         break;
                 }
 
-                if (billType == MainMenuConstants.ProductionStockInBill)
+                if (billType == MainMenuEnum.ProductionStockInBill)
                 {
                     if ((lueType.ItemIndex == 0 || lueType.ItemIndex == -1))
                         hd.Type = 0;
@@ -508,7 +497,7 @@ namespace USL
                         hd.Type = 1;
                 }
                 //添加
-                if (headID == Guid.Empty)
+                if (HeadID == Guid.Empty)
                 {
                     hd.ID = Guid.NewGuid();
                     foreach (StockInBillDtl item in dtl)
@@ -516,22 +505,20 @@ namespace USL
                         item.ID = Guid.NewGuid();
                         item.HdID = hd.ID;
                     }
-                    BLLFty.Create<StockInBillBLL>().Insert(hd, dtl);
                 }
-                else//修改
-                    BLLFty.Create<StockInBillBLL>().Update(hd, dtl);
-                headID = hd.ID;
+                stockInBillFactory.SaveBill(hd, dtl);
+                HeadID = hd.ID;
                 //DataQueryPageRefresh();
                 //MainForm.BillSaveRefresh(billType + "Query");
-                clientFactory.DataPageRefresh(billType);
+                baseFactory.DataPageRefresh(billType);
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 return true;
             }
             catch (Exception ex)
             {
-                if (ex.HResult == -2146232060)  //违反了PRIMARY KEY约束
-                    CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), string.Format("单号:{0}已经存在,请重新添加新单。", hd.BillNo));
-                else
+                //if (ex.HResult == -2146232060)  //违反了PRIMARY KEY约束
+                //    CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), string.Format("单号:{0}已经存在,请重新添加新单。", hd.BillNo));
+                //else
                 CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), ex.Message);
                 return false;
             }
@@ -547,24 +534,21 @@ namespace USL
             {
                 this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
                 gridView.CloseEditForm();
-                if (hd != null)
+                if (headID != null && headID!=Guid.Empty)
                 {
-                    dtl = BLLFty.Create<StockInBillBLL>().GetStockInBillDtl(hd.ID);
-                    StockInBillHd stockIn = BLLFty.Create<StockInBillBLL>().GetStockInBillHd(hd.ID);
-                    if (stockIn != null && stockIn.Status > 1)
+                    StockInBillHd hd = stockInBillFactory.GetStockInBill(headID).FirstOrDefault();
+                    List<StockInBillDtl> dtl = hd.StockInBillDtl.ToList();
+                    if (hd != null && hd.Status > 1)
                     {
                         CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "已结账单据不能取消审核");
                         return false;
                     }
 
-                    if (stockIn != null && stockIn.Status == 0)
+                    if (hd != null && hd.Status == 0)
                     {
                         if (BillValidated(BillStatus.Audited) == false)
                             return false;
                     }
-                    hd.Auditor = MainForm.usersInfo.ID;
-                    hd.AuditDate = DateTime.Now;
-                    hd.Status = 1;
 
                     List<Inventory> inventorylist = new List<Inventory>();
                     List<AccountBook> accountBooklist = new List<AccountBook>();
@@ -573,9 +557,9 @@ namespace USL
                     //Dictionary<Guid, Decimal> totaiQty = BLLFty.Create<InventoryBLL>().GetGoodsTotalQty(hd.WarehouseID);
                     foreach (StockInBillDtl dtlItem in dtl)
                     {
-                        if (billType == MainMenuConstants.SalesReturnBill)  //销售退货不需要增加库存
+                        if (billType == MainMenuEnum.SalesReturnBill)  //销售退货不需要增加库存
                             continue;
-                        Goods goods = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).Find(o => o.ID == dtlItem.GoodsID && o.PCS == dtlItem.PCS);
+                        Goods goods = baseFactory.GetModelList<Goods>().Find(o => o.ID == dtlItem.GoodsID && o.PCS == dtlItem.PCS);
                         //库存数据
                         Inventory ity = new Inventory();
                         ity.ID = Guid.NewGuid();
@@ -585,32 +569,7 @@ namespace USL
                         ity.SupplierID = hd.SupplierID;
                         ity.DeptID = hd.DeptID;
                         ity.GoodsID = dtlItem.GoodsID;
-                        //if (billType == MainMenuConstants.SFGStockInBill || billType == MainMenuConstants.ReturnedMaterialBill)
-                        //{
-                        //    switch (goods.Unit.ToUpper())
-                        //    {
-                        //        case "吨":
-                        //        case "T":
-                        //            ity.Qty = dtlItem.Qty * 1000000;
-                        //            break;
-                        //        case "斤":
-                        //            ity.Qty = dtlItem.Qty * 500;
-                        //            break;
-                        //        case "公斤":
-                        //        case "KG":
-                        //            ity.Qty = dtlItem.Qty * 1000;
-                        //            break;
-                        //        case "米":
-                        //        case "M":
-                        //            ity.Qty = dtlItem.Qty * 100; //米转厘米
-                        //            break;
-                        //        default:
-                        //            ity.Qty = dtlItem.Qty;
-                        //            break;
-                        //    }
-                        //}
-                        //else
-                        if (billType == MainMenuConstants.ProductionStockInBill)//成品入库可以输入负数，为了临时调库存差异
+                        if (billType == MainMenuEnum.ProductionStockInBill)//成品入库可以输入负数，为了临时调库存差异
                             ity.Qty = dtlItem.Qty;
                         else
                             ity.Qty = Math.Abs(dtlItem.Qty);
@@ -638,33 +597,9 @@ namespace USL
                         ab.Price = dtlItem.Price;
                         ab.Discount = dtlItem.Discount;
                         ab.OtherFee = dtlItem.OtherFee;
-                        //if (billType == MainMenuConstants.SFGStockInBill || billType == MainMenuConstants.ReturnedMaterialBill)
-                        //{
-                        //    switch (goods.Unit.ToUpper())
-                        //    {
-                        //        case "吨":
-                        //        case "T":
-                        //            ab.InQty = dtlItem.Qty * 1000000;
-                        //            break;
-                        //        case "斤":
-                        //            ab.InQty = dtlItem.Qty * 500;//转成克
-                        //            break;
-                        //        case "公斤":
-                        //        case "KG":
-                        //            ab.InQty = dtlItem.Qty * 1000;//转成克
-                        //            break;
-                        //        case "米":
-                        //        case "M":
-                        //            ab.InQty = dtlItem.Qty * 100; //米转厘米
-                        //            break;
-                        //        default:
-                        //            ab.InQty = dtlItem.Qty;
-                        //            break;
-                        //    }
-                        //}
-                        //else
                         ab.InQty = ity.Qty;
-                        List<Inventory> lst = BLLFty.Create<InventoryBLL>().GetInventory(hd.WarehouseID, dtlItem.GoodsID, dtlItem.PCS);
+                        Predicate<Inventory> match = o => o.WarehouseID.Equals(hd.WarehouseID) && o.GoodsID.Equals(dtlItem.GoodsID) && o.PCS.Equals(dtlItem.PCS);
+                        List<Inventory> lst = baseFactory.GetModelList<Inventory>().FindAll(match);
                         if (lst.Count>0)
                         {
                             decimal totalAMT = lst.Sum(o => o.Qty * o.Price * o.Discount + o.OtherFee);
@@ -680,7 +615,7 @@ namespace USL
                         ab.BillDate = hd.BillDate;
                         accountBooklist.Add(ab);
 
-                        if (stockIn != null && stockIn.Status == 0)
+                        if (hd != null && hd.Status == 0)
                         {
                             //添加提醒信息
                             decimal total = 0;
@@ -688,7 +623,7 @@ namespace USL
                                 total = lst.Sum(o => o.Qty) + ab.InQty;
                             else
                                 total = ab.InQty;
-                            ////Alert alert = ((List<Alert>)MainForm.dataSourceList[typeof(List<Alert>)]).Find(o => o.GoodsID == dtlItem.GoodsID);
+                            ////Alert alert = baseFactory.GetModelList<Alert>().Find(o => o.GoodsID == dtlItem.GoodsID);
                             ////if (alert != null)
                             ////    dellist.Add(alert);
                             ////if (goods != null && total > goods.UpperLimit && goods.UpperLimit > 0)
@@ -705,8 +640,9 @@ namespace USL
                             ////}
                         }
                     }
+                    List<VStockInBillDtlByBOM> vBomList = baseFactory.GetModelList<VStockInBillDtlByBOM>();
                     bool flag = false;
-                    if (billType == MainMenuConstants.ProductionStockInBill && (lueType.ItemIndex == 0 || lueType.ItemIndex == -1))//成品入库单才减半成品库存，补差入库单不减
+                    if (billType == MainMenuEnum.ProductionStockInBill && (lueType.ItemIndex == 0 || lueType.ItemIndex == -1))//成品入库单才减半成品库存，补差入库单不减
                     {
                         //因为要减去半成品，所以重新获取半成品库存
                         ////totaiQty = BLLFty.Create<InventoryBLL>().GetGoodsTotalQty(warehouseList[1].ID);  //半成品库存
@@ -722,30 +658,45 @@ namespace USL
                         //}
                         //else
                         //{
-                        List<StockInBillDtl> dtlByBOM = BLLFty.Create<StockInBillBLL>().GetVStockInBillDtlByBOM(hd.ID, (int)BOMType.BOM);
-                        foreach (StockInBillDtl dtlItem in dtlByBOM)
+                        Predicate<VStockInBillDtlByBOM> match = o => o.ID.Equals(headID) && o.Type == (int)BOMType.BOM;
+                        vBomList.FindAll(match).ForEach(item =>
                         {
-                            if (StockOut(inventorylist, accountBooklist, alertlist, dellist, dtlItem, stockIn))
+                            StockInBillDtl dtlItem = ConvertTo(item);
+                            if (StockOut(inventorylist, accountBooklist, alertlist, dellist, dtlItem, hd))
                                 flag = true;
-                        }
+                        });
                         //}
                     }
-                    else if (billType==MainMenuConstants.FGStockInBill || billType==MainMenuConstants.FSMStockInBill)//装配入库不减少对应材料库存，因为材料已经领料时出库
-                    //else if (billType == MainMenuConstants.AssembleStockInBill || billType == MainMenuConstants.FGStockInBill || billType == MainMenuConstants.FSMStockInBill)
+                    else if (billType==MainMenuEnum.FGStockInBill || billType==MainMenuEnum.FSMStockInBill)//装配入库不减少对应材料库存，因为材料已经领料时出库
+                    //else if (billType == MainMenuEnum.AssembleStockInBill || billType == MainMenuEnum.FGStockInBill || billType == MainMenuEnum.FSMStockInBill)
                     {
                         //减少入库产品对应的材料库存
-                        List<StockInBillDtl> dtlByMoldMaterial = null;
+                        List<StockInBillDtl> dtlByMoldMaterial = new List<StockInBillDtl>(); ;
                         if (MainForm.SysInfo.CompanyType == (int)CompanyType.Factory)
-                            dtlByMoldMaterial = BLLFty.Create<StockInBillBLL>().GetVStockInBillDtlByBOM(hd.ID, (int)BOMType.Assemble);
+                        {
+                            Predicate<VStockInBillDtlByBOM> match = o => o.ID.Equals(headID) && o.Type == (int)BOMType.Assemble;
+                            vBomList.FindAll(match).ForEach(item =>
+                            {
+                                StockInBillDtl dtlItem = ConvertTo(item);
+                                dtlByMoldMaterial.Add(dtlItem);
+                            });
+                        }
                         else
-                            dtlByMoldMaterial = BLLFty.Create<StockInBillBLL>().GetVStockInBillDtlByBOM(hd.ID);
+                        {
+                            Predicate<VStockInBillDtlByBOM> match = o => o.ID.Equals(headID);
+                            vBomList.FindAll(match).ForEach(item =>
+                            {
+                                StockInBillDtl dtlItem = ConvertTo(item);
+                                dtlByMoldMaterial.Add(dtlItem);
+                            });
+                        }
                         foreach (StockInBillDtl dtlItem in dtlByMoldMaterial)
                         {
-                            if (StockOut(inventorylist, accountBooklist, alertlist, dellist, dtlItem,stockIn))
+                            if (StockOut(inventorylist, accountBooklist, alertlist, dellist, dtlItem, hd))
                                 flag = true;
                         }
                     }
-                    //else if (billType == MainMenuConstants.FSMStockInBill)
+                    //else if (billType == MainMenuEnum.FSMStockInBill)
                     //{
                     //    //减少自动机入库产品对应的原料库存(按模具算原料)
                     //    List<OrderDtl> dtlByMoldMaterial = BLLFty.Create<OrderBLL>().GetVFSMOrderDtlByMoldMaterial(hd.OrderID.Value);
@@ -758,18 +709,21 @@ namespace USL
                     if (flag)
                         return false;
 
-                    if (stockIn != null && stockIn.Status == 1)
+                    if (hd != null && hd.Status == (int)BillStatus.Audited)
                     {
                         hd.Auditor = MainForm.usersInfo.ID;
                         hd.AuditDate = DateTime.Now;
-                        hd.Status = 0;
-                        BLLFty.Create<InventoryBLL>().CancelAudit(hd, inventorylist, accountBooklist);
+                        hd.Status = (int)BillStatus.UnAudited;
+                        stockInBillFactory.CancelAudit(hd, inventorylist, accountBooklist);
                         CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "取消审核成功");
                         return true;
                     }
                     else
                     {
-                        BLLFty.Create<InventoryBLL>().Insert(hd, dtl, inventorylist, accountBooklist, dellist, alertlist);
+                        hd.Auditor = MainForm.usersInfo.ID;
+                        hd.AuditDate = DateTime.Now;
+                        hd.Status = (int)BillStatus.Audited;
+                        stockInBillFactory.Audit(hd, dtl, inventorylist, accountBooklist, dellist, alertlist);
                         MainForm.SetAlertCount();
                         CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "审核成功");
                         return true;
@@ -791,9 +745,26 @@ namespace USL
             {
                 //MainForm.BillSaveRefresh(billType + "Query");
                 //MainForm.InventoryRefresh();
-                clientFactory.DataPageRefresh(billType);
+                baseFactory.DataPageRefresh(billType);
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
+        }
+
+        private StockInBillDtl ConvertTo(VStockInBillDtlByBOM item)
+        {
+            StockInBillDtl dtl = new StockInBillDtl();
+            dtl.ID = item.ID.Value;
+            dtl.HdID = item.HdID;
+            dtl.GoodsID = item.GoodsID;
+            dtl.Qty = item.Qty.Value;
+            dtl.PCS = item.PCS;
+            dtl.InnerBox = item.InnerBox;
+            dtl.NWeight = item.NWeight == 0 ? 1 : item.NWeight;
+            dtl.Price = item.Price;
+            dtl.PriceNoTax = item.PriceNoTax;
+            dtl.Discount = item.Discount;
+            dtl.OtherFee = item.OtherFee;
+            return dtl;
         }
 
         /// <summary>
@@ -806,34 +777,34 @@ namespace USL
         /// <param name="totaiQty"></param>
         /// <param name="dtlItem"></param>
         /// <returns></returns>
-        bool StockOut(List<Inventory> inventorylist, List<AccountBook> accountBooklist, List<Alert> alertlist, List<Alert> dellist, StockInBillDtl dtlItem,StockInBillHd stockIn)
+        bool StockOut(List<Inventory> inventorylist, List<AccountBook> accountBooklist, List<Alert> alertlist, List<Alert> dellist, StockInBillDtl dtlItem,StockInBillHd hd)
         {
             bool flag = false;
             //库存数据
             Inventory ity = new Inventory();
             ity.ID = Guid.NewGuid();
-            //if (billType == MainMenuConstants.ProductionStockInBill)
+            //if (billType == MainMenuEnum.ProductionStockInBill)
             //    ity.WarehouseID = warehouseList[(int)WarehouseType.SFG].ID;
             //else
             //    ity.WarehouseID = hd.WarehouseID;
             switch (billType)
             {
-                case MainMenuConstants.ProductionStockInBill:
-                    ity.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseConstants.SFG).ID;
+                case MainMenuEnum.ProductionStockInBill:
+                    ity.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseEnum.SFG.ToString()).ID;
                     break;
-                case MainMenuConstants.FGStockInBill:
-                    ity.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseConstants.EMS).ID;
+                case MainMenuEnum.FGStockInBill:
+                    ity.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseEnum.EMS.ToString()).ID;
                     break;
-                case MainMenuConstants.FSMStockInBill:
-                    ity.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseConstants.FSM).ID;
+                case MainMenuEnum.FSMStockInBill:
+                    ity.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseEnum.FSM.ToString()).ID;
                     break;
-                case MainMenuConstants.ReturnedMaterialBill:
+                case MainMenuEnum.ReturnedMaterialBill:
                     if (Convert.ToInt32(lueType.EditValue) == 4)
-                        ity.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseConstants.EMS).ID;
+                        ity.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseEnum.EMS.ToString()).ID;
                     else if (Convert.ToInt32(lueType.EditValue) == 7)
-                        ity.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseConstants.FSM).ID;
+                        ity.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseEnum.FSM.ToString()).ID;
                     else
-                        ity.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseConstants.SFG).ID;
+                        ity.WarehouseID = warehouseList.FirstOrDefault(o => o.Code == WarehouseEnum.SFG.ToString()).ID;
                     break;
                 default:
                     ity.WarehouseID = hd.WarehouseID;
@@ -859,7 +830,7 @@ namespace USL
             //账页数据
             AccountBook ab = new AccountBook();
             ab.ID = Guid.NewGuid();
-            //if (billType == MainMenuConstants.ProductionStockInBill)
+            //if (billType == MainMenuEnum.ProductionStockInBill)
             //    ab.WarehouseID = warehouseList[1].ID;
             //else
             //    ab.WarehouseID = hd.WarehouseID;
@@ -873,7 +844,8 @@ namespace USL
             ab.OtherFee = dtlItem.OtherFee;
             ab.OutQty = ity.Qty;
             //List<Inventory> lst = BLLFty.Create<InventoryBLL>().GetInventory(ity.WarehouseID, dtlItem.GoodsID, dtlItem.PCS);
-            List<Inventory> lst = BLLFty.Create<InventoryBLL>().GetInventory(ity.WarehouseID, dtlItem.GoodsID);
+            Predicate<Inventory> match = o => o.WarehouseID.Equals(ity.WarehouseID) && o.GoodsID.Equals(dtlItem.GoodsID);
+            List<Inventory> lst = baseFactory.GetModelList<Inventory>().FindAll(match);
             if (lst.Count>0)
             {
                 decimal totalAMT = lst.Sum(o => o.Qty * o.Price * o.Discount + o.OtherFee);
@@ -889,8 +861,8 @@ namespace USL
             ab.BillDate = hd.BillDate;
             accountBooklist.Add(ab);
 
-            Goods goods = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).Find(o => o.ID.Equals(dtlItem.GoodsID) && o.PCS == dtlItem.PCS);
-            if (stockIn != null && stockIn.Status == 0)
+            Goods goods = baseFactory.GetModelList<Goods>().Find(o => o.ID.Equals(dtlItem.GoodsID) && o.PCS == dtlItem.PCS);
+            if (hd != null && hd.Status == 0)
             {
                 if (ab.BalanceQty < 0)
                 {
@@ -909,7 +881,7 @@ namespace USL
                     total = lst.Sum(o => o.Qty) - Math.Abs(dtlItem.Qty);
                 else
                     total = -Math.Abs(dtlItem.Qty);
-                ////Alert alert = ((List<Alert>)MainForm.dataSourceList[typeof(List<Alert>)]).Find(o => o.GoodsID == dtlItem.GoodsID);
+                ////Alert alert = baseFactory.GetModelList<Alert>().Find(o => o.GoodsID == dtlItem.GoodsID);
                 ////if (alert != null)
                 ////    dellist.Add(alert);
                 ////if (goods != null && total < goods.LowerLimit)
@@ -937,7 +909,7 @@ namespace USL
         /// <param name="totaiQty"></param>
         /// <param name="dtlItem"></param>
         /// <param name="flag"></param>
-        bool StockOut(List<Inventory> inventorylist, List<AccountBook> accountBooklist, List<Alert> alertlist, List<Alert> dellist, OrderDtl dtlItem, StockInBillHd stockIn)
+        bool StockOut(List<Inventory> inventorylist, List<AccountBook> accountBooklist, List<Alert> alertlist, List<Alert> dellist, OrderDtl dtlItem, StockInBillHd hd)
         {
             bool flag = false;
             //库存数据
@@ -974,7 +946,8 @@ namespace USL
             ab.OtherFee = dtlItem.OtherFee;
             ab.OutQty = ity.Qty;
             //List<Inventory> lst = BLLFty.Create<InventoryBLL>().GetInventory(hd.WarehouseID, dtlItem.GoodsID, dtlItem.PCS);
-            List<Inventory> lst = BLLFty.Create<InventoryBLL>().GetInventory(hd.WarehouseID, dtlItem.GoodsID);
+            Predicate<Inventory> match = o => o.WarehouseID.Equals(hd.WarehouseID) && o.GoodsID.Equals(dtlItem.GoodsID);
+            List<Inventory> lst = baseFactory.GetModelList<Inventory>().FindAll(match);
             if (lst.Count>0)
             {
                 decimal totalAMT = lst.Sum(o => o.Qty * o.Price * o.Discount + o.OtherFee);
@@ -990,8 +963,8 @@ namespace USL
             ab.BillDate = hd.BillDate;
             accountBooklist.Add(ab);
 
-            Goods goods = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).Find(o => o.ID.Equals(dtlItem.GoodsID));
-            if (stockIn != null && stockIn.Status == 0)
+            Goods goods = baseFactory.GetModelList<Goods>().Find(o => o.ID.Equals(dtlItem.GoodsID));
+            if (hd != null && hd.Status == 0)
             {
                 if (ab.BalanceQty < 0)
                 {
@@ -1009,7 +982,7 @@ namespace USL
                     total = lst.Sum(o => o.Qty) - Math.Abs(dtlItem.Qty);
                 else
                     total = -Math.Abs(dtlItem.Qty);
-                ////Alert alert = ((List<Alert>)MainForm.dataSourceList[typeof(List<Alert>)]).Find(o => o.GoodsID == dtlItem.GoodsID);
+                ////Alert alert = baseFactory.GetModelList<Alert>().Find(o => o.GoodsID == dtlItem.GoodsID);
                 ////if (alert != null)
                 ////    dellist.Add(alert);
                 ////if (goods != null && total < goods.LowerLimit)
@@ -1035,6 +1008,8 @@ namespace USL
 
         public void Print()
         {
+            StockInBillHd hd = stockInBillHdBindingSource.DataSource as StockInBillHd;
+            List<StockInBillDtl> dtl = stockInBillDtlBindingSource.DataSource as List<StockInBillDtl>;
             if (dtl == null)
             {
                 CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "没有可打印的数据");
@@ -1043,7 +1018,7 @@ namespace USL
             PrintSettingController psc = new PrintSettingController(this.gridControl);
             try
             {
-                if (billType == MainMenuConstants.ProductionStockInBill)
+                if (billType == MainMenuEnum.ProductionStockInBill)
                 {
                     //隐藏部分列
                     foreach (DevExpress.XtraGrid.Columns.GridColumn col in gridView.Columns)
@@ -1057,11 +1032,11 @@ namespace USL
                 if (hd != null)
                 {
                     psc.PrintCompany = MainForm.Company;
-                    List<TypesList> types = MainForm.dataSourceList[typeof(List<TypesList>)] as List<TypesList>;
-                    if (billType == MainMenuConstants.ReturnedMaterialBill)
-                        psc.PrintHeader = types.Find(o => o.Type == MainMenuConstants.StockInBillType && o.No == hd.Type).Name + "单";
+                    List<TypesList> types = baseFactory.GetModelList<TypesList>();
+                    if (billType == MainMenuEnum.ReturnedMaterialBill)
+                        psc.PrintHeader = types.Find(o => o.Type == MainMenuEnum.StockInBillType.ToString() && o.No == hd.Type).Name + "单";
                     else
-                        psc.PrintHeader = types.Find(o => o.SubType == billType && o.No == hd.Type).Name + "单";// "\r\n";
+                        psc.PrintHeader = types.Find(o => o.SubType == billType.ToString() && o.No == hd.Type).Name + "单";// "\r\n";
                     psc.PrintSubTitle = MainForm.Contacts.Replace("\\r\\n", "\r\n");
                     psc.PrintLeftHeader = "单据编号：" + hd.BillNo + "\r\n"
                         + "业务往来：" + lueBusinessContact.Text + "\r\n"
@@ -1101,7 +1076,7 @@ namespace USL
             }
             finally
             {
-                if (billType == MainMenuConstants.ProductionStockInBill)
+                if (billType == MainMenuEnum.ProductionStockInBill)
                 {
                     //还原隐藏列
                     foreach (DevExpress.XtraGrid.Columns.GridColumn col in gridView.Columns)
@@ -1149,11 +1124,11 @@ namespace USL
 
                     //}
                     List<SLSalePrice> slSalePriceList = new List<SLSalePrice>();
-                    if (lueBusinessContact.EditValue != null && lueBusinessContact.Text!=string.Empty)
-                        slSalePriceList = BLLFty.Create<SLSalePriceBLL>().GetSLSalePrice(new Guid(lueBusinessContact.EditValue.ToString()));
+                    if (lueBusinessContact.EditValue != null && lueBusinessContact.Text != string.Empty)
+                        slSalePriceList = baseFactory.GetModelList<SLSalePrice>().FindAll(o => o.ID.Equals(Guid.Parse(lueBusinessContact.EditValue.ToString())));
                     //gridView.SetRowCellValue(gridView.FocusedRowHandle, colGoodsID, goods.ID);
                     gridView.SetRowCellValue(gridView.FocusedRowHandle, colMEAS, goods.MEAS);
-                    if (billType == MainMenuConstants.SalesReturnBill)
+                    if (billType == MainMenuEnum.SalesReturnBill)
                     {
                         gridView.SetRowCellValue(gridView.FocusedRowHandle, colPCS, 1);
                         gridView.SetRowCellValue(gridView.FocusedRowHandle, colInnerBox, 0);
@@ -1169,14 +1144,14 @@ namespace USL
                     Decimal price = goods.Price;
                     Decimal disCount = 1;
                     Decimal otherFee = 0;
-                    //if ((billType == MainMenuConstants.SalesReturnBill && ((List<Company>)MainForm.dataSourceList[typeof(List<Company>)]).Exists(o => o.ID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == (int)CustomerType.DomesticSales))
-                    if ((billType == MainMenuConstants.SalesReturnBill && ((List<Company>)MainForm.dataSourceList[typeof(List<Company>)]).Exists(o => o.ID == new Guid(lueBusinessContact.EditValue.ToString())))
-                        || (billType == MainMenuConstants.SFGStockInBill && ((List<Supplier>)MainForm.dataSourceList[typeof(List<Supplier>)]).Exists(o => o.ID == new Guid(lueBusinessContact.EditValue.ToString()))))
+                    //if ((billType == MainMenuEnum.SalesReturnBill && baseFactory.GetModelList<Company>().Exists(o => o.ID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == (int)CustomerType.DomesticSales))
+                    if ((billType == MainMenuEnum.SalesReturnBill && baseFactory.GetModelList<Company>().Exists(o => o.ID == new Guid(lueBusinessContact.EditValue.ToString())))
+                        || (billType == MainMenuEnum.SFGStockInBill && baseFactory.GetModelList<Supplier>().Exists(o => o.ID == new Guid(lueBusinessContact.EditValue.ToString()))))
                     {
                         //获取或设置客户商品售价
                         //SLSalePrice cSLSalePrice = slSalePriceList.FirstOrDefault(o => o.GoodsID == goods.ID && o.Type == businessContactType);
-                        SLSalePrice cSLSalePrice = BLLFty.Create<SLSalePriceBLL>().GetSLSalePrice().FirstOrDefault(o =>
-                       o.ID == new Guid(lueBusinessContact.EditValue.ToString()) && o.GoodsID == goods.ID && o.Type == businessContactType);
+                        Func<SLSalePrice, bool> match = o => o.ID.Equals(Guid.Parse(lueBusinessContact.EditValue.ToString())) && o.GoodsID.Equals(goods.ID) && o.Type.Equals(businessContactType);
+                        SLSalePrice cSLSalePrice = baseFactory.GetModelList<SLSalePrice>().FirstOrDefault(match);
                         //if (cSLSalePrice == null)
                         //    isSLSalePrice = true;
                         //else
@@ -1208,41 +1183,42 @@ namespace USL
 
         private void lueBusinessContact_EditValueChanged(object sender, EventArgs e)
         {
+            StockInBillHd hd = stockInBillHdBindingSource.DataSource as StockInBillHd;
             switch (billType)
             {
-                case MainMenuConstants.FSMStockInBill:
+                case MainMenuEnum.FSMStockInBill:
                     SetBusinessContact(true);  //自动机给外面的人做
                     break;
-                ////case MainMenuConstants.ProductionStockInBill:
-                case MainMenuConstants.AssembleStockInBill:
+                ////case MainMenuEnum.ProductionStockInBill:
+                case MainMenuEnum.AssembleStockInBill:
                     SetBusinessContact(false);
                     break;
-                case MainMenuConstants.ProductionStockInBill:
-                case MainMenuConstants.SalesReturnBill:
+                case MainMenuEnum.ProductionStockInBill:
+                case MainMenuEnum.SalesReturnBill:
                     VCompany company = ((LookUpEdit)sender).GetSelectedDataRow() as VCompany;
                     if (company != null && hd != null)
                     {
                         hd.CompanyID = company.ID;
                         hd.Contacts = company.联系人;
-                        if (headID == Guid.Empty)
+                        if (HeadID == Guid.Empty)
                             hd.WarehouseType = company.客户类型;
                     }
                     break;
-                case MainMenuConstants.FGStockInBill:
-                case MainMenuConstants.EMSReturnBill:
-                case MainMenuConstants.SFGStockInBill:
-                case MainMenuConstants.FSMReturnBill:
+                case MainMenuEnum.FGStockInBill:
+                case MainMenuEnum.EMSReturnBill:
+                case MainMenuEnum.SFGStockInBill:
+                case MainMenuEnum.FSMReturnBill:
                     VSupplier supplier = ((LookUpEdit)sender).GetSelectedDataRow() as VSupplier;
                     if (supplier != null && hd != null)
                     {
                         hd.SupplierID = supplier.ID;
                         hd.Contacts = supplier.联系人;
-                        if (billType == MainMenuConstants.FGStockInBill)
-                            orderHdBindingSource.DataSource = BLLFty.Create<OrderBLL>().GetOrderHd().FindAll(o =>
-                            o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Status == (int)BillStatus.Audited);
+                        //if (billType == MainMenuEnum.FGStockInBill)
+                        //    orderHdBindingSource.DataSource = BLLFty.Create<OrderBLL>().GetOrderHd().FindAll(o =>
+                            //o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Status == (int)BillStatus.Audited);
                     }
                     break;
-                case MainMenuConstants.ReturnedMaterialBill:
+                case MainMenuEnum.ReturnedMaterialBill:
                     if (Convert.ToInt32(lueType.EditValue) == 9)
                     {
                         VDepartment dept = ((LookUpEdit)sender).GetSelectedDataRow() as VDepartment;
@@ -1285,56 +1261,56 @@ namespace USL
             lueWarehouseType.Enabled = false;
             switch (billType)
             {
-                case MainMenuConstants.ProductionStockInBill:
+                case MainMenuEnum.ProductionStockInBill:
                     SetBusinessContact(true);
                     this.lueBusinessContact.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.stockInBillHdBindingSource, "CompanyID", true));
-                    businessContactBindingSource.DataSource = MainForm.dataSourceList[typeof(List<VCompany>)];
-                    goodsBigType = GoodsBigType.Goods;
+                    businessContactBindingSource.DataSource = baseFactory.GetModelList<VCompany>();
+                    goodsBigType = GoodsBigTypeEnum.Goods;
                     lueWarehouseType.Enabled = true;
                     break;
-                case MainMenuConstants.FSMStockInBill:
+                case MainMenuEnum.FSMStockInBill:
                     //SetBusinessContact(false);     //自家有自动机，不需要放外面做               
                     SetBusinessContact(true);
                     this.lueBusinessContact.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.stockInBillHdBindingSource, "SupplierID", true));
-                    businessContactBindingSource.DataSource = ((List<VSupplier>)MainForm.dataSourceList[typeof(List<VSupplier>)]).FindAll(o => o.供应商类型 == (int)SupplierType.FSM);
-                    goodsBigType = GoodsBigType.Stuff;
+                    businessContactBindingSource.DataSource = baseFactory.GetModelList<VSupplier>().FindAll(o => o.供应商类型 == (int)SupplierTypeEnum.FSM);
+                    goodsBigType = GoodsBigTypeEnum.Stuff;
                     break;
-                case MainMenuConstants.SalesReturnBill:
+                case MainMenuEnum.SalesReturnBill:
                     this.lueBusinessContact.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.stockInBillHdBindingSource, "CompanyID", true));
-                    businessContactBindingSource.DataSource = MainForm.dataSourceList[typeof(List<VCompany>)];
-                    goodsBigType = GoodsBigType.Goods;
+                    businessContactBindingSource.DataSource = baseFactory.GetModelList<VCompany>();
+                    goodsBigType = GoodsBigTypeEnum.Goods;
                     break;
-                case MainMenuConstants.FGStockInBill:
+                case MainMenuEnum.FGStockInBill:
                     this.lueBusinessContact.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.stockInBillHdBindingSource, "SupplierID", true));
-                    businessContactBindingSource.DataSource = ((List<VSupplier>)MainForm.dataSourceList[typeof(List<VSupplier>)]).FindAll(o => o.供应商类型 == (int)SupplierType.EMS);
-                    if (!string.IsNullOrEmpty(lueBusinessContact.Text.Trim()))
-                        orderHdBindingSource.DataSource = BLLFty.Create<OrderBLL>().GetOrderHd().FindAll(o =>
-                        o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Status == (int)BillStatus.Audited);
+                    businessContactBindingSource.DataSource = baseFactory.GetModelList<VSupplier>().FindAll(o => o.供应商类型 == (int)SupplierTypeEnum.EMS);
+                    //if (!string.IsNullOrEmpty(lueBusinessContact.Text.Trim()))
+                    //    orderHdBindingSource.DataSource = BLLFty.Create<OrderBLL>().GetOrderHd().FindAll(o =>
+                    //    o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Status == (int)BillStatus.Audited);
                     //goodsBigType = GoodsBigType.SFGoods;
-                    goodsBigType = GoodsBigType.Stuff;
+                    goodsBigType = GoodsBigTypeEnum.Stuff;
                     break;
-                case MainMenuConstants.EMSReturnBill:
-                case MainMenuConstants.SFGStockInBill:
-                case MainMenuConstants.ReturnedMaterialBill:
-                    if (billType == MainMenuConstants.ReturnedMaterialBill)
+                case MainMenuEnum.EMSReturnBill:
+                case MainMenuEnum.SFGStockInBill:
+                case MainMenuEnum.ReturnedMaterialBill:
+                    if (billType == MainMenuEnum.ReturnedMaterialBill)
                     {
                         switch (Convert.ToInt32(lueType.EditValue))
                         {
                             case 4:
                                 this.lueBusinessContact.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.stockInBillHdBindingSource, "SupplierID", true));
-                                businessContactBindingSource.DataSource = ((List<VSupplier>)MainForm.dataSourceList[typeof(List<VSupplier>)]).FindAll(o => o.供应商类型 == (int)SupplierType.EMS);
+                                businessContactBindingSource.DataSource = baseFactory.GetModelList<VSupplier>().FindAll(o => o.供应商类型 == (int)SupplierTypeEnum.EMS);
                                 break;
                             case 7:
                                 this.lueBusinessContact.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.stockInBillHdBindingSource, "SupplierID", true));
-                                businessContactBindingSource.DataSource = ((List<VSupplier>)MainForm.dataSourceList[typeof(List<VSupplier>)]).FindAll(o => o.供应商类型 == (int)SupplierType.FSM);
+                                businessContactBindingSource.DataSource = baseFactory.GetModelList<VSupplier>().FindAll(o => o.供应商类型 == (int)SupplierTypeEnum.FSM);
                                 break;
                             case 9:
                                 this.lueBusinessContact.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.stockInBillHdBindingSource, "DeptID", true));
-                                businessContactBindingSource.DataSource = MainForm.dataSourceList[typeof(List<VDepartment>)];
+                                businessContactBindingSource.DataSource = baseFactory.GetModelList<VDepartment>();
                                 break;
                             case 10:
                                 this.lueBusinessContact.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.stockInBillHdBindingSource, "CompanyID", true));
-                                businessContactBindingSource.DataSource = MainForm.dataSourceList[typeof(List<VCompany>)];
+                                businessContactBindingSource.DataSource = baseFactory.GetModelList<VCompany>();
                                 break;
                             default:
                                 break;
@@ -1343,57 +1319,58 @@ namespace USL
                     else
                     {
                         this.lueBusinessContact.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.stockInBillHdBindingSource, "SupplierID", true));
-                        businessContactBindingSource.DataSource = ((List<VSupplier>)MainForm.dataSourceList[typeof(List<VSupplier>)]).FindAll(o =>
-                            o.供应商类型 == (billType == MainMenuConstants.EMSReturnBill ? (int)SupplierType.EMS : (int)SupplierType.Purchase));
+                        businessContactBindingSource.DataSource = baseFactory.GetModelList<VSupplier>().FindAll(o =>
+                            o.供应商类型 == (billType == MainMenuEnum.EMSReturnBill ? (int)SupplierTypeEnum.EMS : (int)SupplierTypeEnum.Purchase));
                     }
-                    goodsBigType = GoodsBigType.Stuff;
+                    goodsBigType = GoodsBigTypeEnum.Stuff;
                     break;
-                case MainMenuConstants.FSMReturnBill:
+                case MainMenuEnum.FSMReturnBill:
                     this.lueBusinessContact.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.stockInBillHdBindingSource, "SupplierID", true));
-                    businessContactBindingSource.DataSource = ((List<VSupplier>)MainForm.dataSourceList[typeof(List<VSupplier>)]).FindAll(o => o.供应商类型 == (int)SupplierType.FSM);
-                    goodsBigType =GoodsBigType.Material;
+                    businessContactBindingSource.DataSource = baseFactory.GetModelList<VSupplier>().FindAll(o => o.供应商类型 == (int)SupplierTypeEnum.FSM);
+                    goodsBigType = GoodsBigTypeEnum.Material;
                     break;
-                case MainMenuConstants.AssembleStockInBill:
+                case MainMenuEnum.AssembleStockInBill:
                     SetBusinessContact(false);
-                    goodsBigType = GoodsBigType.SFGoods;
+                    goodsBigType = GoodsBigTypeEnum.SFGoods;
                     break;
             }
-            if (billType == MainMenuConstants.SFGStockInBill)
-                goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type > 0);
-            else if (billType == MainMenuConstants.ReturnedMaterialBill)
+            List<Goods> goodsList = baseFactory.GetModelList<Goods>();
+            if (billType == MainMenuEnum.SFGStockInBill)
+                goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type > 0);
+            else if (billType == MainMenuEnum.ReturnedMaterialBill)
             {
                 switch (Convert.ToInt32(lueType.EditValue))
                 {
                     case 4:
                         if (MainForm.SysInfo.CompanyType == (int)CompanyType.Factory)
-                            goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)GoodsBigType.Stuff);
+                            goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type == (int)GoodsBigTypeEnum.Stuff);
                         else
-                            goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type > (int)GoodsBigType.Goods);
+                            goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type > (int)GoodsBigTypeEnum.Goods);
                         break;
                     case 7:
-                        goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)GoodsBigType.Material || o.Type == (int)GoodsBigType.Basket);
+                        goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type == (int)GoodsBigTypeEnum.Material || o.Type == (int)GoodsBigTypeEnum.Basket);
                         break;
                     case 9:
                     case 10:
-                        goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)GoodsBigType.SFGoods || o.Type == (int)GoodsBigType.Stuff || o.Type == (int)GoodsBigType.Mold);
+                        goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type == (int)GoodsBigTypeEnum.SFGoods || o.Type == (int)GoodsBigTypeEnum.Stuff || o.Type == (int)GoodsBigTypeEnum.Mold);
                         break;
                     default:
                         break;
                 }
             }
-            else if (billType == MainMenuConstants.FGStockInBill || billType==MainMenuConstants.FSMStockInBill)
+            else if (billType == MainMenuEnum.FGStockInBill || billType==MainMenuEnum.FSMStockInBill)
             {
                 if (MainForm.SysInfo.CompanyType == (int)CompanyType.Factory)
-                    goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)goodsBigType || o.Type == (int)GoodsBigType.Basket);
+                    goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type == (int)goodsBigType || o.Type == (int)GoodsBigTypeEnum.Basket);
                 else
-                    goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)GoodsBigType.Goods);
+                    goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type == (int)GoodsBigTypeEnum.Goods);
             }
-            else if (billType == MainMenuConstants.AssembleStockInBill)
+            else if (billType == MainMenuEnum.AssembleStockInBill)
             {
-                goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)GoodsBigType.SFGoods || o.Type == (int)GoodsBigType.Stuff);
+                goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type == (int)GoodsBigTypeEnum.SFGoods || o.Type == (int)GoodsBigTypeEnum.Stuff);
             }
             else
-                goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)goodsBigType);
+                goodsBindingSource.DataSource = goodsList.FindAll(o => o.Type == (int)goodsBigType);
         }
 
         private void gridView_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
@@ -1402,13 +1379,13 @@ namespace USL
             List<StockInBillDtl> list = ((BindingSource)view.DataSource).DataSource as List<StockInBillDtl>;
             if (e.IsGetData && list != null && list.Count > 0)
             {
-                Goods goods = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).Find(o => o.ID == list[e.ListSourceRowIndex].GoodsID);
+                Goods goods = baseFactory.GetModelList<Goods>().Find(o => o.ID == list[e.ListSourceRowIndex].GoodsID);
                 if (goods != null)
                 {
                     if (e.Column == colName)
                         e.Value = goods.Name;
                     if (e.Column == colPackaging && goods.PackagingID != null && goods.PackagingID != Guid.Empty)
-                        e.Value = ((List<Packaging>)MainForm.dataSourceList[typeof(List<Packaging>)]).Find(o => o.ID == goods.PackagingID).Name;
+                        e.Value = baseFactory.GetModelList<Packaging>().Find(o => o.ID == goods.PackagingID).Name;
                     if (e.Column == colSPEC)
                         e.Value = goods.SPEC;
                     //if (e.Column == colNWeight)
@@ -1434,7 +1411,7 @@ namespace USL
         {
             if (!string.IsNullOrEmpty(txtBillNo.Text.Trim()) && lueType.EditValue != null)
             {
-                List<StockInBillHd> bills = ((List<StockInBillHd>)MainForm.dataSourceList[typeof(List<StockInBillHd>)]).FindAll(o => o.Type == (int)lueType.EditValue).OrderBy(o => o.BillNo).ToList();
+                List<StockInBillHd> bills = baseFactory.GetModelList<StockInBillHd>().FindAll(o => o.Type == (int)lueType.EditValue).OrderBy(o => o.BillNo).ToList();
                 for (int i = 0; i < bills.Count; i++)
                 {
                     if (bills[i].BillNo.Equals(txtBillNo.Text.Trim()))
@@ -1466,7 +1443,7 @@ namespace USL
         {
             if (!string.IsNullOrEmpty(txtBillNo.Text.Trim()) && lueType.EditValue != null)
             {
-                List<StockInBillHd> bills = ((List<StockInBillHd>)MainForm.dataSourceList[typeof(List<StockInBillHd>)]).FindAll(o => o.Type == (int)lueType.EditValue).OrderBy(o => o.BillNo).ToList();
+                List<StockInBillHd> bills = baseFactory.GetModelList<StockInBillHd>().FindAll(o => o.Type == (int)lueType.EditValue).OrderBy(o => o.BillNo).ToList();
                 for (int i = 0; i < bills.Count; i++)
                 {
                     if (bills[i].BillNo.Equals(txtBillNo.Text.Trim()))
@@ -1511,9 +1488,11 @@ namespace USL
             try
             {
                 this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
-                if (bomType== BOMType.MoldList && billType == MainMenuConstants.AssembleStockInBill)
+                StockInBillHd hd = stockInBillHdBindingSource.DataSource as StockInBillHd;
+                if (bomType== BOMType.MoldList && billType == MainMenuEnum.AssembleStockInBill)
                 {
-                    List<VStockInBillDtlByBOM> boms = BLLFty.Create<StockInBillBLL>().GetVStockInBillDtlByBOM2(hd.ID, (int)BOMType.Assemble).FindAll(o=>o.货品大类==(int)GoodsBigType.Mold).OrderBy(o => o.货号).ToList();
+                    Predicate<VStockInBillDtlByBOM> predicate = o => o.HdID.Equals(headID) && o.Type.Equals((int)BOMType.Assemble) && o.货品大类 == (int)GoodsBigTypeEnum.Mold;
+                    List<VStockInBillDtlByBOM> boms = baseFactory.GetModelList<VStockInBillDtlByBOM>().FindAll(predicate).OrderBy(o => o.货号).ToList();
                     if (boms.Count > 0)
                     {
                         System.Windows.Forms.DialogResult result = XtraMessageBox.Show("确定要生成模具布产单吗?", "操作提示",
@@ -1523,7 +1502,7 @@ namespace USL
                             //单表头数据
                             OrderHd fsmHd = new OrderHd();
                             fsmHd.ID = Guid.NewGuid();
-                            fsmHd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.Order, true).MaxBillNo;
+                            fsmHd.BillNo = MainForm.GetMaxBillNo(MainMenuEnum.Order, true).MaxBillNo;
                             fsmHd.WarehouseID = hd.WarehouseID;
                             fsmHd.WarehouseType = hd.WarehouseType;
                             fsmHd.CompanyID = hd.CompanyID;
@@ -1562,14 +1541,14 @@ namespace USL
                                 fsmDtl.SerialNo = i++;
                                 fsmDtlList.Add(fsmDtl);
                             }
-                            BLLFty.Create<OrderBLL>().Insert(fsmHd, fsmDtlList);
-                            //MainForm.BillSaveRefresh(MainMenuConstants.FSMOrder);
-                            clientFactory.DataPageRefresh<VFSMOrder>();
+                            orderFactory.SaveBill(fsmHd, fsmDtlList);
+                            //MainForm.BillSaveRefresh(MainMenuEnum.FSMOrder);
+                            baseFactory.DataPageRefresh<VFSMOrder>();
                             //XtraMessageBox.Show("领料出库单已成功生成。", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             //定位
-                            MainForm.SetSelected(pageGroupCore, MainForm.mainMenuList[MainMenuConstants.FSMOrder]);
-                            OrderEditPage page = MainForm.itemDetailPageList[MainMenuConstants.FSMOrder].itemDetail as OrderEditPage;
+                            MainForm.SetSelected(pageGroupCore, MainForm.mainMenuList[MainMenuEnum.FSMOrder]);
+                            OrderEditPage page = MainForm.itemDetailPageList[MainMenuEnum.FSMOrder].itemDetail as OrderEditPage;
                             page.BindData(fsmHd.ID);
                         }
                     }
@@ -1583,9 +1562,11 @@ namespace USL
                     if (hd != null)
                     {
                         XtraAssembleMRPReport xr = new XtraAssembleMRPReport();
-                        List<VMaterialStockInBill> inBill = BLLFty.Create<StockInBillBLL>().GetMaterialStockInBill(hd.ID);
-                        List<VStockInBillDtlByBOM> boms = BLLFty.Create<StockInBillBLL>().GetVStockInBillDtlByBOM2(hd.ID, (int)BOMType.Assemble).OrderBy(o => o.货号).ToList();
-                        List<VStockInBillDtlByColor> color = BLLFty.Create<StockInBillBLL>().GetVStockInBillDtlByColor(hd.ID, (int)BOMType.Assemble).OrderBy(o => o.Color).ToList();
+                        List<VMaterialStockInBill> inBill = baseFactory.GetModelList<VMaterialStockInBill>().FindAll(o => o.HdID.Equals(hd.ID));
+                        Predicate<VStockInBillDtlByBOM> predicate = o => o.HdID.Equals(hd.ID) && o.Type == (int)BOMType.Assemble;
+                        List<VStockInBillDtlByBOM> boms =baseFactory.GetModelList<VStockInBillDtlByBOM>().FindAll(predicate).OrderBy(o => o.货号).ToList();
+                        Predicate<VStockInBillDtlByColor> match = o => o.HdID.Equals(hd.ID) && o.Type == (int)BOMType.Assemble;
+                        List<VStockInBillDtlByColor> color = baseFactory.GetModelList<VStockInBillDtlByColor>().FindAll(match);
                         xr.SetReportDataSource(inBill, boms, color);
                         xr.CreateDocument(true);
                         xr.paramCompany.Value = MainForm.Company;
@@ -1620,9 +1601,11 @@ namespace USL
             try
             {
                 this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
-                if (billType == MainMenuConstants.AssembleStockInBill)
+                if (billType == MainMenuEnum.AssembleStockInBill)
                 {
-                    List<VStockInBillDtlByBOM> boms = BLLFty.Create<StockInBillBLL>().GetVStockInBillDtlByBOM2(hd.ID, (int)BOMType.Assemble).OrderBy(o => o.货号).ToList();
+                    StockInBillHd hd = stockInBillHdBindingSource.DataSource as StockInBillHd;
+                    Predicate<VStockInBillDtlByBOM> predicate = o => o.HdID.Equals(hd.ID) && o.Type == (int)BOMType.Assemble;
+                    List<VStockInBillDtlByBOM> boms = baseFactory.GetModelList<VStockInBillDtlByBOM>().FindAll(predicate).OrderBy(o => o.货号).ToList();
                     if (boms.Count > 0)
                     {
                         System.Windows.Forms.DialogResult result = XtraMessageBox.Show("确定要生成领料出库单吗?", "操作提示",
@@ -1632,7 +1615,7 @@ namespace USL
                             //生成领料出库单表头数据
                             StockOutBillHd outHd = new StockOutBillHd();
                             outHd.ID = Guid.NewGuid();
-                            outHd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.StockOutBillType, true).MaxBillNo;
+                            outHd.BillNo = MainForm.GetMaxBillNo(MainMenuEnum.StockOutBillType, true).MaxBillNo;
                             outHd.WarehouseID = hd.WarehouseID;
                             outHd.WarehouseType = hd.WarehouseType;
                             outHd.OrderID = hd.ID;
@@ -1671,14 +1654,14 @@ namespace USL
                                 outDtl.SerialNo = i++;
                                 outDtlList.Add(outDtl);
                             }
-                            BLLFty.Create<StockOutBillBLL>().Insert(outHd, outDtlList);
-                            //MainForm.BillSaveRefresh(MainMenuConstants.GetMaterialBillQuery);
-                            clientFactory.DataPageRefresh<VMaterialStockOutBill>();
+                            stockOutBillFactory.SaveBill(outHd, outDtlList);
+                            //MainForm.BillSaveRefresh(MainMenuEnum.GetMaterialBillQuery);
+                            baseFactory.DataPageRefresh<VMaterialStockOutBill>();
                             //XtraMessageBox.Show("领料出库单已成功生成。", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             //定位
-                            MainForm.SetSelected(pageGroupCore, MainForm.mainMenuList[MainMenuConstants.GetMaterialBill]);
-                            StockOutBillPage page = MainForm.itemDetailPageList[MainMenuConstants.GetMaterialBill].itemDetail as StockOutBillPage;
+                            MainForm.SetSelected(pageGroupCore, MainForm.mainMenuList[MainMenuEnum.GetMaterialBill]);
+                            StockOutBillPage page = MainForm.itemDetailPageList[MainMenuEnum.GetMaterialBill].itemDetail as StockOutBillPage;
                             page.BindData(outHd.ID);
                         }
                     }

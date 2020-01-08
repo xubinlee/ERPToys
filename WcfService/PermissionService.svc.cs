@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using Common;
+using DAL;
 using EDMX;
 using Factory;
 using IWcfServiceInterface;
@@ -12,14 +13,14 @@ using System.Text;
 
 namespace WcfService
 {
-    public class PermissionService : IPermissionService
+    public class PermissionService : ServiceBase, IPermissionService
     {
         public void DeleteAndAdd(Guid userID, List<Permission> insertList)
         {
             using (ERPToysContext db = EDMXFty.Dc)
             {
                 Expression<Func<Permission, bool>> whereExpression = o=>o.UserID.Equals(userID);
-                DALFty.Create<BaseDAL>().DeleteAndAdd(db, whereExpression, insertList);
+                DALFty.Create<BaseDAL>().DeleteAndAdd<Permission>(db, whereExpression, insertList);
             }
         }
     }

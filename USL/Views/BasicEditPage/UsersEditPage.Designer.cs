@@ -29,7 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UsersEditPage));
             this.layoutControl = new DevExpress.XtraLayout.LayoutControl();
             this.txtDormNo = new DevExpress.XtraEditors.TextEdit();
@@ -154,7 +158,7 @@
             // 
             // usersInfoBindingSource
             // 
-            this.usersInfoBindingSource.DataSource = typeof(DBML.UsersInfo);
+            this.usersInfoBindingSource.DataSource = typeof(EDMX.UsersInfo);
             // 
             // lueType
             // 
@@ -165,20 +169,16 @@
             this.lueType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.lueType.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "", 20, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near)});
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "", 20, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default)});
             this.lueType.Properties.DataSource = this.wageTypeBindingSource;
             this.lueType.Properties.DisplayMember = "Name";
             this.lueType.Properties.NullText = "";
             this.lueType.Properties.PopupSizeable = false;
             this.lueType.Properties.ShowHeader = false;
-            this.lueType.Properties.ValueMember = "No";
+            this.lueType.Properties.ValueMember = "Index";
             this.lueType.Size = new System.Drawing.Size(111, 20);
             this.lueType.StyleController = this.layoutControl;
             this.lueType.TabIndex = 10;
-            // 
-            // wageTypeBindingSource
-            // 
-            this.wageTypeBindingSource.DataSource = typeof(DBML.TypesList);
             // 
             // txtTimeWage
             // 
@@ -233,20 +233,16 @@
             this.lueAttPrivilege.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.lueAttPrivilege.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "", 20, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near)});
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "", 20, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default)});
             this.lueAttPrivilege.Properties.DataSource = this.typesListBindingSource;
             this.lueAttPrivilege.Properties.DisplayMember = "Name";
             this.lueAttPrivilege.Properties.NullText = "";
             this.lueAttPrivilege.Properties.PopupSizeable = false;
             this.lueAttPrivilege.Properties.ShowHeader = false;
-            this.lueAttPrivilege.Properties.ValueMember = "No";
+            this.lueAttPrivilege.Properties.ValueMember = "Index";
             this.lueAttPrivilege.Size = new System.Drawing.Size(53, 20);
             this.lueAttPrivilege.StyleController = this.layoutControl;
             this.lueAttPrivilege.TabIndex = 10;
-            // 
-            // typesListBindingSource
-            // 
-            this.typesListBindingSource.DataSource = typeof(DBML.TypesList);
             // 
             // txtAttCardnumber
             // 
@@ -267,7 +263,6 @@
             this.meRemark.Size = new System.Drawing.Size(531, 238);
             this.meRemark.StyleController = this.layoutControl;
             this.meRemark.TabIndex = 20;
-            this.meRemark.UseOptimizedRendering = true;
             // 
             // pePhoto
             // 
@@ -297,8 +292,9 @@
             this.txtTel.EnterMoveNextControl = true;
             this.txtTel.Location = new System.Drawing.Point(97, 132);
             this.txtTel.Name = "txtTel";
+            editorButtonImageOptions1.Image = global::USL.Properties.Resources.HomePhone;
             this.txtTel.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::USL.Properties.Resources.HomePhone, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.txtTel.Properties.Mask.EditMask = "(\\(\\d\\d\\d\\))?\\d{8,11}";
             this.txtTel.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
             this.txtTel.Size = new System.Drawing.Size(531, 22);
@@ -354,7 +350,7 @@
             this.txtDept.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.txtDept.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "名称", 41, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near)});
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "名称", 41, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default)});
             this.txtDept.Properties.DataSource = this.departmentBindingSource;
             this.txtDept.Properties.DisplayMember = "Name";
             this.txtDept.Properties.NullText = "";
@@ -366,7 +362,7 @@
             // 
             // departmentBindingSource
             // 
-            this.departmentBindingSource.DataSource = typeof(DBML.Department);
+            this.departmentBindingSource.DataSource = typeof(EDMX.Department);
             // 
             // layoutControlGroup1
             // 
@@ -391,10 +387,8 @@
             this.lciTimeWage,
             this.lciWageType,
             this.lciDormNo});
-            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup1.Name = "layoutControlGroup1";
             this.layoutControlGroup1.Size = new System.Drawing.Size(640, 480);
-            this.layoutControlGroup1.Text = "layoutControlGroup1";
             this.layoutControlGroup1.TextVisible = false;
             // 
             // lciTel
@@ -434,9 +428,7 @@
             this.layoutControlItem16.Location = new System.Drawing.Point(520, 0);
             this.layoutControlItem16.Name = "layoutControlItem16";
             this.layoutControlItem16.Size = new System.Drawing.Size(100, 120);
-            this.layoutControlItem16.Text = "layoutControlItem16";
             this.layoutControlItem16.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem16.TextToControlDistance = 0;
             this.layoutControlItem16.TextVisible = false;
             // 
             // lciPost
@@ -453,8 +445,8 @@
             // 
             this.lciName.Control = this.txtName;
             this.lciName.CustomizationFormText = "姓名";
-            this.lciName.Image = ((System.Drawing.Image)(resources.GetObject("lciName.Image")));
-            this.lciName.ImageAlignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciName.ImageOptions.Alignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciName.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("lciName.ImageOptions.Image")));
             this.lciName.Location = new System.Drawing.Point(0, 0);
             this.lciName.Name = "lciName";
             this.lciName.Size = new System.Drawing.Size(520, 24);
@@ -465,8 +457,8 @@
             // 
             this.lciCode.Control = this.txtCode;
             this.lciCode.CustomizationFormText = "账号";
-            this.lciCode.Image = ((System.Drawing.Image)(resources.GetObject("lciCode.Image")));
-            this.lciCode.ImageAlignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciCode.ImageOptions.Alignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.lciCode.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("lciCode.ImageOptions.Image")));
             this.lciCode.Location = new System.Drawing.Point(0, 24);
             this.lciCode.Name = "lciCode";
             this.lciCode.Size = new System.Drawing.Size(520, 24);
@@ -522,7 +514,6 @@
             this.lciAttEnabled.Size = new System.Drawing.Size(278, 24);
             this.lciAttEnabled.Text = "启用考勤";
             this.lciAttEnabled.TextSize = new System.Drawing.Size(0, 0);
-            this.lciAttEnabled.TextToControlDistance = 0;
             this.lciAttEnabled.TextVisible = false;
             // 
             // lciWages

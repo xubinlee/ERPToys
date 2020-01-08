@@ -1,0 +1,19 @@
+﻿一、EDXM添加ADO.NET实体模型采用来自数据库的EF设计器（DATABASE First）模式
+
+二、为edmx添加“代码生成项”也就是“EF6.x DBContext生成器”
+步骤：
+1.在vs中打开edmx
+2.随便找个空白的地方右键，然后选择“添加代码生成项”
+3.然后在随后出现的窗口中选择“EF6.x DBContext生成器”，确定
+4.验证：在解决方案资源管理器中，edmx文件下方就会出现你刚刚添加的“代码生成内容”，一般叫做Model.Context.tt 和Model.tt（其实这两个东西，就是T4模板；打开它，然后按“ctrl+s”的时候，它就会自动执行，并按照edmx文件中的设计，生成相关的Container 、DBSet、entity）
+
+三、特别注意：
+懒加载主从类，需要将从类里主类的属性序列化注释掉，不然会报循环依赖异常。举例：
+
+[DataContract]
+[KnownType(typeof(StockOutBillHd))]
+public partial class StockOutBillDtl
+{
+    //[DataMember]
+    public virtual StockOutBillHd StockOutBillHd { get; set; }
+}

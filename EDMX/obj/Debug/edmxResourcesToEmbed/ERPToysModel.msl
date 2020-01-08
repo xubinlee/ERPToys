@@ -39,6 +39,33 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="AnnualSalesSummaryByCustomerReport">
+      <EntityTypeMapping TypeName="ERPToysModel.AnnualSalesSummaryByCustomerReport">
+        <MappingFragment StoreEntitySet="AnnualSalesSummaryByCustomerReport">
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="年月" ColumnName="年月" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="已收金额" ColumnName="已收金额" />
+          <ScalarProperty Name="未收金额" ColumnName="未收金额" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AnnualSalesSummaryByGoodsReport">
+      <EntityTypeMapping TypeName="ERPToysModel.AnnualSalesSummaryByGoodsReport">
+        <MappingFragment StoreEntitySet="AnnualSalesSummaryByGoodsReport">
+          <ScalarProperty Name="年月" ColumnName="年月" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Appointments">
       <EntityTypeMapping TypeName="ERPToysModel.Appointments">
         <MappingFragment StoreEntitySet="Appointments">
@@ -236,6 +263,41 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="EMSGoodsTrackingDailyReport">
+      <EntityTypeMapping TypeName="ERPToysModel.EMSGoodsTrackingDailyReport">
+        <MappingFragment StoreEntitySet="EMSGoodsTrackingDailyReport">
+          <ScalarProperty Name="委托厂商" ColumnName="委托厂商" />
+          <ScalarProperty Name="日期" ColumnName="日期" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="应收货品数量" ColumnName="应收货品数量" />
+          <ScalarProperty Name="本日发料数量" ColumnName="本日发料数量" />
+          <ScalarProperty Name="本日交货数量" ColumnName="本日交货数量" />
+          <ScalarProperty Name="已用物料数量" ColumnName="已用物料数量" />
+          <ScalarProperty Name="本日退料数量" ColumnName="本日退料数量" />
+          <ScalarProperty Name="未收货品数量" ColumnName="未收货品数量" />
+          <ScalarProperty Name="厂商存料数量" ColumnName="厂商存料数量" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FSMGoodsTrackingDailyReport">
+      <EntityTypeMapping TypeName="ERPToysModel.FSMGoodsTrackingDailyReport">
+        <MappingFragment StoreEntitySet="FSMGoodsTrackingDailyReport">
+          <ScalarProperty Name="委托厂商" ColumnName="委托厂商" />
+          <ScalarProperty Name="日期" ColumnName="日期" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="损耗率" ColumnName="损耗率" />
+          <ScalarProperty Name="应收成品数量" ColumnName="应收成品数量" />
+          <ScalarProperty Name="本日发料数量" ColumnName="本日发料数量" />
+          <ScalarProperty Name="本日交货数量" ColumnName="本日交货数量" />
+          <ScalarProperty Name="已用物料数量" ColumnName="已用物料数量" />
+          <ScalarProperty Name="本日退料数量" ColumnName="本日退料数量" />
+          <ScalarProperty Name="未收成品数量" ColumnName="未收成品数量" />
+          <ScalarProperty Name="厂商存料数量" ColumnName="厂商存料数量" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Goods">
       <EntityTypeMapping TypeName="ERPToysModel.Goods">
         <MappingFragment StoreEntitySet="Goods">
@@ -280,6 +342,22 @@
           <ScalarProperty Name="Source" ColumnName="Source" />
           <ScalarProperty Name="Subsidy" ColumnName="Subsidy" />
           <ScalarProperty Name="PlanYield" ColumnName="PlanYield" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GoodsSalesSummaryByCustomerReport">
+      <EntityTypeMapping TypeName="ERPToysModel.GoodsSalesSummaryByCustomerReport">
+        <MappingFragment StoreEntitySet="GoodsSalesSummaryByCustomerReport">
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="重量" ColumnName="重量" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -502,6 +580,60 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SalesSummaryByCustomerReport">
+      <EntityTypeMapping TypeName="ERPToysModel.SalesSummaryByCustomerReport">
+        <MappingFragment StoreEntitySet="SalesSummaryByCustomerReport">
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="重量" ColumnName="重量" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="已收金额" ColumnName="已收金额" />
+          <ScalarProperty Name="未收金额" ColumnName="未收金额" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalesSummaryByGoodsPriceReport">
+      <EntityTypeMapping TypeName="ERPToysModel.SalesSummaryByGoodsPriceReport">
+        <MappingFragment StoreEntitySet="SalesSummaryByGoodsPriceReport">
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="重量" ColumnName="重量" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalesSummaryByGoodsReport">
+      <EntityTypeMapping TypeName="ERPToysModel.SalesSummaryByGoodsReport">
+        <MappingFragment StoreEntitySet="SalesSummaryByGoodsReport">
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="重量" ColumnName="重量" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalesSummaryMonthlyReport">
+      <EntityTypeMapping TypeName="ERPToysModel.SalesSummaryMonthlyReport">
+        <MappingFragment StoreEntitySet="SalesSummaryMonthlyReport">
+          <ScalarProperty Name="年月" ColumnName="年月" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="已收金额" ColumnName="已收金额" />
+          <ScalarProperty Name="未收金额" ColumnName="未收金额" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="SchClass">
       <EntityTypeMapping TypeName="ERPToysModel.SchClass">
         <MappingFragment StoreEntitySet="SchClass">
@@ -541,6 +673,137 @@
           <ScalarProperty Name="DeptID" ColumnName="DeptID" />
           <ScalarProperty Name="SchClassID" ColumnName="SchClassID" />
           <ScalarProperty Name="SchSerialNo" ColumnName="SchSerialNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StatementOfAccountBasketToSupplierReport">
+      <EntityTypeMapping TypeName="ERPToysModel.StatementOfAccountBasketToSupplierReport">
+        <MappingFragment StoreEntitySet="StatementOfAccountBasketToSupplierReport">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="筐类" ColumnName="筐类" />
+          <ScalarProperty Name="上期欠筐" ColumnName="上期欠筐" />
+          <ScalarProperty Name="本期去筐" ColumnName="本期去筐" />
+          <ScalarProperty Name="本期来筐" ColumnName="本期来筐" />
+          <ScalarProperty Name="共欠" ColumnName="共欠" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StatementOfAccountMaterialToSupplierReport">
+      <EntityTypeMapping TypeName="ERPToysModel.StatementOfAccountMaterialToSupplierReport">
+        <MappingFragment StoreEntitySet="StatementOfAccountMaterialToSupplierReport">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="料名" ColumnName="料名" />
+          <ScalarProperty Name="上期存料" ColumnName="上期存料" />
+          <ScalarProperty Name="本期去料" ColumnName="本期去料" />
+          <ScalarProperty Name="存料合计" ColumnName="存料合计" />
+          <ScalarProperty Name="生产用料" ColumnName="生产用料" />
+          <ScalarProperty Name="损耗" ColumnName="损耗" />
+          <ScalarProperty Name="用料合计" ColumnName="用料合计" />
+          <ScalarProperty Name="结存" ColumnName="结存" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StatementOfAccountSummaryToSupplierReport">
+      <EntityTypeMapping TypeName="ERPToysModel.StatementOfAccountSummaryToSupplierReport">
+        <MappingFragment StoreEntitySet="StatementOfAccountSummaryToSupplierReport">
+          <ScalarProperty Name="厂家代码" ColumnName="厂家代码" />
+          <ScalarProperty Name="厂家名称" ColumnName="厂家名称" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="用料" ColumnName="用料" />
+          <ScalarProperty Name="数量" ColumnName="数量" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="模重" ColumnName="模重" />
+          <ScalarProperty Name="模数" ColumnName="模数" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StatementOfAccountToBulkSalesReport">
+      <EntityTypeMapping TypeName="ERPToysModel.StatementOfAccountToBulkSalesReport">
+        <MappingFragment StoreEntitySet="StatementOfAccountToBulkSalesReport">
+          <ScalarProperty Name="收款单号" ColumnName="收款单号" />
+          <ScalarProperty Name="收款日期" ColumnName="收款日期" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="结算类型" ColumnName="结算类型" />
+          <ScalarProperty Name="出库日期" ColumnName="出库日期" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="数量" ColumnName="数量" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="个数" ColumnName="个数" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="应收金额" ColumnName="应收金额" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="实收金额" ColumnName="实收金额" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StatementOfAccountToCustomerReport">
+      <EntityTypeMapping TypeName="ERPToysModel.StatementOfAccountToCustomerReport">
+        <MappingFragment StoreEntitySet="StatementOfAccountToCustomerReport">
+          <ScalarProperty Name="收款单号" ColumnName="收款单号" />
+          <ScalarProperty Name="收款日期" ColumnName="收款日期" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="客户代码" ColumnName="客户代码" />
+          <ScalarProperty Name="客户名称" ColumnName="客户名称" />
+          <ScalarProperty Name="客户类型" ColumnName="客户类型" />
+          <ScalarProperty Name="结算类型" ColumnName="结算类型" />
+          <ScalarProperty Name="出库日期" ColumnName="出库日期" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="正唛" ColumnName="正唛" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="外箱规格" ColumnName="外箱规格" />
+          <ScalarProperty Name="箱数" ColumnName="箱数" />
+          <ScalarProperty Name="装箱数" ColumnName="装箱数" />
+          <ScalarProperty Name="内盒" ColumnName="内盒" />
+          <ScalarProperty Name="总数量" ColumnName="总数量" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="应收金额" ColumnName="应收金额" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="实收金额" ColumnName="实收金额" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StatementOfAccountToSupplierReport">
+      <EntityTypeMapping TypeName="ERPToysModel.StatementOfAccountToSupplierReport">
+        <MappingFragment StoreEntitySet="StatementOfAccountToSupplierReport">
+          <ScalarProperty Name="付款单号" ColumnName="付款单号" />
+          <ScalarProperty Name="付款日期" ColumnName="付款日期" />
+          <ScalarProperty Name="状态" ColumnName="状态" />
+          <ScalarProperty Name="供应商代码" ColumnName="供应商代码" />
+          <ScalarProperty Name="供应商名称" ColumnName="供应商名称" />
+          <ScalarProperty Name="结算类型" ColumnName="结算类型" />
+          <ScalarProperty Name="结算日期" ColumnName="结算日期" />
+          <ScalarProperty Name="货号" ColumnName="货号" />
+          <ScalarProperty Name="品名" ColumnName="品名" />
+          <ScalarProperty Name="数量" ColumnName="数量" />
+          <ScalarProperty Name="净重" ColumnName="净重" />
+          <ScalarProperty Name="模数" ColumnName="模数" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="单价" ColumnName="单价" />
+          <ScalarProperty Name="折扣" ColumnName="折扣" />
+          <ScalarProperty Name="额外费用" ColumnName="额外费用" />
+          <ScalarProperty Name="金额" ColumnName="金额" />
+          <ScalarProperty Name="规格" ColumnName="规格" />
+          <ScalarProperty Name="货品类型代码" ColumnName="货品类型代码" />
+          <ScalarProperty Name="货品类型名称" ColumnName="货品类型名称" />
+          <ScalarProperty Name="备注" ColumnName="备注" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -759,6 +1022,31 @@
           <ScalarProperty Name="SchClassWage" ColumnName="SchClassWage" />
           <ScalarProperty Name="TimeWage" ColumnName="TimeWage" />
           <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USPAttWageBillDtl">
+      <EntityTypeMapping TypeName="ERPToysModel.USPAttWageBillDtl">
+        <MappingFragment StoreEntitySet="USPAttWageBillDtl">
+          <ScalarProperty Name="CheckItem" ColumnName="CheckItem" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+          <ScalarProperty Name="Classes" ColumnName="Classes" />
+          <ScalarProperty Name="Late" ColumnName="Late" />
+          <ScalarProperty Name="Early" ColumnName="Early" />
+          <ScalarProperty Name="LateCount" ColumnName="LateCount" />
+          <ScalarProperty Name="EarlyCount" ColumnName="EarlyCount" />
+          <ScalarProperty Name="Absent" ColumnName="Absent" />
+          <ScalarProperty Name="Forget" ColumnName="Forget" />
+          <ScalarProperty Name="Leave" ColumnName="Leave" />
+          <ScalarProperty Name="Wages" ColumnName="Wages" />
+          <ScalarProperty Name="Welfare" ColumnName="Welfare" />
+          <ScalarProperty Name="Deduction" ColumnName="Deduction" />
+          <ScalarProperty Name="SocialSecurity" ColumnName="SocialSecurity" />
+          <ScalarProperty Name="IndividualIncomeTax" ColumnName="IndividualIncomeTax" />
+          <ScalarProperty Name="AMT" ColumnName="AMT" />
+          <ScalarProperty Name="WageStatus" ColumnName="WageStatus" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -12,3 +12,4 @@ D:\Project\ERPToys\Utility\obj\Debug\Utility.pdb
 D:\Project\ERPToys\Utility\obj\Debug\Utility.csprojAssemblyReference.cache
 D:\Project\ERPToys\Utility\obj\Debug\Utility.csproj.CopyComplete
 D:\ERPToys\NLog.config
+D:\ERPToys\Utility.dll.config

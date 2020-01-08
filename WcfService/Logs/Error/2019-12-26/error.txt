@@ -1,0 +1,55 @@
+2019-12-26 17:43:38.9307 | Error | 
+InnerException：
+Exception：未将对象引用设置到对象的实例。
+StackTrace：   在 DAL.BaseDAL.ExecuteQuery(DbContext db, Type type, String filter) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 92
+   在 Castle.Proxies.BaseDALProxy.ExecuteQuery_callback_2(DbContext db, Type type, String filter)
+   在 Castle.Proxies.Invocations.BaseDAL_ExecuteQuery_2.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 34
+------------2019-12-26 17:43:38------------
+ 
+2019-12-26 17:43:48.8564 | Error | 
+InnerException：
+Exception：未将对象引用设置到对象的实例。
+StackTrace：   在 DAL.BaseDAL.ExecuteQuery(DbContext db, Type type, String filter) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 92
+   在 Castle.Proxies.BaseDALProxy.ExecuteQuery_callback_2(DbContext db, Type type, String filter)
+   在 Castle.Proxies.Invocations.BaseDAL_ExecuteQuery_2.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 34
+------------2019-12-26 17:43:48------------
+ 
+2019-12-26 17:44:39.3122 | Error | 
+InnerException：
+Exception：未将对象引用设置到对象的实例。
+StackTrace：   在 DAL.BaseDAL.ExecuteQuery(DbContext db, Type type, String filter) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 92
+   在 Castle.Proxies.BaseDALProxy.ExecuteQuery_callback_2(DbContext db, Type type, String filter)
+   在 Castle.Proxies.Invocations.BaseDAL_ExecuteQuery_2.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 34
+------------2019-12-26 17:44:39------------
+ 
+2019-12-26 17:46:57.8169 | Error | 
+InnerException：
+Exception：未将对象引用设置到对象的实例。
+StackTrace：   在 DAL.BaseDAL.ExecuteQuery(DbContext db, Type type, String filter) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 92
+   在 Castle.Proxies.BaseDALProxy.ExecuteQuery_callback_2(DbContext db, Type type, String filter)
+   在 Castle.Proxies.Invocations.BaseDAL_ExecuteQuery_2.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 34
+------------2019-12-26 17:46:57------------
+ 
+2019-12-26 17:59:38.7248 | Error | 
+InnerException：
+Exception：未将对象引用设置到对象的实例。
+StackTrace：   在 DAL.BaseDAL.ExecuteQuery(DbContext db, Type type, String filter) 位置 D:\Project\ERPToys\DAL\BaseDAL.cs:行号 92
+   在 Castle.Proxies.BaseDALProxy.ExecuteQuery_callback_2(DbContext db, Type type, String filter)
+   在 Castle.Proxies.Invocations.BaseDAL_ExecuteQuery_2.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.DynamicProxy.StandardInterceptor.PerformProceed(IInvocation invocation)
+   在 Utility.Interceptor.LoggerInterceptor.PerformProceed(IInvocation invocation) 位置 D:\Project\ERPToys\Utility\Interceptor\LoggerInterceptor.cs:行号 34
+------------2019-12-26 17:59:38------------
+ 

@@ -244,7 +244,7 @@
             // 
             // wageBillHdBindingSource
             // 
-            this.wageBillHdBindingSource.DataSource = typeof(DBML.WageBillHd);
+            this.wageBillHdBindingSource.DataSource = typeof(EDMX.WageBillHd);
             // 
             // btnNext
             // 
@@ -286,7 +286,7 @@
             // 
             // vWageBillDtlBindingSource
             // 
-            this.vWageBillDtlBindingSource.DataSource = typeof(DBML.VWageBillDtl);
+            this.vWageBillDtlBindingSource.DataSource = typeof(EDMX.VWageBillDtl);
             // 
             // gridView
             // 
@@ -469,7 +469,7 @@
             // 
             // vUsersInfoBindingSource
             // 
-            this.vUsersInfoBindingSource.DataSource = typeof(DBML.VUsersInfo);
+            this.vUsersInfoBindingSource.DataSource = typeof(EDMX.VUsersInfo);
             // 
             // lueWarehouse
             // 
@@ -1056,7 +1056,7 @@
             // 
             // vAppointmentsBindingSource
             // 
-            this.vAppointmentsBindingSource.DataSource = typeof(DBML.VAppointments);
+            this.vAppointmentsBindingSource.DataSource = typeof(EDMX.VAppointments);
             // 
             // gvAPT
             // 

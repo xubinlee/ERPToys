@@ -13,7 +13,8 @@ namespace EDMX
     using System.Runtime.Serialization;
     using System.Collections.Generic;
     
-    [DataContract]
+    [DataContract(IsReference = true)]
+    [KnownType(typeof(ReceiptBillHd))]
     
     public partial class ReceiptBillDtl
     {
@@ -31,5 +32,8 @@ namespace EDMX
         public decimal UnReceiptedAMT { get; set; }
     	[DataMember]
         public decimal LastReceiptedAMT { get; set; }
+    
+    	//[DataMember]
+        public virtual ReceiptBillHd ReceiptBillHd { get; set; }
     }
 }

@@ -13,10 +13,16 @@ namespace EDMX
     using System.Runtime.Serialization;
     using System.Collections.Generic;
     
-    [DataContract]
+    [DataContract(IsReference = true)]
+    [KnownType(typeof(ReceiptBillDtl))]
     
     public partial class ReceiptBillHd
     {
+        public ReceiptBillHd()
+        {
+            this.ReceiptBillDtl = new HashSet<ReceiptBillDtl>();
+        }
+    
     	[DataMember]
         public System.Guid ID { get; set; }
     	[DataMember]
@@ -53,5 +59,8 @@ namespace EDMX
         public Nullable<decimal> UnReceiptedAMT { get; set; }
     	[DataMember]
         public byte[] Pic { get; set; }
+    
+    	[DataMember]
+        public virtual ICollection<ReceiptBillDtl> ReceiptBillDtl { get; set; }
     }
 }

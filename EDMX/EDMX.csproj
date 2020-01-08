@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EDMX</RootNamespace>
     <AssemblyName>EDMX</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -63,6 +64,12 @@
     <Compile Include="Alert.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="AnnualSalesSummaryByCustomerReport.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AnnualSalesSummaryByGoodsReport.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Appointments.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
@@ -93,7 +100,9 @@
     <Compile Include="Department.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Extension\EntityType.cs" />
+    <Compile Include="EMSGoodsTrackingDailyReport.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ERPToysModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -109,7 +118,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ERPToysModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Extension\EntityType.cs" />
+    <Compile Include="Extension\Parameter.cs" />
+    <Compile Include="FSMGoodsTrackingDailyReport.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Goods.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GoodsSalesSummaryByCustomerReport.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GoodsType.cs">
@@ -133,7 +150,6 @@
     <Compile Include="Packaging.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Extension\Parameter.cs" />
     <Compile Include="PaymentBillDtl.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
@@ -144,6 +160,8 @@
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Extension\SerializedParam.cs" />
+    <Compile Include="Extension\SerializedSqlParam.cs" />
     <Compile Include="ReceiptBillDtl.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
@@ -153,15 +171,43 @@
     <Compile Include="Resources.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SalesSummaryByCustomerReport.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalesSummaryByGoodsPriceReport.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalesSummaryByGoodsReport.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalesSummaryMonthlyReport.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SchClass.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Extension\SerializedParam.cs" />
-    <Compile Include="Extension\SerializedSqlParam.cs" />
     <Compile Include="SLSalePrice.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
     <Compile Include="StaffSchClass.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StatementOfAccountBasketToSupplierReport.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StatementOfAccountMaterialToSupplierReport.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StatementOfAccountSummaryToSupplierReport.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StatementOfAccountToBulkSalesReport.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StatementOfAccountToCustomerReport.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StatementOfAccountToSupplierReport.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
     <Compile Include="StockInBillDtl.cs">
@@ -195,6 +241,9 @@
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UsersInfo.cs">
+      <DependentUpon>ERPToysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USPAttWageBillDtl.cs">
       <DependentUpon>ERPToysModel.tt</DependentUpon>
     </Compile>
     <Compile Include="VAccountBook.cs">
@@ -397,6 +446,19 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="edmx添加序列化特性.txt" />
+    <Content Include="ERPToysModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ERPToysModel.Context.cs</LastGenOutput>
+      <DependentUpon>ERPToysModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="ERPToysModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ERPToysModel.edmx</DependentUpon>
+      <LastGenOutput>ERPToysModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <EntityDeploy Include="ERPToysModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ERPToysModel.Designer.cs</LastGenOutput>
@@ -408,18 +470,6 @@
       <DependentUpon>ERPToysModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ERPToysModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ERPToysModel.Context.cs</LastGenOutput>
-      <DependentUpon>ERPToysModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="ERPToysModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ERPToysModel.edmx</DependentUpon>
-      <LastGenOutput>ERPToysModel.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

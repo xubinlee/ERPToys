@@ -13,7 +13,7 @@ namespace EDMX
     using System.Runtime.Serialization;
     using System.Collections.Generic;
     
-    [DataContract]
+    [DataContract(IsReference = true)]
     [KnownType(typeof(Goods))]
     
     public partial class GoodsType

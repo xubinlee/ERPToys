@@ -18,12 +18,13 @@ using CommonLibrary;
 using System.IO;
 using MainMenu = EDMX.MainMenu;
 using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class GoodsEditPage : DevExpress.XtraEditors.XtraUserControl, IDataEdit
     {
-        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         MainMenu mainMenu;
         Goods goods = null;
         //string filePath = Application.StartupPath+"\\PicFile\\";//"D:\\ERPToysPic\\";
@@ -66,7 +67,7 @@ namespace USL
             }
             BindData();
 
-            if (mainMenu.Name == MainMenuConstants.Goods)
+            if (mainMenu.Name == MainMenuEnum.Goods.ToString())
                 SetEditItem(DevExpress.XtraLayout.Utils.LayoutVisibility.Always);
             else
                 SetEditItem(DevExpress.XtraLayout.Utils.LayoutVisibility.Never);
@@ -85,7 +86,7 @@ namespace USL
             layoutControlItem12.Visibility = flag;
             layoutControlItem34.Visibility = flag;
             lciPurchasePrice.Visibility = flag;
-            if (mainMenu.Name == MainMenuConstants.Goods)
+            if (mainMenu.Name == MainMenuEnum.Goods.ToString())
                 lblNWeight.Text = "净重(KGS)";
             else
                 lblNWeight.Text = "净重(G)";
@@ -121,8 +122,8 @@ namespace USL
 
         public void BindData()
         {
-            goodsTypeBindingSource.DataSource = MainForm.dataSourceList[typeof(List<GoodsType>)];
-            packagingBindingSource.DataSource = MainForm.dataSourceList[typeof(List<Packaging>)];
+            goodsTypeBindingSource.DataSource = baseFactory.GetModelList<GoodsType>();
+            packagingBindingSource.DataSource = baseFactory.GetModelList<Packaging>();
         }
         public void Add()
         {
@@ -161,7 +162,7 @@ namespace USL
                         obj.Pic = ImageHelper.MakeBuff(ImageHelper.GetReducedImage((Image)pePic.EditValue, 24, 24));
                     }
                 }
-                if (mainMenu.Name == MainMenuConstants.Goods)
+                if (mainMenu.Name == MainMenuEnum.Goods.ToString())
                 {
                     obj.Type = 0;
                     if (string.IsNullOrEmpty(obj.SideMark))
@@ -181,7 +182,7 @@ namespace USL
                     obj.PackagingID = Guid.Empty;
                     obj.PCS = 1;
                 }
-                bool isExist = clientFactory.GetData<Goods>().Any(o => o.ID != obj.ID && o.Code.Equals(obj.Code));
+                bool isExist = baseFactory.GetModelList<Goods>().Any(o => o.ID != obj.ID && o.Code.Equals(obj.Code));
                 if (isExist)
                 {
                     XtraMessageBox.Show(string.Format("货号：{0}已经存在，不允许添加重复货号。", obj.Code), "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -203,11 +204,11 @@ namespace USL
                     goods = obj;
                     goods.ID = Guid.NewGuid();
                     goods.AddTime = DateTime.Now;
-                    clientFactory.Add<Goods>(goods);
+                    baseFactory.Add<Goods>(goods);
 
                 }
                 else
-                    clientFactory.Update<Goods>(goods);
+                    baseFactory.Update<Goods>(goods);
 
                 //CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 //保存成功后，显示原来清晰的图片

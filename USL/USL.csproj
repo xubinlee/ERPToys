@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -10,10 +10,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>USL</RootNamespace>
     <AssemblyName>USL</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,10 +49,6 @@
       <HintPath>..\..\..\ERPToys\CABDevExpress.ExtensionKit.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc" />
-    <Reference Include="DBML, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ERPToys\DBML.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.BonusSkins.v18.1">
       <Private>True</Private>
     </Reference>
@@ -157,10 +154,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ERPToys\Microsoft.Practices.ObjectBuilder.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ERPToys\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ERPToys\NLog.dll</HintPath>
@@ -196,7 +189,6 @@
     <Compile Include="ChartPage.Designer.cs">
       <DependentUpon>ChartPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="ClientFactory.cs" />
     <Compile Include="MonthlyChartPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -675,13 +667,13 @@
     <EmbeddedResource Include="Assets\MediumGray.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ClientFactory\ClientFactory.csproj">
+      <Project>{e4e7c12f-b82f-4e60-8a31-7ebec67abf50}</Project>
+      <Name>ClientFactory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonLibrary\CommonLibrary.csproj">
       <Project>{4220d821-1e36-453e-88f7-0c932372fcee}</Project>
       <Name>CommonLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{79951fcf-e737-4e62-aea7-efae14f3db96}</Project>
-      <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\CustomComponent\CustomComponent.csproj">
       <Project>{DF90DCBB-5E18-4918-BAE5-5551C1897DA2}</Project>

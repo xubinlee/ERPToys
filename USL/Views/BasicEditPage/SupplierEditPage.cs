@@ -9,27 +9,31 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using IBase;
-using DBML;
+using EDMX;
 using Factory;
 using BLL;
 using CommonLibrary;
 using Utility;
+using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class SupplierEditPage : DevExpress.XtraEditors.XtraUserControl, IDataEdit
     {
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         Supplier supplier = null;
-        List<TypesList> types;   //类型列表
+        //List<TypesList> types;   //类型列表
         public SupplierEditPage(Object obj)
         {
             InitializeComponent();
-            types = MainForm.dataSourceList[typeof(List<TypesList>)] as List<TypesList>;
+            //types = baseFactory.GetModelList<TypesList>();
             //单据类型
+            List<EnumHelper.ListItem<SupplierTypeEnum>> supplierType = EnumHelper.GetEnumValues<SupplierTypeEnum>(false);
             if (MainForm.ISnowSoftVersion == ISnowSoftVersion.Procurement || MainForm.ISnowSoftVersion == ISnowSoftVersion.PurchaseSellStock)
-                typesListBindingSource.DataSource = types.FindAll(o => o.Type == TypesListConstants.SupplierType && o.No == 0);
+                typesListBindingSource.DataSource = supplierType.FindAll(o => o.Index == (int)SupplierTypeEnum.Purchase);// types.FindAll(o => o.Type == TypesListConstants.SupplierType && o.No == 0);
             else
-                typesListBindingSource.DataSource = types.FindAll(o => o.Type == TypesListConstants.SupplierType);
+                typesListBindingSource.DataSource = supplierType;//types.FindAll(o => o.Type == TypesListConstants.SupplierType);
             if (obj == null)
             {
                 supplierBindingSource.DataSource = new Supplier();
@@ -59,7 +63,8 @@ namespace USL
                     supplier = obj;
                     supplier.ID = Guid.NewGuid();
                     supplier.AddTime = DateTime.Now;
-                    if (((List<Supplier>)MainForm.dataSourceList[typeof(List<Supplier>)]).Exists(o => o.Name == supplier.Name))
+                    bool exists =baseFactory.GetListByNoTracking<Supplier>().Any(o => o.ID != obj.ID && o.Name.Equals(supplier.Name));
+                    if (exists)
                     {
                         XtraMessageBox.Show("该供应商已经存在，不能重复添加。", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;

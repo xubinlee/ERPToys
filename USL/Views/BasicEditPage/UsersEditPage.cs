@@ -9,19 +9,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using IBase;
-using DBML;
+using EDMX;
 using Factory;
 using BLL;
 using Utility;
 using System.Data.Linq;
 using CommonLibrary;
+using Utility.Interceptor;
+using ClientFactory;
+using MainMenu = EDMX.MainMenu;
 
 namespace USL
 {
     public partial class UsersEditPage : DevExpress.XtraEditors.XtraUserControl, IDataEdit
     {
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         UsersInfo user = null;
-        List<TypesList> types;   //类型列表
+        //List<TypesList> types;   //类型列表
         public UsersEditPage(Object obj)
         {
             InitializeComponent();
@@ -42,9 +46,9 @@ namespace USL
                 lciSchClassWage.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
                 lciTimeWage.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
             }
-            types = MainForm.dataSourceList[typeof(List<TypesList>)] as List<TypesList>;
-            typesListBindingSource.DataSource = types.FindAll(o => o.Type == TypesListConstants.PrivilegeType);
-            wageTypeBindingSource.DataSource = types.FindAll(o => o.Type == TypesListConstants.WageType);
+            //types = baseFactory.GetModelList<TypesList>();
+            typesListBindingSource.DataSource = EnumHelper.GetEnumValues<PrivilegeTypeEnum>(false);// types.FindAll(o => o.Type == TypesListConstants.PrivilegeType);
+            wageTypeBindingSource.DataSource = EnumHelper.GetEnumValues<WageTypeEnum>(false);//types.FindAll(o => o.Type == TypesListConstants.WageType);
             if (obj == null)
             {
                 user = new UsersInfo();
@@ -60,7 +64,7 @@ namespace USL
 
         public void BindData()
         {
-            departmentBindingSource.DataSource = MainForm.dataSourceList[typeof(List<Department>)];
+            departmentBindingSource.DataSource = baseFactory.GetModelList<Department>();
         }
 
         public void Add()
@@ -78,12 +82,13 @@ namespace USL
                     obj.Photo = null;
                 else
                 {
-                    if (pePhoto.EditValue is Binary)
-                        obj.Photo = (Binary)pePhoto.EditValue;
+                    if (pePhoto.EditValue is byte[])
+                        obj.Photo = (byte[])pePhoto.EditValue;
                     else
                         obj.Photo = ImageHelper.MakeBuff((Image)pePhoto.EditValue);
                 }
-                if (BLLFty.Create<UsersInfoBLL>().IsExistAttCardnumber(obj))
+                bool isExist = baseFactory.GetModelList<UsersInfo>().Any(o => o.ID != obj.ID && o.AttCardnumber == obj.AttCardnumber && !string.IsNullOrEmpty(o.AttCardnumber) && o.IsDel == false);
+                if (isExist)
                 {
                     XtraMessageBox.Show(string.Format("考勤卡号：{0}已经存在，不允许添加重复考勤卡号。", obj.AttCardnumber), "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
@@ -98,9 +103,9 @@ namespace USL
                     //添加功能权限信息
                     List<Permission> pList = new List<Permission>();
                     List<ButtonPermission> btnList = new List<ButtonPermission>();
-                    List<DBML.MainMenu> menuList = MainForm.dataSourceList[typeof(List<DBML.MainMenu>)] as List<DBML.MainMenu>;
+                    List<MainMenu> menuList = baseFactory.GetModelList<MainMenu>();
                     int i=0;
-                    foreach (DBML.MainMenu menu in menuList)
+                    foreach (MainMenu menu in menuList)
                     {
                         Permission p = new Permission();
                         p.ID = ++i;

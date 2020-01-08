@@ -112,7 +112,7 @@
             // 
             // vUsersInfoBindingSource
             // 
-            this.vUsersInfoBindingSource.DataSource = typeof(DBML.VUsersInfo);
+            this.vUsersInfoBindingSource.DataSource = typeof(EDMX.VUsersInfo);
             // 
             // layoutView
             // 
@@ -404,7 +404,7 @@
             // 
             // buttonPermissionBindingSource
             // 
-            this.buttonPermissionBindingSource.DataSource = typeof(DBML.ButtonPermission);
+            this.buttonPermissionBindingSource.DataSource = typeof(EDMX.ButtonPermission);
             // 
             // winevButtonPermission
             // 

@@ -21,12 +21,13 @@ using DevExpress.XtraGrid.Columns;
 using CommonLibrary;
 using Utility.Interceptor;
 using MainMenu = EDMX.MainMenu;
+using ClientFactory;
 
 namespace USL
 {
     public partial class DataEditForm : DevExpress.XtraEditors.XtraForm
     {
-        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         Dictionary<MainMenu, Object> editPage;
         MainMenu mainMenu;
         PageGroup pageGroupCore;
@@ -46,7 +47,7 @@ namespace USL
             if (obj != null && obj is VSupplier)
             {
                 dpMoldAllot.Enabled = true;
-                vGoodsByMoldAllotBindingSource.DataSource = ((List<VGoodsByMoldAllot>)MainForm.dataSourceList[typeof(List<VGoodsByMoldAllot>)]).FindAll(o => o.SupplierID == ((VSupplier)obj).ID);
+                vGoodsByMoldAllotBindingSource.DataSource = baseFactory.GetModelList<VGoodsByMoldAllot>().FindAll(o => o.SupplierID == ((VSupplier)obj).ID);
                 gridView.BestFitColumns();
                 foreach (GridColumn col in gridView.Columns)
                 {
@@ -80,60 +81,60 @@ namespace USL
         IDataEdit CreateEditPage(Object obj)
         {
             IDataEdit de = null;
-            switch (mainMenu.Name)
+            switch (Enum.Parse(typeof(MainMenuEnum), mainMenu.Name))
             {
 
-                case MainMenuConstants.Department:
+                case MainMenuEnum.Department:
                     if (obj != null)
-                        obj = ((List<Department>)MainForm.dataSourceList[typeof(List<Department>)]).Find(o => o.ID == ((VDepartment)obj).ID);
+                        obj = baseFactory.GetModelList<Department>().Find(o => o.ID == ((VDepartment)obj).ID);
                     de = new DeptEditPage(obj);
                     ((DeptEditPage)de).Dock = DockStyle.Fill;
                     panelControl.Controls.Add((DeptEditPage)de);
                     break;
-                case MainMenuConstants.Company:
+                case MainMenuEnum.Company:
                     if (obj != null)
-                        obj = ((List<Company>)MainForm.dataSourceList[typeof(List<Company>)]).Find(o => o.ID == ((VCompany)obj).ID);
+                        obj = baseFactory.GetModelList<Company>().Find(o => o.ID == ((VCompany)obj).ID);
                     de = new CompanyEditPage(obj);
                     ((CompanyEditPage)de).Dock = DockStyle.Fill;
                     panelControl.Controls.Add((CompanyEditPage)de);
                     break;
-                case MainMenuConstants.Supplier:
+                case MainMenuEnum.Supplier:
                     if (obj != null)
-                        obj = ((List<Supplier>)MainForm.dataSourceList[typeof(List<Supplier>)]).Find(o => o.ID == ((VSupplier)obj).ID);
+                        obj = baseFactory.GetModelList<Supplier>().Find(o => o.ID == ((VSupplier)obj).ID);
                     de = new SupplierEditPage(obj);
                     ((SupplierEditPage)de).Dock = DockStyle.Fill;
                     panelControl.Controls.Add((SupplierEditPage)de);
                     break;
-                case MainMenuConstants.Staff:
+                case MainMenuEnum.UsersInfo:
                     if (obj != null)
-                        obj = ((List<UsersInfo>)MainForm.dataSourceList[typeof(List<UsersInfo>)]).Find(o => o.ID == ((VUsersInfo)obj).ID);
+                        obj = baseFactory.GetModelList<UsersInfo>().Find(o => o.ID == ((VUsersInfo)obj).ID);
                     de = new UsersEditPage(obj);
                     ((UsersEditPage)de).Dock = DockStyle.Fill;
                     panelControl.Controls.Add((UsersEditPage)de);
                     break;
-                case MainMenuConstants.Goods:
-                case MainMenuConstants.Material:
+                case MainMenuEnum.Goods:
+                case MainMenuEnum.Material:
                     if (obj != null)
                     {
                         if (obj is VGoods)
-                            obj = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).Find(o => o.ID == ((VGoods)obj).ID);
+                            obj = baseFactory.GetModelList<Goods>().Find(o => o.ID == ((VGoods)obj).ID);
                         else
-                            obj = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).Find(o => o.ID == ((VMaterial)obj).ID);
+                            obj = baseFactory.GetModelList<Goods>().Find(o => o.ID == ((VMaterial)obj).ID);
                     }
                     de = new GoodsEditPage(mainMenu, obj);
                     ((GoodsEditPage)de).Dock = DockStyle.Fill;
                     panelControl.Controls.Add((GoodsEditPage)de);
                     break;
-                case MainMenuConstants.GoodsType:
+                case MainMenuEnum.GoodsType:
                     if (obj != null)
-                        obj = ((List<GoodsType>)MainForm.dataSourceList[typeof(List<GoodsType>)]).Find(o => o.ID == ((VGoodsType)obj).ID);
+                        obj = baseFactory.GetModelList<GoodsType>().Find(o => o.ID == ((VGoodsType)obj).ID);
                     de = new GoodsTypeEditPage(obj);
                     ((GoodsTypeEditPage)de).Dock = DockStyle.Fill;
                     panelControl.Controls.Add((GoodsTypeEditPage)de);
                     break;
-                case MainMenuConstants.Packaging:
+                case MainMenuEnum.Packaging:
                     if (obj != null)
-                        obj = ((List<Packaging>)MainForm.dataSourceList[typeof(List<Packaging>)]).Find(o => o.ID == ((VPackaging)obj).ID);
+                        obj = baseFactory.GetModelList<Packaging>().Find(o => o.ID == ((VPackaging)obj).ID);
                     de = new PackagingEditPage(obj);
                     ((PackagingEditPage)de).Dock = DockStyle.Fill;
                     panelControl.Controls.Add((PackagingEditPage)de);
@@ -186,7 +187,8 @@ namespace USL
                     this.Text = mainMenu.Caption;
                     if (dataEditPage.Save())
                     {
-                        clientFactory.DataPageRefresh(mainMenu.Name);
+                        MainMenuEnum menuEnum = (MainMenuEnum)Enum.Parse(typeof(MainMenuEnum), mainMenu.Name);
+                        baseFactory.DataPageRefresh(menuEnum);
                         CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                     }
                 }

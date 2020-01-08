@@ -705,11 +705,11 @@
             // 
             // sfGoodsByBOMBindingSource
             // 
-            this.sfGoodsByBOMBindingSource.DataSource = typeof(DBML.VMaterialStockInBill);
+            this.sfGoodsByBOMBindingSource.DataSource = typeof(EDMX.VMaterialStockInBill);
             // 
             // assembleBindingSource
             // 
-            this.assembleBindingSource.DataSource = typeof(DBML.VStockInBillDtlByBOM);
+            this.assembleBindingSource.DataSource = typeof(EDMX.VStockInBillDtlByBOM);
             // 
             // DetailReportAssemble
             // 
@@ -1079,7 +1079,7 @@
             // 
             // goodsBindingSource
             // 
-            this.goodsBindingSource.DataSource = typeof(DBML.VProductionOrder);
+            this.goodsBindingSource.DataSource = typeof(EDMX.VProductionOrder);
             // 
             // XtraMaterialMRPReport
             // 

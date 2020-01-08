@@ -31,7 +31,7 @@ namespace Utility
         /// <summary>
         /// 职工资料
         /// </summary>
-        public const string Staff = "Staff";
+        public const string UsersInfo = "UsersInfo";
         /// <summary>
         /// 成品资料
         /// </summary>
@@ -523,137 +523,91 @@ namespace Utility
         public const string FSM = "FSM";
     }
 
-    public class TypesListConstants
-    {
-        #region 入库单
-
-        
-        /// <summary>
-        /// 入库单类型
-        /// </summary>
-        public const string StockInBillType = "StockInBillType";
-        ///// <summary>
-        ///// 生产入库
-        ///// </summary>
-        //public const string ProductionStockInBill = "ProductionStockInBill";
-        ///// <summary>
-        ///// 销售退货
-        ///// </summary>
-        //public const string SalesReturnBill = "SalesReturnBill";
-        ///// <summary>
-        ///// 外加工成品回收
-        ///// </summary>
-        //public const string FGStockInBill = "FGStockInBill";
-        ///// <summary>
-        ///// 外加工退料
-        ///// </summary>
-        //public const string EMSReturnBill = "EMSReturnBill";
-        ///// <summary>
-        ///// 自动机退料
-        ///// </summary>
-        //public const string FSMReturnBill = "FSMReturnBill";
-        ///// <summary>
-        ///// 物料入库(采购入料)
-        ///// </summary>
-        //public const string SFGStockInBill = "SFGStockInBill";
-        ///// <summary>
-        ///// 自动机物料入库
-        ///// </summary>
-        //public const string FSMStockInBill = "FSMStockInBill";
-
-        #endregion
-
-        #region 出库单
-
-        /// <summary>
-        /// 订单类型
-        /// </summary>
-        public const string OrderType = "OrderType";
-        /// <summary>
-        /// 出库单类型
-        /// </summary>
-        public const string StockOutBillType = "StockOutBillType";
-        ///// <summary>
-        ///// 成品发货
-        ///// </summary>
-        //public const string FGStockOutBill = "FGStockOutBill";
-
-        ///// <summary>
-        ///// 外加工投料
-        ///// </summary>
-        //public const string EMSStockOutBill = "EMSStockOutBill";
-
-        ///// <summary>
-        ///// 物料出库
-        ///// </summary>
-        //public const string SFGStockOutBill = "SFGStockOutBill";
-        ///// <summary>
-        ///// 自动机物料出库
-        ///// </summary>
-        //public const string FSMStockOutBill = "FSMStockOutBill";
+    //public class TypesListConstants
+    //{
+    //    #region 入库单
 
 
-        #endregion
+    //    /// <summary>
+    //    /// 入库单类型
+    //    /// </summary>
+    //    //public const string StockInBillType = "StockInBillType";
 
-        /// <summary>
-        /// 收款类型
-        /// </summary>
-        public const string ReceiptBillType = "ReceiptBillType";
-        /// <summary>
-        /// 销售收款
-        /// </summary>
-        public const string SalesReceipt = "SalesReceipt";
-        /// <summary>
-        /// 采购退货收款
-        /// </summary>
-        public const string PurchaseReturnReceipt = "PurchaseReturnReceipt";
-        /// <summary>
-        /// 付款类型
-        /// </summary>
-        public const string PaymentBillType = "PaymentBillType";
-        /// <summary>
-        /// 销售退货付款
-        /// </summary>
-        public const string SalesReturnPayment = "SalesReturnPayment";
-        /// <summary>
-        /// 外加工付款
-        /// </summary>
-        public const string EMSPayment = "EMSPayment";
-        /// <summary>
-        /// 采购付款
-        /// </summary>
-        public const string PurchasePayment = "PurchasePayment";
-        /// <summary>
-        /// 自动机付款
-        /// </summary>
-        public const string FSMPayment = "FSMPayment";
-        /// <summary>
-        /// 结算方式
-        /// </summary>
-        public const string POClearType = "POClearType";
-        /// <summary>
-        /// 客户类型
-        /// </summary>
-        public const string CustomerType = "CustomerType";
-        /// <summary>
-        /// 供应商类型
-        /// </summary>
-        public const string SupplierType = "SupplierType";
-        /// <summary>
-        /// 货品类型
-        /// </summary>
-        public const string GoodsType = "GoodsType";
-        /// <summary>
-        /// 特权类型
-        /// </summary>
-        public const string PrivilegeType = "PrivilegeType";
-        /// <summary>
-        /// 验证方式类型
-        /// </summary>
-        public const string VerifyMethodType = "VerifyMethodType";
-        /// <summary>
-        /// 工资类型
-        /// </summary>
-        public const string WageType = "WageType";
-    }
+    //    #endregion
+
+    //    #region 出库单
+
+    //    /// <summary>
+    //    /// 订单类型
+    //    /// </summary>
+    //    //public const string OrderType = "OrderType";
+    //    /// <summary>
+    //    /// 出库单类型
+    //    /// </summary>
+    //    //public const string StockOutBillType = "StockOutBillType";
+
+
+    //    #endregion
+
+    //    /// <summary>
+    //    /// 收款类型
+    //    /// </summary>
+    //    //public const string ReceiptBillType = "ReceiptBillType";
+    //    /// <summary>
+    //    /// 销售收款
+    //    /// </summary>
+    //    public const string SalesReceipt = "SalesReceipt";
+    //    /// <summary>
+    //    /// 采购退货收款
+    //    /// </summary>
+    //    public const string PurchaseReturnReceipt = "PurchaseReturnReceipt";
+    //    /// <summary>
+    //    /// 付款类型
+    //    /// </summary>
+    //    //public const string PaymentBillType = "PaymentBillType";
+    //    /// <summary>
+    //    /// 销售退货付款
+    //    /// </summary>
+    //    public const string SalesReturnPayment = "SalesReturnPayment";
+    //    /// <summary>
+    //    /// 外加工付款
+    //    /// </summary>
+    //    public const string EMSPayment = "EMSPayment";
+    //    /// <summary>
+    //    /// 采购付款
+    //    /// </summary>
+    //    public const string PurchasePayment = "PurchasePayment";
+    //    /// <summary>
+    //    /// 自动机付款
+    //    /// </summary>
+    //    public const string FSMPayment = "FSMPayment";
+    //    /// <summary>
+    //    /// 结算方式
+    //    /// </summary>
+    //    public const string POClearType = "POClearType";
+    //    /// <summary>
+    //    /// 客户类型
+    //    /// </summary>
+    //    public const string CustomerType = "CustomerType";
+    //    /// <summary>
+    //    /// 供应商类型
+    //    /// </summary>
+    //    public const string SupplierType = "SupplierType";
+    //    /// <summary>
+    //    /// 货品类型
+    //    /// </summary>
+    //    //public const string GoodsType = "GoodsType";
+    //    /// <summary>
+    //    /// 特权类型
+    //    /// </summary>
+    //    public const string PrivilegeType = "PrivilegeType";
+    //    /// <summary>
+    //    /// 验证方式类型
+    //    /// </summary>
+    //    public const string VerifyMethodType = "VerifyMethodType";
+    //    /// <summary>
+    //    /// 工资类型
+    //    /// </summary>
+    //    public const string WageType = "WageType";
+    //}
 }

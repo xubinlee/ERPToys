@@ -263,18 +263,14 @@
             this.lueWarehouseType.Properties.NullText = "";
             this.lueWarehouseType.Properties.PopupSizeable = false;
             this.lueWarehouseType.Properties.ShowHeader = false;
-            this.lueWarehouseType.Properties.ValueMember = "No";
+            this.lueWarehouseType.Properties.ValueMember = "Index";
             this.lueWarehouseType.Size = new System.Drawing.Size(50, 20);
             this.lueWarehouseType.StyleController = this.layoutControl;
             this.lueWarehouseType.TabIndex = 10;
             // 
             // stockOutBillHdBindingSource
             // 
-            this.stockOutBillHdBindingSource.DataSource = typeof(DBML.StockOutBillHd);
-            // 
-            // warehouseTypeBindingSource
-            // 
-            this.warehouseTypeBindingSource.DataSource = typeof(DBML.TypesList);
+            this.stockOutBillHdBindingSource.DataSource = typeof(void);
             // 
             // lueOrderNo
             // 
@@ -300,7 +296,7 @@
             // 
             // orderHdBindingSource
             // 
-            this.orderHdBindingSource.DataSource = typeof(DBML.OrderHd);
+            this.orderHdBindingSource.DataSource = typeof(void);
             // 
             // meMainMark
             // 
@@ -341,7 +337,7 @@
             // 
             // businessContactBindingSource
             // 
-            this.businessContactBindingSource.DataSource = typeof(DBML.VCompany);
+            this.businessContactBindingSource.DataSource = typeof(void);
             // 
             // gridControl
             // 
@@ -363,7 +359,7 @@
             // 
             // stockOutBillDtlBindingSource
             // 
-            this.stockOutBillDtlBindingSource.DataSource = typeof(DBML.StockOutBillDtl);
+            this.stockOutBillDtlBindingSource.DataSource = typeof(void);
             // 
             // gridView
             // 
@@ -500,7 +496,7 @@
             // 
             // vGoodsBindingSource
             // 
-            this.vGoodsBindingSource.DataSource = typeof(DBML.VGoods);
+            this.vGoodsBindingSource.DataSource = typeof(void);
             // 
             // colName
             // 
@@ -817,15 +813,11 @@
             this.lueType.Properties.NullText = "";
             this.lueType.Properties.PopupSizeable = false;
             this.lueType.Properties.ShowHeader = false;
-            this.lueType.Properties.ValueMember = "No";
+            this.lueType.Properties.ValueMember = "Index";
             this.lueType.Size = new System.Drawing.Size(124, 20);
             this.lueType.StyleController = this.layoutControl;
             this.lueType.TabIndex = 2;
             this.lueType.EditValueChanged += new System.EventHandler(this.lueType_EditValueChanged);
-            // 
-            // typesListBindingSource
-            // 
-            this.typesListBindingSource.DataSource = typeof(DBML.TypesList);
             // 
             // lueWarehouse
             // 
@@ -848,7 +840,7 @@
             // 
             // warehouseBindingSource
             // 
-            this.warehouseBindingSource.DataSource = typeof(DBML.Warehouse);
+            this.warehouseBindingSource.DataSource = typeof(void);
             // 
             // deAuditDate
             // 
@@ -963,7 +955,7 @@
             // 
             // vUsersInfoBindingSource
             // 
-            this.vUsersInfoBindingSource.DataSource = typeof(DBML.VUsersInfo);
+            this.vUsersInfoBindingSource.DataSource = typeof(void);
             // 
             // lueAuditor
             // 
@@ -1298,7 +1290,7 @@
             // 
             // billDtlByBOMBindingSource
             // 
-            this.billDtlByBOMBindingSource.DataSource = typeof(DBML.VStockOutBillDtlByBOM);
+            this.billDtlByBOMBindingSource.DataSource = typeof(void);
             // 
             // gvBOM
             // 
@@ -1373,7 +1365,7 @@
             // 
             // vGoodsByBOMBindingSource
             // 
-            this.vGoodsByBOMBindingSource.DataSource = typeof(DBML.VGoodsByBOM);
+            this.vGoodsByBOMBindingSource.DataSource = typeof(void);
             // 
             // colName1
             // 

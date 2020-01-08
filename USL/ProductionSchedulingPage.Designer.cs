@@ -175,7 +175,7 @@
             // 
             // vUsersInfoBindingSource
             // 
-            this.vUsersInfoBindingSource.DataSource = typeof(DBML.VUsersInfo);
+            this.vUsersInfoBindingSource.DataSource = typeof(EDMX.VUsersInfo);
             // 
             // winExplorerView
             // 
@@ -421,7 +421,7 @@
             // 
             // appointmentsBindingSource
             // 
-            this.appointmentsBindingSource.DataSource = typeof(DBML.Appointments);
+            this.appointmentsBindingSource.DataSource = typeof(EDMX.Appointments);
             // 
             // dpPS
             // 

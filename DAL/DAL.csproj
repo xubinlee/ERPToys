@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DAL</RootNamespace>
     <AssemblyName>DAL</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -39,6 +39,10 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.2.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ERPToys\StackExchange.Redis.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -69,6 +73,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EDMX\EDMX.csproj">
+      <Project>{A30E02AE-347D-48BD-8971-76D4EDFA4FB7}</Project>
+      <Name>EDMX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Factory\Factory.csproj">
+      <Project>{0943627B-01FE-40CD-AD12-72C5287621DD}</Project>
+      <Name>Factory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IBase\IBase.csproj">
       <Project>{3c92250c-d012-4eb2-ae24-229583721d2d}</Project>
       <Name>IBase</Name>

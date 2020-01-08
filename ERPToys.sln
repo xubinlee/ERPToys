@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IWcfServiceInterface", "IWc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDMX", "EDMX\EDMX.csproj", "{A30E02AE-347D-48BD-8971-76D4EDFA4FB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientFactory", "ClientFactory\ClientFactory.csproj", "{E4E7C12F-B82F-4E60-8A31-7EBEC67ABF50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{A30E02AE-347D-48BD-8971-76D4EDFA4FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A30E02AE-347D-48BD-8971-76D4EDFA4FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A30E02AE-347D-48BD-8971-76D4EDFA4FB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4E7C12F-B82F-4E60-8A31-7EBEC67ABF50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4E7C12F-B82F-4E60-8A31-7EBEC67ABF50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4E7C12F-B82F-4E60-8A31-7EBEC67ABF50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4E7C12F-B82F-4E60-8A31-7EBEC67ABF50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

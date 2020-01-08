@@ -24,8 +24,7 @@ using Utility;
 using System.IO;
 using System.Data;
 using Utility.Interceptor;
-using IWcfServiceInterface;
-using Common;
+using ClientFactory;
 
 namespace USL
 {
@@ -36,9 +35,7 @@ namespace USL
     //[SmartPart]
     public partial class ItemDetailPage : XtraUserControl
     {
-        private static IStockInBillService stockInBillService = ServiceProxyFactory.Create<IStockInBillService>("StockInBillService");
-        private static IGoodsService goodsService = ServiceProxyFactory.Create<IGoodsService>("GoodsService");
-        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         //Dictionary<Guid, PageGroup> groupsItemDetailPage;
         ////public Dictionary<String, IItemDetail> itemDetailList;
         Dictionary<String, int> itemDetailButtonList; //子菜单按钮项
@@ -157,8 +154,8 @@ namespace USL
             btnRefresh.ElementClick += btnRefresh_ElementClick;
             tileNavPane.Buttons.Add(btnRefresh);
 
-            if (menu.Name == MainMenuConstants.SchClass || menu.Name == MainMenuConstants.StaffSchClass || menu.Name == MainMenuConstants.SalesSummaryMonthlyReport ||
-                menu.Name == MainMenuConstants.AnnualSalesSummaryByCustomerReport || menu.Name == MainMenuConstants.AnnualSalesSummaryByGoodsReport)
+            if (menu.Name == MainMenuEnum.SchClass.ToString() || menu.Name == MainMenuEnum.StaffSchClass.ToString() || menu.Name == MainMenuEnum.SalesSummaryMonthlyReport.ToString() ||
+                menu.Name == MainMenuEnum.AnnualSalesSummaryByCustomerReport.ToString() || menu.Name == MainMenuEnum.AnnualSalesSummaryByGoodsReport.ToString())
             {
                 if (menu.Name.Contains("Report"))
                 {
@@ -175,7 +172,7 @@ namespace USL
                 }
                 return;
             }
-            if (menu.Name == MainMenuConstants.Stocktaking)
+            if (menu.Name == MainMenuEnum.Stocktaking.ToString())
             {
                 //盘点导入
                 NavButton btnImport = new NavButton();
@@ -186,7 +183,7 @@ namespace USL
                 tileNavPane.Buttons.Add(btnImport);
                 return;
             }
-            if (menu.Name == MainMenuConstants.ProfitAndLoss)
+            if (menu.Name == MainMenuEnum.ProfitAndLoss.ToString())
             {
                 //更新盘点库存
                 NavButton btnSTUpdate = new NavButton();
@@ -197,7 +194,7 @@ namespace USL
                 tileNavPane.Buttons.Add(btnSTUpdate);
                 return;
             }
-            if (menu.Name == MainMenuConstants.AttGeneralLog)
+            if (menu.Name == MainMenuEnum.AttGeneralLog.ToString())
             {
                 //连接设备
                 btnConnect = new NavButton();
@@ -233,10 +230,10 @@ namespace USL
                 return;
             }
             if (menu.Name.Contains("Query") || menu.Name.Contains("Report") 
-                || menu.Name == MainMenuConstants.StatementOfAccountToCustomer
-                || menu.Name == MainMenuConstants.StatementOfAccountToSupplier
-                || menu.Name == MainMenuConstants.ProductionScheduling
-                || menu.Name == MainMenuConstants.StaffAttendance)
+                || menu.Name == MainMenuEnum.StatementOfAccountToCustomer.ToString()
+                || menu.Name == MainMenuEnum.StatementOfAccountToSupplier.ToString()
+                || menu.Name == MainMenuEnum.ProductionScheduling.ToString()
+                || menu.Name == MainMenuEnum.StaffAttendance.ToString())
             {
                 //if (menu.Name.Contains("Query") && menu.ParentID != new Guid("e11eb222-ba7c-460c-bfbe-8de849e89b14"))//库存管理和报表管理
                 if (menu.Name.Contains("Order") || (menu.Name.Contains("Query") && menu.Name.Contains("Bill")))
@@ -275,8 +272,8 @@ namespace USL
                 if (MainForm.buttonPermissions.Exists(o => o.Name == "btnHistoryQuery" && o.CheckBoxState == true))
                 {
                     if ((menu.SerialNo < 405 || menu.SerialNo > 500)
-                    && menu.Name != MainMenuConstants.ProductionScheduling
-                    && menu.Name != MainMenuConstants.StaffAttendance)
+                    && menu.Name != MainMenuEnum.ProductionScheduling.ToString()
+                    && menu.Name != MainMenuEnum.StaffAttendance.ToString())
                     {
                         //历史记录查询
                         NavButton btnHistoryQuery = new NavButton();
@@ -288,7 +285,7 @@ namespace USL
                     }
                 }
 
-                if (menu.Name == MainMenuConstants.ProductionOrderQuery && MainForm.SysInfo.CompanyType == (int)CompanyType.Trade)
+                if (menu.Name == MainMenuEnum.ProductionOrderQuery.ToString() && MainForm.SysInfo.CompanyType == (int)CompanyType.Trade)
                 {
                     //外加工产品回收
                     NavButton btnOEMGetBack = new NavButton();
@@ -298,7 +295,7 @@ namespace USL
                     btnOEMGetBack.ElementClick += BtnOEMGetBack_ElementClick;
                     tileNavPane.Buttons.Add(btnOEMGetBack);
                 }
-                if (menu.Name == MainMenuConstants.SalesReturnBillQuery)
+                if (menu.Name == MainMenuEnum.SalesReturnBillQuery.ToString())
                 {
                     //退货退料入库
                     NavButton btnMaterialReturn = new NavButton();
@@ -310,7 +307,7 @@ namespace USL
                 }
                 return;
             }
-            if (menu.Name == MainMenuConstants.PermissionSetting)
+            if (menu.Name == MainMenuEnum.PermissionSetting.ToString())
             {
                 if (MainForm.buttonPermissions.Exists(o => o.Name == "btnSave" && o.CheckBoxState == true))
                 {
@@ -326,17 +323,17 @@ namespace USL
             }
             if (MainForm.buttonPermissions.Exists(o => o.Name == "btnAdd" && o.CheckBoxState == true))
             {
-                if (menu.Name != MainMenuConstants.BOM
-                    && menu.Name != MainMenuConstants.MoldList
-                    && menu.Name != MainMenuConstants.MoldAllot
-                    && menu.Name != MainMenuConstants.Assemble
-                    && menu.Name != MainMenuConstants.MoldMaterial
-                    && menu.Name != MainMenuConstants.CustomerSLSalePrice
-                    && menu.Name != MainMenuConstants.SupplierSLSalePrice
-                    && menu.Name != MainMenuConstants.StatementOfAccountToCustomer
-                    && menu.Name != MainMenuConstants.StatementOfAccountToSupplier
-                    && menu.Name != MainMenuConstants.ProductionScheduling
-                    && menu.Name != MainMenuConstants.StaffAttendance)
+                if (menu.Name != MainMenuEnum.BOM.ToString()
+                    && menu.Name != MainMenuEnum.MoldList.ToString()
+                    && menu.Name != MainMenuEnum.MoldAllot.ToString()
+                    && menu.Name != MainMenuEnum.Assemble.ToString()
+                    && menu.Name != MainMenuEnum.MoldMaterial.ToString()
+                    && menu.Name != MainMenuEnum.CustomerSLSalePrice.ToString()
+                    && menu.Name != MainMenuEnum.SupplierSLSalePrice.ToString()
+                    && menu.Name != MainMenuEnum.StatementOfAccountToCustomer.ToString()
+                    && menu.Name != MainMenuEnum.StatementOfAccountToSupplier.ToString()
+                    && menu.Name != MainMenuEnum.ProductionScheduling.ToString()
+                    && menu.Name != MainMenuEnum.StaffAttendance.ToString())
                 {
                     //添加
                     NavButton btnAdd = new NavButton();
@@ -361,9 +358,9 @@ namespace USL
                     tileNavPane.Buttons.Add(btnEdit);
                 }
             }
-            //else if (menu.Name == MainMenuConstants.StatementOfAccountToCustomer 
-            //    || menu.Name == MainMenuConstants.StatementOfAccountToSupplier
-            //    || menu.Name == MainMenuConstants.ProductionScheduling)
+            //else if (menu.Name == MainMenuEnum.StatementOfAccountToCustomer 
+            //    || menu.Name == MainMenuEnum.StatementOfAccountToSupplier
+            //    || menu.Name == MainMenuEnum.ProductionScheduling)
             //{
             //    if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true))
             //    {
@@ -389,13 +386,13 @@ namespace USL
                     btnSave.ElementClick += btnSave_ElementClick;
                     tileNavPane.Buttons.Add(btnSave);
                 }
-                if (menu.Name != MainMenuConstants.BOM
-                    && menu.Name != MainMenuConstants.MoldList
-                    && menu.Name != MainMenuConstants.MoldAllot
-                    && menu.Name != MainMenuConstants.Assemble
-                    && menu.Name != MainMenuConstants.MoldMaterial
-                    && menu.Name != MainMenuConstants.CustomerSLSalePrice
-                    && menu.Name != MainMenuConstants.SupplierSLSalePrice)
+                if (menu.Name != MainMenuEnum.BOM.ToString()
+                    && menu.Name != MainMenuEnum.MoldList.ToString()
+                    && menu.Name != MainMenuEnum.MoldAllot.ToString()
+                    && menu.Name != MainMenuEnum.Assemble.ToString()
+                    && menu.Name != MainMenuEnum.MoldMaterial.ToString()
+                    && menu.Name != MainMenuEnum.CustomerSLSalePrice.ToString()
+                    && menu.Name != MainMenuEnum.SupplierSLSalePrice.ToString())
                 {
                     if (MainForm.buttonPermissions.Exists(o => o.Name == "btnAudit" && o.CheckBoxState == true))
                     {
@@ -412,7 +409,7 @@ namespace USL
                     return;
             }
             //成品导入
-            if (menu.Name == MainMenuConstants.Goods)
+            if (menu.Name == MainMenuEnum.Goods.ToString())
             {
                 //导入
                 NavButton btnGoodsImport = new NavButton();
@@ -430,7 +427,7 @@ namespace USL
                 tileNavPane.Buttons.Add(btnPicImport);
             }
             //物料导入
-            if (menu.Name == MainMenuConstants.Material)
+            if (menu.Name == MainMenuEnum.Material.ToString())
             {
                 //导入
                 NavButton btnMaterialImport = new NavButton();
@@ -457,7 +454,7 @@ namespace USL
                 btnPrint.ElementClick += btnPrint_ElementClick;
                 tileNavPane.Buttons.Add(btnPrint);
             }
-            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && (menu.Name == MainMenuConstants.WageBill || menu.Name==MainMenuConstants.AttWageBill))
+            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && (menu.Name == MainMenuEnum.WageBill.ToString() || menu.Name==MainMenuEnum.AttWageBill.ToString()))
             {
                 //打印日程工资明细
                 NavButton btnAPTPrint = new NavButton();
@@ -467,7 +464,7 @@ namespace USL
                 btnAPTPrint.ElementClick += btnAPTPrint_ElementClick;
                 tileNavPane.Buttons.Add(btnAPTPrint);
             }
-            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && menu.Name == MainMenuConstants.ReceiptBill)
+            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && menu.Name == MainMenuEnum.ReceiptBill.ToString())
             {
                 //客户对账单打印
                 NavButton btnSOA2CPrint = new NavButton();
@@ -477,7 +474,7 @@ namespace USL
                 btnSOA2CPrint.ElementClick += btnSOA2CPrint_ElementClick;
                 tileNavPane.Buttons.Add(btnSOA2CPrint);
             }
-            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && menu.Name == MainMenuConstants.PaymentBill)
+            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && menu.Name == MainMenuEnum.PaymentBill.ToString())
             {
                 //供应商对账单打印
                 NavButton btnSOA2SPrint = new NavButton();
@@ -494,7 +491,7 @@ namespace USL
                 btnSOAPrint.ElementClick += btnSOAPrint_ElementClick;
                 tileNavPane.Buttons.Add(btnSOAPrint);
             }
-            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && menu.Name == MainMenuConstants.ProductionOrder &&
+            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && menu.Name == MainMenuEnum.ProductionOrder.ToString() &&
                 !MainForm.Company.Contains("镇阳") && !MainForm.Company.Contains("创萌"))
             {
                 //打印物料清单
@@ -512,7 +509,7 @@ namespace USL
                 btnGetMaterial.ElementClick += BtnGetMaterial_ElementClick;
                 tileNavPane.Buttons.Add(btnGetMaterial);
             }
-            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && menu.Name == MainMenuConstants.AssembleStockInBill &&
+            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && menu.Name == MainMenuEnum.AssembleStockInBill.ToString() &&
                 !MainForm.Company.Contains("镇阳") && !MainForm.Company.Contains("创萌"))
             {
                 //打印物料清单
@@ -537,7 +534,7 @@ namespace USL
                 btnGetMoldOrder.ElementClick += BtnGetMoldOrder_ElementClick;
                 tileNavPane.Buttons.Add(btnGetMoldOrder);
             }
-            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && menu.Name == MainMenuConstants.FSMOrder)
+            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && menu.Name == MainMenuEnum.FSMOrder.ToString())
             {
                 //MoldList打印
                 NavButton btnMoldListPrint = new NavButton();
@@ -547,7 +544,7 @@ namespace USL
                 btnMoldListPrint.ElementClick += btnMoldListPrint_ElementClick;
                 tileNavPane.Buttons.Add(btnMoldListPrint);
             }
-            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && menu.Name == MainMenuConstants.FSMOrder)
+            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && menu.Name == MainMenuEnum.FSMOrder.ToString())
             {
                 //MoldMaterial打印
                 NavButton btnMoldMaterialPrint = new NavButton();
@@ -557,7 +554,7 @@ namespace USL
                 btnMoldMaterialPrint.ElementClick += btnMoldMaterialPrint_ElementClick;
                 tileNavPane.Buttons.Add(btnMoldMaterialPrint);
             }
-            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && menu.Name == MainMenuConstants.EMSStockOutBill)
+            if (MainForm.buttonPermissions.Exists(o => o.Name == "btnPrint" && o.CheckBoxState == true) && menu.Name == MainMenuEnum.EMSStockOutBill.ToString())
             {
                 //Assemble打印
                 NavButton btnAssemblePrint = new NavButton();
@@ -577,7 +574,7 @@ namespace USL
                 btnDel.ElementClick += btnDel_ElementClick;
                 tileNavPane.Buttons.Add(btnDel);
             }
-            if (menu.Name == MainMenuConstants.Goods || menu.Name == MainMenuConstants.Material && (MainForm.buttonPermissions.Exists(o => o.Name == "btnDel" && o.CheckBoxState == true)))
+            if (menu.Name == MainMenuEnum.Goods.ToString() || menu.Name == MainMenuEnum.Material.ToString() && (MainForm.buttonPermissions.Exists(o => o.Name == "btnDel" && o.CheckBoxState == true)))
             {
                 //停产
                 NavButton btnStop = new NavButton();
@@ -587,7 +584,7 @@ namespace USL
                 btnStop.ElementClick += BtnStop_ElementClick;
                 tileNavPane.Buttons.Add(btnStop);
             }
-            if (menu.Name == MainMenuConstants.Staff)
+            if (menu.Name == MainMenuEnum.UsersInfo.ToString())
             {
                 //连接设备
                 btnConnect = new NavButton();
@@ -639,15 +636,15 @@ namespace USL
                 object currentObj = iExtensions.ReceiveData();
 
 
-                if (menu.Name == MainMenuConstants.ProductionOrderQuery && currentObj != null)
+                if (menu.Name == MainMenuEnum.ProductionOrderQuery.ToString() && currentObj != null)
                 {
                     VProductionOrder order = currentObj as VProductionOrder;
-                    OrderHd hd = clientFactory.GetData<OrderHd>().FirstOrDefault(o => o.ID.Equals(order.HdID));
-                    List<VProductionOrder> dtl = ((List<VProductionOrder>)MainForm.dataSourceList[typeof(List<VProductionOrder>)]).FindAll(o => o.HdID == order.HdID);
+                    OrderHd hd = baseFactory.GetModelList<OrderHd>().FirstOrDefault(o => o.ID.Equals(order.HdID));
+                    List<VProductionOrder> dtl = baseFactory.GetModelList<VProductionOrder>().FindAll(o => o.HdID == order.HdID);
                     //外加工回收单表头数据
                     StockInBillHd inHd = new StockInBillHd();
                     inHd.ID = Guid.NewGuid();
-                    inHd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.StockInBillType, true).MaxBillNo;
+                    inHd.BillNo = MainForm.GetMaxBillNo(MainMenuEnum.StockInBillType, true).MaxBillNo;
                     inHd.WarehouseID = hd.WarehouseID;
                     inHd.WarehouseType = hd.WarehouseType;
                     inHd.OrderID = hd.ID;
@@ -685,19 +682,19 @@ namespace USL
                     }
                     
                     stockInBillService.Insert(inHd, inDtlList);
-                    //MainForm.BillSaveRefresh(MainMenuConstants.FGStockInBillQuery);
-                    clientFactory.DataPageRefresh<VMaterialStockInBill>();
+                    //MainForm.BillSaveRefresh(MainMenuEnum.FGStockInBillQuery);
+                    baseFactory.DataPageRefresh<VMaterialStockInBill>();
 
                     //定位
-                    MainForm.SetSelected(pageGroupCore, MainForm.mainMenuList[MainMenuConstants.FGStockInBill]);
-                    StockInBillPage page = MainForm.itemDetailPageList[MainMenuConstants.FGStockInBill].itemDetail as StockInBillPage;
+                    MainForm.SetSelected(pageGroupCore, MainForm.mainMenuList[MainMenuEnum.FGStockInBill]);
+                    StockInBillPage page = MainForm.itemDetailPageList[MainMenuEnum.FGStockInBill].itemDetail as StockInBillPage;
                     page.BindData(inHd.ID);
                 }
-                else if (menu.Name == MainMenuConstants.SalesReturnBillQuery && currentObj != null)
+                else if (menu.Name == MainMenuEnum.SalesReturnBillQuery.ToString() && currentObj != null)
                 {
                     VStockInBill bill = currentObj as VStockInBill;
-                    StockInBillHd hd = clientFactory.GetData<StockInBillHd>().FirstOrDefault(o => o.ID.Equals(bill.HdID));
-                    List<VStockInBillDtlByBOM> vList = clientFactory.GetData<VStockInBillDtlByBOM>().FindAll(o => o.HdID.Equals(bill.HdID) && o.Type.Equals((int)BOMType.BOM));
+                    StockInBillHd hd = baseFactory.GetModelList<StockInBillHd>().FirstOrDefault(o => o.ID.Equals(bill.HdID));
+                    List<VStockInBillDtlByBOM> vList = baseFactory.GetModelList<VStockInBillDtlByBOM>().FindAll(o => o.HdID.Equals(bill.HdID) && o.Type.Equals((int)BOMType.BOM));
                     List<StockInBillDtl> dtlByBOM = new List<StockInBillDtl>();
                     vList.ForEach(item => {
                         StockInBillDtl dtl = new StockInBillDtl();
@@ -717,8 +714,8 @@ namespace USL
                     //退料单表头数据
                     StockInBillHd inHd = new StockInBillHd();
                     inHd.ID = Guid.NewGuid();
-                    inHd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.StockInBillType, true).MaxBillNo;
-                    inHd.WarehouseID = MainForm.WarehouseList.FirstOrDefault(o => o.Code == WarehouseConstants.SFG).ID;  //半成品
+                    inHd.BillNo = MainForm.GetMaxBillNo(MainMenuEnum.StockInBillType, true).MaxBillNo;
+                    inHd.WarehouseID = MainForm.WarehouseList.FirstOrDefault(o => o.Code == WarehouseEnum.SFG.ToString()).ID;  //半成品
                     inHd.WarehouseType = hd.WarehouseType;
                     inHd.OrderID = hd.ID;
                     inHd.OrderDate = hd.OrderDate;
@@ -755,14 +752,14 @@ namespace USL
                     }
                     
                     stockInBillService.Insert(inHd, inDtlList);
-                    //MainForm.BillSaveRefresh(MainMenuConstants.ReturnedMaterialBillQuery);
-                    //MainForm.BillSaveRefresh(MainMenuConstants.SalesReturnBillQuery);
-                    clientFactory.DataPageRefresh<VMaterialStockInBill>();
-                    clientFactory.DataPageRefresh<VStockInBill>();
+                    //MainForm.BillSaveRefresh(MainMenuEnum.ReturnedMaterialBillQuery);
+                    //MainForm.BillSaveRefresh(MainMenuEnum.SalesReturnBillQuery);
+                    baseFactory.DataPageRefresh<VMaterialStockInBill>();
+                    baseFactory.DataPageRefresh<VStockInBill>();
 
                     //定位
-                    MainForm.SetSelected(pageGroupCore, MainForm.mainMenuList[MainMenuConstants.ReturnedMaterialBill]);
-                    StockInBillPage page = MainForm.itemDetailPageList[MainMenuConstants.ReturnedMaterialBill].itemDetail as StockInBillPage;
+                    MainForm.SetSelected(pageGroupCore, MainForm.mainMenuList[MainMenuEnum.ReturnedMaterialBill]);
+                    StockInBillPage page = MainForm.itemDetailPageList[MainMenuEnum.ReturnedMaterialBill].itemDetail as StockInBillPage;
                     page.BindData(inHd.ID);
                 }
             }
@@ -790,7 +787,7 @@ namespace USL
                         if (!System.IO.Directory.Exists(MainForm.DownloadFilePath))
                             System.IO.Directory.CreateDirectory(MainForm.DownloadFilePath);
                         string[] files = Directory.GetFiles(_path);//, "*.png", SearchOption.AllDirectories);
-                        List<Goods> goodsList = MainForm.dataSourceList[typeof(List<Goods>)] as List<Goods>;
+                        List<Goods> goodsList = baseFactory.GetModelList<Goods>();
                         //bool result = true;
                         foreach (Goods item in goodsList)
                         {
@@ -815,9 +812,9 @@ namespace USL
                         }
                         //if (result == false)
                         //    return;
-                        clientFactory.ModifyByList<Goods>(goodsList);
-                        clientFactory.DataPageRefresh<Goods>();
-                        clientFactory.DataPageRefresh<VMaterial>();
+                        baseFactory.ModifyByList<Goods>(goodsList);
+                        baseFactory.DataPageRefresh<Goods>();
+                        baseFactory.DataPageRefresh<VMaterial>();
                         CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "导入成功");
                     }
                 }
@@ -853,7 +850,7 @@ namespace USL
 
                     //Int64 iBarCode = BLLFty.Create<GoodsBLL>().GetMaxBarCode();
                     List<Goods> InsertGoodsList = new List<Goods>();
-                    //List<Goods> UpdateGoodsList = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]);
+                    //List<Goods> UpdateGoodsList = baseFactory.GetModelList<Goods>();
                     List<Goods> UpdateGoodsList = new List<Goods>();
                     foreach (DataRow row in ds.Tables[0].Rows)
                     {
@@ -869,19 +866,19 @@ namespace USL
                             return;
                         }
                         //检查包装方式是否存在
-                        Packaging packaging =clientFactory.GetData<Packaging>().FirstOrDefault(o => o.Name.Contains(row["包装方式"].ToString().Trim()));
+                        Packaging packaging =baseFactory.GetModelList<Packaging>().FirstOrDefault(o => o.Name.Contains(row["包装方式"].ToString().Trim()));
                         if (packaging == null)
                         {
                             Packaging p = new Packaging();
                             p.ID = Guid.NewGuid();
                             p.Name = row["包装方式"].ToString().Trim();
                             packaging = p;
-                            clientFactory.Add<Packaging>(p);
+                            baseFactory.Add<Packaging>(p);
                             //CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), string.Format("找不到包装方式[{0}]，请先添加该包装方式。", row["包装方式"].ToString().Trim()));
                             //return;
                         }
                         //检查货品类型是否存在
-                        GoodsType goodsType =clientFactory.GetData<GoodsType>().FirstOrDefault(o => o.Name.Contains(row["货品类型"].ToString().Trim()));
+                        GoodsType goodsType =baseFactory.GetModelList<GoodsType>().FirstOrDefault(o => o.Name.Contains(row["货品类型"].ToString().Trim()));
                         if (goodsType == null)
                         {
                             GoodsType gt = new GoodsType();
@@ -889,12 +886,12 @@ namespace USL
                             gt.Code = Rexlib.GetSpellCode(row["货品类型"].ToString().Trim());
                             gt.Name = row["货品类型"].ToString().Trim();
                             goodsType = gt;
-                            clientFactory.Add<GoodsType>(gt);
+                            baseFactory.Add<GoodsType>(gt);
                             //CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), string.Format("找不到货品类型[{0}]，请先添加该货品类型。", row["货品类型"].ToString().Trim()));
                             //return;
                         }
                         //检查货号是否存在
-                        Goods hasGoods = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).Find(o => o.Code == row["货号"].ToString().Trim());
+                        Goods hasGoods = baseFactory.GetModelList<Goods>().Find(o => o.Code == row["货号"].ToString().Trim());
                         bool isNewGoods = false;
                         if (hasGoods == null)
                         {
@@ -943,7 +940,7 @@ namespace USL
                     {
                         goodsService.AddAndUpdate(InsertGoodsList, UpdateGoodsList);
                         //InitGrid(BLLFty.Create<GoodsBLL>().GetVGoods());
-                        clientFactory.DataPageRefresh<Goods>();
+                        baseFactory.DataPageRefresh<Goods>();
                         CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "导入成功");
                         return;
                     }
@@ -976,7 +973,7 @@ namespace USL
                     DataSet ds = ExcelHelper.ImportExcel(openFileDialog.FileName);
 
                     //Int64 iBarCode = BLLFty.Create<GoodsBLL>().GetMaxBarCode();
-                    List<Goods> hasGoodsList = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]);
+                    List<Goods> hasGoodsList = baseFactory.GetModelList<Goods>();
                     List<Goods> InsertGoodsList = new List<Goods>();
                     List<Goods> UpdateGoodsList = new List<Goods>();
                     Hashtable htGoods = new Hashtable();
@@ -989,7 +986,7 @@ namespace USL
                             return;
                         }
                         //检查货品类型是否存在
-                        GoodsType goodsType =clientFactory.GetData<GoodsType>().FirstOrDefault(o => o.Name.Contains(row["货品类型"].ToString().Trim()));
+                        GoodsType goodsType =baseFactory.GetModelList<GoodsType>().FirstOrDefault(o => o.Name.Contains(row["货品类型"].ToString().Trim()));
                         if (goodsType == null)
                         {
                             GoodsType gt = new GoodsType();
@@ -997,7 +994,7 @@ namespace USL
                             gt.Code = Rexlib.GetSpellCode(row["货品类型"].ToString().Trim());
                             gt.Name = row["货品类型"].ToString().Trim();
                             goodsType = gt;
-                            clientFactory.Add<GoodsType>(gt);
+                            baseFactory.Add<GoodsType>(gt);
                             //CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), string.Format("找不到货品类型[{0}]，请先添加该货品类型。", row["货品类型"].ToString().Trim()));
                             //return;
                         }
@@ -1038,7 +1035,7 @@ namespace USL
 
                         //goods.ID = Guid.NewGuid();
                         if (row["货品类型"].ToString().Trim().Contains("包装"))
-                            hasGoods.Type = (int)GoodsBigType.SFGoods;
+                            hasGoods.Type = (int)GoodsBigTypeEnum.SFGoods;
                         else if (row["货品类型"].ToString().Trim().Contains("胶件")
                             || row["货品类型"].ToString().Trim().Equals("半成品")
                             || row["货品类型"].ToString().Trim().Contains("配件")
@@ -1046,11 +1043,11 @@ namespace USL
                             || row["货品类型"].ToString().Trim().Contains("电镀")
                             || row["货品类型"].ToString().Trim().Contains("移印")
                             || row["货品类型"].ToString().Trim().Contains("贴标"))
-                            hasGoods.Type = (int)GoodsBigType.Stuff;
+                            hasGoods.Type = (int)GoodsBigTypeEnum.Stuff;
                         else if (row["货品类型"].ToString().Trim().Contains("原料"))
-                            hasGoods.Type = (int)GoodsBigType.Material;
+                            hasGoods.Type = (int)GoodsBigTypeEnum.Material;
                         else if (row["货品类型"].ToString().Trim().Contains("筐袋"))
-                            hasGoods.Type = (int)GoodsBigType.Basket;
+                            hasGoods.Type = (int)GoodsBigTypeEnum.Basket;
                         else if (row["货品类型"].ToString().Trim().Equals("成品"))
                             continue;
                         else
@@ -1207,7 +1204,7 @@ namespace USL
                             //添加
                             Goods goods = null;
                             Goods jj = null;
-                            goods = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FirstOrDefault(o => o.Code == row["用料"].ToString().Trim());
+                            goods = baseFactory.GetModelList<Goods>().FirstOrDefault(o => o.Code == row["用料"].ToString().Trim());
                             if (goods == null)
                                 jj = InsertGoodsList.Find(o => o.Code == row["用料"].ToString().Trim());
                             else
@@ -1215,9 +1212,9 @@ namespace USL
                             if (jj != null)
                             {
                                 Goods g = InsertGoodsList.Find(o => o.Code == row["货号"].ToString().Trim());
-                                if (g != null && g.Type != (int)GoodsBigType.Goods)
+                                if (g != null && g.Type != (int)GoodsBigTypeEnum.Goods)
                                 {
-                                    if (jj.Type != (int)GoodsBigType.Material)
+                                    if (jj.Type != (int)GoodsBigTypeEnum.Material)
                                     {
                                         if (has[g.Code] == null)
                                         {
@@ -1242,9 +1239,9 @@ namespace USL
                             if (jju != null)
                             {
                                 Goods gu = UpdateGoodsList.Find(o => o.Code == row["货号"].ToString().Trim());
-                                if (gu != null && gu.Type != (int)GoodsBigType.Goods)
+                                if (gu != null && gu.Type != (int)GoodsBigTypeEnum.Goods)
                                 {
-                                    if (jju.Type != (int)GoodsBigType.Material)
+                                    if (jju.Type != (int)GoodsBigTypeEnum.Material)
                                     {
                                         if (has[gu.Code] == null)
                                         {
@@ -1279,7 +1276,7 @@ namespace USL
             }
             finally
             {
-                clientFactory.DataPageRefresh<VMaterial>();
+                baseFactory.DataPageRefresh<VMaterial>();
                 ((TabbedGoodsPage)itemDetail).DataRefresh();
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
@@ -1308,19 +1305,19 @@ namespace USL
                     if (row["货品类型"].ToString().Trim().Contains("胶件"))
                     {
                         strGoodsType = "原料";
-                        iGoodsType = (int)GoodsBigType.Material;
+                        iGoodsType = (int)GoodsBigTypeEnum.Material;
                     }
                     else if (row["货品类型"].ToString().Trim().Equals("成品"))
                     {
                         //strGoodsType = row["货品类型"].ToString().Trim();
-                        iGoodsType = (int)GoodsBigType.Goods;
+                        iGoodsType = (int)GoodsBigTypeEnum.Goods;
                     }
                     else
                     {
                         strGoodsType = row["货品类型"].ToString().Trim();
-                        iGoodsType = (int)GoodsBigType.Stuff;
+                        iGoodsType = (int)GoodsBigTypeEnum.Stuff;
                     }
-                    List<Goods> goodsList = clientFactory.GetData<Goods>();
+                    List<Goods> goodsList = baseFactory.GetModelList<Goods>();
                     //检查用料
                     hasMaterial = goodsList.FirstOrDefault(o => o.Name.Contains(row["用料"].ToString().Trim()));
                     if (row["货品类型"].ToString().Trim().Contains("胶件"))
@@ -1338,7 +1335,7 @@ namespace USL
                                 gt.ID = Guid.NewGuid();
                                 gt.Code = Rexlib.GetSpellCode(strGoodsType);
                                 gt.Name = strGoodsType;
-                                clientFactory.Add<GoodsType>(gt);
+                                baseFactory.Add<GoodsType>(gt);
                                 //CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), string.Format("找不到货品类型[{0}]，请先添加该货品类型。", row["货品类型"].ToString().Trim()));
                                 //return;
                             }
@@ -1349,12 +1346,12 @@ namespace USL
                             material.NWeight = 1;
                             material.CavityNumber = 1;
                             material.AddTime = DateTime.Now;
-                            clientFactory.Add<Goods>(material);
+                            baseFactory.Add<Goods>(material);
                             hasMaterial = material;
                         }
                     }
                     hasGoods = goodsList.FirstOrDefault(o => o.Code == row["货号"].ToString().Trim());
-                    hasParentGoods =clientFactory.GetData<VParentGoodsByBOM>().FirstOrDefault(o => o.货号 == row["货号"].ToString().Trim());
+                    hasParentGoods =baseFactory.GetModelList<VParentGoodsByBOM>().FirstOrDefault(o => o.货号 == row["货号"].ToString().Trim());
                 }
                 else
                     continue;
@@ -1391,7 +1388,7 @@ namespace USL
                     }
                     else
                     {
-                        BOM bomCheck = clientFactory.GetData<BOM>().FirstOrDefault(o => o.ParentGoodsID.Equals(hasParentGoods.ID.GetValueOrDefault()));
+                        BOM bomCheck = baseFactory.GetModelList<BOM>().FirstOrDefault(o => o.ParentGoodsID.Equals(hasParentGoods.ID.GetValueOrDefault()));
                         if (bomCheck != null)
                         {
                             BOM bom = new BOM();
@@ -1447,7 +1444,7 @@ namespace USL
                     XtraMessageBox.Show("连接失败，请检查设备的通讯方式。", "错误");
                     return;
                 }
-                List<UsersInfo> attUsers = ((List<UsersInfo>)MainForm.dataSourceList[typeof(List<UsersInfo>)]).FindAll(o => o.AttEnabled == true);
+                List<UsersInfo> attUsers = baseFactory.GetModelList<UsersInfo>().FindAll(o => o.AttEnabled == true);
                 int idwErrorCode = 0;
                 bool result;
                 foreach (UsersInfo user in attUsers)
@@ -1626,7 +1623,7 @@ namespace USL
                 AttGeneralLog attLog = null;
                 //lvLogs.Items.Clear();
                 MainForm.AxCZKEM1.EnableDevice(MainForm.AttParam.MachineNumber, false);//disable the device
-                List<AttGeneralLog> attLogs = clientFactory.GetData<AttGeneralLog>();
+                List<AttGeneralLog> attLogs = baseFactory.GetModelList<AttGeneralLog>();
                 if (MainForm.AxCZKEM1.ReadGeneralLogData(MainForm.AttParam.MachineNumber))//read all the attendance records to the memory
                 {
                     while (MainForm.AxCZKEM1.SSR_GetGeneralLogData(MainForm.AttParam.MachineNumber, out sdwEnrollNumber, out idwVerifyMode,
@@ -1655,11 +1652,11 @@ namespace USL
                             attLogList.Add(attLog);
                         }
                     }
-                    clientFactory.AddByBulkCopy<AttGeneralLog>(attLogList);
+                    baseFactory.AddByBulkCopy<AttGeneralLog>(attLogList);
                     if (attLogList.Count>0)
                     {
-                        clientFactory.UpdateCache<AttGeneralLog>();
-                        List<VAttGeneralLog> vLogs = clientFactory.UpdateCache<VAttGeneralLog>();
+                        baseFactory.DataPageRefresh<AttGeneralLog>();
+                        List<VAttGeneralLog> vLogs = baseFactory.DataPageRefresh<VAttGeneralLog>();
                         ((DataQueryPage)itemDetail).BindData(vLogs);
                         //获取并添加apt
                         MainForm.GetAttAppointments();
@@ -1680,7 +1677,7 @@ namespace USL
                 }
                 MainForm.AxCZKEM1.EnableDevice(MainForm.AttParam.MachineNumber, true);//enable the device
                 //MainForm.DataQueryPageRefresh();
-                clientFactory.DataPageRefresh<VAttAppointments>();
+                baseFactory.DataPageRefresh<VAttAppointments>();
             }
             catch (Exception ex)
             {
@@ -1698,7 +1695,8 @@ namespace USL
         {
             HistoryQueryForm form = new HistoryQueryForm(menu, ((DataQueryPage)itemDetail).gridView.DataSource);
             form.ShowDialog();
-            clientFactory.DataPageRefresh(menu.Name, form.Filter);
+            MainMenuEnum menuEnum = (MainMenuEnum)Enum.Parse(typeof(MainMenuEnum), menu.Name);
+            baseFactory.DataPageRefresh(menuEnum, form.Filter);
             //((DataQueryPage)itemDetail).InitGrid(MainForm.GetData(menu.Name));
             if (string.IsNullOrEmpty(form.Filter))
             {
@@ -1790,100 +1788,100 @@ namespace USL
 
         public void PageFty(string menuName)
         {
-            switch (menuName)
+            switch (Enum.Parse(typeof(MainMenuEnum), menuName))
             {
-                case MainMenuConstants.ProductionStockInBill:
-                //case MainMenuConstants.MakeupStockInBill:
-                case MainMenuConstants.SalesReturnBill:
-                case MainMenuConstants.FGStockInBill:
-                case MainMenuConstants.EMSReturnBill:
-                case MainMenuConstants.SFGStockInBill:
-                case MainMenuConstants.FSMStockInBill:
-                case MainMenuConstants.FSMReturnBill:
-                case MainMenuConstants.AssembleStockInBill:
-                case MainMenuConstants.ReturnedMaterialBill:
-                    itemDetail = new StockInBillPage(Guid.Empty, pageGroupCore, menuName);
+                case MainMenuEnum.ProductionStockInBill:
+                //case MainMenuEnum.MakeupStockInBill:
+                case MainMenuEnum.SalesReturnBill:
+                case MainMenuEnum.FGStockInBill:
+                case MainMenuEnum.EMSReturnBill:
+                case MainMenuEnum.SFGStockInBill:
+                case MainMenuEnum.FSMStockInBill:
+                case MainMenuEnum.FSMReturnBill:
+                case MainMenuEnum.AssembleStockInBill:
+                case MainMenuEnum.ReturnedMaterialBill:
+                    itemDetail = new StockInBillPage(Guid.Empty, pageGroupCore, (MainMenuEnum)Enum.Parse(typeof(MainMenuEnum), menuName));
                     iExtensions = (StockInBillPage)itemDetail;
                     break;
-                case MainMenuConstants.Order:
-                case MainMenuConstants.FSMOrder:
-                case MainMenuConstants.ProductionOrder:
-                    itemDetail = new OrderEditPage(Guid.Empty, menuName);
+                case MainMenuEnum.Order:
+                case MainMenuEnum.FSMOrder:
+                case MainMenuEnum.ProductionOrder:
+                    itemDetail = new OrderEditPage(Guid.Empty, (MainMenuEnum)Enum.Parse(typeof(MainMenuEnum), menuName));
                     iExtensions = (OrderEditPage)itemDetail;
                     break;
-                case MainMenuConstants.FGStockOutBill:
-                case MainMenuConstants.EMSStockOutBill:
-                case MainMenuConstants.SFGStockOutBill:
-                case MainMenuConstants.FSMStockOutBill:
-                case MainMenuConstants.GetMaterialBill:
-                case MainMenuConstants.FSMDPReturnBill:
-                case MainMenuConstants.EMSDPReturnBill:
-                    itemDetail = new StockOutBillPage(Guid.Empty, menuName);
+                case MainMenuEnum.FGStockOutBill:
+                case MainMenuEnum.EMSStockOutBill:
+                case MainMenuEnum.SFGStockOutBill:
+                case MainMenuEnum.FSMStockOutBill:
+                case MainMenuEnum.GetMaterialBill:
+                case MainMenuEnum.FSMDPReturnBill:
+                case MainMenuEnum.EMSDPReturnBill:
+                    itemDetail = new StockOutBillPage(Guid.Empty, (MainMenuEnum)Enum.Parse(typeof(MainMenuEnum), menuName));
                     iExtensions = (StockOutBillPage)itemDetail;
                     break;
-                case MainMenuConstants.BOM:
+                case MainMenuEnum.BOM:
                     itemDetail = new BOMEditPage(BOMType.BOM);
                     break;
-                case MainMenuConstants.MoldList:
+                case MainMenuEnum.MoldList:
                     itemDetail = new BOMEditPage(BOMType.MoldList);
                     break;
-                case MainMenuConstants.MoldMaterial:
+                case MainMenuEnum.MoldMaterial:
                     itemDetail = new BOMEditPage(BOMType.MoldMaterial);
                     break;
-                case MainMenuConstants.Assemble:
+                case MainMenuEnum.Assemble:
                     itemDetail = new BOMEditPage(BOMType.Assemble);
                     break;
-                case MainMenuConstants.MoldAllot:
+                case MainMenuEnum.MoldAllot:
                     itemDetail = new MoldAllotPage();
                     break;
-                case MainMenuConstants.CustomerSLSalePrice:
+                case MainMenuEnum.CustomerSLSalePrice:
                     itemDetail = new SLSalePricePage(BusinessContactType.Customer);
                     break;
-                case MainMenuConstants.SupplierSLSalePrice:
+                case MainMenuEnum.SupplierSLSalePrice:
                     itemDetail = new SLSalePricePage(BusinessContactType.Supplier);
                     break;
-                case MainMenuConstants.ReceiptBill:
+                case MainMenuEnum.ReceiptBill:
                     itemDetail = new ReceiptBillPage(Guid.Empty);
                     iExtensions = (ReceiptBillPage)itemDetail;
                     break;
-                case MainMenuConstants.PaymentBill:
+                case MainMenuEnum.PaymentBill:
                     itemDetail = new PaymentBillPage(Guid.Empty);
                     iExtensions = (PaymentBillPage)itemDetail;
                     break;
-                case MainMenuConstants.PermissionSetting:
+                case MainMenuEnum.PermissionSetting:
                     itemDetail = new PermissionSettingPage();
                     break;
-                case MainMenuConstants.Material:
+                case MainMenuEnum.Material:
                     itemDetail = new TabbedGoodsPage(menu, pageGroupCore, itemDetailButtonList);
                     iExtensions = (TabbedGoodsPage)itemDetail;
                     break;
-                case MainMenuConstants.ProductionScheduling:
+                case MainMenuEnum.ProductionScheduling:
                     itemDetail = new ProductionSchedulingPage();
                     break;
-                case MainMenuConstants.WageBill:
+                case MainMenuEnum.WageBill:
                     itemDetail = new WageBillPage(Guid.Empty);
                     iExtensions = (WageBillPage)itemDetail;
                     break;
-                case MainMenuConstants.SchClass:
+                case MainMenuEnum.SchClass:
                     itemDetail = new SchClassPage();
                     break;
-                case MainMenuConstants.StaffSchClass:
+                case MainMenuEnum.StaffSchClass:
                     itemDetail = new StaffSchClassPage();
                     break;
-                case MainMenuConstants.StaffAttendance:
+                case MainMenuEnum.StaffAttendance:
                     itemDetail = new AttendanceSchedulingPage();
                     break;
-                case MainMenuConstants.AttWageBill:
+                case MainMenuEnum.AttWageBill:
                     itemDetail = new AttWageBillPage(Guid.Empty);
                     iExtensions = (AttWageBillPage)itemDetail;
                     break;
-                case MainMenuConstants.SalesSummaryMonthlyReport:
+                case MainMenuEnum.SalesSummaryMonthlyReport:
                     itemDetail = new MonthlyChartPage();
                     break;
-                case MainMenuConstants.AnnualSalesSummaryByCustomerReport:
+                case MainMenuEnum.AnnualSalesSummaryByCustomerReport:
                     itemDetail = new CustomerChartPage();
                     break;
-                case MainMenuConstants.AnnualSalesSummaryByGoodsReport:
+                case MainMenuEnum.AnnualSalesSummaryByGoodsReport:
                     itemDetail = new GoodsChartPage();
                     break;
             }
@@ -1892,21 +1890,16 @@ namespace USL
         public void LoadBusinessData(MainMenu menu)
         {
             IList list = null;
+            MainMenuEnum menuEnum = (MainMenuEnum)Enum.Parse(typeof(MainMenuEnum), menu.Name);
             // 按单据贪婪加载
-            if (menu.Name.ToLower().Contains("order"))
+            if (menu.Name.ToLower().EndsWith("hd"))
             {
-                list = clientFactory.GetListByInclude<OrderHd>(nameof(OrderDtl));
-            }
-            else if (menu.Name.ToLower().Contains("stockinbill"))
-            {
-                list = clientFactory.GetListByInclude<StockInBillHd>(nameof(StockInBillDtl));
-            }
-            else if (menu.Name.ToLower().Contains("stockoutbill"))
-            {
-                list = clientFactory.GetListByInclude<StockOutBillHd>(nameof(StockOutBillDtl));
+                list = baseFactory.GetListByInclude(menuEnum, menu.Name.Replace("Hd", "Dtl"));
             }
             else
-                list = clientFactory.ExecuteQuery(menu.Name, string.Empty);
+            {
+                list = baseFactory.ExecuteQuery(menuEnum, string.Empty);
+            }
             if (list != null)
             {
                 itemDetail = new DataQueryPage(menu, list, pageGroupCore, itemDetailButtonList);
@@ -1918,8 +1911,8 @@ namespace USL
             {
                 ((XtraUserControl)itemDetail).Dock = System.Windows.Forms.DockStyle.Fill;
                 xtraScrollableControl1.Controls.Add((XtraUserControl)itemDetail);
-                if (ClientFactory.itemDetailList.ContainsKey(menu.Name) == false)
-                    ClientFactory.itemDetailList.Add(menu.Name, itemDetail);
+                if (BaseFactory.itemDetailList.ContainsKey(menu.Name) == false)
+                    BaseFactory.itemDetailList.Add(menu.Name, itemDetail);
                 //RootWorkItem.State["ItemDetailList"] = itemDetailList;
                 CreateToolsButton(menu);
                 //菜单
@@ -1981,7 +1974,8 @@ namespace USL
             {
                 this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
                 //MainForm.GetDataSource();
-                clientFactory.DataPageRefresh(menu.Name);
+                MainMenuEnum menuEnum = (MainMenuEnum)Enum.Parse(typeof(MainMenuEnum), menu.Name);
+                baseFactory.DataPageRefresh(menuEnum);
             }
             catch (Exception ex)
             {
@@ -2007,11 +2001,12 @@ namespace USL
                 this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
                 if (itemDetail.Save())
                 {
+                    MainMenuEnum menuEnum = (MainMenuEnum)Enum.Parse(typeof(MainMenuEnum), menu.Name);
                     if (!menu.Name.ToUpper().Contains("BILL") && !menu.Name.Contains("Order") && !menu.Name.Contains("SLSalePrice"))
-                        //if (menu.Name != MainMenuConstants.ReceiptBill && menu.Name != MainMenuConstants.PaymentBill && !menu.Name.ToUpper().Contains("WAGEBILL") &&
+                        //if (menu.Name != MainMenuEnum.ReceiptBill && menu.Name != MainMenuEnum.PaymentBill && !menu.Name.ToUpper().Contains("WAGEBILL") &&
                         //    !menu.Name.ToUpper().Contains("STOCKIN") && !menu.Name.ToUpper().Contains("STOCKOUT") && !menu.Name.ToUpper().Contains("ORDER") && !menu.Name.Contains("MaterialBill")
                         //    && !menu.Name.ToUpper().Contains("RECEIPT") && !menu.Name.ToUpper().Contains("PAYMENT") && !menu.Name.Contains("SLSalePrice"))
-                        clientFactory.DataPageRefresh(menu.Name);
+                    baseFactory.DataPageRefresh(menuEnum);
                     setNavButtonStatus(menu, ButtonType.btnSave);
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
                 }
@@ -2033,10 +2028,11 @@ namespace USL
                 this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
                 if (itemDetail.Audit())
                 {
+                    MainMenuEnum menuEnum = (MainMenuEnum)Enum.Parse(typeof(MainMenuEnum), menu.Name);
                     //if (!menu.Name.ToUpper().Contains("STOCKIN") && !menu.Name.ToUpper().Contains("STOCKOUT") && !menu.Name.ToUpper().Contains("ORDER") && !menu.Name.ToUpper().Contains("WAGEBILL")
                     //     && !menu.Name.ToUpper().Contains("RECEIPT") && !menu.Name.ToUpper().Contains("PAYMENT"))
                     if (!menu.Name.ToUpper().Contains("BILL") && !menu.Name.Contains("Order") && !menu.Name.Contains("SLSalePrice"))
-                        clientFactory.DataPageRefresh(menu.Name);
+                        baseFactory.DataPageRefresh(menuEnum);
                     if (!menu.Name.Contains("Query"))
                     {
                         if (btnAudit.Caption == "审核")
@@ -2330,11 +2326,13 @@ namespace USL
                 WindowsUIView view = manager.View as WindowsUIView;
                 if (view != null)
                 {
-                    foreach (MainMenu mm in menuList.FindAll(o => o.ParentID == MainForm.mainMenuList[item.Name].ParentID))
+                    MainMenuEnum mainMenuEnum = (MainMenuEnum)Enum.Parse(typeof(MainMenuEnum), item.Name);
+                    foreach (MainMenu mm in menuList.FindAll(o => o.ParentID == MainForm.mainMenuList[mainMenuEnum].ParentID))
                     {
+                        MainMenuEnum menuEnum = (MainMenuEnum)Enum.Parse(typeof(MainMenuEnum), mm.Name);
                         if (MainForm.hasItemDetailPage[mm.Name] == null)
                         {
-                            MainForm.itemDetailPageList[mm.Name].LoadBusinessData(MainForm.mainMenuList[mm.Name]);
+                            MainForm.itemDetailPageList[menuEnum].LoadBusinessData(mm);
                             MainForm.hasItemDetailPage.Add(mm.Name, true);
                         }
                     }

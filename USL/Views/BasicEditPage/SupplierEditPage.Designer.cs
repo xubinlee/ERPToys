@@ -28,14 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions3 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject9 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject10 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject11 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject12 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions4 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject13 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject14 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject15 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject16 = new DevExpress.Utils.SerializableAppearanceObject();
             this.layoutControl = new DevExpress.XtraLayout.LayoutControl();
             this.lueType = new DevExpress.XtraEditors.LookUpEdit();
-            this.supplierBindingSource = new System.Windows.Forms.BindingSource();
-            this.typesListBindingSource = new System.Windows.Forms.BindingSource();
+            this.supplierBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.typesListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.txtQQ = new DevExpress.XtraEditors.ButtonEdit();
             this.lblQQ = new DevExpress.XtraEditors.LabelControl();
             this.txtInvoiceAddr = new DevExpress.XtraEditors.TextEdit();
@@ -212,24 +229,20 @@
             this.lueType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.lueType.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "", 20, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near)});
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "", 20, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default)});
             this.lueType.Properties.DataSource = this.typesListBindingSource;
             this.lueType.Properties.DisplayMember = "Name";
             this.lueType.Properties.NullText = "";
             this.lueType.Properties.PopupSizeable = false;
             this.lueType.Properties.ShowHeader = false;
-            this.lueType.Properties.ValueMember = "No";
+            this.lueType.Properties.ValueMember = "Index";
             this.lueType.Size = new System.Drawing.Size(102, 20);
             this.lueType.StyleController = this.layoutControl;
             this.lueType.TabIndex = 9;
             // 
             // supplierBindingSource
             // 
-            this.supplierBindingSource.DataSource = typeof(DBML.Supplier);
-            // 
-            // typesListBindingSource
-            // 
-            this.typesListBindingSource.DataSource = typeof(DBML.TypesList);
+            this.supplierBindingSource.DataSource = typeof(EDMX.Supplier);
             // 
             // txtQQ
             // 
@@ -237,8 +250,9 @@
             this.txtQQ.EnterMoveNextControl = true;
             this.txtQQ.Location = new System.Drawing.Point(92, 156);
             this.txtQQ.Name = "txtQQ";
+            editorButtonImageOptions1.Image = global::USL.Properties.Resources.QQ_16;
             this.txtQQ.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::USL.Properties.Resources.QQ_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.txtQQ.Size = new System.Drawing.Size(536, 22);
             this.txtQQ.StyleController = this.layoutControl;
             this.txtQQ.TabIndex = 33;
@@ -335,8 +349,9 @@
             this.txtFax.EnterMoveNextControl = true;
             this.txtFax.Location = new System.Drawing.Point(92, 180);
             this.txtFax.Name = "txtFax";
+            editorButtonImageOptions2.Image = global::USL.Properties.Resources.fax;
             this.txtFax.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::USL.Properties.Resources.fax, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.txtFax.Size = new System.Drawing.Size(536, 22);
             this.txtFax.StyleController = this.layoutControl;
             this.txtFax.TabIndex = 26;
@@ -347,8 +362,9 @@
             this.txtContactCellPhone.EnterMoveNextControl = true;
             this.txtContactCellPhone.Location = new System.Drawing.Point(92, 132);
             this.txtContactCellPhone.Name = "txtContactCellPhone";
+            editorButtonImageOptions3.Image = global::USL.Properties.Resources.MobilePhone;
             this.txtContactCellPhone.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::USL.Properties.Resources.MobilePhone, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject3, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions3, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.txtContactCellPhone.Size = new System.Drawing.Size(536, 22);
             this.txtContactCellPhone.StyleController = this.layoutControl;
             this.txtContactCellPhone.TabIndex = 25;
@@ -359,8 +375,9 @@
             this.txtContactTel.EnterMoveNextControl = true;
             this.txtContactTel.Location = new System.Drawing.Point(92, 108);
             this.txtContactTel.Name = "txtContactTel";
+            editorButtonImageOptions4.Image = global::USL.Properties.Resources.HomePhone;
             this.txtContactTel.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::USL.Properties.Resources.HomePhone, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject4, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions4, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.txtContactTel.Size = new System.Drawing.Size(536, 22);
             this.txtContactTel.StyleController = this.layoutControl;
             this.txtContactTel.TabIndex = 24;
@@ -531,6 +548,8 @@
             // 
             this.lblName.Appearance.Image = global::USL.Properties.Resources.mark;
             this.lblName.Appearance.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblName.Appearance.Options.UseImage = true;
+            this.lblName.Appearance.Options.UseImageAlign = true;
             this.lblName.Location = new System.Drawing.Point(12, 36);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(76, 20);
@@ -553,6 +572,8 @@
             // 
             this.lblCode.Appearance.Image = global::USL.Properties.Resources.mark;
             this.lblCode.Appearance.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblCode.Appearance.Options.UseImage = true;
+            this.lblCode.Appearance.Options.UseImageAlign = true;
             this.lblCode.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.lblCode.Location = new System.Drawing.Point(12, 12);
             this.lblCode.Name = "lblCode";
@@ -600,7 +621,6 @@
             this.layoutControlItem29,
             this.layoutControlItem32,
             this.lciType});
-            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup1.Name = "Root";
             this.layoutControlGroup1.Size = new System.Drawing.Size(640, 480);
             this.layoutControlGroup1.TextVisible = false;

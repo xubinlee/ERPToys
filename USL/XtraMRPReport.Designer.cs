@@ -815,7 +815,7 @@
             // 
             // goodsBindingSource
             // 
-            this.goodsBindingSource.DataSource = typeof(DBML.VProductionOrder);
+            this.goodsBindingSource.DataSource = typeof(EDMX.VProductionOrder);
             // 
             // DetailReportSFGoods
             // 
@@ -1286,7 +1286,7 @@
             // 
             // sfGoodsByBOMBindingSource
             // 
-            this.sfGoodsByBOMBindingSource.DataSource = typeof(DBML.VOrderDtlByBOM);
+            this.sfGoodsByBOMBindingSource.DataSource = typeof(EDMX.VOrderDtlByBOM);
             // 
             // DetailReportAssemble
             // 
@@ -1656,7 +1656,7 @@
             // 
             // assembleBindingSource
             // 
-            this.assembleBindingSource.DataSource = typeof(DBML.VOrderDtlByBOM);
+            this.assembleBindingSource.DataSource = typeof(EDMX.VOrderDtlByBOM);
             // 
             // DetailReportColor
             // 
@@ -1880,7 +1880,7 @@
             // 
             // colorDataSource
             // 
-            this.colorDataSource.DataSource = typeof(DBML.VOrderDtlByColor);
+            this.colorDataSource.DataSource = typeof(EDMX.VOrderDtlByColor);
             this.colorDataSource.Name = "colorDataSource";
             // 
             // XtraMRPReport

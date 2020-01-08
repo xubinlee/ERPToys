@@ -103,7 +103,7 @@
             // 
             // schClassBindingSource
             // 
-            this.schClassBindingSource.DataSource = typeof(DBML.SchClass);
+            this.schClassBindingSource.DataSource = typeof(EDMX.SchClass);
             // 
             // layoutView
             // 

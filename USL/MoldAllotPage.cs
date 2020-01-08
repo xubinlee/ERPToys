@@ -11,18 +11,19 @@ using DevExpress.XtraEditors;
 using IBase;
 using Factory;
 using BLL;
-using DBML;
+using EDMX;
 using CommonLibrary;
 using Utility;
 using DevExpress.XtraGrid.Views.Grid;
 using System.Collections;
 using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class MoldAllotPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
-        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         List<MoldAllot> moldAllotList;
         List<MoldAllot> supplierMoldAllotList;
         Guid focusedID;
@@ -41,10 +42,10 @@ namespace USL
 
         public void BindData(object obj)
         {
-            vSupplierBindingSource.DataSource = MainForm.dataSourceList[typeof(List<VSupplier>)];
-            //vGoodsByBOMBindingSource.DataSource = ((List<VGoodsByBOM>)MainForm.dataSourceList[typeof(List<VGoodsByBOM>)]).FindAll(o => o.类型 == (int)BOMType.MoldList);//MainForm.dataSourceList[typeof(List<VGoods>)];
-            goodsBindingSource.DataSource = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).FindAll(o => o.Type == (int)GoodsBigType.Mold);
-            moldAllotList = ((List<MoldAllot>)MainForm.dataSourceList[typeof(List<MoldAllot>)]);
+            vSupplierBindingSource.DataSource = baseFactory.GetModelList<VSupplier>();
+            //vGoodsByBOMBindingSource.DataSource = ((List<VGoodsByBOM>)baseFactory.GetModelList<VGoodsByBOM>().FindAll(o => o.类型 == (int)BOMType.MoldList);//baseFactory.GetModelList<VGoods>();
+            goodsBindingSource.DataSource = baseFactory.GetModelList<Goods>().FindAll(o => o.Type.Equals((int)GoodsBigTypeEnum.Mold)); 
+            moldAllotList = baseFactory.GetModelList<MoldAllot>();
             GetMoldAllotDataSource();
         }
 
@@ -63,7 +64,7 @@ namespace USL
             if (winExplorerView.GetFocusedRowCellValue(colID) != null)
             {
                 focusedID = new Guid(winExplorerView.GetFocusedRowCellValue(colID).ToString());
-                moldAllotList = ((List<MoldAllot>)MainForm.dataSourceList[typeof(List<MoldAllot>)]);
+                moldAllotList = baseFactory.GetModelList<MoldAllot>();
                 if (moldAllotList != null)
                 {
                     bOMBindingSource.DataSource = supplierMoldAllotList = moldAllotList.FindAll(o => o.SupplierID == focusedID);
@@ -204,7 +205,7 @@ namespace USL
             List<MoldAllot> list = ((BindingSource)view.DataSource).DataSource as List<MoldAllot>;
             if (e.IsGetData && list != null && list.Count > 0)
             {
-                Goods goods = ((List<Goods>)MainForm.dataSourceList[typeof(List<Goods>)]).Find(o => o.ID == list[e.ListSourceRowIndex].GoodsID);
+                Goods goods = baseFactory.GetModelList<Goods>().Find(o => o.ID == list[e.ListSourceRowIndex].GoodsID);
                 if (goods != null)
                 {
                     if (e.Column == colName)
@@ -222,13 +223,13 @@ namespace USL
         private void gridView_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             Save();
-            clientFactory.DataPageRefresh<MoldAllot>();
+            baseFactory.DataPageRefresh<MoldAllot>();
         }
 
         private void gridView_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
             Save();
-            clientFactory.DataPageRefresh<MoldAllot>();
+            baseFactory.DataPageRefresh<MoldAllot>();
         }
     }
 }

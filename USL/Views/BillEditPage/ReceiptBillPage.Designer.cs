@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReceiptBillPage));
-            DevExpress.XtraGrid.StyleFormatCondition styleFormatCondition1 = new DevExpress.XtraGrid.StyleFormatCondition();
+            DevExpress.XtraGrid.StyleFormatCondition styleFormatCondition2 = new DevExpress.XtraGrid.StyleFormatCondition();
             this.colStatus = new DevExpress.XtraGrid.Columns.GridColumn();
             this.layoutControl = new DevExpress.XtraLayout.LayoutControl();
             this.meUnReceiptedAMT = new DevExpress.XtraEditors.TextEdit();
@@ -247,7 +247,7 @@
             // 
             // receiptBillHdBindingSource
             // 
-            this.receiptBillHdBindingSource.DataSource = typeof(DBML.ReceiptBillHd);
+            this.receiptBillHdBindingSource.DataSource = typeof(EDMX.ReceiptBillHd);
             // 
             // meReceiptedAM
             // 
@@ -306,7 +306,7 @@
             // 
             // vReceiptBillDtlBindingSource
             // 
-            this.vReceiptBillDtlBindingSource.DataSource = typeof(DBML.VReceiptBillDtl);
+            this.vReceiptBillDtlBindingSource.DataSource = typeof(EDMX.VReceiptBillDtl);
             // 
             // imageListCheck
             // 
@@ -377,14 +377,14 @@
             this.colLastReceiptedAMT,
             this.colStatus,
             this.colRemark});
-            styleFormatCondition1.Appearance.ForeColor = System.Drawing.Color.Red;
-            styleFormatCondition1.Appearance.Options.UseForeColor = true;
-            styleFormatCondition1.ApplyToRow = true;
-            styleFormatCondition1.Column = this.colStatus;
-            styleFormatCondition1.Condition = DevExpress.XtraGrid.FormatConditionEnum.Equal;
-            styleFormatCondition1.Value1 = 3;
+            styleFormatCondition2.Appearance.ForeColor = System.Drawing.Color.Red;
+            styleFormatCondition2.Appearance.Options.UseForeColor = true;
+            styleFormatCondition2.ApplyToRow = true;
+            styleFormatCondition2.Column = this.colStatus;
+            styleFormatCondition2.Condition = DevExpress.XtraGrid.FormatConditionEnum.Equal;
+            styleFormatCondition2.Value1 = 3;
             this.gridView.FormatConditions.AddRange(new DevExpress.XtraGrid.StyleFormatCondition[] {
-            styleFormatCondition1});
+            styleFormatCondition2});
             this.gridView.GridControl = this.gridControl;
             this.gridView.Name = "gridView";
             this.gridView.OptionsFind.FindNullPrompt = "请输入查找内容...";
@@ -577,7 +577,7 @@
             // 
             // businessContactBindingSource
             // 
-            this.businessContactBindingSource.DataSource = typeof(DBML.Company);
+            this.businessContactBindingSource.DataSource = typeof(EDMX.Company);
             // 
             // lueBillType
             // 
@@ -594,15 +594,11 @@
             this.lueBillType.Properties.NullText = "";
             this.lueBillType.Properties.PopupSizeable = false;
             this.lueBillType.Properties.ShowHeader = false;
-            this.lueBillType.Properties.ValueMember = "No";
+            this.lueBillType.Properties.ValueMember = "Index";
             this.lueBillType.Size = new System.Drawing.Size(178, 20);
             this.lueBillType.StyleController = this.layoutControl;
             this.lueBillType.TabIndex = 4;
             this.lueBillType.EditValueChanged += new System.EventHandler(this.lueBillType_EditValueChanged);
-            // 
-            // billTypeBindingSource
-            // 
-            this.billTypeBindingSource.DataSource = typeof(DBML.TypesList);
             // 
             // lueWarehouse
             // 
@@ -725,7 +721,7 @@
             // 
             // vUsersInfoBindingSource
             // 
-            this.vUsersInfoBindingSource.DataSource = typeof(DBML.VUsersInfo);
+            this.vUsersInfoBindingSource.DataSource = typeof(EDMX.VUsersInfo);
             // 
             // lueAuditor
             // 
@@ -759,14 +755,10 @@
             this.luePOClear.Properties.NullText = "";
             this.luePOClear.Properties.PopupSizeable = false;
             this.luePOClear.Properties.ShowHeader = false;
-            this.luePOClear.Properties.ValueMember = "No";
+            this.luePOClear.Properties.ValueMember = "Index";
             this.luePOClear.Size = new System.Drawing.Size(217, 20);
             this.luePOClear.StyleController = this.layoutControl;
             this.luePOClear.TabIndex = 5;
-            // 
-            // pOClearBindingSource
-            // 
-            this.pOClearBindingSource.DataSource = typeof(DBML.TypesList);
             // 
             // meBalance
             // 
@@ -1150,7 +1142,7 @@
             // 
             // statementOfAccountToCustomerReportBindingSource
             // 
-            this.statementOfAccountToCustomerReportBindingSource.DataSource = typeof(DBML.StatementOfAccountToCustomerReport);
+            this.statementOfAccountToCustomerReportBindingSource.DataSource = typeof(EDMX.StatementOfAccountToCustomerReport);
             // 
             // gvSOA
             // 

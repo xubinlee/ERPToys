@@ -9,3 +9,5 @@ D:\Project\ERPToys\Common\obj\Debug\Common.dll
 D:\Project\ERPToys\Common\obj\Debug\Common.pdb
 D:\ERPToys\Common.dll
 D:\ERPToys\Common.pdb
+D:\Project\ERPToys\Common\obj\Debug\Common.csproj.CopyComplete
+D:\Project\ERPToys\Common\obj\Debug\Common.csprojAssemblyReference.cache

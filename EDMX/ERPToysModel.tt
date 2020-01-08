@@ -433,7 +433,7 @@ public class CodeStringGenerator
 	public string WriteEntityTypeSerializationInfo(EntityType type)
 	{
 		StringBuilder output = new StringBuilder();
-		output.AppendLine("[DataContract]");
+		output.AppendLine("[DataContract(IsReference = true)]");
 
 		List<String> typeList = new List<String>();
 		var complexProperties = _typeMapper.GetComplexProperties(type);

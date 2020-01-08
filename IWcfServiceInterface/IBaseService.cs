@@ -49,6 +49,16 @@ namespace IWcfServiceInterface
         [FaultContract(typeof(ServiceExceptionDetail))]
         [WebInvoke(Method = "DELETE", UriTemplate = "Delete", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         int Delete(SerializedParam param);
+
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="param">已序列化的参数类</param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceExceptionDetail))]
+        [WebInvoke(Method = "DELETE", UriTemplate = "DelByBulk", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        int DelByBulk(SerializedParam param);
         #endregion
 
         #region 修改

@@ -9,16 +9,19 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using IBase;
-using DBML;
+using EDMX;
 using Factory;
 using BLL;
 using CommonLibrary;
 using Utility;
+using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class DeptEditPage : DevExpress.XtraEditors.XtraUserControl, IDataEdit
     {
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         Department dept = null;
         public DeptEditPage(Object obj)
         {
@@ -52,7 +55,8 @@ namespace USL
                     dept = obj;
                     dept.ID = Guid.NewGuid();
                     dept.AddTime = DateTime.Now;
-                    if (((List<Department>)MainForm.dataSourceList[typeof(List<Department>)]).Exists(o => o.Name == dept.Name))
+                    bool exists = baseFactory.GetListByNoTracking<Company>().Any(o => o.ID != obj.ID && o.Name.Equals(dept.Name));
+                    if (exists)
                     {
                         XtraMessageBox.Show("该部门已经存在，不能重复添加。", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;

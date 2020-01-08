@@ -168,7 +168,7 @@
             // 
             // vGoodsByMoldAllotBindingSource
             // 
-            this.vGoodsByMoldAllotBindingSource.DataSource = typeof(DBML.VGoodsByMoldAllot);
+            this.vGoodsByMoldAllotBindingSource.DataSource = typeof(EDMX.VGoodsByMoldAllot);
             // 
             // gridView
             // 

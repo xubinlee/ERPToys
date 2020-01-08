@@ -44,7 +44,7 @@ namespace USL
 
         private void CreateFilterColumns()
         {
-            if (mainMenu.Name.Contains("Report") && mainMenu.Name != MainMenuConstants.SalesBillSummaryReport)
+            if (mainMenu.Name.Contains("Report") && mainMenu.Name != MainMenuEnum.SalesBillSummaryReport.ToString())
             {
                 UnboundFilterColumn billDate = new UnboundFilterColumn("单据日期", "单据日期", typeof(String), new RepositoryItemDateEdit(), FilterColumnClauseClass.DateTime);
                 filterControl.FilterColumns.Add(billDate);

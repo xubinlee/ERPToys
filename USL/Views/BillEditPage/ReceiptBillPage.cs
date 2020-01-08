@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using IBase;
-using DBML;
+using EDMX;
 using Factory;
 using BLL;
 using Utility;
@@ -17,31 +17,21 @@ using CommonLibrary;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Columns;
 using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class ReceiptBillPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail, IExtensions
     {
-        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
-        ReceiptBillHd hd;
-        List<VReceiptBillDtl> dtl;
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
+        //ReceiptBillHd hd;
+        //List<VReceiptBillDtl> dtl;
         List<StatementOfAccountToCustomerReport> soa;
         Guid headID;
         //String billType;
-        List<TypesList> types;   //类型列表
+        //List<TypesList> types;   //类型列表
 
-        public ReceiptBillHd Hd
-        {
-            get
-            {
-                return hd;
-            }
-
-            set
-            {
-                hd = value;
-            }
-        }
+        public Guid HeadID { get => headID; set => headID = value; }
 
         public ReceiptBillPage(Guid hdID)
         {
@@ -86,20 +76,37 @@ namespace USL
             {
                 headID = (Guid)hdID;
                 receiptBillHdBindingSource.DataSource = hd = BLLFty.Create<ReceiptBillBLL>().GetReceiptBillHd(headID);
-                switch (types.Find(o => o.Type == TypesListConstants.ReceiptBillType && o.No == int.Parse(lueBillType.EditValue.ToString())).SubType)
+                switch (Enum.Parse(typeof(ReceiptBillTypeEnum),lueBillType.EditValue.ToString()))
                 {
-                    case TypesListConstants.SalesReceipt:
-                        //dtl = ((List<VReceiptBillDtl>)MainForm.dataSourceList[typeof(List<VReceiptBillDtl>)]).FindAll(o =>
-                        //            o.CompanyID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == int.Parse(lueBillType.EditValue.ToString()));
+                    case ReceiptBillTypeEnum.SalesReceipt:
                         dtl = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
                                     o.CompanyID == new Guid(lueBusinessContact.EditValue.ToString()) && (o.Type == 0 || o.Type == 2));
                         break;
-                    case TypesListConstants.PurchaseReturnReceipt:
+                    case ReceiptBillTypeEnum.SalesReturnPayment:
+                        break;
+                    case ReceiptBillTypeEnum.PurchaseReturnReceipt:
                         dtl = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
                                     o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == int.Parse(lueBillType.EditValue.ToString()));
                         break;
+                    case ReceiptBillTypeEnum.SupplierReceipt:
+                        break;
+                    default:
+                        break;
                 }
-                List<VReceiptBill> list = ((List<VReceiptBill>)MainForm.dataSourceList[typeof(List<VReceiptBill>)]).FindAll(o => o.HdID == headID);
+                //switch (types.Find(o => o.Type == TypesListConstants.ReceiptBillType && o.No == int.Parse(lueBillType.EditValue.ToString())).SubType)
+                //{
+                //    case TypesListConstants.SalesReceipt:
+                //        //dtl = ((List<VReceiptBillDtl>)baseFactory.GetModelList<VReceiptBillDtl>().FindAll(o =>
+                //        //            o.CompanyID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == int.Parse(lueBillType.EditValue.ToString()));
+                //        dtl = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
+                //                    o.CompanyID == new Guid(lueBusinessContact.EditValue.ToString()) && (o.Type == 0 || o.Type == 2));
+                //        break;
+                //    case TypesListConstants.PurchaseReturnReceipt:
+                //        dtl = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
+                //                    o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == int.Parse(lueBillType.EditValue.ToString()));
+                //        break;
+                //}
+                List<VReceiptBill> list = baseFactory.GetModelList<VReceiptBill>().FindAll(o => o.HdID == headID);
                 for (int i = dtl.Count - 1; i >= 0; i--)
                 {
                     VReceiptBill obj = list.Find(o => o.BillID == dtl[i].BillID);
@@ -115,16 +122,16 @@ namespace USL
                 }
                 vReceiptBillDtlBindingSource.DataSource = dtl;
                 statementOfAccountToCustomerReportBindingSource.DataSource = soa = 
-                    ((List<StatementOfAccountToCustomerReport>)MainForm.dataSourceList[typeof(List<StatementOfAccountToCustomerReport>)]).FindAll(o => o.收款单号 == hd.BillNo);
+                    baseFactory.GetModelList<StatementOfAccountToCustomerReport>().FindAll(o => o.收款单号 == hd.BillNo);
                 decimal billAMT = dtl.Sum(o => o.LastReceiptedAMT.Value);
                 meLastAMT.EditValue = billAMT;
                 meTotalAMT.EditValue = (hd.Balance == null ? 0 : hd.Balance) + billAMT;
             }
-            types = MainForm.dataSourceList[typeof(List<TypesList>)] as List<TypesList>;
+            //types = baseFactory.GetModelList<TypesList>();
             //单据类型
-            billTypeBindingSource.DataSource = types.FindAll(o => o.Type == TypesListConstants.ReceiptBillType && o.No != 2);//不显示销售退货付款类型
-            pOClearBindingSource.DataSource = types.FindAll(o => o.Type == TypesListConstants.POClearType);
-            vUsersInfoBindingSource.DataSource = MainForm.dataSourceList[typeof(List<VUsersInfo>)];
+            billTypeBindingSource.DataSource = EnumHelper.GetEnumValues<ReceiptBillTypeEnum>(false).FindAll(o => o.Index != (int)ReceiptBillTypeEnum.SalesReturnPayment);//不显示销售退货付款类型 // types.FindAll(o => o.Type == TypesListConstants.ReceiptBillType && o.No != 2);//不显示销售退货付款类型
+            pOClearBindingSource.DataSource = EnumHelper.GetEnumValues<POClearTypeEnum>(false);// types.FindAll(o => o.Type == TypesListConstants.POClearType);
+            vUsersInfoBindingSource.DataSource = baseFactory.GetModelList<VUsersInfo>();
             gridView.BestFitColumns();
             gridView.FindFilterText = string.Empty;
             gridControl.EndUpdate();
@@ -144,7 +151,7 @@ namespace USL
             //    else
             //        hd.BillNo = "SK" + DateTime.Now.ToString("yyyyMMdd") + "001";
             //}
-            hd.BillNo = MainForm.GetMaxBillNo(MainMenuConstants.ReceiptBill, true).MaxBillNo;
+            hd.BillNo = MainForm.GetMaxBillNo(MainMenuEnum.ReceiptBill, true).MaxBillNo;
             meLastAMT.EditValue = null;
             meTotalAMT.EditValue = null;
             headID = Guid.Empty;
@@ -181,7 +188,7 @@ namespace USL
 
                     }
                     //刷新查询界面
-                    clientFactory.DataPageRefresh<VReceiptBill>();
+                    baseFactory.DataPageRefresh<VReceiptBill>();
                     receiptBillHdBindingSource.DataSource = hd = new ReceiptBillHd();
                     vReceiptBillDtlBindingSource.DataSource = dtl = new List<VReceiptBillDtl>();
                     CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "删除成功");
@@ -333,11 +340,11 @@ namespace USL
                 meLastAMT.EditValue = billAMT;
                 meTotalAMT.EditValue = (hd.Balance == null ? 0 : hd.Balance) + billAMT;
                 headID = hd.ID;
-                clientFactory.DataPageRefresh<VReceiptBill>();
-                //MainForm.BillSaveRefresh(MainMenuConstants.ReceiptBillQuery);
+                baseFactory.DataPageRefresh<VReceiptBill>();
+                //MainForm.BillSaveRefresh(MainMenuEnum.ReceiptBillQuery);
                 ////MainForm.DataQueryPageRefresh();
                 statementOfAccountToCustomerReportBindingSource.DataSource = soa = //BLLFty.Create<ReportBLL>().GetStatementOfAccountToCustomerReport(string.Format("收款单号='{0}'", hd.BillNo));
-                    ((List<StatementOfAccountToCustomerReport>)MainForm.dataSourceList[typeof(List<StatementOfAccountToCustomerReport>)]).FindAll(o => o.收款单号 == hd.BillNo);
+                    baseFactory.GetModelList<StatementOfAccountToCustomerReport>().FindAll(o => o.收款单号 == hd.BillNo);
                 //DataQueryPageRefresh();
                 //QueryPageRefresh();
                 CommonServices.ErrorTrace.SetSuccessfullyInfo(this.FindForm(), "保存成功");
@@ -363,7 +370,7 @@ namespace USL
             {
                 this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
                 gridView.CloseEditForm();
-                if (hd != null)
+                if (headID != null && headID!=Guid.Empty)
                 {
                     ReceiptBillHd receipt = BLLFty.Create<ReceiptBillBLL>().GetReceiptBillHd(hd.ID);
 
@@ -448,7 +455,7 @@ namespace USL
                             soHdList.Add(soHd);
                         }
                         //删除提醒信息
-                        Alert alert = ((List<Alert>)MainForm.dataSourceList[typeof(List<Alert>)]).Find(o => o.BillID == item.BillID);
+                        Alert alert = baseFactory.GetModelList<Alert>().Find(o => o.BillID == item.BillID);
                         if (alert != null)
                             dellist.Add(alert);
                     }
@@ -476,8 +483,8 @@ namespace USL
             }
             finally
             {
-                //MainForm.BillSaveRefresh(MainMenuConstants.ReceiptBillQuery);
-                clientFactory.DataPageRefresh<VReceiptBill>();
+                //MainForm.BillSaveRefresh(MainMenuEnum.ReceiptBillQuery);
+                baseFactory.DataPageRefresh<VReceiptBill>();
                 this.Cursor = System.Windows.Forms.Cursors.Default;
             }
         }
@@ -545,30 +552,47 @@ namespace USL
             vReceiptBillDtlBindingSource.Clear();
             if (!string.IsNullOrEmpty(lueBillType.Text.Trim()))
             {
-                switch (types.Find(o => o.Type == TypesListConstants.ReceiptBillType && o.No == int.Parse(lueBillType.EditValue.ToString())).SubType)
+                switch (Enum.Parse(typeof(ReceiptBillTypeEnum),lueBillType.EditValue.ToString()))
                 {
-                    case TypesListConstants.SalesReceipt:
+                    case ReceiptBillTypeEnum.SalesReceipt:
                         this.lueBusinessContact.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.receiptBillHdBindingSource, "CompanyID", true));
-                        businessContactBindingSource.DataSource = MainForm.dataSourceList[typeof(List<Company>)];
+                        businessContactBindingSource.DataSource = baseFactory.GetModelList<Company>();
                         break;
-                    case TypesListConstants.PurchaseReturnReceipt:
+                    case ReceiptBillTypeEnum.SalesReturnPayment:
+                        break;
+                    case ReceiptBillTypeEnum.PurchaseReturnReceipt:
                         this.lueBusinessContact.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.receiptBillHdBindingSource, "SupplierID", true));
-                        businessContactBindingSource.DataSource = MainForm.dataSourceList[typeof(List<Supplier>)];
+                        businessContactBindingSource.DataSource = baseFactory.GetModelList<Supplier>();
+                        break;
+                    case ReceiptBillTypeEnum.SupplierReceipt:
+                        break;
+                    default:
                         break;
                 }
+                //switch (types.Find(o => o.Type == TypesListConstants.ReceiptBillType && o.No == int.Parse(lueBillType.EditValue.ToString())).SubType)
+                //{
+                //    case TypesListConstants.SalesReceipt:
+                //        this.lueBusinessContact.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.receiptBillHdBindingSource, "CompanyID", true));
+                //        businessContactBindingSource.DataSource = baseFactory.GetModelList<Company>();
+                //        break;
+                //    case TypesListConstants.PurchaseReturnReceipt:
+                //        this.lueBusinessContact.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.receiptBillHdBindingSource, "SupplierID", true));
+                //        businessContactBindingSource.DataSource = baseFactory.GetModelList<Supplier>();
+                //        break;
+                //}
             }
             if (hd != null && hd.Status == 0)
             {
                 //if (lueBusinessContact.EditValue != null && !string.IsNullOrEmpty(lueBusinessContact.EditValue.ToString()) && lueBillType.EditValue != null)
                 if (!string.IsNullOrEmpty(lueBusinessContact.Text.Trim()))
                 {
-                    switch (types.Find(o => o.Type == TypesListConstants.ReceiptBillType && o.No == int.Parse(lueBillType.EditValue.ToString())).SubType)
+                    switch (Enum.Parse(typeof(ReceiptBillTypeEnum),lueBillType.EditValue.ToString()))
                     {
-                        case TypesListConstants.SalesReceipt:
+                        case ReceiptBillTypeEnum.SalesReceipt:
                             if (!string.IsNullOrEmpty(lueBusinessContact.Text.Trim()))
                             {
                                 //外销客户账期到才可收款，如交货后45天收款
-                                Company company = ((List<Company>)MainForm.dataSourceList[typeof(List<Company>)]).Find(o => o.ID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == (int)CustomerType.ExportSales);
+                                Company company = baseFactory.GetModelList<Company>().Find(o => o.ID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == (int)CustomerTypeEnum.ExportSales);
                                 if (company != null && company.AccountPeriod.HasValue && company.AccountPeriod.Value > 0)
                                 {
                                     vReceiptBillDtlBindingSource.DataSource = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
@@ -584,12 +608,46 @@ namespace USL
                                                 o.CompanyID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == int.Parse(lueBillType.EditValue.ToString()) && o.Status != 3);
                                 }
                             }
-                                break;
-                        case TypesListConstants.PurchaseReturnReceipt:
+                            break;
+                        case ReceiptBillTypeEnum.SalesReturnPayment:
+                            break;
+                        case ReceiptBillTypeEnum.PurchaseReturnReceipt:
                             vReceiptBillDtlBindingSource.DataSource = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
                                     o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == int.Parse(lueBillType.EditValue.ToString()) && o.Status != 3);
                             break;
+                        case ReceiptBillTypeEnum.SupplierReceipt:
+                            break;
+                        default:
+                            break;
                     }
+                    //switch (types.Find(o => o.Type == TypesListConstants.ReceiptBillType && o.No == int.Parse(lueBillType.EditValue.ToString())).SubType)
+                    //{
+                    //    case TypesListConstants.SalesReceipt:
+                    //        if (!string.IsNullOrEmpty(lueBusinessContact.Text.Trim()))
+                    //        {
+                    //            //外销客户账期到才可收款，如交货后45天收款
+                    //            Company company = baseFactory.GetModelList<Company>().Find(o => o.ID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == (int)CustomerTypeEnum.ExportSales);
+                    //            if (company != null && company.AccountPeriod.HasValue && company.AccountPeriod.Value > 0)
+                    //            {
+                    //                vReceiptBillDtlBindingSource.DataSource = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
+                    //                        o.CompanyID == new Guid(lueBusinessContact.EditValue.ToString()) && (o.Type == 0 || o.Type == 2) && o.Status != 3 && o.BillDate.AddDays(company.AccountPeriod.Value) <= DateTime.Now);
+                    //            }
+                    //            else
+                    //            {
+                    //                if (int.Parse(lueBillType.EditValue.ToString()) == 0)
+                    //                    vReceiptBillDtlBindingSource.DataSource = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
+                    //                            o.CompanyID == new Guid(lueBusinessContact.EditValue.ToString()) && (o.Type == 0 || o.Type == 2) && o.Status != 3);
+                    //                else
+                    //                    vReceiptBillDtlBindingSource.DataSource = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
+                    //                            o.CompanyID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == int.Parse(lueBillType.EditValue.ToString()) && o.Status != 3);
+                    //            }
+                    //        }
+                    //            break;
+                    //    case TypesListConstants.PurchaseReturnReceipt:
+                    //        vReceiptBillDtlBindingSource.DataSource = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
+                    //                o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == int.Parse(lueBillType.EditValue.ToString()) && o.Status != 3);
+                    //        break;
+                    //}
                 }
                 else
                     vReceiptBillDtlBindingSource.DataSource = null;
@@ -598,20 +656,21 @@ namespace USL
         }
 
 
-        string billType = "";
+        string displayText = "";
         private void gridView_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
         {
             if (e.Column == colBillNo)
             {
-                if (e.DisplayText.Contains("RK"))
-                    billType = TypesListConstants.StockInBillType;
+                if (e.DisplayText.StartsWith("CK"))
+                    displayText = EnumHelper.GetDescription<StockOutBillTypeEnum>((StockOutBillTypeEnum)e.Value);
                 else
-                    billType = TypesListConstants.StockOutBillType;
+                    displayText = EnumHelper.GetDescription<StockInBillTypeEnum>((StockInBillTypeEnum)e.Value);
             }
-            if (e.Column == colType && !string.IsNullOrEmpty(billType))
+            if (e.Column == colType)
             {
-                List<TypesList> types = MainForm.dataSourceList[typeof(List<TypesList>)] as List<TypesList>;
-                e.DisplayText = types.Find(o => o.Type == billType && o.No == Convert.ToInt32(e.Value)).Name.Trim();
+                //List<TypesList> types = baseFactory.GetModelList<TypesList>();
+                //e.DisplayText = types.Find(o => o.Type == billType && o.No == Convert.ToInt32(e.Value)).Name.Trim();
+                e.DisplayText = displayText;
             }
         }
 
@@ -621,18 +680,18 @@ namespace USL
             vReceiptBillDtlBindingSource.Clear();
             if (!string.IsNullOrEmpty(lueBillType.Text.Trim()) && !string.IsNullOrEmpty(lueBusinessContact.Text.Trim()))
             {
-                switch (types.Find(o => o.Type == TypesListConstants.ReceiptBillType && o.No == int.Parse(lueBillType.EditValue.ToString())).SubType)
+                switch (Enum.Parse(typeof(ReceiptBillTypeEnum), lueBillType.EditValue.ToString()))
                 {
-                    case TypesListConstants.SalesReceipt:
+                    case ReceiptBillTypeEnum.SalesReceipt:
                         Company company = ((LookUpEdit)sender).GetSelectedDataRow() as Company;
                         if (company != null && hd != null)
                         {
                             hd.CompanyID = company.ID;
                             hd.Contacts = company.Contacts;
-                            if (!string.IsNullOrEmpty(lueBusinessContact.Text.Trim()))  
+                            if (!string.IsNullOrEmpty(lueBusinessContact.Text.Trim()))
                             {
                                 //外销客户账期到才可收款，如交货后45天收款
-                                Company customer = ((List<Company>)MainForm.dataSourceList[typeof(List<Company>)]).Find(o => o.ID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == 1);
+                                Company customer = baseFactory.GetModelList<Company>().Find(o => o.ID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == 1);
                                 if (customer != null && customer.AccountPeriod.HasValue && customer.AccountPeriod.Value > 0)
                                 {
                                     vReceiptBillDtlBindingSource.DataSource = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
@@ -657,14 +716,16 @@ namespace USL
                             meBalance.EditValue = rHd.UnReceiptedAMT;
                         }
                         break;
-                    case TypesListConstants.PurchaseReturnReceipt:
+                    case ReceiptBillTypeEnum.SalesReturnPayment:
+                        break;
+                    case ReceiptBillTypeEnum.PurchaseReturnReceipt:
                         Supplier supplier = ((LookUpEdit)sender).GetSelectedDataRow() as Supplier;
                         if (supplier != null && hd != null)
                         {
                             hd.SupplierID = supplier.ID;
                             hd.Contacts = supplier.Contacts;
-                            vReceiptBillDtlBindingSource.DataSource  = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
-                                    o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == int.Parse(lueBillType.EditValue.ToString()) &&  o.Status != 3);
+                            vReceiptBillDtlBindingSource.DataSource = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
+                                   o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == int.Parse(lueBillType.EditValue.ToString()) && o.Status != 3);
 
                         }
                         //获得上期欠款
@@ -675,7 +736,66 @@ namespace USL
                             meBalance.EditValue = rsHd.UnReceiptedAMT;
                         }
                         break;
+                    case ReceiptBillTypeEnum.SupplierReceipt:
+                        break;
+                    default:
+                        break;
                 }
+                //switch (types.Find(o => o.Type == TypesListConstants.ReceiptBillType && o.No == int.Parse(lueBillType.EditValue.ToString())).SubType)
+                //{
+                //    case TypesListConstants.SalesReceipt:
+                //        Company company = ((LookUpEdit)sender).GetSelectedDataRow() as Company;
+                //        if (company != null && hd != null)
+                //        {
+                //            hd.CompanyID = company.ID;
+                //            hd.Contacts = company.Contacts;
+                //            if (!string.IsNullOrEmpty(lueBusinessContact.Text.Trim()))  
+                //            {
+                //                //外销客户账期到才可收款，如交货后45天收款
+                //                Company customer = baseFactory.GetModelList<Company>().Find(o => o.ID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == 1);
+                //                if (customer != null && customer.AccountPeriod.HasValue && customer.AccountPeriod.Value > 0)
+                //                {
+                //                    vReceiptBillDtlBindingSource.DataSource = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
+                //                            o.CompanyID == new Guid(lueBusinessContact.EditValue.ToString()) && (o.Type == 0 || o.Type == 2) && o.Status != 3 && o.BillDate.AddDays(customer.AccountPeriod.Value) <= DateTime.Now);
+                //                }
+                //                else
+                //                {
+                //                    if (int.Parse(lueBillType.EditValue.ToString()) == 0)//销售收款时，同时处理销售退货
+                //                        vReceiptBillDtlBindingSource.DataSource = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
+                //                                o.CompanyID == new Guid(lueBusinessContact.EditValue.ToString()) && (o.Type == 0 || o.Type == 2) && o.Status != 3);
+                //                    else
+                //                        vReceiptBillDtlBindingSource.DataSource = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
+                //                                o.CompanyID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == int.Parse(lueBillType.EditValue.ToString()) && o.Status != 3);
+                //                }
+                //            }
+                //        }
+                //        //获得上期欠款
+                //        ReceiptBillHd rHd = BLLFty.Create<ReceiptBillBLL>().GetReceiptBillHd().FindAll(o => o.CompanyID == new Guid(lueBusinessContact.EditValue.ToString())).OrderByDescending(o => o.BillNo).FirstOrDefault(o => o.Status > (int)BillStatus.UnAudited);
+                //        if (rHd != null)
+                //        {
+                //            hd.Balance = rHd.UnReceiptedAMT;
+                //            meBalance.EditValue = rHd.UnReceiptedAMT;
+                //        }
+                //        break;
+                //    case TypesListConstants.PurchaseReturnReceipt:
+                //        Supplier supplier = ((LookUpEdit)sender).GetSelectedDataRow() as Supplier;
+                //        if (supplier != null && hd != null)
+                //        {
+                //            hd.SupplierID = supplier.ID;
+                //            hd.Contacts = supplier.Contacts;
+                //            vReceiptBillDtlBindingSource.DataSource  = BLLFty.Create<ReceiptBillBLL>().GetVReceiptBillDtl().FindAll(o =>
+                //                    o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString()) && o.Type == int.Parse(lueBillType.EditValue.ToString()) &&  o.Status != 3);
+
+                //        }
+                //        //获得上期欠款
+                //        ReceiptBillHd rsHd = BLLFty.Create<ReceiptBillBLL>().GetReceiptBillHd().FindAll(o => o.SupplierID == new Guid(lueBusinessContact.EditValue.ToString())).OrderByDescending(o => o.BillNo).FirstOrDefault(o => o.Status > (int)BillStatus.UnAudited);
+                //        if (rsHd != null)
+                //        {
+                //            hd.Balance = rsHd.UnReceiptedAMT;
+                //            meBalance.EditValue = rsHd.UnReceiptedAMT;
+                //        }
+                //        break;
+                //}
             }
             else
                 vReceiptBillDtlBindingSource.DataSource  = null;
@@ -690,7 +810,7 @@ namespace USL
             {
                 if (list[e.ListSourceRowIndex].BillNo.Contains("RK"))
                 {
-                    List<VStockInBill> bill = ((List<VStockInBill>)MainForm.dataSourceList[typeof(List<VStockInBill>)]).FindAll(o => o.HdID == list[e.ListSourceRowIndex].BillID);
+                    List<VStockInBill> bill = baseFactory.GetModelList<VStockInBill>().FindAll(o => o.HdID == list[e.ListSourceRowIndex].BillID);
                     if (bill != null)
                     {
                         if (e.Column == colQty)
@@ -699,7 +819,7 @@ namespace USL
                 }
                 else
                 {
-                    List<VStockOutBill> bill = ((List<VStockOutBill>)MainForm.dataSourceList[typeof(List<VStockOutBill>)]).FindAll(o => o.HdID == list[e.ListSourceRowIndex].BillID);
+                    List<VStockOutBill> bill = baseFactory.GetModelList<VStockOutBill>().FindAll(o => o.HdID == list[e.ListSourceRowIndex].BillID);
                     if (bill != null)
                     {
                         if (e.Column == colQty)
@@ -713,7 +833,7 @@ namespace USL
         {
             if (!string.IsNullOrEmpty(txtBillNo.Text.Trim()))
             {
-                List<ReceiptBillHd> bills = ((List<ReceiptBillHd>)MainForm.dataSourceList[typeof(List<ReceiptBillHd>)]).OrderBy(o => o.BillNo).ToList();
+                List<ReceiptBillHd> bills = baseFactory.GetModelList<ReceiptBillHd>().OrderBy(o => o.BillNo).ToList();
                 for (int i = 0; i < bills.Count; i++)
                 {
                     if (bills[i].BillNo.Equals(txtBillNo.Text.Trim()))
@@ -725,9 +845,9 @@ namespace USL
                             if (i - 1 == 0)
                                 btnPrev.Enabled = false;
                             if (bills[i - 1].Status == 0)
-                                MainForm.itemDetailPageList[MainMenuConstants.ReceiptBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuConstants.ReceiptBill], ButtonType.btnSave);
+                                MainForm.itemDetailPageList[MainMenuEnum.ReceiptBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuEnum.ReceiptBill], ButtonType.btnSave);
                             else
-                                MainForm.itemDetailPageList[MainMenuConstants.ReceiptBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuConstants.ReceiptBill], ButtonType.btnAudit);
+                                MainForm.itemDetailPageList[MainMenuEnum.ReceiptBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuEnum.ReceiptBill], ButtonType.btnAudit);
                             break;
                         }
                         else
@@ -745,7 +865,7 @@ namespace USL
         {
             if (!string.IsNullOrEmpty(txtBillNo.Text.Trim()))
             {
-                List<ReceiptBillHd> bills = ((List<ReceiptBillHd>)MainForm.dataSourceList[typeof(List<ReceiptBillHd>)]).OrderBy(o => o.BillNo).ToList();
+                List<ReceiptBillHd> bills = baseFactory.GetModelList<ReceiptBillHd>().OrderBy(o => o.BillNo).ToList();
                 for (int i = 0; i < bills.Count; i++)
                 {
                     if (bills[i].BillNo.Equals(txtBillNo.Text.Trim()))
@@ -757,9 +877,9 @@ namespace USL
                             if (i + 1 == bills.Count - 1)
                                 btnNext.Enabled = false;
                             if (bills[i + 1].Status == 0)
-                                MainForm.itemDetailPageList[MainMenuConstants.ReceiptBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuConstants.ReceiptBill], ButtonType.btnSave);
+                                MainForm.itemDetailPageList[MainMenuEnum.ReceiptBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuEnum.ReceiptBill], ButtonType.btnSave);
                             else
-                                MainForm.itemDetailPageList[MainMenuConstants.ReceiptBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuConstants.ReceiptBill], ButtonType.btnAudit);
+                                MainForm.itemDetailPageList[MainMenuEnum.ReceiptBill].setNavButtonStatus(MainForm.mainMenuList[MainMenuEnum.ReceiptBill], ButtonType.btnAudit);
                             break;
                         }
                         else

@@ -5,6 +5,7 @@ using System.Text;
 using System.Data;
 using System.Reflection;
 using System.Collections;
+using static Utility.EnumHelper;
 
 namespace Utility
 {
@@ -181,6 +182,45 @@ namespace Utility
                 }
             }
             return DataSetToIList<T>(p_DataSet, _TableIndex);
+        }
+        
+        /// <summary>
+        /// DataRow装换为泛型实体
+        /// </summary>
+        /// <typeparam name="T">实体类型</typeparam>
+        /// <typeparam name="E">实体枚举类型</typeparam>
+        /// <param name="dt">DataTable</param>
+        /// <param name="row">数据行</param>
+        /// <param name="model">实体对象</param>
+        /// <returns></returns>
+        public static void DataRowToModel<T, E>(DataTable dt, DataRow row, T model)
+        {
+            if (dt == null)
+                return;
+            foreach (PropertyInfo p in model.GetType().GetProperties())
+            {
+                //string enumTypeName = model.GetType().Name + "Enum";
+                //ListItem item = EnumHelper.GetEnumValues(assemblyString, enumTypeName, false).FirstOrDefault(o => o.Value.ToString().Equals(p.Name));
+                ListItem<E> item = GetEnumValues<E>(false).FirstOrDefault(o => o.Value.ToString().Equals(p.Name));
+                if (item != null)
+                {
+                    if (dt.Columns.Contains(item.Name))
+                    {
+                        if (p.PropertyType.IsGenericType)
+                        {
+                            // 泛型Nullable<>
+                            Type genericTypeDefinition = p.PropertyType.GetGenericTypeDefinition();
+                            if (genericTypeDefinition == typeof(Nullable<>))
+                                p.SetValue(model, string.IsNullOrWhiteSpace(row[item.Name].ToString()) ? null : Convert.ChangeType(row[item.Name], Nullable.GetUnderlyingType(p.PropertyType)), null);
+                        }
+                        else
+                        {
+                            // 非泛型
+                            p.SetValue(model, string.IsNullOrWhiteSpace(row[item.Name].ToString()) ? null : Convert.ChangeType(row[item.Name], p.PropertyType), null);
+                        }
+                    }
+                }
+            }
         }
     }
 }

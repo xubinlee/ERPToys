@@ -11,7 +11,7 @@ using DevExpress.XtraEditors;
 using IBase;
 using Factory;
 using BLL;
-using DBML;
+using EDMX;
 using CommonLibrary;
 using Utility;
 using DevExpress.XtraGrid.Views.Grid;
@@ -24,12 +24,13 @@ using SchedulerReportingExample;
 using DevExpress.XtraScheduler.Reporting;
 using DevExpress.XtraReports.UI;
 using Utility.Interceptor;
+using ClientFactory;
 
 namespace USL
 {
     public partial class ProductionSchedulingPage : DevExpress.XtraEditors.XtraUserControl, IItemDetail
     {
-        private static ClientFactory clientFactory = LoggerInterceptor.CreateProxy<ClientFactory>();
+        private static BaseFactory baseFactory = LoggerInterceptor.CreateProxy<BaseFactory>();
         Guid focusedID;
         //bool addNew = false;  //是否新增
         public ProductionSchedulingPage()
@@ -49,7 +50,7 @@ namespace USL
         public void BindData(object obj)
         {
             schedulerStorage.BeginUpdate();
-            vUsersInfoBindingSource.DataSource = ((List<VUsersInfo>)MainForm.dataSourceList[typeof(List<VUsersInfo>)]).FindAll(o =>
+            vUsersInfoBindingSource.DataSource = baseFactory.GetModelList<VUsersInfo>().FindAll(o =>
                 o.已删除 == false && o.部门 == "注塑机");
             GetPSDataSource();
             schedulerStorage.RefreshData();
@@ -71,7 +72,7 @@ namespace USL
             if (winExplorerView.GetFocusedRowCellValue(colID) != null)
             {
                 focusedID = new Guid(winExplorerView.GetFocusedRowCellValue(colID).ToString());
-                appointmentsBindingSource.DataSource = ((List<Appointments>)MainForm.dataSourceList[typeof(List<Appointments>)]).FindAll(o => o.UserID == focusedID);
+                appointmentsBindingSource.DataSource = baseFactory.GetModelList<Appointments>().FindAll(o => o.UserID == focusedID);
                 picStatus.Visible = false;
                 //DataView dv = erpToysDataSet.Appointments.DefaultView;
                 //dv.RowFilter = string.Format("UserID='{0}'", focusedID);
@@ -115,9 +116,9 @@ namespace USL
                 new SchedulerControlPrintAdapter(this.schedulerControl1);
             xr.SchedulerAdapter = scPrintAdapter;
             xr.CreateDocument(true);
-            xr.paramUserName.Value = ((List<UsersInfo>)MainForm.dataSourceList[typeof(List<UsersInfo>)]).FirstOrDefault(o =>
+            xr.paramUserName.Value = baseFactory.GetModelList<UsersInfo>().FirstOrDefault(o =>
                 o.ID == focusedID).Name;
-            //xr.paramAMT.Value = ((List<VAppointments>)MainForm.dataSourceList[typeof(List<VAppointments>)]).FindAll(o =>
+            //xr.paramAMT.Value = ((List<VAppointments>)baseFactory.GetModelList<VAppointments>().FindAll(o =>
             //    o.UserID == focusedID && o.日期.Value.Month == dateNavigator.DateTime.Month).Sum(o => o.当班金额);
 
             using (ReportPrintTool printTool = new ReportPrintTool(xr))
@@ -165,10 +166,10 @@ namespace USL
 
         private void schedulerStorage_AppointmentsChanged(object sender, PersistentObjectsEventArgs e)
         {
-            BLLFty.Create<AppointmentsBLL>().Update(GetAppointmentsList(e.Objects));
+            baseFactory.ModifyByList<Appointments>(GetAppointmentsList(e.Objects));
             //刷新数据
-            clientFactory.UpdateCache<Appointments>();
-            clientFactory.DataPageRefresh<VAppointments>();
+            baseFactory.DataPageRefresh<Appointments>();
+            baseFactory.DataPageRefresh<VAppointments>();
         }
 
         private void schedulerStorage_AppointmentsInserted(object sender, PersistentObjectsEventArgs e)
@@ -181,28 +182,29 @@ namespace USL
                     CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "添加失败，请刷新数据后重试。");
                     break;
                 }
-                BLLFty.Create<AppointmentsBLL>().Insert(dbApt);
+                baseFactory.Add<Appointments>(dbApt);
                 break;
             }
             //刷新数据
-            clientFactory.UpdateCache<Appointments>();
-            clientFactory.DataPageRefresh<VAppointments>();
+            baseFactory.DataPageRefresh<Appointments>();
+            baseFactory.DataPageRefresh<VAppointments>();
         }
 
         private void schedulerStorage_AppointmentsDeleted(object sender, PersistentObjectsEventArgs e)
         {
-            foreach (Appointment apt in e.Objects)
-            {
-                if (apt.Id == null)
-                {
-                    CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "删除失败。");
-                    break;
-                }
-                BLLFty.Create<AppointmentsBLL>().Delete((Int64)apt.Id);
-            }
+            //foreach (Appointment apt in e.Objects)
+            //{
+            //    if (apt.Id == null)
+            //    {
+            //        CommonServices.ErrorTrace.SetErrorInfo(this.FindForm(), "删除失败。");
+            //        break;
+            //    }
+            //    BLLFty.Create<AppointmentsBLL>().Delete((Int64)apt.Id);
+            //}
+            baseFactory.DelByBulk<Appointments>(GetAppointmentsList(e.Objects));
             //刷新数据
-            clientFactory.UpdateCache<Appointments>();
-            clientFactory.DataPageRefresh<VAppointments>();
+            baseFactory.DataPageRefresh<Appointments>();
+            baseFactory.DataPageRefresh<VAppointments>();
         }
         private void schedulerControl1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -214,7 +216,7 @@ namespace USL
 
         private void schedulerControl1_SelectionChanged(object sender, EventArgs e)
         {
-            VWageBill wage= ((List<VWageBill>)MainForm.dataSourceList[typeof(List<VWageBill>)]).FirstOrDefault(o =>o.UserID==focusedID &&
+            VWageBill wage= baseFactory.GetModelList<VWageBill>().FirstOrDefault(o =>o.UserID==focusedID &&
                 o.年月 == Convert.ToString(((SchedulerControl)sender).SelectedInterval.Start.Year + "-" + ((SchedulerControl)sender).SelectedInterval.Start.Month.ToString().PadLeft(2,'0')));
             //if (((SchedulerControl)sender).SelectedAppointments.Count > 0 &&
             //    Convert.ToInt32(((SchedulerControl)sender).SelectedAppointments[0].CustomFields["WageStatus"]) == (int)WageStatus.Closed)
